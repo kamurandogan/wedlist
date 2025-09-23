@@ -2,9 +2,9 @@ name: Flutter CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
   # Manuel tetikleme (deploy-rules işi için)
   workflow_dispatch:
 
@@ -28,7 +28,7 @@ jobs:
         run: flutter --version
 
       - name: Format check
-        run: flutter format --set-exit-if-changed .
+        run: dart format --set-exit-if-changed .
 
       - name: Analyze
         run: flutter analyze
@@ -48,7 +48,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Install Firebase CLI
         run: npm i -g firebase-tools
