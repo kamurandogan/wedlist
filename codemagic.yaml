@@ -1,8 +1,11 @@
 workflows:
   ci:
     name: CI
-    max_build_duration: 45
-    environment:
+    max_build_duration: 45      vars:
+        BUNDLE_ID: com.kamurandev.wedlist.wedlist # Projedeki iOS Bundle ID
+        CERTIFICATE_PRIVATE_KEY: $CERTIFICATE_PRIVATE_KEY
+      groups:
+        - app_store_connect # Codemagic UI'da APP_STORE_CONNECT_* değişkenlerini tanımlayın environment:
       flutter: stable
     scripts:
       - name: Install dependencies
