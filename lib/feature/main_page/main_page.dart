@@ -41,7 +41,11 @@ class _MainPageState extends State<MainPage> {
   Future<void> _initMonetization() async {
     await sl<PurchaseService>().init();
     final remove = sl<PurchaseService>().removeAds.value;
-    sl<AdsService>().adsGloballyDisabled = remove;
+    if (remove) {
+      sl<AdsService>().disableAds();
+    } else {
+      sl<AdsService>().enableAds();
+    }
     if (!remove) {
       _scheduleInterstitial();
       sl<PurchaseService>().removeAds.addListener(_onEntitlementChanged);
@@ -50,7 +54,11 @@ class _MainPageState extends State<MainPage> {
 
   void _onEntitlementChanged() {
     final remove = sl<PurchaseService>().removeAds.value;
-    sl<AdsService>().adsGloballyDisabled = remove;
+    if (remove) {
+      sl<AdsService>().disableAds();
+    } else {
+      sl<AdsService>().enableAds();
+    }
     if (remove) {
       _interstitialTimer?.cancel();
     } else {
@@ -65,7 +73,7 @@ class _MainPageState extends State<MainPage> {
       try {
         // showInterstitial uygun değilse false döner ve preload tetikler
         await sl<AdsService>().showInterstitial();
-      } catch (_) {
+      } on Exception {
         // sessizce yoksay
       }
     });

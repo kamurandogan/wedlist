@@ -37,13 +37,9 @@ class UserItemRemoteDataSourceImpl implements UserItemRemoteDataSource {
             .collection(FirebasePaths.users)
             .doc(uid)
             .get();
-        final collabs =
-            (userDoc.data()?['collaborators'] as List?)?.cast<String>() ??
-            const <String>[];
+        final collabs = (userDoc.data()?['collaborators'] as List?)?.cast<String>() ?? const <String>[];
         final removed =
-            (userDoc.data()?['removedCollaborators'] as List?)
-                ?.cast<String>() ??
-            const <String>[];
+      (userDoc.data()?['removedCollaborators'] as List?)?.cast<String>() ?? const <String>[];
         owners = <String>{uid, ...collabs}.toList();
         toSave = toSave.copyWith(owners: owners, createdBy: uid);
 
@@ -57,8 +53,9 @@ class UserItemRemoteDataSourceImpl implements UserItemRemoteDataSource {
           for (final d in reverseQ.docs) {
             final otherId = d.id;
             if (otherId == uid) continue;
-            if (removed.contains(otherId))
+            if (removed.contains(otherId)) {
               continue; // user explicitly removed them
+            }
             if (!owners.contains(otherId)) {
               owners.add(otherId);
             }
@@ -96,10 +93,11 @@ class UserItemRemoteDataSourceImpl implements UserItemRemoteDataSource {
               final collabs =
                   (rs.data()?['collaborators'] as List?)?.cast<String>() ??
                   const <String>[];
-              if (collabs.contains(uid))
+              if (collabs.contains(uid)) {
                 verified.add(rid);
-              else
+              } else {
                 verified.add(rid); // fallback keep
+              }
             } on Exception {
               verified.add(rid);
             }

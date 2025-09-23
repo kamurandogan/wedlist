@@ -51,7 +51,8 @@ class AdsService {
 
   // Entitlement-based kill switch (e.g., Remove Ads purchase)
   bool _adsGloballyDisabled = false;
-  set adsGloballyDisabled(bool v) => _adsGloballyDisabled = v;
+  void disableAds() => _adsGloballyDisabled = true;
+  void enableAds() => _adsGloballyDisabled = false;
   bool get adsEnabled => _adsSupported && !_adsGloballyDisabled;
 
   /// Google Mobile Ads SDK'yı başlatır (idempotent: tekrar çağrılırsa hızlı döner).
@@ -106,8 +107,9 @@ class AdsService {
     void Function(LoadAdError error)? onFailed,
   }) {
     if (!adsEnabled) {
-      if (kDebugMode)
+      if (kDebugMode) {
         debugPrint('Banner ads are not supported on this platform.');
+      }
       return null;
     }
     _currentBanner?.dispose();

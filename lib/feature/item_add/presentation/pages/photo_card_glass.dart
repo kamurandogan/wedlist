@@ -27,7 +27,7 @@ class PhotoCardGlass extends StatelessWidget {
             // Koyu arka plan (cam efektinin altında kalır)
             Positioned.fill(
               child: Container(
-                color: Colors.black.withOpacity(0.35),
+                color: Colors.black.withValues(alpha: 0.35),
               ),
             ),
             // İçerik: metinleri beyaz uygula

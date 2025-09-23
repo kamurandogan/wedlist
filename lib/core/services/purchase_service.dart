@@ -35,7 +35,12 @@ class PurchaseService {
     _sub ??= _iap.purchaseStream.listen(
       _onPurchaseUpdated,
       onDone: () => _sub?.cancel(),
-      onError: (_) {},
+      onError: (Object error, [StackTrace? stackTrace]) {
+        if (kDebugMode) {
+          // ignore: avoid_print
+          print('IAP stream error: $error');
+        }
+      },
     );
     await queryProducts();
     await _loadEntitlements();
@@ -120,23 +125,24 @@ class PurchaseService {
       return;
     }
     final ref = _firestore.collection('users').doc(uid);
-    final patch = <String, dynamic>{
-      'premium': <String, dynamic>{
-        'updatedAt': FieldValue.serverTimestamp(),
-      },
+    final premium = <String, dynamic>{
+      'updatedAt': FieldValue.serverTimestamp(),
     };
     if (pd.productID == kRemoveAdsId) {
-      patch['premium']!['removeAds'] = true;
+      premium['removeAds'] = true;
       removeAds.value = true;
     }
     if (pd.productID == kCollabUnlockId) {
-      patch['premium']!['collabUnlocked'] = true;
+      premium['collabUnlocked'] = true;
       collabUnlocked.value = true;
     }
+    final patch = <String, dynamic>{'premium': premium};
     try {
       await ref.set(patch, SetOptions(merge: true));
-    } catch (_) {
-      // yut
+    } on FirebaseException catch (_) {
+      // yut: ağ/firestore hataları
+    } on Exception catch (_) {
+      // yut: diğer hatalar
     }
   }
 
@@ -146,12 +152,12 @@ class PurchaseService {
     try {
       final doc = await _firestore.collection('users').doc(uid).get();
       final data = doc.data() ?? <String, dynamic>{};
-      final premium =
-          (data['premium'] as Map?)?.cast<String, dynamic>() ??
-          <String, dynamic>{};
+      final premium = (data['premium'] is Map) ? (data['premium'] as Map).cast<String, dynamic>() : <String, dynamic>{};
       removeAds.value = (premium['removeAds'] as bool?) ?? false;
       collabUnlocked.value = (premium['collabUnlocked'] as bool?) ?? false;
-    } catch (_) {
+    } on FirebaseException catch (_) {
+      // ignore
+    } on Exception catch (_) {
       // ignore
     }
   }

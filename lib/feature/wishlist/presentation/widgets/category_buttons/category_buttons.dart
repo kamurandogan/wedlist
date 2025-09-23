@@ -56,13 +56,14 @@ class _CategoryButtonsState extends State<CategoryButtons> {
         for (final j in rawList) {
           final cat = (j['category'] as String?)?.trim();
           final title = (j['title'] as String?)?.trim();
-          if (cat == null || cat.isEmpty || title == null || title.isEmpty)
+          if (cat == null || cat.isEmpty || title == null || title.isEmpty) {
             continue;
+          }
           final normCat = _norm(cat);
           _wishByCategory.putIfAbsent(normCat, () => <String>{}).add(title);
         }
       }
-    } catch (_) {
+    } on Exception {
       // ignore errors; fallback to show all buttons
     } finally {
       if (mounted) setState(() => _wishlistLoaded = true);
@@ -200,8 +201,9 @@ class _CategoryButtonsState extends State<CategoryButtons> {
                         if (titles != null && titles.isNotEmpty) {
                           var remaining = 0;
                           for (final t in titles) {
-                            if (!ownedKeys.contains(keyOf(title, t)))
+                            if (!ownedKeys.contains(keyOf(title, t))) {
                               remaining++;
+                            }
                           }
                           displayLabel = '$title ($remaining)';
                         }

@@ -24,14 +24,18 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
   @override
   void initState() {
     super.initState();
-    _bootstrap();
+    _bootstrap(); // ignore: unawaited_futures
   }
 
   Future<void> _bootstrap() async {
     // Ensure we know entitlement state before showing ads
     await sl<PurchaseService>().init();
     final removeAds = sl<PurchaseService>().removeAds.value;
-    sl<AdsService>().adsGloballyDisabled = removeAds;
+    if (removeAds) {
+      sl<AdsService>().disableAds();
+    } else {
+      sl<AdsService>().enableAds();
+    }
     if (!removeAds) {
       await _load();
       // React to entitlement changes live
@@ -41,25 +45,35 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
 
   void _onEntitlementChanged() {
     final remove = sl<PurchaseService>().removeAds.value;
-    sl<AdsService>().adsGloballyDisabled = remove;
+    if (remove) {
+      sl<AdsService>().disableAds();
+    } else {
+      sl<AdsService>().enableAds();
+    }
     if (remove) {
       _retryTimer?.cancel();
       _banner?.dispose();
-      if (mounted)
+      if (mounted) {
         setState(() {
           _banner = null;
           _loaded = false;
         });
+      }
     } else {
       // If entitlement revoked (rare), try to load again
-      _load();
+      _scheduleLoad();
     }
+  }
+
+  // Schedule a load without awaiting to avoid blocking the listener
+  void _scheduleLoad() {
+    _load(); // ignore: unawaited_futures
   }
 
   Future<void> _load() async {
     // Eski banner'ı temizle
     _retryTimer?.cancel();
-    _banner?.dispose();
+    await _banner?.dispose();
     _banner = null;
     _loaded = false;
 
@@ -74,9 +88,9 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
         setState(() => _loaded = false);
         // 15-30 sn arası bekleme ile otomatik yeniden dene (burada 20 sn)
         _retryTimer?.cancel();
-        _retryTimer = Timer(_retryDelay, () {
+        _retryTimer = Timer(_retryDelay, () async {
           if (!mounted) return;
-          _load();
+          await _load();
         });
       },
     );
