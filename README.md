@@ -1,6 +1,6 @@
 # wedlist
 
-Çok dilli (11+ dil), çok ülkeli düğün / çeyiz (wish & dowry list) yönetimi, iş birliği ve Google Mobile Ads desteği olan bir Flutter uygulaması.
+Çok dilli (11+ dil), çok ülkeli düğün / çeyiz (wish & dowry list) yönetimi, iş birliği, IAP (in‑app purchase) ve Google Mobile Ads desteği olan bir Flutter uygulaması.
 
 ## Özellikler
 
@@ -8,23 +8,61 @@
 - Gerçek zamanlı iş birliği (karşılıklı eşleşen collaborator ilişkisi)
 - Çok dillilik (Flutter gen_l10n, 11+ locale)
 - Reklamlar: Banner, Interstitial, Rewarded (merkezi servis)
-- Bağımlılıklar: `google_mobile_ads`, `firebase_core`, `cloud_firestore` vb.
+- Satın alma: Reklamsız kullanım ve partner özelliği kilit açma
+- Teknolojiler: `firebase_core`, `cloud_firestore`, `google_mobile_ads`, `in_app_purchase`, `go_router`, `bloc/cubit`
 
-## Getting Started
+## Kurulum ve Çalıştırma
 
-1. Flutter SDK kurulu olduğundan emin olun.
-2. `firebase_options.dart` dosyasının yapılandırıldığını doğrulayın (FlutterFire CLI ile oluşturulmuş olmalı).
-3. Paketleri indir: `flutter pub get`
-4. Çalıştır: `flutter run`
+Önkoşullar
+
+- Flutter SDK (stable)
+- Android Studio veya Xcode (platforma göre)
+- Firebase projeniz yapılandırılmış olmalı (FlutterFire CLI `lib/firebase_options.dart` üretmiş olmalı)
+
+Hızlı başlatma
+
+```powershell
+# Bağımlılıkları indir
+flutter pub get
+
+# (İsteğe bağlı) l10n üretimi
+flutter gen-l10n
+
+# Uygulamayı çalıştır (bağlı cihaza ya da seçili emülatöre)
+flutter run
+```
+
+### iOS
+
+- macOS üzerinde Xcode gereklidir.
+- İlk kurulumda CocoaPods çalışır; sorun olursa aşağıyı deneyin:
+
+```bash
+cd ios
+pod install
+```
+
+### Android
+
+- Geliştirici modu ve USB hata ayıklama açık olmalı.
+- Release derlemesi için `android/key.properties` ve keystore (repo dışında) gerekir.
+
+## Ekran Görüntüleri
+
+`assets/images/` içindeki görsellerden bazıları:
+
+| Ana Sayfa | Giriş | Onboarding |
+| --- | --- | --- |
+| ![home](assets/images/wedlist_logo_512.png) | ![login](assets/images/login.png) | ![onboarding](assets/images/planning.png) |
 
 ## Cloud Functions (Opsiyonel)
 
-`functions/` dizininde bir `onWrite` tetikleyicisi:
+`functions/` dizininde örnek bir tetikleyici akışı:
 
 - İş birliği (collaborators) çift yönlü senkronizasyonu
 - İki tarafın wishlist listesinin birleştirilmesi
 
-Deploy:
+Deploy
 
 ```bash
 cd functions
@@ -43,8 +81,7 @@ Bu projede `google_mobile_ads` paketi kullanılarak merkezi bir `AdsService` ile
 `pubspec.yaml` içinde:
 
 ```yaml
-
-    google_mobile_ads: ^5.1.0
+  google_mobile_ads: ^5.1.0
 ```
 
 ### 2. Android Kurulumu
@@ -58,7 +95,7 @@ Bu projede `google_mobile_ads` paketi kullanılarak merkezi bir `AdsService` ile
         android:value="ca-app-pub-3940256099942544~3347511713" /> <!-- TEST ID -->
 ```
 
-1. Yayın öncesi TEST ID yerine kendi App ID değerini koymayı unutmayın.
+Yayın öncesi TEST ID yerine kendi App ID değerini koymayı unutmayın.
 
 ### 3. iOS Kurulumu
 
@@ -70,7 +107,7 @@ Bu projede `google_mobile_ads` paketi kullanılarak merkezi bir `AdsService` ile
 <string>ca-app-pub-3940256099942544~1458002511</string> <!-- TEST ID -->
 ```
 
-1. iOS 14+ için (gerekiyorsa) App Tracking Transparency açıklaması ekleyin:
+iOS 14+ için (gerekiyorsa) App Tracking Transparency açıklaması ekleyin:
 
 ```xml
 <key>NSUserTrackingUsageDescription</key>
@@ -162,16 +199,6 @@ Future<void> onUserAction() async {
 - [ ] Reklam sıklığı kullanıcı deneyimini bozuyor mu?
 - [ ] Rewarded ödülleri kötüye kullanım senaryolarına karşı sınırlandı mı?
 
-### 10. Sorun Giderme
-
-| Sorun | Olası Sebep | Çözüm |
-|-------|-------------|-------|
-| Reklam gelmiyor | Henüz fill yok | Gerçek cihazda 1-2 saat bekleyin (yeni ID) |
-| Test ID policy uyarısı | Prod’a test ID bırakıldı | Prod ID ile değiştirin |
-| Rewarded callback yok | Kullanıcı tamamlamadı | Reklamı tamamen izledi mi kontrol edin |
-
 ---
 
 Her türlü ekleme / iyileştirme için PR veya issue açabilirsiniz.
-
-- Kullanıcı odaklı akışları bölmeyecek yerlerde
