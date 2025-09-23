@@ -128,12 +128,7 @@ workflows:
         script: flutter build ipa --release
     artifacts:
       - build/ios/ipa/*.ipa
-
-    # İsteğe bağlı otomatik yükleme (sonradan aktif edebiliriz):
-    # publishing:
-    #   app_store_connect:
-    #     api_key:
-    #       key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
-    #       issuer_id: $APP_STORE_CONNECT_ISSUER_ID
-    #       private_key: $APP_STORE_CONNECT_PRIVATE_KEY
-    #     submit_to_testflight: true
+    publishing:
+      app_store_connect:
+        api_key: "$APP_STORE_CONNECT_KEY_IDENTIFIER:$APP_STORE_CONNECT_ISSUER_ID:$APP_STORE_CONNECT_PRIVATE_KEY"
+        submit_to_testflight: true
