@@ -96,6 +96,9 @@ class _OnboardingViewState extends State<_OnboardingView>
     return SizedBox(
       width: double.infinity,
       child: DropdownButtonFormField<String>(
+        // Flutter 3.33+ prefers `initialValue`, but for cross-version compatibility
+        // we keep `value` and silence the deprecation in CI.
+        // ignore: deprecated_member_use
         value: _selectedCountry,
         items: OnboardingMixin._supportedCountries
             .map(
