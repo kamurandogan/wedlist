@@ -70,9 +70,6 @@ class _PhotoCarouselState extends State<PhotoCarousel> {
                           },
                         ),
                       ),
-                      const SizedBox(height: 16),
-                      // TODO(wedlist): Add page indicator back (e.g., SmoothPageIndicator)
-                      const SizedBox(height: 8),
                     ],
                   );
                 },

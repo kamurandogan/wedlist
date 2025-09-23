@@ -12,8 +12,6 @@ part 'presentation/pages/login_formfield.dart';
 part 'presentation/widgets/register_button.dart';
 part 'presentation/widgets/sign_up_with_google_button.dart';
 
-// TODO(kamuran): : Google ile giriş yapmayı kaldır sadece mail ile giriş yapılsın.
-
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 

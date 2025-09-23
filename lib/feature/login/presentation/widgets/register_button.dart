@@ -14,7 +14,6 @@ class RegisterButton extends StatelessWidget {
         TextButton(
           onPressed: () {
             context.go(AppRoute.register.path);
-            // TODO(kamuran): Register sayfasına yönlendirme
           },
           style: TextButton.styleFrom(
             foregroundColor: AppColors.primary,

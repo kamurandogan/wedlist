@@ -42,9 +42,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<void> signOut() async {
-    // TODO(kamuran): Implement sign out logic
-  }
+  Future<void> signOut() async {}
 
   @override
   Future<UserModel?> getCurrentUser() async {
