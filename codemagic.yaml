@@ -10,7 +10,6 @@ workflows:
         CERTIFICATE_PRIVATE_KEY: $CERTIFICATE_PRIVATE_KEY
       groups:
         - app_store_connect # Codemagic UI'da APP_STORE_CONNECT_* değişkenlerini tanımlayın environment:
-      flutter: stable
     scripts:
       - name: Install dependencies
         script: flutter pub get
