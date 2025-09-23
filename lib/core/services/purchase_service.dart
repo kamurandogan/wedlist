@@ -152,7 +152,9 @@ class PurchaseService {
     try {
       final doc = await _firestore.collection('users').doc(uid).get();
       final data = doc.data() ?? <String, dynamic>{};
-      final premium = (data['premium'] is Map) ? (data['premium'] as Map).cast<String, dynamic>() : <String, dynamic>{};
+      final premium = (data['premium'] is Map)
+          ? (data['premium'] as Map).cast<String, dynamic>()
+          : <String, dynamic>{};
       removeAds.value = (premium['removeAds'] as bool?) ?? false;
       collabUnlocked.value = (premium['collabUnlocked'] as bool?) ?? false;
     } on FirebaseException catch (_) {

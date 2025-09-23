@@ -37,9 +37,13 @@ class UserItemRemoteDataSourceImpl implements UserItemRemoteDataSource {
             .collection(FirebasePaths.users)
             .doc(uid)
             .get();
-        final collabs = (userDoc.data()?['collaborators'] as List?)?.cast<String>() ?? const <String>[];
+        final collabs =
+            (userDoc.data()?['collaborators'] as List?)?.cast<String>() ??
+            const <String>[];
         final removed =
-      (userDoc.data()?['removedCollaborators'] as List?)?.cast<String>() ?? const <String>[];
+            (userDoc.data()?['removedCollaborators'] as List?)
+                ?.cast<String>() ??
+            const <String>[];
         owners = <String>{uid, ...collabs}.toList();
         toSave = toSave.copyWith(owners: owners, createdBy: uid);
 
