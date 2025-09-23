@@ -48,10 +48,15 @@ import 'package:wedlist/feature/register/data/repositories/register_repository_i
 import 'package:wedlist/feature/register/domain/repositories/register_repository.dart';
 import 'package:wedlist/feature/register/domain/usecases/register_usecase.dart';
 import 'package:wedlist/feature/register/presentation/blocs/register_bloc.dart';
+import 'package:wedlist/feature/settings/data/collab_repository_impl.dart';
 import 'package:wedlist/feature/settings/data/country_repository_impl.dart';
 import 'package:wedlist/feature/settings/data/theme_repository_impl.dart';
+import 'package:wedlist/feature/settings/domain/repositories/collab_repository.dart';
 import 'package:wedlist/feature/settings/domain/repositories/country_repository.dart';
+import 'package:wedlist/feature/settings/domain/usecases/add_collab_invite.dart';
 import 'package:wedlist/feature/settings/domain/usecases/change_country.dart';
+import 'package:wedlist/feature/settings/domain/usecases/load_collab_summary.dart';
+import 'package:wedlist/feature/settings/domain/usecases/remove_partner.dart';
 import 'package:wedlist/feature/settings/domain/usecases/toggle_theme.dart';
 import 'package:wedlist/feature/settings/domain/usecases/watch_country.dart';
 import 'package:wedlist/feature/settings/presentation/bloc/country_cubit.dart';
@@ -153,6 +158,16 @@ Future<void> init() async {
         sl<CountryPersistenceService>(),
       ),
     )
+    // Collab (Settings) domain wiring
+    ..registerLazySingleton<CollabRepository>(
+      () => CollabRepositoryImpl(
+        FirebaseFirestore.instance,
+        FirebaseAuth.instance,
+      ),
+    )
+    ..registerLazySingleton(() => LoadCollabSummary(sl<CollabRepository>()))
+    ..registerLazySingleton(() => AddCollabInvite(sl<CollabRepository>()))
+    ..registerLazySingleton(() => RemovePartner(sl<CollabRepository>()))
     ..registerLazySingleton(() => WatchCountry(sl<CountryRepository>()))
     ..registerLazySingleton(() => ChangeCountry(sl<CountryRepository>()))
     ..registerFactory(

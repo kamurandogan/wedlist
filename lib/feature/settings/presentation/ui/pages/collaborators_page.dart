@@ -5,8 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wedlist/core/extensions/l10n_extension.dart';
 import 'package:wedlist/core/router/app_router.dart';
+import 'package:wedlist/feature/settings/domain/usecases/add_collab_invite.dart';
+import 'package:wedlist/feature/settings/domain/usecases/load_collab_summary.dart';
+import 'package:wedlist/feature/settings/domain/usecases/remove_partner.dart';
 import 'package:wedlist/feature/settings/presentation/cubit/collab_cubit.dart';
 import 'package:wedlist/feature/settings/presentation/ui/pages/collaborators_editor.dart';
+import 'package:wedlist/injection_container.dart';
 
 // Partner ekleme ve yönetim sayfası
 // TO:DO(kamuran) : partner eklerken mail adresi yazılan kullanıcı partner ekleme özelliğini satın almış mı kontrol et. Satın almamışsa uyar ve ekleme yapma.
@@ -25,6 +29,9 @@ class CollaboratorsPage extends StatelessWidget {
         create: (_) => CollabCubit(
           FirebaseAuth.instance,
           FirebaseFirestore.instance,
+          sl<LoadCollabSummary>(),
+          sl<AddCollabInvite>(),
+          sl<RemovePartner>(),
         )..observe(),
         child: const Padding(
           padding: EdgeInsets.all(16),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wedlist/feature/settings/presentation/cubit/collab_cubit.dart';
+import 'package:wedlist/feature/settings/domain/entities/collab.dart';
 import 'package:wedlist/feature/settings/presentation/ui/atoms/remove_collaborator_button.dart';
 
 class CollaboratorListTile extends StatelessWidget {
