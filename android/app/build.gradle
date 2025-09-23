@@ -14,7 +14,7 @@ def keystorePropertiesFile = rootProject.file('key.properties')
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
-def hasReleaseKeystore = keystoreProperties.containsKey('storeFile')
+def hasReleaseKeystore = keystorePropertiesFile.exists() && keystoreProperties.containsKey('storeFile')
 
 android {
     namespace = "com.kamurandev.wedlist.wedlist"
@@ -42,24 +42,28 @@ android {
     }
 
     signingConfigs {
-        release {
-            if (!hasReleaseKeystore) {
-                throw new GradleException("Release keystore not configured. Create android/key.properties and set storeFile, storePassword, keyAlias, keyPassword.")
+        if (hasReleaseKeystore) {
+            release {
+                storeFile file(keystoreProperties['storeFile'])
+                storePassword keystoreProperties['storePassword']
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
             }
-            storeFile file(keystoreProperties['storeFile'])
-            storePassword keystoreProperties['storePassword']
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
         }
     }
 
     buildTypes {
         release {
-            // Enforce release signing. Do not allow debug fallback for Play Store bundles.
-            signingConfig = signingConfigs.release
+            // Enforce release signing only if keystore is configured.
+            if (hasReleaseKeystore) {
+                signingConfig = signingConfigs.release
+            }
             // For first upload keep minify off to avoid unexpected issues; can enable later for size reduction.
             // minifyEnabled true
             // shrinkResources true
+        }
+        debug {
+            // Use default debug signing config; no release keystore required.
         }
     }
 }
