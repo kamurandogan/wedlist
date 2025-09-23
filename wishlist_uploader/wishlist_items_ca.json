@@ -1,0 +1,800 @@
+[
+    {
+        "id": "ca_k_1",
+        "title": "Cookware Set (Stainless / Nonstick)",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_2",
+        "title": "Cast Iron Skillet",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_3",
+        "title": "Dutch Oven",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_4",
+        "title": "Frying Pan / Sauté Pan",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_5",
+        "title": "Baking Sheet Set",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_6",
+        "title": "Mixing Bowl Set",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_7",
+        "title": "Measuring Cups & Spoons",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_8",
+        "title": "Cutlery / Silverware Set",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_9",
+        "title": "Knife Block / Knife Set",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_10",
+        "title": "Cutting Boards (Multiple)",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_11",
+        "title": "Dinnerware Set (Everyday)",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_12",
+        "title": "Dinnerware Set (Formal)",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_13",
+        "title": "Glassware Set (Drinking)",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_14",
+        "title": "Wine Glasses",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_15",
+        "title": "Mugs / Coffee Cups",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_16",
+        "title": "Coffee Maker (Drip / Single-Serve)",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_17",
+        "title": "Espresso Machine",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_18",
+        "title": "Kettle (Electric)",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_19",
+        "title": "Toaster / Toaster Oven",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_20",
+        "title": "Blender / Smoothie Blender",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_21",
+        "title": "Food Processor",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_22",
+        "title": "Stand Mixer (e.g. KitchenAid)",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_23",
+        "title": "Hand Mixer",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_24",
+        "title": "Slow Cooker / Crockpot",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_25",
+        "title": "Pressure Cooker / Instant Pot",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_26",
+        "title": "Air Fryer",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_27",
+        "title": "Microwave Oven",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_28",
+        "title": "Dish Rack / Drying Mat",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_29",
+        "title": "Storage Container Set (Glass/Plastic)",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_30",
+        "title": "Spice Rack / Organizer",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_31",
+        "title": "Can Opener / Bottle Opener Set",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_32",
+        "title": "Salad Spinner",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_33",
+        "title": "Colander / Strainer",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_34",
+        "title": "Grater / Zester",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_35",
+        "title": "Baking Dish / Casserole (Glass)",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_36",
+        "title": "Cake/Pie/Pan Set",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_37",
+        "title": "Trivets & Pot Holders",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_38",
+        "title": "Table Linens (Tablecloths, Runners)",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_39",
+        "title": "Placemats / Napkin Set",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_k_40",
+        "title": "Serving Utensils & Serving Bowls",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "ca_bed_1",
+        "title": "Bed Frame (Queen/King options)",
+        "category": "Bedroom",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "ca_bed_2",
+        "title": "Quality Mattress (Memory / Hybrid)",
+        "category": "Bedroom",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "ca_bed_3",
+        "title": "Mattress Protector",
+        "category": "Bedroom",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "ca_bed_4",
+        "title": "Sheet Set (Percale / Sateen)",
+        "category": "Bedroom",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "ca_bed_5",
+        "title": "Duvet Insert & Cover",
+        "category": "Bedroom",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "ca_bed_6",
+        "title": "Comforter / Quilt",
+        "category": "Bedroom",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "ca_bed_7",
+        "title": "Pillows (Sleeping & Decorative)",
+        "category": "Bedroom",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "ca_bed_8",
+        "title": "Extra Pillowcases",
+        "category": "Bedroom",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "ca_bed_9",
+        "title": "Throw Blankets",
+        "category": "Bedroom",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "ca_bed_10",
+        "title": "Nightstands / Bedside Tables",
+        "category": "Bedroom",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "ca_bed_11",
+        "title": "Dresser / Chest of Drawers",
+        "category": "Bedroom",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "ca_bed_12",
+        "title": "Wardrobe / Closet Organizer",
+        "category": "Bedroom",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "ca_bed_13",
+        "title": "Full-length Mirror",
+        "category": "Bedroom",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "ca_bed_14",
+        "title": "Bedside Lamps",
+        "category": "Bedroom",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "ca_bed_15",
+        "title": "Headboard (Upholstered / Wood)",
+        "category": "Bedroom",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "ca_lr_1",
+        "title": "Sofa / Sectional",
+        "category": "Living Room",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "ca_lr_2",
+        "title": "Loveseat / Accent Chairs",
+        "category": "Living Room",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "ca_lr_3",
+        "title": "Coffee Table",
+        "category": "Living Room",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "ca_lr_4",
+        "title": "Side Tables / End Tables",
+        "category": "Living Room",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "ca_lr_5",
+        "title": "TV Stand / Media Console",
+        "category": "Living Room",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "ca_lr_6",
+        "title": "Bookshelves / Storage Units",
+        "category": "Living Room",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "ca_lr_7",
+        "title": "Area Rug (Size options)",
+        "category": "Living Room",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "ca_lr_8",
+        "title": "Curtains / Drapes",
+        "category": "Living Room",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "ca_lr_9",
+        "title": "Throw Pillows & Covers",
+        "category": "Living Room",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "ca_lr_10",
+        "title": "Throw Blankets / Throws",
+        "category": "Living Room",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "ca_lr_11",
+        "title": "Wall Art / Prints",
+        "category": "Living Room",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "ca_lr_12",
+        "title": "Floor Lamp / Table Lamps",
+        "category": "Living Room",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "ca_ba_1",
+        "title": "Towel Set (Bath / Hand / Washcloth)",
+        "category": "Bathroom",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "ca_ba_2",
+        "title": "Bathrobe(s)",
+        "category": "Bathroom",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "ca_ba_3",
+        "title": "Bath Mat / Rugs",
+        "category": "Bathroom",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "ca_ba_4",
+        "title": "Shower Curtain & Liner",
+        "category": "Bathroom",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "ca_ba_5",
+        "title": "Toothbrush Holder / Soap Dish",
+        "category": "Bathroom",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "ca_ba_6",
+        "title": "Bathroom Storage / Shelving",
+        "category": "Bathroom",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "ca_ba_7",
+        "title": "Laundry Hamper / Basket",
+        "category": "Bathroom",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "ca_ba_8",
+        "title": "Grooming Set (Towels + Organizer)",
+        "category": "Bathroom",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "ca_e_1",
+        "title": "Refrigerator (Fridge)",
+        "category": "Electronic Goods",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "ca_e_2",
+        "title": "Stove / Range (Electric / Gas)",
+        "category": "Electronic Goods",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "ca_e_3",
+        "title": "Oven (Built-in / Range)",
+        "category": "Electronic Goods",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "ca_e_4",
+        "title": "Microwave",
+        "category": "Electronic Goods",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "ca_e_5",
+        "title": "Dishwasher",
+        "category": "Electronic Goods",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "ca_e_6",
+        "title": "Washer (Washing Machine)",
+        "category": "Electronic Goods",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "ca_e_7",
+        "title": "Dryer",
+        "category": "Electronic Goods",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "ca_e_8",
+        "title": "Vacuum Cleaner (Robot / Upright)",
+        "category": "Electronic Goods",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "ca_e_9",
+        "title": "Small Vacuum / Handheld Vacuum",
+        "category": "Electronic Goods",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "ca_e_10",
+        "title": "Iron & Ironing Board",
+        "category": "Electronic Goods",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "ca_e_11",
+        "title": "Air Purifier",
+        "category": "Electronic Goods",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "ca_e_12",
+        "title": "Smart TV / Streaming Device",
+        "category": "Electronic Goods",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "ca_e_13",
+        "title": "Soundbar / Home Audio",
+        "category": "Electronic Goods",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "ca_e_14",
+        "title": "Router / Mesh Wi-Fi System",
+        "category": "Electronic Goods",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "ca_e_15",
+        "title": "Smart Home Hub / Smart Plugs / Bulbs",
+        "category": "Electronic Goods",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "ca_out_1",
+        "title": "Propane or Gas Grill (BBQ)",
+        "category": "Outdoor",
+        "categoryKey": "outdoor"
+    },
+    {
+        "id": "ca_out_2",
+        "title": "Patio Furniture (Set)",
+        "category": "Outdoor",
+        "categoryKey": "outdoor"
+    },
+    {
+        "id": "ca_out_3",
+        "title": "Outdoor Heater / Fire Pit",
+        "category": "Outdoor",
+        "categoryKey": "outdoor"
+    },
+    {
+        "id": "ca_out_4",
+        "title": "Gardening Tools Starter Kit",
+        "category": "Outdoor",
+        "categoryKey": "outdoor"
+    },
+    {
+        "id": "ca_out_5",
+        "title": "Outdoor Lighting (String Lights)",
+        "category": "Outdoor",
+        "categoryKey": "outdoor"
+    },
+    {
+        "id": "ca_out_6",
+        "title": "Cooler / Ice Chest",
+        "category": "Outdoor",
+        "categoryKey": "outdoor"
+    },
+    {
+        "id": "ca_out_7",
+        "title": "Hammock / Outdoor Lounger",
+        "category": "Outdoor",
+        "categoryKey": "outdoor"
+    },
+    {
+        "id": "ca_en_1",
+        "title": "Coat Rack / Hall Tree",
+        "category": "Entryway",
+        "categoryKey": "entryway"
+    },
+    {
+        "id": "ca_en_2",
+        "title": "Shoe Storage / Shoe Rack",
+        "category": "Entryway",
+        "categoryKey": "entryway"
+    },
+    {
+        "id": "ca_en_3",
+        "title": "Console Table / Entry Table",
+        "category": "Entryway",
+        "categoryKey": "entryway"
+    },
+    {
+        "id": "ca_en_4",
+        "title": "Welcome Mat / Doormat",
+        "category": "Entryway",
+        "categoryKey": "entryway"
+    },
+    {
+        "id": "ca_en_5",
+        "title": "Umbrella Stand",
+        "category": "Entryway",
+        "categoryKey": "entryway"
+    },
+    {
+        "id": "ca_en_6",
+        "title": "Key Hook / Organizer",
+        "category": "Entryway",
+        "categoryKey": "entryway"
+    },
+    {
+        "id": "ca_ho_1",
+        "title": "Home Office Desk",
+        "category": "Home Office",
+        "categoryKey": "home_office"
+    },
+    {
+        "id": "ca_ho_2",
+        "title": "Ergonomic Office Chair",
+        "category": "Home Office",
+        "categoryKey": "home_office"
+    },
+    {
+        "id": "ca_ho_3",
+        "title": "Desk Lamp",
+        "category": "Home Office",
+        "categoryKey": "home_office"
+    },
+    {
+        "id": "ca_ho_4",
+        "title": "Filing Cabinet / Storage",
+        "category": "Home Office",
+        "categoryKey": "home_office"
+    },
+    {
+        "id": "ca_ho_5",
+        "title": "Printer / All-in-One",
+        "category": "Home Office",
+        "categoryKey": "home_office"
+    },
+    {
+        "id": "ca_ho_6",
+        "title": "Monitor / External Display",
+        "category": "Home Office",
+        "categoryKey": "home_office"
+    },
+    {
+        "id": "ca_misc_1",
+        "title": "Tool Kit / Basic Tools",
+        "category": "Miscellaneous",
+        "categoryKey": "miscellaneous"
+    },
+    {
+        "id": "ca_misc_2",
+        "title": "First Aid Kit",
+        "category": "Miscellaneous",
+        "categoryKey": "miscellaneous"
+    },
+    {
+        "id": "ca_misc_3",
+        "title": "Flashlight & Batteries",
+        "category": "Miscellaneous",
+        "categoryKey": "miscellaneous"
+    },
+    {
+        "id": "ca_misc_4",
+        "title": "Photo Frames (Set)",
+        "category": "Miscellaneous",
+        "categoryKey": "miscellaneous"
+    },
+    {
+        "id": "ca_misc_5",
+        "title": "Wall Clock",
+        "category": "Miscellaneous",
+        "categoryKey": "miscellaneous"
+    },
+    {
+        "id": "ca_misc_6",
+        "title": "Decorative Vases / Bowls",
+        "category": "Miscellaneous",
+        "categoryKey": "miscellaneous"
+    },
+    {
+        "id": "ca_misc_7",
+        "title": "Candles & Candle Holders",
+        "category": "Miscellaneous",
+        "categoryKey": "miscellaneous"
+    },
+    {
+        "id": "ca_misc_8",
+        "title": "Storage Bins / Organizers",
+        "category": "Miscellaneous",
+        "categoryKey": "miscellaneous"
+    },
+    {
+        "id": "ca_misc_9",
+        "title": "Laundry Drying Rack",
+        "category": "Miscellaneous",
+        "categoryKey": "miscellaneous"
+    },
+    {
+        "id": "ca_misc_10",
+        "title": "Bathroom Scale",
+        "category": "Miscellaneous",
+        "categoryKey": "miscellaneous"
+    },
+    {
+        "id": "ca_baby_1",
+        "title": "Crib / Bassinet (Optional)",
+        "category": "Baby & Kids",
+        "categoryKey": "baby_kids"
+    },
+    {
+        "id": "ca_baby_2",
+        "title": "Baby Mattress & Protector",
+        "category": "Baby & Kids",
+        "categoryKey": "baby_kids"
+    },
+    {
+        "id": "ca_baby_3",
+        "title": "Stroller",
+        "category": "Baby & Kids",
+        "categoryKey": "baby_kids"
+    },
+    {
+        "id": "ca_baby_4",
+        "title": "Car Seat (Infant / Convertible)",
+        "category": "Baby & Kids",
+        "categoryKey": "baby_kids"
+    },
+    {
+        "id": "ca_baby_5",
+        "title": "High Chair",
+        "category": "Baby & Kids",
+        "categoryKey": "baby_kids"
+    },
+    {
+        "id": "ca_baby_6",
+        "title": "Baby Monitor",
+        "category": "Baby & Kids",
+        "categoryKey": "baby_kids"
+    },
+    {
+        "id": "ca_pet_1",
+        "title": "Pet Bowl Set / Pet Bed",
+        "category": "Pets",
+        "categoryKey": "pets"
+    },
+    {
+        "id": "ca_pet_2",
+        "title": "Pet Carrier / Crate",
+        "category": "Pets",
+        "categoryKey": "pets"
+    },
+    {
+        "id": "ca_pet_3",
+        "title": "Pet Toys / Starter Pack",
+        "category": "Pets",
+        "categoryKey": "pets"
+    },
+    {
+        "id": "ca_services_1",
+        "title": "Gift Cards (Retailers)",
+        "category": "Services & Gift Cards",
+        "categoryKey": "services"
+    },
+    {
+        "id": "ca_services_2",
+        "title": "Home Cleaning Service Gift Certificate",
+        "category": "Services & Gift Cards",
+        "categoryKey": "services"
+    },
+    {
+        "id": "ca_services_3",
+        "title": "Meal Kit Subscription (e.g. HelloFresh)",
+        "category": "Services & Gift Cards",
+        "categoryKey": "services"
+    },
+    {
+        "id": "ca_services_4",
+        "title": "Streaming / Entertainment Subscription (1 year)",
+        "category": "Services & Gift Cards",
+        "categoryKey": "services"
+    },
+    {
+        "id": "ca_services_5",
+        "title": "Travel Fund / Honeymoon Contribution",
+        "category": "Services & Gift Cards",
+        "categoryKey": "services"
+    }
+]

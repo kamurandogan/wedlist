@@ -1,0 +1,290 @@
+[
+    {
+        "id": "k_1",
+        "title": "炊具套装",
+        "category": "厨房",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_2",
+        "title": "餐具套装",
+        "category": "厨房",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_3",
+        "title": "茶具/咖啡具",
+        "category": "厨房",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_4",
+        "title": "烤面包机",
+        "category": "厨房",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_5",
+        "title": "微波炉",
+        "category": "厨房",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_6",
+        "title": "搅拌机/食品加工机",
+        "category": "厨房",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_7",
+        "title": "水壶/电热水壶",
+        "category": "厨房",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_8",
+        "title": "刀具套装",
+        "category": "厨房",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_9",
+        "title": "切菜板",
+        "category": "厨房",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_10",
+        "title": "储物容器",
+        "category": "厨房",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "y_1",
+        "title": "床",
+        "category": "卧室",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_2",
+        "title": "床垫",
+        "category": "卧室",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_3",
+        "title": "床上用品套装",
+        "category": "卧室",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_4",
+        "title": "衣柜",
+        "category": "卧室",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_5",
+        "title": "床头柜",
+        "category": "卧室",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_6",
+        "title": "枕头和毯子",
+        "category": "卧室",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "s_1",
+        "title": "沙发",
+        "category": "客厅",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_2",
+        "title": "茶几",
+        "category": "客厅",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_3",
+        "title": "电视柜",
+        "category": "客厅",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_4",
+        "title": "书架",
+        "category": "客厅",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_5",
+        "title": "地毯",
+        "category": "客厅",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_6",
+        "title": "窗帘",
+        "category": "客厅",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_7",
+        "title": "装饰靠垫",
+        "category": "客厅",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_8",
+        "title": "灯具 / 台灯",
+        "category": "客厅",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "b_1",
+        "title": "浴巾",
+        "category": "浴室",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "b_2",
+        "title": "浴室地垫",
+        "category": "浴室",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "b_3",
+        "title": "淋浴帘",
+        "category": "浴室",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "b_4",
+        "title": "镜子",
+        "category": "浴室",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "b_5",
+        "title": "脏衣篮",
+        "category": "浴室",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "e_1",
+        "title": "冰箱",
+        "category": "电子产品",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_2",
+        "title": "洗衣机",
+        "category": "电子产品",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_3",
+        "title": "洗碗机",
+        "category": "电子产品",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_4",
+        "title": "吸尘器",
+        "category": "电子产品",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_5",
+        "title": "熨斗",
+        "category": "电子产品",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_6",
+        "title": "吹风机",
+        "category": "电子产品",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "h_1",
+        "title": "衣帽架",
+        "category": "门厅 / 玄关",
+        "categoryKey": "hall"
+    },
+    {
+        "id": "h_2",
+        "title": "玄关柜",
+        "category": "门厅 / 玄关",
+        "categoryKey": "hall"
+    },
+    {
+        "id": "h_3",
+        "title": "门口地毯",
+        "category": "门厅 / 玄关",
+        "categoryKey": "hall"
+    },
+    {
+        "id": "h_4",
+        "title": "顶灯",
+        "category": "门厅 / 玄关",
+        "categoryKey": "hall"
+    },
+    {
+        "id": "o_1",
+        "title": "熨衣板",
+        "category": "其他家居用品",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "o_2",
+        "title": "照片框",
+        "category": "其他家居用品",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "o_3",
+        "title": "装饰花瓶",
+        "category": "其他家居用品",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "o_4",
+        "title": "衣架",
+        "category": "其他家居用品",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "o_5",
+        "title": "晾衣架",
+        "category": "其他家居用品",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "o_6",
+        "title": "衣夹",
+        "category": "其他家居用品",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "k_11",
+        "title": "电饭煲",
+        "category": "厨房",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_12",
+        "title": "竹蒸笼",
+        "category": "厨房",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_13",
+        "title": "筷子套装",
+        "category": "厨房",
+        "categoryKey": "kitchen"
+    }
+]

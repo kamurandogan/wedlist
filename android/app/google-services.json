@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "835425852476",
+    "firebase_url": "https://wedlist-bb058-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "wedlist-bb058",
+    "storage_bucket": "wedlist-bb058.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:835425852476:android:91dddf42db3f33f5ebb739",
+        "android_client_info": {
+          "package_name": "com.kamurandev.wedlist.wedlist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "835425852476-ve3ccgjiqb69k9shm67h4g0euae6iqme.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kamurandev.wedlist.wedlist",
+            "certificate_hash": "ff34e994c627001e1e997abbcd169f5feebf778d"
+          }
+        },
+        {
+          "client_id": "835425852476-2sdm5gd1m388jv4k616dgreuq4tfg5uk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyfANJgCOZ0J9o5n6u-eG2S8gysPGG6fA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "835425852476-2sdm5gd1m388jv4k616dgreuq4tfg5uk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "835425852476-p7dc5ghk5tt5tmq3fp4edmplmn35nm5u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.kamurandev.wedlist.wedlist"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

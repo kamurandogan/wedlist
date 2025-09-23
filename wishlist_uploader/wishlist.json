@@ -1,0 +1,39 @@
+{
+  "wishListItems": {
+    "language": "tr",
+    "category": {
+      "kitchen": {
+        "category": "Mutfak",
+        "items": {
+          "item_1": "Mutfak Robotu",
+          "item_2": "Mikser",
+          "item_3": "Kahve Makinesi"
+        }
+      },
+      "living_room": {
+        "category": "Oturma Odası",
+        "items": {
+          "item_1": "Koltuk Takımı",
+          "item_2": "TV Ünitesi",
+          "item_3": "Halı"
+        }
+      },
+      "bedroom": {
+        "category": "Yatak Odası",
+        "items": {
+          "item_1": "Yatak",
+          "item_2": "Yatak Takımı",
+          "item_3": "Yatak Odası Takımı"
+        }
+      },
+      "electronics": {
+        "category": "Elektronik",
+        "items": {
+          "item_1": "Laptop",
+          "item_2": "Akıllı Telefon",
+          "item_3": "Tablet"
+        }
+      }
+    }
+  }
+}

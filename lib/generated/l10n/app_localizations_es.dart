@@ -1,0 +1,250 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for Spanish Castilian (`es`).
+class AppLocalizationsEs extends AppLocalizations {
+  AppLocalizationsEs([String locale = 'es']) : super(locale);
+
+  @override
+  String get appTitle => 'WedList';
+
+  @override
+  String get welcomeMessage => 'Bienvenido a WedList';
+
+  @override
+  String get helloText => 'Hola,';
+
+  @override
+  String get totalPaidTitle => 'Total Pagado';
+
+  @override
+  String get remainingDaysTitle => 'Días Restantes';
+
+  @override
+  String get progressTitle => 'Progreso';
+
+  @override
+  String get settingsTitle => 'Configuración';
+
+  @override
+  String get addPartnerTitle => 'Agregar Pareja';
+
+  @override
+  String get manageSubscriptionTitle => 'Gestionar Suscripción';
+
+  @override
+  String get partnerTitle => 'Pareja';
+
+  @override
+  String get partnerAdded => 'Pareja agregada';
+
+  @override
+  String get partnerRemoved => 'Pareja eliminada';
+
+  @override
+  String get logoutButtonText => 'Cerrar sesión';
+
+  @override
+  String get pendingInvitations => 'Invitaciones Pendientes';
+
+  @override
+  String get pendingText => 'Pendiente';
+
+  @override
+  String get noPartnersText => 'Aún no se han agregado parejas.';
+
+  @override
+  String get changeCountry => 'Cambiar País';
+
+  @override
+  String get addItemTitle => 'Agregar Ítem';
+
+  @override
+  String get priceTitleTextfield => 'Precio';
+
+  @override
+  String get descriptionTitleTextfield => 'Descripción';
+
+  @override
+  String get addPhotoButtonText => 'Agregar Foto';
+
+  @override
+  String get addItemButtonText => 'Agregar';
+
+  @override
+  String get itemAddedSuccess => '¡Ítem agregado con éxito!';
+
+  @override
+  String get itemLoadingButtonText => 'Cargando...';
+
+  @override
+  String get wishListTitle => 'Lista de Deseos';
+
+  @override
+  String get itemsTitle => 'Ítems';
+
+  @override
+  String get saveButtonText => 'Guardar';
+
+  @override
+  String get needCategoryErrorText => 'Se requiere nombre de categoría';
+
+  @override
+  String get categoryUpdatedText => 'Categoría actualizada';
+
+  @override
+  String get categoryCreatedText => 'Categoría creada';
+
+  @override
+  String get completedCategoryText => 'Completado';
+
+  @override
+  String get somethingWentWrongErrorText =>
+      'Algo salió mal. Inténtalo de nuevo.';
+
+  @override
+  String get addCategoryButtonText => 'Agregar Categoría';
+
+  @override
+  String get addCategoryTextfieldHint =>
+      'Ingrese nombre de categoría ej. Cocina';
+
+  @override
+  String get addCategoryTextfieldLabel => 'Nombre de categoría';
+
+  @override
+  String get itemFieldHint => 'Ingrese nombre del ítem ej. Tostadora';
+
+  @override
+  String get itemFieldLabel => 'Ítem';
+
+  @override
+  String get notificationAcceptSuccess => 'Colaboración aceptada';
+
+  @override
+  String get notificationRejectSuccess => 'Solicitud rechazada';
+
+  @override
+  String get deleteItemTitle => 'Eliminar Ítem';
+
+  @override
+  String get deleteItemQuestion =>
+      '¿Eliminar permanentemente este ítem? Esta acción no se puede deshacer.';
+
+  @override
+  String get deleteCancel => 'Cancelar';
+
+  @override
+  String get deleteConfirm => 'Eliminar';
+
+  @override
+  String get deleteItemDone => 'Ítem eliminado';
+
+  @override
+  String get notificationsEmpty => 'Aún no tienes notificaciones';
+
+  @override
+  String get errorPrefix => 'Error:';
+
+  @override
+  String get collabRequestAcceptedTitle =>
+      'Tu solicitud de colaboración fue aceptada';
+
+  @override
+  String get collabRequestRejectedTitle =>
+      'Tu solicitud de colaboración fue rechazada';
+
+  @override
+  String get notificationItemAddedBody => 'Agregado a la lista';
+
+  @override
+  String get notificationItemDeletedBody => 'Eliminado de la lista';
+
+  @override
+  String get notificationItemAddedSuffix => 'añadido';
+
+  @override
+  String get notificationItemDeletedSuffix => 'eliminado';
+
+  @override
+  String get onboardingTitle1 => 'Planifica tu ajuar fácilmente';
+
+  @override
+  String get onboardingBody1 =>
+      'Gestiona todos tus preparativos de boda desde tu teléfono, categoriza tus necesidades y no te pierdas ningún detalle.';
+
+  @override
+  String get onboardingTitle2 => 'Haz el seguimiento junto a tu pareja';
+
+  @override
+  String get onboardingBody2 =>
+      'Trabaja en la misma lista con tu pareja, ve al instante quién compró qué y qué queda, y disfruta avanzando juntos.';
+
+  @override
+  String get onboardingTitle3 => 'Controla tus gastos';
+
+  @override
+  String get onboardingBody3 =>
+      'No excedas tu presupuesto, ve al instante tus gastos totales y por categoría, y haz el seguimiento desde tu móvil.';
+
+  @override
+  String get selectCountryTitle => 'Seleccione su país';
+
+  @override
+  String get collaboratorEmailLabel =>
+      'Agregar colaborador por correo electrónico';
+
+  @override
+  String get partnerFeatureRequired => 'Se requiere la función de pareja';
+
+  @override
+  String get enablePartnerFeatureTitle => 'Habilitar función de pareja';
+
+  @override
+  String get purchaseUnsupported =>
+      'Las compras dentro de la aplicación no son compatibles en este dispositivo o no hay una cuenta de tienda disponible.';
+
+  @override
+  String get purchaseSuccess => 'Compra exitosa';
+
+  @override
+  String get purchaseFailed => 'No se pudo completar la compra';
+
+  @override
+  String get removeAdsTitle => 'Eliminar anuncios';
+
+  @override
+  String get restorePurchasesTitle => 'Restaurar compras';
+
+  @override
+  String get restoringPurchasesMessage => 'Restaurando compras';
+
+  @override
+  String get alreadyHasPartnerError =>
+      'Ya tienes una pareja. Elimina primero a la pareja actual.';
+
+  @override
+  String get userNotFoundError => 'Usuario no encontrado';
+
+  @override
+  String get cannotInviteSelfError => 'No puedes invitarte a ti mismo';
+
+  @override
+  String get targetNotEntitledError =>
+      'El usuario no ha comprado la función de pareja';
+
+  @override
+  String get inviteAlreadyPendingError =>
+      'Ya hay una invitación pendiente para este usuario';
+
+  @override
+  String get genericUserLabel => 'Un usuario';
+
+  @override
+  String collabRequestTitle(Object inviter) {
+    return '$inviter te invitó como colaborador';
+  }
+}

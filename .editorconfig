@@ -1,0 +1,38 @@
+# Flutter / Dart için EditorConfig
+# Bu dosyayı projenin kök dizinine koy (pubspec.yaml ile aynı yere)
+
+root = true
+
+# Tüm dosyalar için varsayılan ayarlar
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+
+# Dart & Flutter dosyaları
+[*.{dart}]
+indent_style = space
+indent_size = 2
+
+# YAML dosyaları (pubspec.yaml, analysis_options.yaml vs.)
+[*.{yaml,yml}]
+indent_style = space
+indent_size = 2
+
+# JSON dosyaları
+[*.json]
+indent_style = space
+indent_size = 2
+
+# Markdown ve dokümantasyon dosyaları
+[*.md]
+trim_trailing_whitespace = false
+insert_final_newline = true
+
+# HTML, CSS, JS gibi web tarafı dosyaları (eğer kullanıyorsan)
+[*.{html,css,js}]
+indent_style = space
+indent_size = 2

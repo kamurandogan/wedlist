@@ -1,0 +1,81 @@
+include: package:very_good_analysis/analysis_options.yaml
+
+analyzer:
+  errors:
+    document_ignores: ignore
+    lines_longer_than_80_chars: ignore
+    public_member_api_docs: ignore
+    one_member_abstracts: ignore
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "build/**"
+  plugins:
+    - dart_code_metrics
+
+linter:
+  rules:
+    prefer_const_constructors: true
+    prefer_const_literals_to_create_immutables: true
+    avoid_print: true
+    unnecessary_this: true
+    prefer_final_fields: true
+    always_use_package_imports: true
+    avoid_relative_lib_imports: true
+    directives_ordering: true
+    unnecessary_await_in_return: true
+
+dart_code_metrics:
+  metrics:
+    cyclomatic-complexity: 10
+    maximum-nesting-level: 4
+    number-of-parameters: 4
+    source-lines-of-code: 50
+  metrics-exclude:
+    - test/**
+    - "**/*.g.dart"
+
+  rules:
+    # Ortak kurallar
+    - no-boolean-literal-compare
+    - no-empty-block
+    - prefer-trailing-comma
+    - prefer-conditional-expressions
+    - avoid-nested-conditional-expressions
+    - avoid-unused-parameters
+    - member-ordering
+
+    # Data katmanı kuralları (UI import yasak)
+    - avoid-importing-ui-packages:
+        custom-message: "❌ Data katmanında UI kodu kullanamazsın. Lütfen 'material' veya 'cupertino' import etme."
+        paths:
+          - lib/feature/data/**
+        banned-packages:
+          - "package:flutter/material.dart"
+          - "package:flutter/cupertino.dart"
+
+    # Domain katmanı kuralları (Data import yasak)
+    - avoid-importing-data-packages:
+        custom-message: "❌ Domain katmanında Data katmanını import edemezsin. Sadece Repository interface kullan."
+        paths:
+          - lib/feature/domain/**
+        banned-packages:
+          - "lib/feature/data/"
+
+    # Presentation katmanı kuralları (Data'ya doğrudan erişim yasak)
+    - avoid-importing-data-directly:
+        custom-message: "❌ Presentation katmanında Data katmanını doğrudan import edemezsin. Domain üzerinden eriş."
+        paths:
+          - lib/feature/presentation/**
+        banned-packages:
+          - "lib/feature/data/"
+
+    # Abstract class uyarısını kapatma (Domain + Data)
+    - unnecessary-abstract-class:
+        enabled: false
+        paths:
+          - lib/feature/domain/**
+          - lib/feature/data/**
+
+  rules-exclude:
+    - test/**

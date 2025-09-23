@@ -1,0 +1,266 @@
+[
+    {
+        "id": "k_1",
+        "title": "Batterie de cuisine",
+        "category": "Cuisine",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_2",
+        "title": "Service de couverts",
+        "category": "Cuisine",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_3",
+        "title": "Service de vaisselle",
+        "category": "Cuisine",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_4",
+        "title": "Cafetière",
+        "category": "Cuisine",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_5",
+        "title": "Grille-pain",
+        "category": "Cuisine",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_6",
+        "title": "Micro-ondes",
+        "category": "Cuisine",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_7",
+        "title": "Mixeur / Robot culinaire",
+        "category": "Cuisine",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_8",
+        "title": "Verres et tasses",
+        "category": "Cuisine",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_9",
+        "title": "Bouilloire",
+        "category": "Cuisine",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_10",
+        "title": "Planche à découper",
+        "category": "Cuisine",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "y_1",
+        "title": "Lit",
+        "category": "Chambre",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_2",
+        "title": "Matelas",
+        "category": "Chambre",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_3",
+        "title": "Parure de lit",
+        "category": "Chambre",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_4",
+        "title": "Armoire",
+        "category": "Chambre",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_5",
+        "title": "Chevet",
+        "category": "Chambre",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_6",
+        "title": "Couettes et oreillers",
+        "category": "Chambre",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "s_1",
+        "title": "Canapé",
+        "category": "Salon",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_2",
+        "title": "Table basse",
+        "category": "Salon",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_3",
+        "title": "Meuble TV",
+        "category": "Salon",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_4",
+        "title": "Bibliothèque",
+        "category": "Salon",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_5",
+        "title": "Tapis",
+        "category": "Salon",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_6",
+        "title": "Rideaux",
+        "category": "Salon",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_7",
+        "title": "Coussins décoratifs",
+        "category": "Salon",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "b_1",
+        "title": "Serviettes de bain",
+        "category": "Salle de bain",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "b_2",
+        "title": "Tapis de bain",
+        "category": "Salle de bain",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "b_3",
+        "title": "Rideau de douche",
+        "category": "Salle de bain",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "b_4",
+        "title": "Miroir",
+        "category": "Salle de bain",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "b_5",
+        "title": "Panier à linge",
+        "category": "Salle de bain",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "e_1",
+        "title": "Réfrigérateur",
+        "category": "Électroménager",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_2",
+        "title": "Lave-linge",
+        "category": "Électroménager",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_3",
+        "title": "Lave-vaisselle",
+        "category": "Électroménager",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_4",
+        "title": "Aspirateur",
+        "category": "Électroménager",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_5",
+        "title": "Fer à repasser",
+        "category": "Électroménager",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_6",
+        "title": "Sèche-cheveux",
+        "category": "Électroménager",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "h_1",
+        "title": "Portemanteau",
+        "category": "Hall / Entrée",
+        "categoryKey": "hall"
+    },
+    {
+        "id": "h_2",
+        "title": "Console",
+        "category": "Hall / Entrée",
+        "categoryKey": "hall"
+    },
+    {
+        "id": "h_3",
+        "title": "Tapis d'entrée",
+        "category": "Hall / Entrée",
+        "categoryKey": "hall"
+    },
+    {
+        "id": "h_4",
+        "title": "Lustre / Plafonnier",
+        "category": "Hall / Entrée",
+        "categoryKey": "hall"
+    },
+    {
+        "id": "o_1",
+        "title": "Table à repasser",
+        "category": "Autres",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "o_2",
+        "title": "Cadres photo",
+        "category": "Autres",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "o_3",
+        "title": "Vase décoratif",
+        "category": "Autres",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "o_4",
+        "title": "Patères / Crochets",
+        "category": "Autres",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "o_5",
+        "title": "Paillasson",
+        "category": "Autres",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "o_6",
+        "title": "Pinces à linge",
+        "category": "Autres",
+        "categoryKey": "other_home_needs"
+    }
+]

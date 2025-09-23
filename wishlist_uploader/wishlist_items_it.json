@@ -1,0 +1,266 @@
+[
+    {
+        "id": "k_1",
+        "title": "Batteria di pentole",
+        "category": "Cucina",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_2",
+        "title": "Servizio di posate",
+        "category": "Cucina",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_3",
+        "title": "Servizio di piatti",
+        "category": "Cucina",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_4",
+        "title": "Macchina da caffè",
+        "category": "Cucina",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_5",
+        "title": "Tostapane",
+        "category": "Cucina",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_6",
+        "title": "Microonde",
+        "category": "Cucina",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_7",
+        "title": "Frullatore / Robot da cucina",
+        "category": "Cucina",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_8",
+        "title": "Bicchieri e tazze",
+        "category": "Cucina",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_9",
+        "title": "Bollitore",
+        "category": "Cucina",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_10",
+        "title": "Tagliere",
+        "category": "Cucina",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "y_1",
+        "title": "Letto",
+        "category": "Camera da letto",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_2",
+        "title": "Materasso",
+        "category": "Camera da letto",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_3",
+        "title": "Completo letto",
+        "category": "Camera da letto",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_4",
+        "title": "Armadio",
+        "category": "Camera da letto",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_5",
+        "title": "Comodino",
+        "category": "Camera da letto",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_6",
+        "title": "Coperte e cuscini",
+        "category": "Camera da letto",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "s_1",
+        "title": "Divano",
+        "category": "Soggiorno",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_2",
+        "title": "Tavolino",
+        "category": "Soggiorno",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_3",
+        "title": "Mobile TV",
+        "category": "Soggiorno",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_4",
+        "title": "Libreria",
+        "category": "Soggiorno",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_5",
+        "title": "Tappeto",
+        "category": "Soggiorno",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_6",
+        "title": "Tende",
+        "category": "Soggiorno",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_7",
+        "title": "Cuscini decorativi",
+        "category": "Soggiorno",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "b_1",
+        "title": "Asciugamani da bagno",
+        "category": "Bagno",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "b_2",
+        "title": "Tappetino da bagno",
+        "category": "Bagno",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "b_3",
+        "title": "Tenda doccia",
+        "category": "Bagno",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "b_4",
+        "title": "Specchio",
+        "category": "Bagno",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "b_5",
+        "title": "Cesto per la biancheria",
+        "category": "Bagno",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "e_1",
+        "title": "Frigorifero",
+        "category": "Elettrodomestici",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_2",
+        "title": "Lavatrice",
+        "category": "Elettrodomestici",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_3",
+        "title": "Lavastoviglie",
+        "category": "Elettrodomestici",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_4",
+        "title": "Aspirapolvere",
+        "category": "Elettrodomestici",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_5",
+        "title": "Ferro da stiro",
+        "category": "Elettrodomestici",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_6",
+        "title": "Asciugacapelli",
+        "category": "Elettrodomestici",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "h_1",
+        "title": "Appendiabiti",
+        "category": "Ingresso",
+        "categoryKey": "hall"
+    },
+    {
+        "id": "h_2",
+        "title": "Consolle",
+        "category": "Ingresso",
+        "categoryKey": "hall"
+    },
+    {
+        "id": "h_3",
+        "title": "Zerbino",
+        "category": "Ingresso",
+        "categoryKey": "hall"
+    },
+    {
+        "id": "h_4",
+        "title": "Lampadario",
+        "category": "Ingresso",
+        "categoryKey": "hall"
+    },
+    {
+        "id": "o_1",
+        "title": "Asse da stiro",
+        "category": "Altri articoli per la casa",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "o_2",
+        "title": "Cornici fotografiche",
+        "category": "Altri articoli per la casa",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "o_3",
+        "title": "Vaso decorativo",
+        "category": "Altri articoli per la casa",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "o_4",
+        "title": "Ganci / Attaccapanni",
+        "category": "Altri articoli per la casa",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "o_5",
+        "title": "Stendibiancheria",
+        "category": "Altri articoli per la casa",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "o_6",
+        "title": "Mollette per il bucato",
+        "category": "Altri articoli per la casa",
+        "categoryKey": "other_home_needs"
+    }
+]

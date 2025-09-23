@@ -1,0 +1,31 @@
+{
+    "flutter": {
+        "platforms": {
+            "android": {
+                "default": {
+                    "projectId": "wedlist-bb058",
+                    "appId": "1:835425852476:android:91dddf42db3f33f5ebb739",
+                    "fileOutput": "android/app/google-services.json"
+                }
+            },
+            "dart": {
+                "lib/firebase_options.dart": {
+                    "projectId": "wedlist-bb058",
+                    "configurations": {
+                        "android": "1:835425852476:android:91dddf42db3f33f5ebb739",
+                        "ios": "1:835425852476:ios:4f4af773a2a63d9aebb739",
+                        "macos": "1:835425852476:ios:4f4af773a2a63d9aebb739",
+                        "web": "1:835425852476:web:6e9ca783d3af5ac2ebb739",
+                        "windows": "1:835425852476:web:7efb386fb68ccb5febb739"
+                    }
+                }
+            }
+        }
+    },
+    "firestore": {
+        "rules": "firestore.rules"
+    },
+    "storage": {
+        "rules": "storage.rules"
+    }
+}

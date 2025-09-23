@@ -1,0 +1,278 @@
+[
+  {
+    "id": "k_1",
+    "title": "Juego de Ollas y Sartenes",
+    "category": "Cocina",
+    "categoryKey": "kitchen"
+  },
+  {
+    "id": "k_2",
+    "title": "Cubertería",
+    "category": "Cocina",
+    "categoryKey": "kitchen"
+  },
+  {
+    "id": "k_3",
+    "title": "Vajilla",
+    "category": "Cocina",
+    "categoryKey": "kitchen"
+  },
+  {
+    "id": "k_4",
+    "title": "Cafetera",
+    "category": "Cocina",
+    "categoryKey": "kitchen"
+  },
+  {
+    "id": "k_5",
+    "title": "Tostadora",
+    "category": "Cocina",
+    "categoryKey": "kitchen"
+  },
+  {
+    "id": "k_6",
+    "title": "Microondas",
+    "category": "Cocina",
+    "categoryKey": "kitchen"
+  },
+  {
+    "id": "k_7",
+    "title": "Licuadora / Robot de Cocina",
+    "category": "Cocina",
+    "categoryKey": "kitchen"
+  },
+  {
+    "id": "k_8",
+    "title": "Vasos y Tazas",
+    "category": "Cocina",
+    "categoryKey": "kitchen"
+  },
+  {
+    "id": "k_9",
+    "title": "Hervidor Eléctrico",
+    "category": "Cocina",
+    "categoryKey": "kitchen"
+  },
+  {
+    "id": "k_10",
+    "title": "Tabla de Cortar",
+    "category": "Cocina",
+    "categoryKey": "kitchen"
+  },
+
+  {
+    "id": "y_1",
+    "title": "Cama",
+    "category": "Dormitorio",
+    "categoryKey": "bedroom"
+  },
+  {
+    "id": "y_2",
+    "title": "Colchón",
+    "category": "Dormitorio",
+    "categoryKey": "bedroom"
+  },
+  {
+    "id": "y_3",
+    "title": "Ropa de Cama",
+    "category": "Dormitorio",
+    "categoryKey": "bedroom"
+  },
+  {
+    "id": "y_4",
+    "title": "Armario",
+    "category": "Dormitorio",
+    "categoryKey": "bedroom"
+  },
+  {
+    "id": "y_5",
+    "title": "Mesita de Noche",
+    "category": "Dormitorio",
+    "categoryKey": "bedroom"
+  },
+  {
+    "id": "y_6",
+    "title": "Almohadas y Mantas",
+    "category": "Dormitorio",
+    "categoryKey": "bedroom"
+  },
+
+  {
+    "id": "s_1",
+    "title": "Sofá",
+    "category": "Sala de Estar",
+    "categoryKey": "living_room"
+  },
+  {
+    "id": "s_2",
+    "title": "Mesa de Centro",
+    "category": "Sala de Estar",
+    "categoryKey": "living_room"
+  },
+  {
+    "id": "s_3",
+    "title": "Mueble de TV",
+    "category": "Sala de Estar",
+    "categoryKey": "living_room"
+  },
+  {
+    "id": "s_4",
+    "title": "Estantería / Librería",
+    "category": "Sala de Estar",
+    "categoryKey": "living_room"
+  },
+  {
+    "id": "s_5",
+    "title": "Alfombra",
+    "category": "Sala de Estar",
+    "categoryKey": "living_room"
+  },
+  {
+    "id": "s_6",
+    "title": "Cortinas",
+    "category": "Sala de Estar",
+    "categoryKey": "living_room"
+  },
+  {
+    "id": "s_7",
+    "title": "Cojines Decorativos",
+    "category": "Sala de Estar",
+    "categoryKey": "living_room"
+  },
+  {
+    "id": "s_8",
+    "title": "Lámparas y Iluminación",
+    "category": "Sala de Estar",
+    "categoryKey": "living_room"
+  },
+
+  {
+    "id": "b_1",
+    "title": "Toallas de Baño",
+    "category": "Baño",
+    "categoryKey": "bathroom"
+  },
+  {
+    "id": "b_2",
+    "title": "Alfombra de Baño",
+    "category": "Baño",
+    "categoryKey": "bathroom"
+  },
+  {
+    "id": "b_3",
+    "title": "Cortina de Ducha",
+    "category": "Baño",
+    "categoryKey": "bathroom"
+  },
+  {
+    "id": "b_4",
+    "title": "Espejo",
+    "category": "Baño",
+    "categoryKey": "bathroom"
+  },
+  {
+    "id": "b_5",
+    "title": "Cesto de Ropa",
+    "category": "Baño",
+    "categoryKey": "bathroom"
+  },
+
+  {
+    "id": "e_1",
+    "title": "Refrigerador",
+    "category": "Electrónica",
+    "categoryKey": "electronic_goods"
+  },
+  {
+    "id": "e_2",
+    "title": "Lavadora",
+    "category": "Electrónica",
+    "categoryKey": "electronic_goods"
+  },
+  {
+    "id": "e_3",
+    "title": "Lavavajillas",
+    "category": "Electrónica",
+    "categoryKey": "electronic_goods"
+  },
+  {
+    "id": "e_4",
+    "title": "Aspiradora",
+    "category": "Electrónica",
+    "categoryKey": "electronic_goods"
+  },
+  {
+    "id": "e_5",
+    "title": "Plancha",
+    "category": "Electrónica",
+    "categoryKey": "electronic_goods"
+  },
+  {
+    "id": "e_6",
+    "title": "Secador de Pelo",
+    "category": "Electrónica",
+    "categoryKey": "electronic_goods"
+  },
+
+  {
+    "id": "h_1",
+    "title": "Perchero",
+    "category": "Hall / Entrada",
+    "categoryKey": "hall"
+  },
+  {
+    "id": "h_2",
+    "title": "Aparador",
+    "category": "Hall / Entrada",
+    "categoryKey": "hall"
+  },
+  {
+    "id": "h_3",
+    "title": "Alfombra de Entrada",
+    "category": "Hall / Entrada",
+    "categoryKey": "hall"
+  },
+  {
+    "id": "h_4",
+    "title": "Lámpara de Techo",
+    "category": "Hall / Entrada",
+    "categoryKey": "hall"
+  },
+
+  {
+    "id": "o_1",
+    "title": "Tabla de Planchar",
+    "category": "Otros Artículos del Hogar",
+    "categoryKey": "other_home_needs"
+  },
+  {
+    "id": "o_2",
+    "title": "Marcos de Fotos",
+    "category": "Otros Artículos del Hogar",
+    "categoryKey": "other_home_needs"
+  },
+  {
+    "id": "o_3",
+    "title": "Jarrones Decorativos",
+    "category": "Otros Artículos del Hogar",
+    "categoryKey": "other_home_needs"
+  },
+  {
+    "id": "o_4",
+    "title": "Ganchos / Perchas",
+    "category": "Otros Artículos del Hogar",
+    "categoryKey": "other_home_needs"
+  },
+  {
+    "id": "o_5",
+    "title": "Tendedero de Ropa",
+    "category": "Otros Artículos del Hogar",
+    "categoryKey": "other_home_needs"
+  },
+  {
+    "id": "o_6",
+    "title": "Pinzas de Ropa",
+    "category": "Otros Artículos del Hogar",
+    "categoryKey": "other_home_needs"
+  }
+]

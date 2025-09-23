@@ -1,0 +1,205 @@
+{
+  "generatedAt": "2025-09-13T10:49:53.063Z",
+  "expectedCategories": [
+    "kitchen",
+    "bedroom",
+    "living_room",
+    "bathroom",
+    "electronic_goods",
+    "hall",
+    "other_home_needs"
+  ],
+  "countries": {
+    "FR": {
+      "total": 44,
+      "counts": {
+        "kitchen": 10,
+        "bedroom": 6,
+        "living_room": 7,
+        "bathroom": 5,
+        "electronic_goods": 6,
+        "hall": 4,
+        "other_home_needs": 6
+      },
+      "missing": [],
+      "duplicates": [],
+      "extraCategories": []
+    },
+    "IT": {
+      "total": 44,
+      "counts": {
+        "kitchen": 10,
+        "bedroom": 6,
+        "living_room": 7,
+        "bathroom": 5,
+        "electronic_goods": 6,
+        "hall": 4,
+        "other_home_needs": 6
+      },
+      "missing": [],
+      "duplicates": [],
+      "extraCategories": []
+    },
+    "NL": {
+      "total": 45,
+      "counts": {
+        "kitchen": 10,
+        "bedroom": 6,
+        "living_room": 8,
+        "bathroom": 5,
+        "electronic_goods": 6,
+        "hall": 4,
+        "other_home_needs": 6
+      },
+      "missing": [],
+      "duplicates": [],
+      "extraCategories": []
+    },
+    "PT": {
+      "total": 45,
+      "counts": {
+        "kitchen": 10,
+        "bedroom": 6,
+        "living_room": 8,
+        "bathroom": 5,
+        "electronic_goods": 6,
+        "hall": 4,
+        "other_home_needs": 6
+      },
+      "missing": [],
+      "duplicates": [],
+      "extraCategories": []
+    },
+    "CN": {
+      "total": 45,
+      "counts": {
+        "kitchen": 10,
+        "bedroom": 6,
+        "living_room": 8,
+        "bathroom": 5,
+        "electronic_goods": 6,
+        "hall": 4,
+        "other_home_needs": 6
+      },
+      "missing": [],
+      "duplicates": [],
+      "extraCategories": []
+    },
+    "IN": {
+      "total": 44,
+      "counts": {
+        "kitchen": 10,
+        "bedroom": 5,
+        "living_room": 8,
+        "bathroom": 5,
+        "electronic_goods": 6,
+        "hall": 4,
+        "other_home_needs": 6
+      },
+      "missing": [],
+      "duplicates": [],
+      "extraCategories": []
+    }
+  },
+  "stats": {
+    "kitchen": {
+      "min": 10,
+      "max": 10,
+      "avg": 10,
+      "median": 10,
+      "values": [
+        10,
+        10,
+        10,
+        10,
+        10,
+        10
+      ]
+    },
+    "bedroom": {
+      "min": 5,
+      "max": 6,
+      "avg": 5.83,
+      "median": 6,
+      "values": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        5
+      ]
+    },
+    "living_room": {
+      "min": 7,
+      "max": 8,
+      "avg": 7.67,
+      "median": 8,
+      "values": [
+        7,
+        7,
+        8,
+        8,
+        8,
+        8
+      ]
+    },
+    "bathroom": {
+      "min": 5,
+      "max": 5,
+      "avg": 5,
+      "median": 5,
+      "values": [
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ]
+    },
+    "electronic_goods": {
+      "min": 6,
+      "max": 6,
+      "avg": 6,
+      "median": 6,
+      "values": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ]
+    },
+    "hall": {
+      "min": 4,
+      "max": 4,
+      "avg": 4,
+      "median": 4,
+      "values": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ]
+    },
+    "other_home_needs": {
+      "min": 6,
+      "max": 6,
+      "avg": 6,
+      "median": 6,
+      "values": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ]
+    }
+  },
+  "warnings": []
+}

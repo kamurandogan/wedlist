@@ -1,0 +1,284 @@
+[
+    {
+        "id": "k_1",
+        "title": "Pannenset",
+        "category": "Keuken",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_2",
+        "title": "Bestekset",
+        "category": "Keuken",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_3",
+        "title": "Servies",
+        "category": "Keuken",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_4",
+        "title": "Koffiezetapparaat",
+        "category": "Keuken",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_5",
+        "title": "Broodrooster",
+        "category": "Keuken",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_6",
+        "title": "Magnetron",
+        "category": "Keuken",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_7",
+        "title": "Blender / Keukenmachine",
+        "category": "Keuken",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_8",
+        "title": "Glazen en mokken",
+        "category": "Keuken",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_9",
+        "title": "Waterkoker",
+        "category": "Keuken",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_10",
+        "title": "Snijplank",
+        "category": "Keuken",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "y_1",
+        "title": "Bed",
+        "category": "Slaapkamer",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_2",
+        "title": "Matras",
+        "category": "Slaapkamer",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_3",
+        "title": "Beddengoed",
+        "category": "Slaapkamer",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_4",
+        "title": "Kledingkast",
+        "category": "Slaapkamer",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_5",
+        "title": "Nachtkastje",
+        "category": "Slaapkamer",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_6",
+        "title": "Dekens en kussens",
+        "category": "Slaapkamer",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "s_1",
+        "title": "Bankstel",
+        "category": "Woonkamer",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_2",
+        "title": "Salontafel",
+        "category": "Woonkamer",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_3",
+        "title": "TV-meubel",
+        "category": "Woonkamer",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_4",
+        "title": "Boekenkast",
+        "category": "Woonkamer",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_5",
+        "title": "Vloerkleed",
+        "category": "Woonkamer",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_6",
+        "title": "Gordijnen",
+        "category": "Woonkamer",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_7",
+        "title": "Decoratieve kussens",
+        "category": "Woonkamer",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_8",
+        "title": "Lampen en verlichting",
+        "category": "Woonkamer",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "b_1",
+        "title": "Badhanddoeken",
+        "category": "Badkamer",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "b_2",
+        "title": "Badmat",
+        "category": "Badkamer",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "b_3",
+        "title": "Douchegordijn",
+        "category": "Badkamer",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "b_4",
+        "title": "Spiegel",
+        "category": "Badkamer",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "b_5",
+        "title": "Wasmand",
+        "category": "Badkamer",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "e_1",
+        "title": "Koelkast",
+        "category": "Elektronica",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_2",
+        "title": "Wasmachine",
+        "category": "Elektronica",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_3",
+        "title": "Vaatwasser",
+        "category": "Elektronica",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_4",
+        "title": "Stofzuiger",
+        "category": "Elektronica",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_5",
+        "title": "Strijkijzer",
+        "category": "Elektronica",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_6",
+        "title": "Föhn",
+        "category": "Elektronica",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "h_1",
+        "title": "Kapstok",
+        "category": "Hal/Entree",
+        "categoryKey": "hall"
+    },
+    {
+        "id": "h_2",
+        "title": "Sidetable",
+        "category": "Hal/Entree",
+        "categoryKey": "hall"
+    },
+    {
+        "id": "h_3",
+        "title": "Deurmat",
+        "category": "Hal/Entree",
+        "categoryKey": "hall"
+    },
+    {
+        "id": "h_4",
+        "title": "Plafondlamp",
+        "category": "Hal/Entree",
+        "categoryKey": "hall"
+    },
+    {
+        "id": "o_1",
+        "title": "Strijkplank",
+        "category": "Overige huishoudelijke artikelen",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "o_2",
+        "title": "Fotolijsten",
+        "category": "Overige huishoudelijke artikelen",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "o_3",
+        "title": "Decoratieve vaas",
+        "category": "Overige huishoudelijke artikelen",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "o_4",
+        "title": "Haken / Kapstokhaken",
+        "category": "Overige huishoudelijke artikelen",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "o_5",
+        "title": "Wasrek",
+        "category": "Overige huishoudelijke artikelen",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "o_6",
+        "title": "Wasknijpers",
+        "category": "Overige huishoudelijke artikelen",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "k_11",
+        "title": "Kaasschaaf",
+        "category": "Keuken",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_12",
+        "title": "Pannenkoekenpan",
+        "category": "Keuken",
+        "categoryKey": "kitchen"
+    }
+]

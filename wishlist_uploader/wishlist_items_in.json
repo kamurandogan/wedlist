@@ -1,0 +1,284 @@
+[
+  {
+    "id": "k_1",
+    "title": "कुकवेयर सेट",
+    "category": "रसोई",
+    "categoryKey": "kitchen"
+  },
+  {
+    "id": "k_2",
+    "title": "डिनरवेयर सेट",
+    "category": "रसोई",
+    "categoryKey": "kitchen"
+  },
+  {
+    "id": "k_3",
+    "title": "कटलरी सेट",
+    "category": "रसोई",
+    "categoryKey": "kitchen"
+  },
+  {
+    "id": "k_4",
+    "title": "कॉफी/टी मग सेट",
+    "category": "रसोई",
+    "categoryKey": "kitchen"
+  },
+  {
+    "id": "k_5",
+    "title": "मिक्सर / ब्लेंडर",
+    "category": "रसोई",
+    "categoryKey": "kitchen"
+  },
+  {
+    "id": "k_6",
+    "title": "फूड प्रोसेसर",
+    "category": "रसोई",
+    "categoryKey": "kitchen"
+  },
+  {
+    "id": "k_7",
+    "title": "इलेक्ट्रिक केटल",
+    "category": "रसोई",
+    "categoryKey": "kitchen"
+  },
+  {
+    "id": "k_8",
+    "title": "चाकू सेट",
+    "category": "रसोई",
+    "categoryKey": "kitchen"
+  },
+  {
+    "id": "k_9",
+    "title": "कटिंग बोर्ड",
+    "category": "रसोई",
+    "categoryKey": "kitchen"
+  },
+  {
+    "id": "k_10",
+    "title": "स्टोरेज कंटेनर",
+    "category": "रसोई",
+    "categoryKey": "kitchen"
+  },
+  {
+    "id": "y_1",
+    "title": "बेड",
+    "category": "बेडरूम",
+    "categoryKey": "bedroom"
+  },
+  {
+    "id": "y_2",
+    "title": "बेडिंग सेट",
+    "category": "बेडरूम",
+    "categoryKey": "bedroom"
+  },
+  {
+    "id": "y_3",
+    "title": "वार्डरोब",
+    "category": "बेडरूम",
+    "categoryKey": "bedroom"
+  },
+  {
+    "id": "y_4",
+    "title": "बेडसाइड टेबल",
+    "category": "बेडरूम",
+    "categoryKey": "bedroom"
+  },
+  {
+    "id": "y_5",
+    "title": "पिलो और ब्लैंकेट",
+    "category": "बेडरूम",
+    "categoryKey": "bedroom"
+  },
+  {
+    "id": "s_1",
+    "title": "सोफा सेट",
+    "category": "लिविंग रूम",
+    "categoryKey": "living_room"
+  },
+  {
+    "id": "s_2",
+    "title": "टीवी स्टैंड",
+    "category": "लिविंग रूम",
+    "categoryKey": "living_room"
+  },
+  {
+    "id": "s_3",
+    "title": "कॉफी टेबल",
+    "category": "लिविंग रूम",
+    "categoryKey": "living_room"
+  },
+  {
+    "id": "s_4",
+    "title": "बुकशेल्फ़",
+    "category": "लिविंग रूम",
+    "categoryKey": "living_room"
+  },
+  {
+    "id": "s_5",
+    "title": "कालीन",
+    "category": "लिविंग रूम",
+    "categoryKey": "living_room"
+  },
+  {
+    "id": "s_6",
+    "title": "परदे",
+    "category": "लिविंग रूम",
+    "categoryKey": "living_room"
+  },
+  {
+    "id": "s_7",
+    "title": "सजावटी तकिए",
+    "category": "लिविंग रूम",
+    "categoryKey": "living_room"
+  },
+  {
+    "id": "s_8",
+    "title": "लाइट / लैंप",
+    "category": "लिविंग रूम",
+    "categoryKey": "living_room"
+  },
+  {
+    "id": "b_1",
+    "title": "तौलिया",
+    "category": "बाथरूम",
+    "categoryKey": "bathroom"
+  },
+  {
+    "id": "b_2",
+    "title": "बाथरूम मैट",
+    "category": "बाथरूम",
+    "categoryKey": "bathroom"
+  },
+  {
+    "id": "b_3",
+    "title": "शावर पर्दा",
+    "category": "बाथरूम",
+    "categoryKey": "bathroom"
+  },
+  {
+    "id": "b_4",
+    "title": "दर्पण",
+    "category": "बाथरूम",
+    "categoryKey": "bathroom"
+  },
+  {
+    "id": "b_5",
+    "title": "कचरा डिब्बा",
+    "category": "बाथरूम",
+    "categoryKey": "bathroom"
+  },
+  {
+    "id": "e_1",
+    "title": "फ्रिज",
+    "category": "इलेक्ट्रॉनिक सामान",
+    "categoryKey": "electronic_goods"
+  },
+  {
+    "id": "e_2",
+    "title": "वॉशिंग मशीन",
+    "category": "इलेक्ट्रॉनिक सामान",
+    "categoryKey": "electronic_goods"
+  },
+  {
+    "id": "e_3",
+    "title": "डिशवॉशर",
+    "category": "इलेक्ट्रॉनिक सामान",
+    "categoryKey": "electronic_goods"
+  },
+  {
+    "id": "e_4",
+    "title": "वैक्यूम क्लीनर",
+    "category": "इलेक्ट्रॉनिक सामान",
+    "categoryKey": "electronic_goods"
+  },
+  {
+    "id": "e_5",
+    "title": "इस्त्री",
+    "category": "इलेक्ट्रॉनिक सामान",
+    "categoryKey": "electronic_goods"
+  },
+  {
+    "id": "e_6",
+    "title": "हेयर ड्रायर",
+    "category": "इलेक्ट्रॉनिक सामान",
+    "categoryKey": "electronic_goods"
+  },
+  {
+    "id": "h_1",
+    "title": "कोट रैक",
+    "category": "हॉल / एंट्री",
+    "categoryKey": "hall"
+  },
+  {
+    "id": "h_2",
+    "title": "एंट्री टेबल",
+    "category": "हॉल / एंट्री",
+    "categoryKey": "hall"
+  },
+  {
+    "id": "h_3",
+    "title": "दरवाज़े का मैट",
+    "category": "हॉल / एंट्री",
+    "categoryKey": "hall"
+  },
+  {
+    "id": "h_4",
+    "title": "लाइट फिक्स्चर",
+    "category": "हॉल / एंट्री",
+    "categoryKey": "hall"
+  },
+  {
+    "id": "o_1",
+    "title": "इस्त्री बोर्ड",
+    "category": "अन्य घरेलू आवश्यकताएँ",
+    "categoryKey": "other_home_needs"
+  },
+  {
+    "id": "o_2",
+    "title": "फोटो फ्रेम",
+    "category": "अन्य घरेलू आवश्यकताएँ",
+    "categoryKey": "other_home_needs"
+  },
+  {
+    "id": "o_3",
+    "title": "सजावटी फूलदान",
+    "category": "अन्य घरेलू आवश्यकताएँ",
+    "categoryKey": "other_home_needs"
+  },
+  {
+    "id": "o_4",
+    "title": "कपड़े के हैंगर",
+    "category": "अन्य घरेलू आवश्यकताएँ",
+    "categoryKey": "other_home_needs"
+  },
+  {
+    "id": "o_5",
+    "title": "कपड़े सुखाने की रैक",
+    "category": "अन्य घरेलू आवश्यकताएँ",
+    "categoryKey": "other_home_needs"
+  },
+  {
+    "id": "o_6",
+    "title": "कपड़े क्लिप",
+    "category": "अन्य घरेलू आवश्यकताएँ",
+    "categoryKey": "other_home_needs"
+  },
+  {
+    "id": "k_11",
+    "title": "प्रेशर कुकर",
+    "category": "रसोई",
+    "categoryKey": "kitchen"
+  },
+  {
+    "id": "k_12",
+    "title": "मसाला डब्बा",
+    "category": "रसोई",
+    "categoryKey": "kitchen"
+  },
+  {
+    "id": "k_13",
+    "title": "तवा (रोटी/दोसाई पैन)",
+    "category": "रसोई",
+    "categoryKey": "kitchen"
+  }
+]

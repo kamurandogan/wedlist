@@ -1,0 +1,186 @@
+[
+  {
+    "id": "k_1",
+    "title": "Kochgeschirr-Set",
+    "category": "Küche",
+    "categoryKey": "kitchen"
+  },
+  {
+    "id": "k_2",
+    "title": "Besteck-Set",
+    "category": "Küche",
+    "categoryKey": "kitchen"
+  },
+  {
+    "id": "k_3",
+    "title": "Geschirr-Set",
+    "category": "Küche",
+    "categoryKey": "kitchen"
+  },
+  {
+    "id": "k_4",
+    "title": "Kaffeemaschine",
+    "category": "Küche",
+    "categoryKey": "kitchen"
+  },
+  {
+    "id": "k_5",
+    "title": "Toaster",
+    "category": "Küche",
+    "categoryKey": "kitchen"
+  },
+  {
+    "id": "k_6",
+    "title": "Mikrowelle",
+    "category": "Küche",
+    "categoryKey": "kitchen"
+  },
+  {
+    "id": "k_7",
+    "title": "Töpfe und Pfannen",
+    "category": "Küche",
+    "categoryKey": "kitchen"
+  },
+  {
+    "id": "k_8",
+    "title": "Gläser-Set",
+    "category": "Küche",
+    "categoryKey": "kitchen"
+  },
+  {
+    "id": "k_9",
+    "title": "Küchenmaschine",
+    "category": "Küche",
+    "categoryKey": "kitchen"
+  },
+
+  {
+    "id": "y_1",
+    "title": "Bett",
+    "category": "Schlafzimmer",
+    "categoryKey": "bedroom"
+  },
+  {
+    "id": "y_2",
+    "title": "Matratze",
+    "category": "Schlafzimmer",
+    "categoryKey": "bedroom"
+  },
+  {
+    "id": "y_3",
+    "title": "Bettwäsche-Set",
+    "category": "Schlafzimmer",
+    "categoryKey": "bedroom"
+  },
+  {
+    "id": "y_4",
+    "title": "Kleiderschrank",
+    "category": "Schlafzimmer",
+    "categoryKey": "bedroom"
+  },
+  {
+    "id": "y_5",
+    "title": "Nachttisch",
+    "category": "Schlafzimmer",
+    "categoryKey": "bedroom"
+  },
+  {
+    "id": "y_6",
+    "title": "Bettdecke und Kissen",
+    "category": "Schlafzimmer",
+    "categoryKey": "bedroom"
+  },
+
+  {
+    "id": "s_1",
+    "title": "Sofa",
+    "category": "Wohnzimmer",
+    "categoryKey": "living_room"
+  },
+  {
+    "id": "s_2",
+    "title": "Wohnzimmertisch",
+    "category": "Wohnzimmer",
+    "categoryKey": "living_room"
+  },
+  {
+    "id": "s_3",
+    "title": "Fernseher",
+    "category": "Wohnzimmer",
+    "categoryKey": "living_room"
+  },
+  {
+    "id": "s_4",
+    "title": "Fernsehschrank",
+    "category": "Wohnzimmer",
+    "categoryKey": "living_room"
+  },
+  {
+    "id": "s_5",
+    "title": "Regal",
+    "category": "Wohnzimmer",
+    "categoryKey": "living_room"
+  },
+  {
+    "id": "s_6",
+    "title": "Teppich",
+    "category": "Wohnzimmer",
+    "categoryKey": "living_room"
+  },
+
+  {
+    "id": "b_1",
+    "title": "Handtücher-Set",
+    "category": "Badezimmer",
+    "categoryKey": "bathroom"
+  },
+  {
+    "id": "b_2",
+    "title": "Duschvorhang",
+    "category": "Badezimmer",
+    "categoryKey": "bathroom"
+  },
+  {
+    "id": "b_3",
+    "title": "Badezimmer-Regal",
+    "category": "Badezimmer",
+    "categoryKey": "bathroom"
+  },
+  {
+    "id": "b_4",
+    "title": "Spiegel",
+    "category": "Badezimmer",
+    "categoryKey": "bathroom"
+  },
+
+  {
+    "id": "e_1",
+    "title": "Kühlschrank",
+    "category": "Elektrogeräte",
+    "categoryKey": "electronic_goods"
+  },
+  {
+    "id": "e_2",
+    "title": "Waschmaschine",
+    "category": "Elektrogeräte",
+    "categoryKey": "electronic_goods"
+  },
+  {
+    "id": "e_3",
+    "title": "Geschirrspüler",
+    "category": "Elektrogeräte",
+    "categoryKey": "electronic_goods"
+  },
+  {
+    "id": "e_4",
+    "title": "Staubsauger",
+    "category": "Elektrogeräte",
+    "categoryKey": "electronic_goods"
+  },
+  {
+    "id": "e_5",
+    "title": "Bügeleisen",
+    "category": "Elektrogeräte",
+    "categoryKey": "electronic_goods"
+  }
+]

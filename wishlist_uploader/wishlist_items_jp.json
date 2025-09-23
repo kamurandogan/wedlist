@@ -1,0 +1,260 @@
+[
+    {
+        "id": "k_1",
+        "title": "炊飯器 (ライス クッカー)",
+        "category": "キッチン",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_2",
+        "title": "電気ケトル",
+        "category": "キッチン",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_3",
+        "title": "急須 (ティーポット)",
+        "category": "キッチン",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_4",
+        "title": "湯のみセット (お茶用カップ)",
+        "category": "キッチン",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_5",
+        "title": "どんぶり鉢セット",
+        "category": "キッチン",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_6",
+        "title": "箸セット (家族用)",
+        "category": "キッチン",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_7",
+        "title": "寿司桶 (すしおけ)",
+        "category": "キッチン",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_8",
+        "title": "鍋 (土鍋・しゃぶしゃぶ鍋)",
+        "category": "キッチン",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_9",
+        "title": "漆器 (お椀セット)",
+        "category": "キッチン",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_10",
+        "title": "酒器セット (徳利とお猪口)",
+        "category": "キッチン",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_11",
+        "title": "包丁セット",
+        "category": "キッチン",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_12",
+        "title": "まな板",
+        "category": "キッチン",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "b_1",
+        "title": "敷布団 (しきぶとん)",
+        "category": "寝室",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "b_2",
+        "title": "掛け布団 (かけぶとん)",
+        "category": "寝室",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "b_3",
+        "title": "毛布",
+        "category": "寝室",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "b_4",
+        "title": "枕 (複数)",
+        "category": "寝室",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "b_5",
+        "title": "座布団",
+        "category": "寝室",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "b_6",
+        "title": "布団カバー & シーツ",
+        "category": "寝室",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "b_7",
+        "title": "畳ベッド or ベッドフレーム",
+        "category": "寝室",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "l_1",
+        "title": "こたつ (ヒーター付きテーブル)",
+        "category": "リビングルーム",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "l_2",
+        "title": "座椅子",
+        "category": "リビングルーム",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "l_3",
+        "title": "畳マット",
+        "category": "リビングルーム",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "l_4",
+        "title": "障子 (和紙のスライドドア)",
+        "category": "リビングルーム",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "l_5",
+        "title": "屏風 (びょうぶ・パーテーション)",
+        "category": "リビングルーム",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "l_6",
+        "title": "掛け軸 (かけじく)",
+        "category": "リビングルーム",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "l_7",
+        "title": "生け花用花瓶",
+        "category": "リビングルーム",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "e_1",
+        "title": "冷蔵庫",
+        "category": "電化製品",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_2",
+        "title": "洗濯機",
+        "category": "電化製品",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_3",
+        "title": "電子レンジ",
+        "category": "電化製品",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_4",
+        "title": "掃除機",
+        "category": "電化製品",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_5",
+        "title": "エアコン",
+        "category": "電化製品",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_6",
+        "title": "テレビ",
+        "category": "電化製品",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "ba_1",
+        "title": "バスタオル (複数)",
+        "category": "バスルーム",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "ba_2",
+        "title": "ハンドタオル",
+        "category": "バスルーム",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "ba_3",
+        "title": "石鹸置き",
+        "category": "バスルーム",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "ba_4",
+        "title": "バスチェア & 洗面器",
+        "category": "バスルーム",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "ba_5",
+        "title": "風呂桶 (おけ)",
+        "category": "バスルーム",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "ba_6",
+        "title": "スリッパ",
+        "category": "バスルーム",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "o_1",
+        "title": "掛時計",
+        "category": "その他",
+        "categoryKey": "other"
+    },
+    {
+        "id": "o_2",
+        "title": "傘立て",
+        "category": "その他",
+        "categoryKey": "other"
+    },
+    {
+        "id": "o_3",
+        "title": "靴箱",
+        "category": "その他",
+        "categoryKey": "other"
+    },
+    {
+        "id": "o_4",
+        "title": "文机 (ふづくえ)",
+        "category": "その他",
+        "categoryKey": "other"
+    },
+    {
+        "id": "o_5",
+        "title": "茶道具セット",
+        "category": "その他",
+        "categoryKey": "other"
+    }
+]

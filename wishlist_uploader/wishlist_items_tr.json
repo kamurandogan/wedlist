@@ -1,0 +1,434 @@
+[
+    {
+        "id": "k_1",
+        "title": "Tencere Setleri ve Diğer Pişirme Ürünleri",
+        "category": "Mutfak",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_2",
+        "title": "Yemek Takımları",
+        "category": "Mutfak",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_3",
+        "title": "Kahvaltı Takımları",
+        "category": "Mutfak",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_4",
+        "title": "Çatal-Bıçak Takımları",
+        "category": "Mutfak",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_5",
+        "title": "Çeyizlik Bardak Setleri",
+        "category": "Mutfak",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_6",
+        "title": "Yardımcı Mutfak Eşyaları",
+        "category": "Mutfak",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_7",
+        "title": "Sofra Tekstili",
+        "category": "Mutfak",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_8",
+        "title": "Mutfak Masa Takımları",
+        "category": "Mutfak",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_9",
+        "title": "Mutfak Aksesuarları",
+        "category": "Mutfak",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_10",
+        "title": "Mutfak Robotu",
+        "category": "Mutfak",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_11",
+        "title": "Çay Makinesi",
+        "category": "Mutfak",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_12",
+        "title": "Tost Makinesi",
+        "category": "Mutfak",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_13",
+        "title": "Blender Seti",
+        "category": "Mutfak",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_14",
+        "title": "Katı Meyve Sıkacağı",
+        "category": "Mutfak",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_15",
+        "title": "Kettle / Su Isıtıcı",
+        "category": "Mutfak",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_16",
+        "title": "Elektrikli Cezve",
+        "category": "Mutfak",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_17",
+        "title": "Elektrikli Süpürge",
+        "category": "Mutfak",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_18",
+        "title": "Ütü",
+        "category": "Mutfak",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_19",
+        "title": "Saç Kurutma Makinesi",
+        "category": "Mutfak",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "y_1",
+        "title": "Yatak Odası Takımı (Yatak bazası, Yatak, Dolap, Şifonyer, Keson)",
+        "category": "Yatak Odası",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_2",
+        "title": "Avize",
+        "category": "Yatak Odası",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_3",
+        "title": "Perde",
+        "category": "Yatak Odası",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_4",
+        "title": "Pamuklu Çift Kişilik Nevresim Takımı (2 Set)",
+        "category": "Yatak Odası",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_5",
+        "title": "Çift Kişilik Yorgan (2 Adet)",
+        "category": "Yatak Odası",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_6",
+        "title": "Battaniye (2 Adet)",
+        "category": "Yatak Odası",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_7",
+        "title": "Saten Çift Kişilik Nevresim Takımı",
+        "category": "Yatak Odası",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_8",
+        "title": "Yatak Örtüsü",
+        "category": "Yatak Odası",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_9",
+        "title": "Halı",
+        "category": "Yatak Odası",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_10",
+        "title": "Alez (2 Adet)",
+        "category": "Yatak Odası",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_11",
+        "title": "Baş Yastığı (6 Adet)",
+        "category": "Yatak Odası",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_12",
+        "title": "Lastikli Çarşaf (2 Adet)",
+        "category": "Yatak Odası",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "s_1",
+        "title": "Koltuk Takımı",
+        "category": "Oturma Odası",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_2",
+        "title": "Yemek Odası Takımı",
+        "category": "Oturma Odası",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_3",
+        "title": "TV Ünitesi",
+        "category": "Oturma Odası",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_4",
+        "title": "Kitaplık",
+        "category": "Oturma Odası",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_5",
+        "title": "Orta Sehpa",
+        "category": "Oturma Odası",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_6",
+        "title": "Zigon Sehpa Takımı",
+        "category": "Oturma Odası",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_7",
+        "title": "Halı",
+        "category": "Oturma Odası",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_8",
+        "title": "Perde",
+        "category": "Oturma Odası",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_9",
+        "title": "Kırlent (6 Adet)",
+        "category": "Oturma Odası",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_10",
+        "title": "Aksesuar",
+        "category": "Oturma Odası",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_11",
+        "title": "Avize",
+        "category": "Oturma Odası",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_12",
+        "title": "Abajur / Lambader",
+        "category": "Oturma Odası",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "b_1",
+        "title": "Bornoz Takımı",
+        "category": "Banyo",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "b_2",
+        "title": "Havlular (6 el havlusu, 7 yüz havlusu, 2 ayak havlusu)",
+        "category": "Banyo",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "b_3",
+        "title": "Klozet Takımı",
+        "category": "Banyo",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "b_4",
+        "title": "Lifler ve Keseler (10’lu)",
+        "category": "Banyo",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "b_5",
+        "title": "Çöp Kovası, Fırça, Sabunluk, Fırçalık",
+        "category": "Banyo",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "b_6",
+        "title": "Çamaşır Kirli Sepeti",
+        "category": "Banyo",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "h_1",
+        "title": "Portmanto",
+        "category": "Hol / Antre",
+        "categoryKey": "hall"
+    },
+    {
+        "id": "h_2",
+        "title": "Dresuar",
+        "category": "Hol / Antre",
+        "categoryKey": "hall"
+    },
+    {
+        "id": "h_3",
+        "title": "Halı / Yolluk",
+        "category": "Hol / Antre",
+        "categoryKey": "hall"
+    },
+    {
+        "id": "h_4",
+        "title": "Avize",
+        "category": "Hol / Antre",
+        "categoryKey": "hall"
+    },
+    {
+        "id": "e_1",
+        "title": "Buzdolabı",
+        "category": "Elektronik Ev Eşyası",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_2",
+        "title": "Televizyon",
+        "category": "Elektronik Ev Eşyası",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_3",
+        "title": "Ocak + Fırın + Davlumbaz",
+        "category": "Elektronik Ev Eşyası",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_4",
+        "title": "Çamaşır Makinesi",
+        "category": "Elektronik Ev Eşyası",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_5",
+        "title": "Bulaşık Makinesi",
+        "category": "Elektronik Ev Eşyası",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "d_1",
+        "title": "Tablolar (2 Adet Orta Boy)",
+        "category": "Diğer Ev İhtiyaçları",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "d_2",
+        "title": "Ayakkabı Dolabı",
+        "category": "Diğer Ev İhtiyaçları",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "d_3",
+        "title": "Askı (50 Adet)",
+        "category": "Diğer Ev İhtiyaçları",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "d_4",
+        "title": "Ütü Masası",
+        "category": "Diğer Ev İhtiyaçları",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "d_5",
+        "title": "Vazo (2 Adet Orta Boy)",
+        "category": "Diğer Ev İhtiyaçları",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "d_6",
+        "title": "Çamaşır Kurutma Askısı",
+        "category": "Diğer Ev İhtiyaçları",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "d_7",
+        "title": "Fotoğraf Çerçeveleri (5 Adet Orta Boy)",
+        "category": "Diğer Ev İhtiyaçları",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "d_8",
+        "title": "Duvar / Masa Saati",
+        "category": "Diğer Ev İhtiyaçları",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "d_9",
+        "title": "Mum / Mumluk (5’li)",
+        "category": "Diğer Ev İhtiyaçları",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "d_10",
+        "title": "Dış Kapı Paspası",
+        "category": "Diğer Ev İhtiyaçları",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "d_11",
+        "title": "Çamaşır Mandalı (50 Adet)",
+        "category": "Diğer Ev İhtiyaçları",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "k_20",
+        "title": "Türk Kahvesi Fincan Seti",
+        "category": "Mutfak",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_21",
+        "title": "Bakır Cezve",
+        "category": "Mutfak",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "d_12",
+        "title": "Misafir Terlikleri",
+        "category": "Diğer Ev İhtiyaçları",
+        "categoryKey": "other_home_needs"
+    }
+]

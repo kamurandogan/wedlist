@@ -1,0 +1,284 @@
+[
+    {
+        "id": "k_1",
+        "title": "Conjunto de Panelas",
+        "category": "Cozinha",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_2",
+        "title": "Talheres",
+        "category": "Cozinha",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_3",
+        "title": "Conjunto de Louça",
+        "category": "Cozinha",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_4",
+        "title": "Máquina de Café",
+        "category": "Cozinha",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_5",
+        "title": "Torradeira",
+        "category": "Cozinha",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_6",
+        "title": "Micro-ondas",
+        "category": "Cozinha",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_7",
+        "title": "Liquidificador / Robot de Cozinha",
+        "category": "Cozinha",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_8",
+        "title": "Copos e Canecas",
+        "category": "Cozinha",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_9",
+        "title": "Chaleira Elétrica",
+        "category": "Cozinha",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_10",
+        "title": "Tábua de Cortar",
+        "category": "Cozinha",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "y_1",
+        "title": "Cama",
+        "category": "Quarto",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_2",
+        "title": "Colchão",
+        "category": "Quarto",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_3",
+        "title": "Roupa de Cama",
+        "category": "Quarto",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_4",
+        "title": "Roupeiro / Guarda-Roupa",
+        "category": "Quarto",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_5",
+        "title": "Mesa de Cabeceira",
+        "category": "Quarto",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_6",
+        "title": "Almofadas e Cobertores",
+        "category": "Quarto",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "s_1",
+        "title": "Sofá",
+        "category": "Sala de Estar",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_2",
+        "title": "Mesa de Centro",
+        "category": "Sala de Estar",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_3",
+        "title": "Móvel de TV",
+        "category": "Sala de Estar",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_4",
+        "title": "Estante / Prateleira",
+        "category": "Sala de Estar",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_5",
+        "title": "Tapete",
+        "category": "Sala de Estar",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_6",
+        "title": "Cortinas",
+        "category": "Sala de Estar",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_7",
+        "title": "Almofadas Decorativas",
+        "category": "Sala de Estar",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_8",
+        "title": "Lâmpadas e Iluminação",
+        "category": "Sala de Estar",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "b_1",
+        "title": "Toalhas de Banho",
+        "category": "Casa de Banho",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "b_2",
+        "title": "Tapete de Banho",
+        "category": "Casa de Banho",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "b_3",
+        "title": "Cortina de Duche",
+        "category": "Casa de Banho",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "b_4",
+        "title": "Espelho",
+        "category": "Casa de Banho",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "b_5",
+        "title": "Cesto da Roupa",
+        "category": "Casa de Banho",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "e_1",
+        "title": "Frigorífico",
+        "category": "Electrónica",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_2",
+        "title": "Máquina de Lavar Roupa",
+        "category": "Electrónica",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_3",
+        "title": "Máquina de Lavar Loiça",
+        "category": "Electrónica",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_4",
+        "title": "Aspirador",
+        "category": "Electrónica",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_5",
+        "title": "Ferro de Engomar",
+        "category": "Electrónica",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_6",
+        "title": "Secador de Cabelo",
+        "category": "Electrónica",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "h_1",
+        "title": "Cabide",
+        "category": "Hall / Entrada",
+        "categoryKey": "hall"
+    },
+    {
+        "id": "h_2",
+        "title": "Aparador",
+        "category": "Hall / Entrada",
+        "categoryKey": "hall"
+    },
+    {
+        "id": "h_3",
+        "title": "Tapete de Entrada",
+        "category": "Hall / Entrada",
+        "categoryKey": "hall"
+    },
+    {
+        "id": "h_4",
+        "title": "Candeeiro de Teto",
+        "category": "Hall / Entrada",
+        "categoryKey": "hall"
+    },
+    {
+        "id": "o_1",
+        "title": "Tábua de Passar",
+        "category": "Outros Itens Domésticos",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "o_2",
+        "title": "Molduras de Fotos",
+        "category": "Outros Itens Domésticos",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "o_3",
+        "title": "Vasos Decorativos",
+        "category": "Outros Itens Domésticos",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "o_4",
+        "title": "Ganchos / Cabides",
+        "category": "Outros Itens Domésticos",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "o_5",
+        "title": "Varal de Roupa",
+        "category": "Outros Itens Domésticos",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "o_6",
+        "title": "Pregadores de Roupa",
+        "category": "Outros Itens Domésticos",
+        "categoryKey": "other_home_needs"
+    },
+    {
+        "id": "k_11",
+        "title": "Azeiteira (Garrafa de Azeite)",
+        "category": "Cozinha",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_12",
+        "title": "Assadeira de Barro (para Bacalhau)",
+        "category": "Cozinha",
+        "categoryKey": "kitchen"
+    }
+]

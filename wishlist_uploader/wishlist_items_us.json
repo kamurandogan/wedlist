@@ -1,0 +1,440 @@
+[
+    {
+        "id": "k_1",
+        "title": "Cookware Set",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_2",
+        "title": "Nonstick Frying Pan",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_3",
+        "title": "Cast Iron Skillet",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_4",
+        "title": "Dutch Oven",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_5",
+        "title": "Baking Sheets",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_6",
+        "title": "Mixing Bowls",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_7",
+        "title": "Measuring Cups & Spoons",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_8",
+        "title": "Cutlery Set",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_9",
+        "title": "Knife Block Set",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_10",
+        "title": "Cutting Boards",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_11",
+        "title": "Serving Platters",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_12",
+        "title": "Dinnerware Set",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_13",
+        "title": "Flatware Set",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_14",
+        "title": "Glassware Set",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_15",
+        "title": "Wine Glasses",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_16",
+        "title": "Mugs",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_17",
+        "title": "Coffee Maker",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_18",
+        "title": "Espresso Machine",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_19",
+        "title": "Tea Kettle",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_20",
+        "title": "Blender",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_21",
+        "title": "Food Processor",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_22",
+        "title": "Slow Cooker",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_23",
+        "title": "Instant Pot",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_24",
+        "title": "Air Fryer",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_25",
+        "title": "Toaster",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_26",
+        "title": "Stand Mixer",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_27",
+        "title": "Hand Mixer",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_28",
+        "title": "Microwave Oven",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_29",
+        "title": "Grill Pan",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_30",
+        "title": "Storage Containers",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "k_31",
+        "title": "Spice Rack",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "y_1",
+        "title": "Bed Frame",
+        "category": "Bedroom",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_2",
+        "title": "Mattress",
+        "category": "Bedroom",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_3",
+        "title": "Pillows",
+        "category": "Bedroom",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_4",
+        "title": "Comforter",
+        "category": "Bedroom",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_5",
+        "title": "Duvet Cover",
+        "category": "Bedroom",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_6",
+        "title": "Bed Sheets",
+        "category": "Bedroom",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_7",
+        "title": "Blankets",
+        "category": "Bedroom",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_8",
+        "title": "Nightstands",
+        "category": "Bedroom",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_9",
+        "title": "Wardrobe/Closet",
+        "category": "Bedroom",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_10",
+        "title": "Dresser",
+        "category": "Bedroom",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_11",
+        "title": "Bedside Lamps",
+        "category": "Bedroom",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "y_12",
+        "title": "Full-Length Mirror",
+        "category": "Bedroom",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "s_1",
+        "title": "Sofa Set",
+        "category": "Living Room",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_2",
+        "title": "Coffee Table",
+        "category": "Living Room",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_3",
+        "title": "TV Stand",
+        "category": "Living Room",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_4",
+        "title": "Bookshelf",
+        "category": "Living Room",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_5",
+        "title": "Area Rug",
+        "category": "Living Room",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_6",
+        "title": "Curtains",
+        "category": "Living Room",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_7",
+        "title": "Throw Pillows",
+        "category": "Living Room",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_8",
+        "title": "Wall Art",
+        "category": "Living Room",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "s_9",
+        "title": "Floor Lamp",
+        "category": "Living Room",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "b_1",
+        "title": "Towel Set",
+        "category": "Bathroom",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "b_2",
+        "title": "Bath Mat",
+        "category": "Bathroom",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "b_3",
+        "title": "Shower Curtain",
+        "category": "Bathroom",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "b_4",
+        "title": "Toothbrush Holder",
+        "category": "Bathroom",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "b_5",
+        "title": "Soap Dispenser",
+        "category": "Bathroom",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "b_6",
+        "title": "Laundry Basket",
+        "category": "Bathroom",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "e_1",
+        "title": "Refrigerator",
+        "category": "Electronic Goods",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_2",
+        "title": "Washing Machine",
+        "category": "Electronic Goods",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_3",
+        "title": "Dryer",
+        "category": "Electronic Goods",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_4",
+        "title": "Dishwasher",
+        "category": "Electronic Goods",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_5",
+        "title": "Microwave",
+        "category": "Electronic Goods",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_6",
+        "title": "Vacuum Cleaner",
+        "category": "Electronic Goods",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_7",
+        "title": "Iron & Ironing Board",
+        "category": "Electronic Goods",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "e_8",
+        "title": "Hair Dryer",
+        "category": "Electronic Goods",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "o_1",
+        "title": "Coat Rack",
+        "category": "Other",
+        "categoryKey": "other"
+    },
+    {
+        "id": "o_2",
+        "title": "Shoe Rack",
+        "category": "Other",
+        "categoryKey": "other"
+    },
+    {
+        "id": "o_3",
+        "title": "Wall Clock",
+        "category": "Other",
+        "categoryKey": "other"
+    },
+    {
+        "id": "o_4",
+        "title": "Umbrella Stand",
+        "category": "Other",
+        "categoryKey": "other"
+    },
+    {
+        "id": "o_5",
+        "title": "Picture Frames",
+        "category": "Other",
+        "categoryKey": "other"
+    },
+    {
+        "id": "o_6",
+        "title": "Candles & Candle Holders",
+        "category": "Other",
+        "categoryKey": "other"
+    },
+    {
+        "id": "o_7",
+        "title": "Vase",
+        "category": "Other",
+        "categoryKey": "other"
+    }
+]

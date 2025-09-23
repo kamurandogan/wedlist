@@ -1,0 +1,122 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Removed single-collaborator restriction: any list of collaborators now allowed.
+
+    // User items: owners-based access control
+    match /userItems/{itemId} {
+      // Create: the incoming document must include the creator in owners
+      allow create: if request.auth != null
+        && request.resource.data.owners is list
+        && request.auth.uid in request.resource.data.owners;
+
+      // Read/Update/Delete: the current user must be in existing owners
+      allow read, list, update, delete: if request.auth != null
+        && request.auth.uid in resource.data.owners;
+    }
+
+    // Public catalog of items: readable by authenticated users only
+    match /items/{itemId} {
+      allow read: if request.auth != null; // allows get
+      allow list: if request.auth != null; // allows queries
+      allow write: if false;
+    }
+
+    // Country-specific public catalogs (items_<COUNTRY>): readable by authenticated users only
+    match /items_TR/{itemId} {
+      allow read: if request.auth != null;
+      allow list: if request.auth != null;
+      allow write: if false;
+    }
+    match /items_US/{itemId} {
+      allow read: if request.auth != null;
+      allow list: if request.auth != null;
+      allow write: if false;
+    }
+    match /items_CA/{itemId} {
+      allow read: if request.auth != null;
+      allow list: if request.auth != null;
+      allow write: if false;
+    }
+    match /items_UK/{itemId} {
+      allow read: if request.auth != null;
+      allow list: if request.auth != null;
+      allow write: if false;
+    }
+    match /items_AU/{itemId} {
+      allow read: if request.auth != null;
+      allow list: if request.auth != null;
+      allow write: if false;
+    }
+    match /items_DE/{itemId} {
+      allow read: if request.auth != null;
+      allow list: if request.auth != null;
+      allow write: if false;
+    }
+    match /items_FR/{itemId} {
+      allow read: if request.auth != null;
+      allow list: if request.auth != null;
+      allow write: if false;
+    }
+    match /items_IT/{itemId} {
+      allow read: if request.auth != null;
+      allow list: if request.auth != null;
+      allow write: if false;
+    }
+    match /items_JP/{itemId} {
+      allow read: if request.auth != null;
+      allow list: if request.auth != null;
+      allow write: if false;
+    }
+
+    // User-specific wishlist catalog additions
+    match /customItems/{docId} {
+      // Create: must include owners and current user within it
+      allow create: if request.auth != null
+        && request.resource.data.owners is list
+        && request.auth.uid in request.resource.data.owners;
+
+      // Read/Query/Update/Delete: only owners can access
+      allow read, list, update, delete: if request.auth != null
+        && request.auth.uid in resource.data.owners;
+    }
+
+    // Users collection: allow users to manage their own profile doc.
+    // Read is allowed for authenticated users to support email lookup for collaborators.
+    match /users/{uid} {
+      allow read: if request.auth != null;
+  // Only the owner can write; collaborators list now unrestricted in length.
+  allow write: if request.auth != null && request.auth.uid == uid;
+
+      // Notifications subcollection under a user
+      match /notifications/{nid} {
+        // Only the owner can read their notifications
+        allow get, list: if request.auth != null && request.auth.uid == uid;
+
+        // Allow the owner to manage (create/update/delete) their notifications
+        allow create, update, delete: if request.auth != null && request.auth.uid == uid;
+        // Allow any authenticated user to create a LIMITED set of collaboration-related notifications
+        // (first invite gönderimi için collaborator olma şartını kaldırıyoruz).
+        allow create: if request.auth != null
+          && request.resource.data.createdBy == request.auth.uid
+          && request.resource.data.type is string
+          && request.resource.data.type in [
+            'collab_request',
+            'collab_accepted',
+            'collab_removed',
+            'collab_rejected',
+            // Item ownership change notifications
+            'item_added',
+            'item_deleted'
+          ]
+          // Temel alan tip kontrolleri
+          && request.resource.data.read is bool;
+      }
+    }
+
+    // Block everything else by default
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

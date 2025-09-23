@@ -1,0 +1,440 @@
+[
+    {
+        "id": "au_k_1",
+        "title": "Cookware Set (Stainless / Nonstick)",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "au_k_2",
+        "title": "Cast Iron Skillet",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "au_k_3",
+        "title": "Frying Pan / Wok",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "au_k_4",
+        "title": "Dutch Oven / Casserole Dish",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "au_k_5",
+        "title": "Mixing Bowl Set",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "au_k_6",
+        "title": "Measuring Cups & Spoons",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "au_k_7",
+        "title": "Knife Set & Cutting Boards",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "au_k_8",
+        "title": "Dinnerware Set (Everyday)",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "au_k_9",
+        "title": "Glassware Set (Water / Juice)",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "au_k_10",
+        "title": "Wine Glasses & Beer Glasses",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "au_k_11",
+        "title": "Mugs / Coffee Cups",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "au_k_12",
+        "title": "Kettle (Electric)",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "au_k_13",
+        "title": "Coffee Machine (Espresso / Pod)",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "au_k_14",
+        "title": "Toaster / Sandwich Press",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "au_k_15",
+        "title": "Blender / Smoothie Maker",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "au_k_16",
+        "title": "Food Processor",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "au_k_17",
+        "title": "Slow Cooker / Multi-Cooker",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "au_k_18",
+        "title": "Air Fryer",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "au_k_19",
+        "title": "Microwave Oven",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "au_k_20",
+        "title": "Storage Containers (Glass/Plastic)",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "au_k_21",
+        "title": "Spice Rack",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "au_k_22",
+        "title": "BBQ Tools Starter Set",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "au_k_23",
+        "title": "Reusable Water Bottles",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "au_k_24",
+        "title": "Lunch Boxes / Food Jars",
+        "category": "Kitchen",
+        "categoryKey": "kitchen"
+    },
+    {
+        "id": "au_bed_1",
+        "title": "Bed Frame (Queen/King)",
+        "category": "Bedroom",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "au_bed_2",
+        "title": "Quality Mattress",
+        "category": "Bedroom",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "au_bed_3",
+        "title": "Sheet Set (Cotton / Linen)",
+        "category": "Bedroom",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "au_bed_4",
+        "title": "Duvet / Quilt & Cover",
+        "category": "Bedroom",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "au_bed_5",
+        "title": "Comforter / Blanket",
+        "category": "Bedroom",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "au_bed_6",
+        "title": "Pillows (Sleeping & Decorative)",
+        "category": "Bedroom",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "au_bed_7",
+        "title": "Mattress Protector",
+        "category": "Bedroom",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "au_bed_8",
+        "title": "Wardrobe / Closet Organizer",
+        "category": "Bedroom",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "au_bed_9",
+        "title": "Nightstands / Bedside Tables",
+        "category": "Bedroom",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "au_bed_10",
+        "title": "Bedside Lamps",
+        "category": "Bedroom",
+        "categoryKey": "bedroom"
+    },
+    {
+        "id": "au_lr_1",
+        "title": "Sofa / Sectional",
+        "category": "Living Room",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "au_lr_2",
+        "title": "Coffee Table",
+        "category": "Living Room",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "au_lr_3",
+        "title": "TV Stand / Entertainment Unit",
+        "category": "Living Room",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "au_lr_4",
+        "title": "Bookshelf / Storage Unit",
+        "category": "Living Room",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "au_lr_5",
+        "title": "Area Rug",
+        "category": "Living Room",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "au_lr_6",
+        "title": "Curtains / Blinds",
+        "category": "Living Room",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "au_lr_7",
+        "title": "Wall Art / Prints",
+        "category": "Living Room",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "au_lr_8",
+        "title": "Ceiling Fan / Floor Fan",
+        "category": "Living Room",
+        "categoryKey": "living_room"
+    },
+    {
+        "id": "au_ba_1",
+        "title": "Towel Set (Bath / Hand)",
+        "category": "Bathroom",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "au_ba_2",
+        "title": "Shower Curtain & Liner",
+        "category": "Bathroom",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "au_ba_3",
+        "title": "Bath Mat / Rug",
+        "category": "Bathroom",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "au_ba_4",
+        "title": "Toiletry Organizer",
+        "category": "Bathroom",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "au_ba_5",
+        "title": "Laundry Basket / Hamper",
+        "category": "Bathroom",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "au_ba_6",
+        "title": "Hair Dryer & Grooming Tools",
+        "category": "Bathroom",
+        "categoryKey": "bathroom"
+    },
+    {
+        "id": "au_e_1",
+        "title": "Refrigerator",
+        "category": "Electronic Goods",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "au_e_2",
+        "title": "Stove / Oven",
+        "category": "Electronic Goods",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "au_e_3",
+        "title": "Dishwasher",
+        "category": "Electronic Goods",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "au_e_4",
+        "title": "Washing Machine",
+        "category": "Electronic Goods",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "au_e_5",
+        "title": "Clothes Dryer / Drying Rack",
+        "category": "Electronic Goods",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "au_e_6",
+        "title": "Vacuum Cleaner",
+        "category": "Electronic Goods",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "au_e_7",
+        "title": "Fan / Portable Air Cooler",
+        "category": "Electronic Goods",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "au_e_8",
+        "title": "Smart TV / Streaming Device",
+        "category": "Electronic Goods",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "au_e_9",
+        "title": "Router / Wi-Fi System",
+        "category": "Electronic Goods",
+        "categoryKey": "electronic_goods"
+    },
+    {
+        "id": "au_out_1",
+        "title": "Gas BBQ Grill",
+        "category": "Outdoor",
+        "categoryKey": "outdoor"
+    },
+    {
+        "id": "au_out_2",
+        "title": "Outdoor Dining Set",
+        "category": "Outdoor",
+        "categoryKey": "outdoor"
+    },
+    {
+        "id": "au_out_3",
+        "title": "Outdoor Lounge Chairs",
+        "category": "Outdoor",
+        "categoryKey": "outdoor"
+    },
+    {
+        "id": "au_out_4",
+        "title": "Patio Umbrella / Shade",
+        "category": "Outdoor",
+        "categoryKey": "outdoor"
+    },
+    {
+        "id": "au_out_5",
+        "title": "Cooler / Eskie",
+        "category": "Outdoor",
+        "categoryKey": "outdoor"
+    },
+    {
+        "id": "au_out_6",
+        "title": "Beach Towels & Gear",
+        "category": "Outdoor",
+        "categoryKey": "outdoor"
+    },
+    {
+        "id": "au_out_7",
+        "title": "Garden Tools Starter Kit",
+        "category": "Outdoor",
+        "categoryKey": "outdoor"
+    },
+    {
+        "id": "au_off_1",
+        "title": "Home Office Desk",
+        "category": "Home Office",
+        "categoryKey": "home_office"
+    },
+    {
+        "id": "au_off_2",
+        "title": "Ergonomic Office Chair",
+        "category": "Home Office",
+        "categoryKey": "home_office"
+    },
+    {
+        "id": "au_off_3",
+        "title": "Desk Lamp",
+        "category": "Home Office",
+        "categoryKey": "home_office"
+    },
+    {
+        "id": "au_off_4",
+        "title": "Monitor / External Display",
+        "category": "Home Office",
+        "categoryKey": "home_office"
+    },
+    {
+        "id": "au_misc_1",
+        "title": "Tool Kit / Screwdriver Set",
+        "category": "Miscellaneous",
+        "categoryKey": "miscellaneous"
+    },
+    {
+        "id": "au_misc_2",
+        "title": "First Aid Kit",
+        "category": "Miscellaneous",
+        "categoryKey": "miscellaneous"
+    },
+    {
+        "id": "au_misc_3",
+        "title": "Flashlight & Batteries",
+        "category": "Miscellaneous",
+        "categoryKey": "miscellaneous"
+    },
+    {
+        "id": "au_misc_4",
+        "title": "Picnic Set / Esky",
+        "category": "Miscellaneous",
+        "categoryKey": "miscellaneous"
+    },
+    {
+        "id": "au_misc_5",
+        "title": "Reusable Shopping Bags",
+        "category": "Miscellaneous",
+        "categoryKey": "miscellaneous"
+    }
+]
