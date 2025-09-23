@@ -1,4 +1,6 @@
-@Skip('Skipped on CI for stability; relies on async Firestore normalization. Re-enable when integration tests are set up.')
+@Skip(
+  'Skipped on CI for stability; relies on async Firestore normalization. Re-enable when integration tests are set up.',
+)
 library;
 
 import 'package:bloc_test/bloc_test.dart';
