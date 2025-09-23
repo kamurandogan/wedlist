@@ -1,0 +1,79 @@
+name: Flutter CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  # Manuel tetikleme (deploy-rules işi için)
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    name: Format · Analyze · Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Flutter pub get
+        run: flutter pub get
+
+      - name: Flutter version
+        run: flutter --version
+
+      - name: Format check
+        run: flutter format --set-exit-if-changed .
+
+      - name: Analyze
+        run: flutter analyze
+
+      - name: Test
+        run: flutter test --no-pub
+
+  deploy-rules:
+    # Sadece manuel tetikleme ile çalışsın
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    name: Firebase Deploy (Firestore/Storage Rules)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Firebase CLI
+        run: npm i -g firebase-tools
+
+      - name: Configure Google Credentials if provided (Service Account)
+        shell: bash
+        run: |
+          if [ -n "${{ secrets.GCP_SA_KEY }}" ]; then
+            echo "${{ secrets.GCP_SA_KEY }}" > $RUNNER_TEMP/gcp-key.json
+            echo "GOOGLE_APPLICATION_CREDENTIALS=$RUNNER_TEMP/gcp-key.json" >> $GITHUB_ENV
+          fi
+
+      - name: Deploy Firestore & Storage Rules
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          FIREBASE_PROJECT_ID: ${{ vars.FIREBASE_PROJECT_ID }}
+        shell: bash
+        run: |
+          if [ -n "$GOOGLE_APPLICATION_CREDENTIALS" ]; then
+            echo "Using Service Account via GOOGLE_APPLICATION_CREDENTIALS"
+            firebase deploy --project "$FIREBASE_PROJECT_ID" --only firestore,storage --non-interactive
+          elif [ -n "$FIREBASE_TOKEN" ]; then
+            echo "Using FIREBASE_TOKEN"
+            firebase deploy --project "$FIREBASE_PROJECT_ID" --only firestore,storage --non-interactive --token "$FIREBASE_TOKEN"
+          else
+            echo "No credentials provided (set secrets.GCP_SA_KEY or secrets.FIREBASE_TOKEN)."
+            exit 1
+          fi
