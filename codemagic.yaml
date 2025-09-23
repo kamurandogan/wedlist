@@ -1,0 +1,54 @@
+workflows:
+  ci:
+    name: CI
+    max_build_duration: 45
+    environment:
+      flutter: stable
+    scripts:
+      - name: Install dependencies
+        script: flutter pub get
+      - name: Format check
+        script: dart format --set-exit-if-changed .
+      - name: Analyze
+        script: flutter analyze
+      - name: Run tests
+        script: flutter test --test-randomize-ordering-seed=random
+      - name: Build Android debug APK
+        script: flutter build apk --debug
+    artifacts:
+      - build/app/outputs/flutter-apk/*.apk
+
+  android_release:
+    name: Android Release (AAB)
+    max_build_duration: 60
+    environment:
+      flutter: stable
+      groups:
+        - keystore_credentials # Codemagic UI'da oluşturacağınız env grubu (aşağıdaki env'leri içermeli)
+    scripts:
+      - name: Install dependencies
+        script: flutter pub get
+      - name: Format check
+        script: dart format --set-exit-if-changed .
+      - name: Analyze
+        script: flutter analyze
+      - name: Run tests
+        script: flutter test --test-randomize-ordering-seed=random
+      - name: Prepare Android keystore
+        script: |
+          # Aşağıdaki env değişkenlerini Codemagic'de tanımlayın:
+          # ANDROID_KEYSTORE (base64), ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS, ANDROID_KEY_PASSWORD
+          echo "$ANDROID_KEYSTORE" | base64 --decode > android/app/keystore.jks
+          cat > android/key.properties <<EOF
+          storePassword=$ANDROID_KEYSTORE_PASSWORD
+          keyPassword=$ANDROID_KEY_PASSWORD
+          keyAlias=$ANDROID_KEY_ALIAS
+          storeFile=app/keystore.jks
+          EOF
+      - name: Build Android App Bundle (release)
+        script: flutter build appbundle --release
+    artifacts:
+      - build/app/outputs/bundle/release/*.aab
+
+  # iOS için imzalama gereklidir. Codemagic Automatic Code Signing ile
+  # kolayca kurulabilir. Hazır olduğunuzda ayrı bir iOS workflow'u ekleyebiliriz.
