@@ -14,8 +14,12 @@ part 'dowry_list_event.dart';
 part 'dowry_list_state.dart';
 
 class DowryListBloc extends Bloc<DowryListEvent, DowryListState> {
-  DowryListBloc(this.getUserItems, this.deleteUserItem, this.updateUserItem, this.watchUserItems)
-    : super(DowryListInitial()) {
+  DowryListBloc(
+    this.getUserItems,
+    this.deleteUserItem,
+    this.updateUserItem,
+    this.watchUserItems,
+  ) : super(DowryListInitial()) {
     on<DeleteDowryItem>(_deleteItem);
     on<UpdateDowryItem>(_updateItem);
     on<FetchDowryListItems>(_fetchItems);
@@ -30,12 +34,17 @@ class DowryListBloc extends Bloc<DowryListEvent, DowryListState> {
   StreamSubscription<List<UserItemEntity>>? _sub;
 
   // Firestore'dan listeyi çekme fonksiyonu
-  Future<void> _fetchItems(FetchDowryListItems event, Emitter<DowryListState> emit) async {
+  Future<void> _fetchItems(
+    FetchDowryListItems event,
+    Emitter<DowryListState> emit,
+  ) async {
     emit(DowryListLoading());
     final result = await getUserItems();
     result.match(
       (l) => emit(DowryListError(l.message)),
-      (items) => items.isEmpty ? emit(DowryListEmpty('Liste boş')) : emit(DowryListLoaded(items)),
+      (items) => items.isEmpty
+          ? emit(DowryListEmpty('Liste boş'))
+          : emit(DowryListLoaded(items)),
     );
   }
 
@@ -43,7 +52,10 @@ class DowryListBloc extends Bloc<DowryListEvent, DowryListState> {
     add(_OptimisticInsert(item));
   }
 
-  void _onOptimisticInsert(_OptimisticInsert event, Emitter<DowryListState> emit) {
+  void _onOptimisticInsert(
+    _OptimisticInsert event,
+    Emitter<DowryListState> emit,
+  ) {
     final current = state;
     if (current is DowryListLoaded) {
       final existing = current.items;
@@ -55,7 +67,10 @@ class DowryListBloc extends Bloc<DowryListEvent, DowryListState> {
     }
   }
 
-  Future<void> _deleteItem(DeleteDowryItem event, Emitter<DowryListState> emit) async {
+  Future<void> _deleteItem(
+    DeleteDowryItem event,
+    Emitter<DowryListState> emit,
+  ) async {
     final res = await deleteUserItem(event.id);
     res.match(
       (l) => emit(DowryListError(l.message)),
@@ -71,7 +86,10 @@ class DowryListBloc extends Bloc<DowryListEvent, DowryListState> {
     );
   }
 
-  Future<void> _updateItem(UpdateDowryItem event, Emitter<DowryListState> emit) async {
+  Future<void> _updateItem(
+    UpdateDowryItem event,
+    Emitter<DowryListState> emit,
+  ) async {
     final res = await updateUserItem(event.updatedItem);
     res.match(
       (l) => emit(DowryListError(l.message)),
@@ -79,7 +97,10 @@ class DowryListBloc extends Bloc<DowryListEvent, DowryListState> {
     );
   }
 
-  Future<void> _subscribe(SubscribeDowryItems event, Emitter<DowryListState> emit) async {
+  Future<void> _subscribe(
+    SubscribeDowryItems event,
+    Emitter<DowryListState> emit,
+  ) async {
     await _sub?.cancel();
     emit(DowryListLoading());
     _sub = watchUserItems().listen(
@@ -88,7 +109,10 @@ class DowryListBloc extends Bloc<DowryListEvent, DowryListState> {
     );
   }
 
-  void _onStreamUpdated(_DowryItemsStreamUpdated event, Emitter<DowryListState> emit) {
+  void _onStreamUpdated(
+    _DowryItemsStreamUpdated event,
+    Emitter<DowryListState> emit,
+  ) {
     if (event.items.isEmpty) {
       emit(DowryListEmpty('Liste boş'));
     } else {

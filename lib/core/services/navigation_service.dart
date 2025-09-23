@@ -5,7 +5,8 @@ import 'package:go_router/go_router.dart';
 /// Bu servis sayesinde context olmadan sayfa geçişleri yapılabilir
 class NavigationService {
   /// GoRouter ile kullanılmak üzere Global NavigatorKey tanımı
-  static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  static final GlobalKey<NavigatorState> navigatorKey =
+      GlobalKey<NavigatorState>();
 
   /// Mevcut BuildContext'e erişim
   /// Bu context sayesinde yönlendirmeler yapılır

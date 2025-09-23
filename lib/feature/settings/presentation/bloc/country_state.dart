@@ -14,11 +14,15 @@ class CountryState {
   final String? lastMessage;
   final bool wishlistInvalidated;
 
-  CountryState copyWith({String? countryCode, CountryStatus? status, String? lastMessage, bool? wishlistInvalidated}) =>
-      CountryState(
-        countryCode: countryCode ?? this.countryCode,
-        status: status ?? this.status,
-        lastMessage: lastMessage ?? this.lastMessage,
-        wishlistInvalidated: wishlistInvalidated ?? this.wishlistInvalidated,
-      );
+  CountryState copyWith({
+    String? countryCode,
+    CountryStatus? status,
+    String? lastMessage,
+    bool? wishlistInvalidated,
+  }) => CountryState(
+    countryCode: countryCode ?? this.countryCode,
+    status: status ?? this.status,
+    lastMessage: lastMessage ?? this.lastMessage,
+    wishlistInvalidated: wishlistInvalidated ?? this.wishlistInvalidated,
+  );
 }

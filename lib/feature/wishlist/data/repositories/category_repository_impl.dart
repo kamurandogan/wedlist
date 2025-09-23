@@ -3,7 +3,6 @@ import 'package:wedlist/feature/wishlist/domain/entities/category_item.dart';
 import 'package:wedlist/feature/wishlist/domain/repositories/categort_repository.dart';
 
 class CategoryRepositoryImpl implements CategoryRepository {
-
   CategoryRepositoryImpl(this.remoteDataSource);
   final CategoryRemoteDataSource remoteDataSource;
 

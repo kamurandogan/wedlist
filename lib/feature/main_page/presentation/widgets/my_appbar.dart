@@ -9,7 +9,9 @@ class MyAppbar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       toolbarHeight: 10,
-      systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: AppColors.primary),
+      systemOverlayStyle: const SystemUiOverlayStyle(
+        statusBarColor: AppColors.primary,
+      ),
     );
   }
 }

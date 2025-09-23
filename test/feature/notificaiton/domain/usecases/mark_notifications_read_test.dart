@@ -3,7 +3,8 @@ import 'package:mocktail/mocktail.dart';
 import 'package:wedlist/feature/notification/domain/repositories/notification_repository.dart';
 import 'package:wedlist/feature/notification/domain/usecases/mark_notifications_read.dart';
 
-class _MockNotificationRepository extends Mock implements NotificationRepository {}
+class _MockNotificationRepository extends Mock
+    implements NotificationRepository {}
 
 void main() {
   group('MarkNotificationsRead', () {

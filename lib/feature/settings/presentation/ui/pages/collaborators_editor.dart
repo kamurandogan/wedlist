@@ -80,7 +80,10 @@ class _CollaboratorsEditorState extends State<CollaboratorsEditor> {
       },
       child: Container(
         padding: const EdgeInsets.all(24),
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(32), color: Colors.white),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(32),
+          color: Colors.white,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -96,23 +99,32 @@ class _CollaboratorsEditorState extends State<CollaboratorsEditor> {
                   p.loading != c.loading,
               builder: (context, state) {
                 final hasPartner = state.collaborators.isNotEmpty;
-                final hasWaiting = state.invites.any((i) => i.status == 'waiting');
+                final hasWaiting = state.invites.any(
+                  (i) => i.status == 'waiting',
+                );
                 if (hasPartner || hasWaiting) {
                   final msg = hasPartner
                       ? context
                             .loc
                             .partnerTitle // reuse existing key; or create a new one later
-                      : context.loc.pendingInvitations; // shows generic pending heading
+                      : context
+                            .loc
+                            .pendingInvitations; // shows generic pending heading
                   return Padding(
                     padding: AppPaddings.smallOnlyTop,
                     child: Row(
                       children: [
-                        const Icon(Icons.info_outline, size: 18, color: Colors.orange),
+                        const Icon(
+                          Icons.info_outline,
+                          size: 18,
+                          color: Colors.orange,
+                        ),
                         const SizedBox(width: 8),
                         Expanded(
                           child: Text(
                             msg,
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.orange[800]),
+                            style: Theme.of(context).textTheme.bodySmall
+                                ?.copyWith(color: Colors.orange[800]),
                           ),
                         ),
                       ],
@@ -124,7 +136,10 @@ class _CollaboratorsEditorState extends State<CollaboratorsEditor> {
                   children: [
                     Padding(
                       padding: AppPaddings.smallOnlyTop,
-                      child: CollaboratorInputRow(controller: _controller, onAdd: () => _add(context)),
+                      child: CollaboratorInputRow(
+                        controller: _controller,
+                        onAdd: () => _add(context),
+                      ),
                     ),
                     Padding(
                       padding: AppPaddings.mediumOnlyTop,
@@ -148,28 +163,51 @@ class _CollaboratorsEditorState extends State<CollaboratorsEditor> {
                     return const LinearProgressIndicator();
                   }
                   if (state.error != null) {
-                    return Text(state.error!, style: const TextStyle(color: Colors.red));
+                    return Text(
+                      state.error!,
+                      style: const TextStyle(color: Colors.red),
+                    );
                   }
-                  final waitingInvites = state.invites.where((i) => i.status == 'waiting').toList();
+                  final waitingInvites = state.invites
+                      .where((i) => i.status == 'waiting')
+                      .toList();
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       if (waitingInvites.isNotEmpty) ...[
-                        Text(context.loc.pendingInvitations, style: Theme.of(context).textTheme.titleSmall),
+                        Text(
+                          context.loc.pendingInvitations,
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
                         const SizedBox(height: 8),
                         ...waitingInvites.map(
                           (i) => Row(
                             children: [
-                              const Icon(Icons.hourglass_bottom, size: 16, color: Colors.orange),
+                              const Icon(
+                                Icons.hourglass_bottom,
+                                size: 16,
+                                color: Colors.orange,
+                              ),
                               const SizedBox(width: 8),
-                              Expanded(child: Text(i.email, style: Theme.of(context).textTheme.bodyMedium)),
+                              Expanded(
+                                child: Text(
+                                  i.email,
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                              ),
                               Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 4,
+                                ),
                                 decoration: BoxDecoration(
                                   color: Colors.orange.withValues(alpha: 0.1),
                                   borderRadius: BorderRadius.circular(12),
                                 ),
-                                child: Text(context.loc.pendingText, style: const TextStyle(color: Colors.orange)),
+                                child: Text(
+                                  context.loc.pendingText,
+                                  style: const TextStyle(color: Colors.orange),
+                                ),
                               ),
                             ],
                           ),
@@ -177,14 +215,19 @@ class _CollaboratorsEditorState extends State<CollaboratorsEditor> {
                         const SizedBox(height: 16),
                       ],
                       if (state.collaborators.isEmpty)
-                        Text(context.loc.noPartnersText, style: Theme.of(context).textTheme.bodySmall)
+                        Text(
+                          context.loc.noPartnersText,
+                          style: Theme.of(context).textTheme.bodySmall,
+                        )
                       else
                         Column(
                           children: state.collaborators
                               .map(
                                 (c) => CollaboratorListTile(
                                   user: c,
-                                  onRemove: () => context.read<CollabCubit>().remove(c.uid, context: context),
+                                  onRemove: () => context
+                                      .read<CollabCubit>()
+                                      .remove(c.uid, context: context),
                                 ),
                               )
                               .toList(),

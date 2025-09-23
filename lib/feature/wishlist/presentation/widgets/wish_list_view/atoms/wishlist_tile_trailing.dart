@@ -7,7 +7,11 @@ import 'package:wedlist/core/utils/colors.dart';
 
 /// Atomik: Sağdaki ekle butonu ve ikon
 class WishListTileTrailing extends StatelessWidget {
-  const WishListTileTrailing({required this.title, required this.item, super.key});
+  const WishListTileTrailing({
+    required this.title,
+    required this.item,
+    super.key,
+  });
   final String title;
   final ItemEntity item;
 

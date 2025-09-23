@@ -12,10 +12,11 @@ class RegisterRemoteDataSourceImpl implements RegisterRemoteDataSource {
   @override
   Future<void> register(RegisterModel model) async {
     try {
-      final userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: model.email,
-        password: model.password,
-      );
+      final userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+            email: model.email,
+            password: model.password,
+          );
       // Send verification email immediately after account creation
       await userCredential.user?.sendEmailVerification();
       final uid = userCredential.user?.uid;
@@ -27,12 +28,15 @@ class RegisterRemoteDataSourceImpl implements RegisterRemoteDataSource {
           await ref.putData(model.avatarBytes!);
           avatarUrl = await ref.getDownloadURL();
         }
-        final userRef = FirebaseFirestore.instance.collection(FirebasePaths.users).doc(uid);
+        final userRef = FirebaseFirestore.instance
+            .collection(FirebasePaths.users)
+            .doc(uid);
         await userRef.set({
           'uid': uid,
           'email': model.email.trim().toLowerCase(),
           'name': model.name,
-          if (model.weddingDate != null) 'weddingDate': Timestamp.fromDate(model.weddingDate!),
+          if (model.weddingDate != null)
+            'weddingDate': Timestamp.fromDate(model.weddingDate!),
           if (avatarUrl != null) 'avatarUrl': avatarUrl,
           'createdAt': FieldValue.serverTimestamp(),
         }, SetOptions(merge: true));
@@ -41,7 +45,8 @@ class RegisterRemoteDataSourceImpl implements RegisterRemoteDataSource {
         final prefs = await SharedPreferences.getInstance();
         var country = (prefs.getString('selected_country') ?? '').toUpperCase();
         if (country.isEmpty) {
-          country = (ui.PlatformDispatcher.instance.locale.countryCode ?? 'TR').toUpperCase();
+          country = (ui.PlatformDispatcher.instance.locale.countryCode ?? 'TR')
+              .toUpperCase();
         }
         await userRef.set({'country': country}, SetOptions(merge: true));
         await prefs.remove('selected_country');

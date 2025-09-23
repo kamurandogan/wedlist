@@ -16,7 +16,9 @@ class AppNotificationModel {
 
   factory AppNotificationModel.fromJson(Map<String, dynamic> json, String id) {
     final ts = json['createdAt'];
-    final dt = ts is Timestamp ? ts.toDate() : DateTime.tryParse(ts?.toString() ?? '') ?? DateTime.now();
+    final dt = ts is Timestamp
+        ? ts.toDate()
+        : DateTime.tryParse(ts?.toString() ?? '') ?? DateTime.now();
     return AppNotificationModel(
       id: id,
       type: json['type'] as String? ?? 'item_added',

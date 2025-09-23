@@ -7,7 +7,10 @@ class WishListTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 24),
-      child: Text('Wish List', style: Theme.of(context).textTheme.headlineSmall),
+      child: Text(
+        'Wish List',
+        style: Theme.of(context).textTheme.headlineSmall,
+      ),
     );
   }
 }

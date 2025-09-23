@@ -41,7 +41,8 @@ class _VerificationPageState extends State<VerificationPage> {
       context.go(AppRoute.main.path);
     } else {
       setState(() {
-        errorText = 'E-posta adresiniz henüz doğrulanmadı. Lütfen e-postanızı kontrol edin ve gelen linke tıklayın.';
+        errorText =
+            'E-posta adresiniz henüz doğrulanmadı. Lütfen e-postanızı kontrol edin ve gelen linke tıklayın.';
       });
     }
   }
@@ -55,7 +56,10 @@ class _VerificationPageState extends State<VerificationPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Verification', style: Theme.of(context).textTheme.headlineLarge),
+              Text(
+                'Verification',
+                style: Theme.of(context).textTheme.headlineLarge,
+              ),
               Text(
                 _userEmail != null
                     ? 'Lütfen $_userEmail adresine gönderilen doğrulama linkine tıklayın.'
@@ -73,7 +77,10 @@ class _VerificationPageState extends State<VerificationPage> {
               if (errorText != null)
                 Padding(
                   padding: const EdgeInsets.only(bottom: 8),
-                  child: Text(errorText!, style: const TextStyle(color: Colors.red)),
+                  child: Text(
+                    errorText!,
+                    style: const TextStyle(color: Colors.red),
+                  ),
                 ),
               CustomFilledButton(
                 text: 'Doğrulamayı Kontrol Et',

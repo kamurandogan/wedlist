@@ -9,13 +9,18 @@ class ItemModel {
     category: json['category'] as String,
   );
 
-  factory ItemModel.fromEntity(ItemEntity e) => ItemModel(id: e.id, title: e.title, category: e.category);
+  factory ItemModel.fromEntity(ItemEntity e) =>
+      ItemModel(id: e.id, title: e.title, category: e.category);
 
   final String id;
   final String title;
   final String category;
 
-  Map<String, dynamic> toJson() => {'id': id, 'title': title, 'category': category};
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'title': title,
+    'category': category,
+  };
 
   ItemEntity toEntity() => ItemEntity(id: id, title: title, category: category);
 }

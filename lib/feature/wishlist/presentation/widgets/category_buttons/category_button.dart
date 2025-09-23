@@ -19,9 +19,13 @@ final class CategoryButton extends StatelessWidget {
       onPressed: onPressed,
       style: OutlinedButton.styleFrom(
         backgroundColor: isSelected ? AppColors.primary : Colors.transparent,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_buttonCircularRadius)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(_buttonCircularRadius),
+        ),
         side: BorderSide(
-          color: isSelected ? AppColors.primary : Colors.grey.withValues(alpha: 0.4),
+          color: isSelected
+              ? AppColors.primary
+              : Colors.grey.withValues(alpha: 0.4),
           width: 1.2,
         ),
       ),

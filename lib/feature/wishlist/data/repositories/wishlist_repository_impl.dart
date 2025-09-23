@@ -8,7 +8,11 @@ class WishListRepositoryImpl implements WishListRepository {
 
   @override
   // ignore: lines_longer_than_80_chars
-  Future<List<ItemEntity>> getItems(String category, String langCode, String id) {
+  Future<List<ItemEntity>> getItems(
+    String category,
+    String langCode,
+    String id,
+  ) {
     return remoteDataSource.getItems(category, langCode, id);
   }
 

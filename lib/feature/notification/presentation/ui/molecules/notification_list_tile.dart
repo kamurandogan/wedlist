@@ -29,12 +29,17 @@ class NotificationListTile extends StatelessWidget {
         leading: const NotificationIcon(color: AppColors.pastelPink),
         title: Text(
           title,
-          style: Theme.of(
-            context,
-          ).textTheme.titleSmall?.copyWith(fontWeight: unread ? FontWeight.bold : FontWeight.normal),
+          style:
+              Theme.of(
+                context,
+              ).textTheme.titleSmall?.copyWith(
+                fontWeight: unread ? FontWeight.bold : FontWeight.normal,
+              ),
         ),
         subtitle: Text(subtitle),
-        trailing: unread ? const Icon(Icons.brightness_1, color: AppColors.accent) : null,
+        trailing: unread
+            ? const Icon(Icons.brightness_1, color: AppColors.accent)
+            : null,
         onTap: onTap,
       ),
     );

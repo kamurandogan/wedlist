@@ -19,7 +19,8 @@ sealed class UserItemModel with _$UserItemModel {
     @Default('') String createdBy,
   }) = _UserItemModel;
 
-  factory UserItemModel.fromJson(Map<String, dynamic> json) => _$UserItemModelFromJson(json);
+  factory UserItemModel.fromJson(Map<String, dynamic> json) =>
+      _$UserItemModelFromJson(json);
 
   factory UserItemModel.fromEntity(UserItemEntity entity) => UserItemModel(
     id: entity.id,

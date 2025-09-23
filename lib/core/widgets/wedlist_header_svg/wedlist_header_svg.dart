@@ -10,6 +10,9 @@ class WedlistHeaderSvg extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(height: MediaQuery.of(context).size.height * 0.15, child: _logoSvg);
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.15,
+      child: _logoSvg,
+    );
   }
 }

@@ -27,7 +27,8 @@ class AddToDowryButton extends StatefulWidget {
   State<AddToDowryButton> createState() => _AddToDowryButtonState();
 }
 
-class _AddToDowryButtonState extends State<AddToDowryButton> with SingleTickerProviderStateMixin {
+class _AddToDowryButtonState extends State<AddToDowryButton>
+    with SingleTickerProviderStateMixin {
   bool _clicked = false;
   late AnimationController _controller;
   late Animation<Color?> _colorAnimation;

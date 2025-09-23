@@ -36,7 +36,17 @@ mixin OnboardingMixin<T extends StatefulWidget> on State<T> {
   }
 
   // Country selection state for onboarding
-  static const List<String> _supportedCountries = ['TR', 'US', 'CA', 'UK', 'AU', 'DE', 'FR', 'IT', 'JP'];
+  static const List<String> _supportedCountries = [
+    'TR',
+    'US',
+    'CA',
+    'UK',
+    'AU',
+    'DE',
+    'FR',
+    'IT',
+    'JP',
+  ];
   static const Map<String, String> _countryLabels = {
     'TR': 'Turkey',
     'US': 'United States',

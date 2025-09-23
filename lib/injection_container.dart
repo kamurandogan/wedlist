@@ -85,16 +85,31 @@ Future<void> init() async {
     // ItemAdd Feature Injection
     ..registerLazySingleton<ItemRepository>(ItemRepositoryImpl.new)
     ..registerLazySingleton<UserItemRemoteDataSource>(
-      () => UserItemRemoteDataSourceImpl(FirebaseFirestore.instance, FirebaseStorage.instance, FirebaseAuth.instance),
+      () => UserItemRemoteDataSourceImpl(
+        FirebaseFirestore.instance,
+        FirebaseStorage.instance,
+        FirebaseAuth.instance,
+      ),
     )
-    ..registerLazySingleton<UserItemRepository>(() => UserItemRepositoryImpl(sl<UserItemRemoteDataSource>()))
-    ..registerLazySingleton<AddUserItemUseCase>(() => AddUserItemUseCase(sl<UserItemRepository>()))
+    ..registerLazySingleton<UserItemRepository>(
+      () => UserItemRepositoryImpl(sl<UserItemRemoteDataSource>()),
+    )
+    ..registerLazySingleton<AddUserItemUseCase>(
+      () => AddUserItemUseCase(sl<UserItemRepository>()),
+    )
     // Photo Upload
     ..registerLazySingleton<PhotoUploadDataSource>(
-      () => PhotoUploadDataSourceImpl(FirebaseStorage.instance, FirebaseAuth.instance),
+      () => PhotoUploadDataSourceImpl(
+        FirebaseStorage.instance,
+        FirebaseAuth.instance,
+      ),
     )
-    ..registerLazySingleton<PhotoRepository>(() => PhotoRepositoryImpl(sl<PhotoUploadDataSource>()))
-    ..registerLazySingleton<UploadPhotoUseCase>(() => UploadPhotoUseCase(sl<PhotoRepository>()))
+    ..registerLazySingleton<PhotoRepository>(
+      () => PhotoRepositoryImpl(sl<PhotoUploadDataSource>()),
+    )
+    ..registerLazySingleton<UploadPhotoUseCase>(
+      () => UploadPhotoUseCase(sl<PhotoRepository>()),
+    )
     ..registerLazySingleton<UploadPhotoWithProgressUseCase>(
       () => UploadPhotoWithProgressUseCase(sl<PhotoRepository>()),
     );
@@ -102,21 +117,41 @@ Future<void> init() async {
   sl
     // Register Feature Injection
     ..registerFactory(() => AddItemBloc(sl<AddUserItemUseCase>()))
-    ..registerFactory(() => AddPhotoCubit(sl<UploadPhotoUseCase>(), sl<UploadPhotoWithProgressUseCase>()))
-    ..registerLazySingleton<RegisterRemoteDataSource>(RegisterRemoteDataSourceImpl.new)
-    ..registerLazySingleton<RegisterRepository>(() => RegisterRepositoryImpl(sl<RegisterRemoteDataSource>()))
-    ..registerLazySingleton<RegisterUseCase>(() => RegisterUseCase(sl<RegisterRepository>()))
+    ..registerFactory(
+      () => AddPhotoCubit(
+        sl<UploadPhotoUseCase>(),
+        sl<UploadPhotoWithProgressUseCase>(),
+      ),
+    )
+    ..registerLazySingleton<RegisterRemoteDataSource>(
+      RegisterRemoteDataSourceImpl.new,
+    )
+    ..registerLazySingleton<RegisterRepository>(
+      () => RegisterRepositoryImpl(sl<RegisterRemoteDataSource>()),
+    )
+    ..registerLazySingleton<RegisterUseCase>(
+      () => RegisterUseCase(sl<RegisterRepository>()),
+    )
     ..registerFactory(() => RegisterBloc(sl<RegisterUseCase>()))
     // Login/Auth Feature Injection
     ..registerLazySingleton<AuthRemoteDataSource>(AuthRemoteDataSourceImpl.new)
-    ..registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(sl<AuthRemoteDataSource>()))
+    ..registerLazySingleton<AuthRepository>(
+      () => AuthRepositoryImpl(sl<AuthRemoteDataSource>()),
+    )
     ..registerLazySingleton<SignIn>(() => SignIn(sl<AuthRepository>()))
     ..registerLazySingleton<CountryPersistenceService>(
-      () => CountryPersistenceService(FirebaseFirestore.instance, FirebaseAuth.instance),
+      () => CountryPersistenceService(
+        FirebaseFirestore.instance,
+        FirebaseAuth.instance,
+      ),
     )
     // Country feature
     ..registerLazySingleton<CountryRepository>(
-      () => CountryRepositoryImpl(FirebaseFirestore.instance, FirebaseAuth.instance, sl<CountryPersistenceService>()),
+      () => CountryRepositoryImpl(
+        FirebaseFirestore.instance,
+        FirebaseAuth.instance,
+        sl<CountryPersistenceService>(),
+      ),
     )
     ..registerLazySingleton(() => WatchCountry(sl<CountryRepository>()))
     ..registerLazySingleton(() => ChangeCountry(sl<CountryRepository>()))
@@ -129,12 +164,18 @@ Future<void> init() async {
         sl<RefreshBus>(),
       ),
     )
-    ..registerFactory(() => AuthBloc(sl<SignIn>(), sl<CountryPersistenceService>()))
+    ..registerFactory(
+      () => AuthBloc(sl<SignIn>(), sl<CountryPersistenceService>()),
+    )
     ..registerLazySingleton(() => sharedPreferences)
     // Core
-    ..registerLazySingleton<ThemeRepositoryImpl>(() => ThemeRepositoryImpl(sl<SharedPreferences>()))
+    ..registerLazySingleton<ThemeRepositoryImpl>(
+      () => ThemeRepositoryImpl(sl<SharedPreferences>()),
+    )
     // Domain
-    ..registerLazySingleton<ToggleTheme>(() => ToggleTheme(sl<ThemeRepositoryImpl>()))
+    ..registerLazySingleton<ToggleTheme>(
+      () => ToggleTheme(sl<ThemeRepositoryImpl>()),
+    )
     // Bloc (GÜNCELLENDİ ✅)
     ..registerLazySingleton<ThemeCubit>(
       () => ThemeCubit(
@@ -144,39 +185,68 @@ Future<void> init() async {
     )
     // Wishlist Injection
     ..registerLazySingleton(() => FirebaseFirestore.instance)
-    ..registerLazySingleton<WishListRemoteDataSource>(() => WishListRemoteDataSourceImpl(sl(), FirebaseAuth.instance))
-    ..registerLazySingleton<WishListRepository>(() => WishListRepositoryImpl(sl()))
+    ..registerLazySingleton<WishListRemoteDataSource>(
+      () => WishListRemoteDataSourceImpl(sl(), FirebaseAuth.instance),
+    )
+    ..registerLazySingleton<WishListRepository>(
+      () => WishListRepositoryImpl(sl()),
+    )
     ..registerLazySingleton(() => GetWishListItems(sl()))
     ..registerLazySingleton(() => AddWishlistItems(sl()))
     ..registerFactory(() => WishListBloc(sl(), sl<RefreshBus>()))
     // Category Injection
-    ..registerLazySingleton<CategoryRemoteDataSource>(() => CategoryRemoteDataSourceImpl(sl(), FirebaseAuth.instance))
-    ..registerLazySingleton<CategoryRepository>(() => CategoryRepositoryImpl(sl()))
+    ..registerLazySingleton<CategoryRemoteDataSource>(
+      () => CategoryRemoteDataSourceImpl(sl(), FirebaseAuth.instance),
+    )
+    ..registerLazySingleton<CategoryRepository>(
+      () => CategoryRepositoryImpl(sl()),
+    )
     ..registerLazySingleton(() => GetCategoryItems(sl()))
     ..registerFactory(() => CategorylistBloc(sl(), sl<RefreshBus>()))
     // User Service
-    ..registerLazySingleton<UserService>(() => UserService(FirebaseFirestore.instance, FirebaseAuth.instance))
+    ..registerLazySingleton<UserService>(
+      () => UserService(FirebaseFirestore.instance, FirebaseAuth.instance),
+    )
     // Ads Service
     ..registerLazySingleton<AdsService>(AdsService.new)
     // Purchase Service
     ..registerLazySingleton<PurchaseService>(PurchaseService.new)
     // Notifications
     ..registerLazySingleton<NotificationRemoteDataSource>(
-      () => NotificationRemoteDataSourceImpl(FirebaseFirestore.instance, FirebaseAuth.instance),
+      () => NotificationRemoteDataSourceImpl(
+        FirebaseFirestore.instance,
+        FirebaseAuth.instance,
+      ),
     )
     ..registerLazySingleton<NotificationRepository>(
       () => NotificationRepositoryImpl(sl<NotificationRemoteDataSource>()),
     )
-    ..registerLazySingleton(() => WatchNotifications(sl<NotificationRepository>()))
-    ..registerLazySingleton(() => MarkNotificationsRead(sl<NotificationRepository>()))
-    ..registerLazySingleton(() => DeleteNotificationUseCase(sl<NotificationRepository>()))
-    ..registerLazySingleton(() => SendNotificationToUser(sl<NotificationRepository>()))
+    ..registerLazySingleton(
+      () => WatchNotifications(sl<NotificationRepository>()),
+    )
+    ..registerLazySingleton(
+      () => MarkNotificationsRead(sl<NotificationRepository>()),
+    )
+    ..registerLazySingleton(
+      () => DeleteNotificationUseCase(sl<NotificationRepository>()),
+    )
+    ..registerLazySingleton(
+      () => SendNotificationToUser(sl<NotificationRepository>()),
+    )
     ..registerFactory(() => NotificationBloc(sl(), sl(), sl(), sl()))
     // DowryList -> UserItem use cases
-    ..registerLazySingleton<GetUserItemsUseCase>(() => GetUserItemsUseCase(sl<UserItemRepository>()))
-    ..registerLazySingleton<DeleteUserItemUseCase>(() => DeleteUserItemUseCase(sl<UserItemRepository>()))
-    ..registerLazySingleton<UpdateUserItemUseCase>(() => UpdateUserItemUseCase(sl<UserItemRepository>()))
-    ..registerLazySingleton<WatchUserItemsUseCase>(() => WatchUserItemsUseCase(sl<UserItemRepository>()))
+    ..registerLazySingleton<GetUserItemsUseCase>(
+      () => GetUserItemsUseCase(sl<UserItemRepository>()),
+    )
+    ..registerLazySingleton<DeleteUserItemUseCase>(
+      () => DeleteUserItemUseCase(sl<UserItemRepository>()),
+    )
+    ..registerLazySingleton<UpdateUserItemUseCase>(
+      () => UpdateUserItemUseCase(sl<UserItemRepository>()),
+    )
+    ..registerLazySingleton<WatchUserItemsUseCase>(
+      () => WatchUserItemsUseCase(sl<UserItemRepository>()),
+    )
     ..registerFactory(
       () => DowryListBloc(
         sl<GetUserItemsUseCase>(),

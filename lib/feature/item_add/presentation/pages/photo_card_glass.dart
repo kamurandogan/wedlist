@@ -4,7 +4,12 @@ import 'package:wedlist/feature/item_add/presentation/widgets/photo_card_glass/p
 import 'package:wedlist/feature/item_add/presentation/widgets/photo_card_glass/photo_card_glass_content.dart';
 
 class PhotoCardGlass extends StatelessWidget {
-  const PhotoCardGlass({required this.title, required this.price, required this.note, super.key});
+  const PhotoCardGlass({
+    required this.title,
+    required this.price,
+    required this.note,
+    super.key,
+  });
   final String title;
   final String price;
   final String note;

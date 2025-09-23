@@ -46,18 +46,24 @@ class _PhotoCarouselState extends State<PhotoCarousel> {
                   }
                   final items = List.of(state.items)
                     ..sort((a, b) {
-                      final da = a.createdAt ?? DateTime.fromMillisecondsSinceEpoch(0);
-                      final db = b.createdAt ?? DateTime.fromMillisecondsSinceEpoch(0);
+                      final da =
+                          a.createdAt ?? DateTime.fromMillisecondsSinceEpoch(0);
+                      final db =
+                          b.createdAt ?? DateTime.fromMillisecondsSinceEpoch(0);
                       return db.compareTo(da);
                     });
-                  final controller = PageController(viewportFraction: 0.92, initialPage: currentIndex);
+                  final controller = PageController(
+                    viewportFraction: 0.92,
+                    initialPage: currentIndex,
+                  );
                   return Column(
                     children: [
                       Expanded(
                         child: PageView.builder(
                           itemCount: items.length,
                           controller: controller,
-                          onPageChanged: (index) => setState(() => currentIndex = index),
+                          onPageChanged: (index) =>
+                              setState(() => currentIndex = index),
                           itemBuilder: (context, index) {
                             final item = items[index];
                             return DowryItemCard(item: item);

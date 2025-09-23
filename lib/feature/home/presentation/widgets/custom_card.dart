@@ -1,7 +1,12 @@
 part of '../../home_page.dart';
 
 class CustomCard extends StatelessWidget {
-  const CustomCard({required this.cardHeight, super.key, this.cardColor = Colors.white, this.child});
+  const CustomCard({
+    required this.cardHeight,
+    super.key,
+    this.cardColor = Colors.white,
+    this.child,
+  });
 
   final double cardHeight;
   final Color? cardColor;

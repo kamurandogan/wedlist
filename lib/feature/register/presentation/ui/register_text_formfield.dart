@@ -37,7 +37,8 @@ class RegisterTextFormfield extends StatelessWidget {
         RegisterTextField(
           labelText: 'Şifre (Tekrar)',
           controller: passwordAgainController,
-          validator: (v) => v == null || v.isEmpty ? 'Şifreyi tekrar giriniz' : null,
+          validator: (v) =>
+              v == null || v.isEmpty ? 'Şifreyi tekrar giriniz' : null,
         ),
       ],
     );

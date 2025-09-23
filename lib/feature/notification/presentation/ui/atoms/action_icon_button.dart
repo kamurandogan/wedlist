@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
 class ActionIconButton extends StatelessWidget {
-  const ActionIconButton({required this.icon, required this.color, required this.onPressed, super.key});
+  const ActionIconButton({
+    required this.icon,
+    required this.color,
+    required this.onPressed,
+    super.key,
+  });
 
   final IconData icon;
   final Color color;

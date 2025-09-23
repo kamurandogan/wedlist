@@ -9,13 +9,25 @@ class PhotoRepositoryImpl implements PhotoRepository {
   final PhotoUploadDataSource _dataSource;
 
   @override
-  Future<String> uploadBytes(Uint8List bytes, String fileName, {String? contentType}) {
+  Future<String> uploadBytes(
+    Uint8List bytes,
+    String fileName, {
+    String? contentType,
+  }) {
     return _dataSource.uploadBytes(bytes, fileName, contentType: contentType);
   }
 
   @override
-  Stream<double> uploadBytesProgress(Uint8List bytes, String fileName, {String? contentType}) async* {
-    await for (final snap in _dataSource.uploadBytesWithProgress(bytes, fileName, contentType: contentType)) {
+  Stream<double> uploadBytesProgress(
+    Uint8List bytes,
+    String fileName, {
+    String? contentType,
+  }) async* {
+    await for (final snap in _dataSource.uploadBytesWithProgress(
+      bytes,
+      fileName,
+      contentType: contentType,
+    )) {
       final total = snap.totalBytes;
       final transferred = snap.bytesTransferred;
       if (total > 0) {

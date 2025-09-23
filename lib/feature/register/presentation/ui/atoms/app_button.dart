@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 
 class AppButton extends StatelessWidget {
-  const AppButton({required this.text, this.onPressed, this.icon, this.isLoading = false, super.key});
+  const AppButton({
+    required this.text,
+    this.onPressed,
+    this.icon,
+    this.isLoading = false,
+    super.key,
+  });
 
   final String text;
   final VoidCallback? onPressed;
@@ -17,7 +23,10 @@ class AppButton extends StatelessWidget {
           ? SizedBox(
               width: 18,
               height: 18,
-              child: CircularProgressIndicator(strokeWidth: 2, color: Theme.of(context).colorScheme.onPrimary),
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
             )
           : (icon ?? const SizedBox.shrink()),
       label: Text(text),

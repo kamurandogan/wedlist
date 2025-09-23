@@ -10,7 +10,13 @@ import 'package:wedlist/feature/settings/domain/usecases/watch_country.dart';
 part 'country_state.dart';
 
 class CountryCubit extends Cubit<CountryState> {
-  CountryCubit(this._watch, this._change, this._firestore, this._auth, this._refreshBus) : super(const CountryState()) {
+  CountryCubit(
+    this._watch,
+    this._change,
+    this._firestore,
+    this._auth,
+    this._refreshBus,
+  ) : super(const CountryState()) {
     _sub = _watch().listen((value) {
       emit(state.copyWith(countryCode: value, status: CountryStatus.ready));
     });
@@ -34,9 +40,17 @@ class CountryCubit extends Cubit<CountryState> {
       await _resetWishList();
       // Publish global refresh event so other blocs can respond
       _refreshBus.countryChanged();
-      emit(state.copyWith(status: CountryStatus.ready, lastMessage: 'updated', wishlistInvalidated: true));
+      emit(
+        state.copyWith(
+          status: CountryStatus.ready,
+          lastMessage: 'updated',
+          wishlistInvalidated: true,
+        ),
+      );
     } on Exception catch (e) {
-      emit(state.copyWith(status: CountryStatus.error, lastMessage: e.toString()));
+      emit(
+        state.copyWith(status: CountryStatus.error, lastMessage: e.toString()),
+      );
     }
   }
 
@@ -50,6 +64,8 @@ class CountryCubit extends Cubit<CountryState> {
     final uid = _auth.currentUser?.uid;
     if (uid == null) return;
     final ref = _firestore.collection('users').doc(uid);
-    await ref.set({'wishList': <Map<String, dynamic>>[]}, SetOptions(merge: true));
+    await ref.set({
+      'wishList': <Map<String, dynamic>>[],
+    }, SetOptions(merge: true));
   }
 }

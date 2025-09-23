@@ -13,7 +13,9 @@ class RegisterModel extends RegisterEntity {
     name: json['name'] as String,
     email: json['email'] as String,
     password: json['password'] as String,
-    weddingDate: json['weddingDate'] != null ? DateTime.parse(json['weddingDate'] as String) : null,
+    weddingDate: json['weddingDate'] != null
+        ? DateTime.parse(json['weddingDate'] as String)
+        : null,
   );
 
   Map<String, dynamic> toJson() => {

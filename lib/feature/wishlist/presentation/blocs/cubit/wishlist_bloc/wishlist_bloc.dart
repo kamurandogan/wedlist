@@ -10,13 +10,20 @@ part 'wishlist_event.dart';
 part 'wishlist_state.dart';
 
 class WishListBloc extends Bloc<WishListEvent, WishListState> {
-  WishListBloc(this.getWishListItems, this._refreshBus) : super(WishListInitial()) {
+  WishListBloc(this.getWishListItems, this._refreshBus)
+    : super(WishListInitial()) {
     on<FetchWishListItems>(_onFetch);
 
     // Ülke değiştiğinde son parametrelerle otomatik refresh
     _sub = _refreshBus.stream.listen((evt) {
       if (evt.type == RefreshEventType.countryChanged && _lastParams != null) {
-        add(FetchWishListItems(_lastParams!.category, _lastParams!.langCode, _lastParams!.id));
+        add(
+          FetchWishListItems(
+            _lastParams!.category,
+            _lastParams!.langCode,
+            _lastParams!.id,
+          ),
+        );
       }
     });
   }
@@ -25,11 +32,18 @@ class WishListBloc extends Bloc<WishListEvent, WishListState> {
   StreamSubscription<RefreshEvent>? _sub;
   _FetchParams? _lastParams;
 
-  Future<void> _onFetch(FetchWishListItems event, Emitter<WishListState> emit) async {
+  Future<void> _onFetch(
+    FetchWishListItems event,
+    Emitter<WishListState> emit,
+  ) async {
     emit(WishListLoading());
     try {
       _lastParams = _FetchParams(event.category, event.langCode, event.id);
-      final items = await getWishListItems.call(event.category, event.langCode, event.id);
+      final items = await getWishListItems.call(
+        event.category,
+        event.langCode,
+        event.id,
+      );
       emit(WishListLoaded(items));
     } on FirebaseException catch (e) {
       emit(WishListError(_firebaseErrorToMessage(e)));

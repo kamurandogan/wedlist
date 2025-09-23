@@ -20,10 +20,14 @@ class DowryCategoryButton extends StatelessWidget {
       style: OutlinedButton.styleFrom(
         backgroundColor: bg,
         side: BorderSide(
-          color: isSelected ? AppColors.primary : Colors.grey.withValues(alpha: 0.4),
+          color: isSelected
+              ? AppColors.primary
+              : Colors.grey.withValues(alpha: 0.4),
           width: 1.2,
         ),
-        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(24))),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(24)),
+        ),
         padding: const EdgeInsets.symmetric(horizontal: 16),
       ),
       onPressed: onPressed,

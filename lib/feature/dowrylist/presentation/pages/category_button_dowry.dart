@@ -42,7 +42,9 @@ class DowryCategoryButtons extends StatelessWidget {
                         categoryName: cat,
                         isSelected: isSelected,
                         onPressed: () {
-                          context.read<SelectCategoryCubit>().selectCategory(cat);
+                          context.read<SelectCategoryCubit>().selectCategory(
+                            cat,
+                          );
                         },
                       ),
                     );

@@ -7,7 +7,11 @@ class UploadPhotoUseCase {
 
   final PhotoRepository _repo;
 
-  Future<String> call({required Uint8List bytes, required String fileName, String? contentType}) {
+  Future<String> call({
+    required Uint8List bytes,
+    required String fileName,
+    String? contentType,
+  }) {
     return _repo.uploadBytes(bytes, fileName, contentType: contentType);
   }
 }

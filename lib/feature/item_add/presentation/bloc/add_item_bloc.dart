@@ -39,7 +39,10 @@ class AddItemBloc extends Bloc<AddItemEvent, AddItemState> {
   }
   // Firestore'dan otomatik id üretmek için yardımcı fonksiyon
   static String generateFirestoreId() {
-    return FirebaseFirestore.instance.collection(FirebasePaths.userItems).doc().id;
+    return FirebaseFirestore.instance
+        .collection(FirebasePaths.userItems)
+        .doc()
+        .id;
   }
 
   final AddUserItemUseCase addUserItemUseCase;

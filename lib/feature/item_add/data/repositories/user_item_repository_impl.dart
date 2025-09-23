@@ -43,6 +43,7 @@ class UserItemRepositoryImpl implements UserItemRepository {
   }
 
   @override
-  Stream<List<UserItemEntity>> watchAllUserItems() =>
-      remoteDataSource.watchAllUserItems().map((models) => models.map((e) => e.toEntity()).toList());
+  Stream<List<UserItemEntity>> watchAllUserItems() => remoteDataSource
+      .watchAllUserItems()
+      .map((models) => models.map((e) => e.toEntity()).toList());
 }

@@ -32,7 +32,10 @@ class WishListView extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text('İstek listenizi görmek için lütfen giriş yapın.', textAlign: TextAlign.center),
+                const Text(
+                  'İstek listenizi görmek için lütfen giriş yapın.',
+                  textAlign: TextAlign.center,
+                ),
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () => context.go(AppRoute.login.path),
@@ -51,8 +54,12 @@ class WishListView extends StatelessWidget {
           final langCode = Localizations.localeOf(context).languageCode;
 
           // Seçili kategori ve dil koduna göre ilgili wishlist ve kategori verilerini çek
-          context.read<WishListBloc>().add(FetchWishListItems(categoryState, langCode, categoryState));
-          context.read<CategorylistBloc>().add(FetchCategoryList(langCode, categoryState));
+          context.read<WishListBloc>().add(
+            FetchWishListItems(categoryState, langCode, categoryState),
+          );
+          context.read<CategorylistBloc>().add(
+            FetchCategoryList(langCode, categoryState),
+          );
           return BlocConsumer<WishListBloc, WishListState>(
             listener: (context, state) {
               if (state is WishListError) {
@@ -81,7 +88,13 @@ class WishListView extends StatelessWidget {
                     }
                     final filtered = ownedKeys.isEmpty
                         ? state.items
-                        : state.items.where((w) => !ownedKeys.contains(keyOf(w.category, w.title))).toList();
+                        : state.items
+                              .where(
+                                (w) => !ownedKeys.contains(
+                                  keyOf(w.category, w.title),
+                                ),
+                              )
+                              .toList();
                     // UI-level dedup by normalized category+title in case upstream still contains duplicates
                     String norm(String s) => s.trim().toLowerCase();
                     final byKey = <String, ItemEntity>{};
@@ -126,7 +139,9 @@ class WishListView extends StatelessWidget {
               // Hata durumu
               else if (state is WishListError) {
                 // Ayrıca sayfada da kısa bir bilgi gösterelim
-                return Center(child: Text(context.loc.somethingWentWrongErrorText));
+                return Center(
+                  child: Text(context.loc.somethingWentWrongErrorText),
+                );
               }
               // Varsayılan boş durum
               return const SizedBox();

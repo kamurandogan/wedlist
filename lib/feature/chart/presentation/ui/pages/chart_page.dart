@@ -24,7 +24,8 @@ class ChartPage extends StatelessWidget {
         return bloc;
       },
       child: BlocListener<DowryListBloc, DowryListState>(
-        listenWhen: (prev, curr) => curr is DowryListLoaded || curr is DowryListEmpty,
+        listenWhen: (prev, curr) =>
+            curr is DowryListLoaded || curr is DowryListEmpty,
         listener: (ctx, state) {
           final chartBloc = ctx.read<ChartBloc>();
           if (state is DowryListLoaded) {
@@ -57,7 +58,9 @@ class ChartPage extends StatelessWidget {
                           children: [
                             for (var i = 0; i < state.items.length; i++)
                               SpendingLegend(
-                                color: ChartPalette.adaptive(context)[i % ChartPalette.pastel.length],
+                                color: ChartPalette.adaptive(
+                                  context,
+                                )[i % ChartPalette.pastel.length],
                                 label: state.items[i].category,
                               ),
                           ],

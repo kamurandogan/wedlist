@@ -8,7 +8,9 @@ class ToggleTheme {
   final ThemeRepositoryImpl repository;
 
   Future<AppTheme> call(AppTheme currentTheme) async {
-    final newTheme = currentTheme == AppTheme.dark ? AppTheme.light : AppTheme.dark;
+    final newTheme = currentTheme == AppTheme.dark
+        ? AppTheme.light
+        : AppTheme.dark;
     await repository.saveTheme(newTheme);
     return newTheme;
   }

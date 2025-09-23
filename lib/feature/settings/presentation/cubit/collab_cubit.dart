@@ -10,7 +10,11 @@ import 'package:wedlist/core/user/user_service.dart';
 import 'package:wedlist/injection_container.dart';
 
 class CollaboratorUser {
-  CollaboratorUser({required this.uid, required this.email, required this.name});
+  CollaboratorUser({
+    required this.uid,
+    required this.email,
+    required this.name,
+  });
   final String uid;
   final String email;
   final String name;
@@ -43,7 +47,11 @@ class CollabState {
 }
 
 class CollabInvite {
-  CollabInvite({required this.uid, required this.email, required this.status}); // waiting | accepted | rejected
+  CollabInvite({
+    required this.uid,
+    required this.email,
+    required this.status,
+  }); // waiting | accepted | rejected
 
   factory CollabInvite.fromMap(Map<String, dynamic> map) => CollabInvite(
     uid: (map['uid'] as String?) ?? '',
@@ -54,7 +62,11 @@ class CollabInvite {
   final String email;
   final String status;
 
-  Map<String, dynamic> toMap() => {'uid': uid, 'email': email, 'status': status};
+  Map<String, dynamic> toMap() => {
+    'uid': uid,
+    'email': email,
+    'status': status,
+  };
 }
 
 class CollabCubit extends Cubit<CollabState> {
@@ -71,14 +83,25 @@ class CollabCubit extends Cubit<CollabState> {
     if (uid == null) return;
     emit(state.copyWith(loading: true));
     try {
-      final doc = await _firestore.collection(FirebasePaths.users).doc(uid).get();
-      var collaboratorIds = (doc.data()?['collaborators'] as List?)?.cast<String>() ?? const <String>[];
+      final doc = await _firestore
+          .collection(FirebasePaths.users)
+          .doc(uid)
+          .get();
+      var collaboratorIds =
+          (doc.data()?['collaborators'] as List?)?.cast<String>() ??
+          const <String>[];
       if (collaboratorIds.length > 1) {
-        collaboratorIds = [collaboratorIds.first]; // Tek partner kuralı: normalize et
+        collaboratorIds = [
+          collaboratorIds.first,
+        ]; // Tek partner kuralı: normalize et
       }
       final invitesRaw =
-          (doc.data()?['collabInvites'] as List?)?.cast<Map<String, dynamic>>() ?? const <Map<String, dynamic>>[];
-      final removedList = (doc.data()?['removedCollaborators'] as List?)?.cast<String>() ?? const <String>[];
+          (doc.data()?['collabInvites'] as List?)
+              ?.cast<Map<String, dynamic>>() ??
+          const <Map<String, dynamic>>[];
+      final removedList =
+          (doc.data()?['removedCollaborators'] as List?)?.cast<String>() ??
+          const <String>[];
       final invites = invitesRaw.map(CollabInvite.fromMap).toList();
       // Remote acceptance detection: Eğer waiting davet var ve karşı taraf kendi belgesinde beni collaborator olarak eklediyse
       // (acceptor cross-write yetkisi olmadığı için benim dokümanım güncellenmemiş olabilir) burada self-heal yap.
@@ -86,10 +109,15 @@ class CollabCubit extends Cubit<CollabState> {
       for (final inv in invites) {
         if (inv.status == 'waiting') {
           try {
-            final otherSnap = await _firestore.collection(FirebasePaths.users).doc(inv.uid).get();
+            final otherSnap = await _firestore
+                .collection(FirebasePaths.users)
+                .doc(inv.uid)
+                .get();
             final otherData = otherSnap.data();
             if (otherData != null) {
-              final otherCollabs = (otherData['collaborators'] as List?)?.cast<String>() ?? const <String>[];
+              final otherCollabs =
+                  (otherData['collaborators'] as List?)?.cast<String>() ??
+                  const <String>[];
               if (otherCollabs.contains(uid)) {
                 // Karşı taraf beni eklemiş => kabul gerçekleşmiş, kendi doc'umu güncelle.
                 if (!collaboratorIds.contains(inv.uid)) {
@@ -107,24 +135,35 @@ class CollabCubit extends Cubit<CollabState> {
       // Yeni mantık: collaborators listesine girmiş bir id fiilen kabul edilmiş sayılır.
       final healedIds = List<String>.from(collaboratorIds);
       // Persist normalization of invite statuses (accepted / removed) back to Firestore if needed
-      var persistChanged = inviterHealChanged; // remote acceptance tetiklendiyse kesin yazacağız
+      var persistChanged =
+          inviterHealChanged; // remote acceptance tetiklendiyse kesin yazacağız
       for (var i = 0; i < invites.length; i++) {
         final inv = invites[i];
         // Collaborators dizisine girmişse waiting -> accepted geçir
         if (healedIds.contains(inv.uid) && inv.status == 'waiting') {
-          invites[i] = CollabInvite(uid: inv.uid, email: inv.email, status: 'accepted');
+          invites[i] = CollabInvite(
+            uid: inv.uid,
+            email: inv.email,
+            status: 'accepted',
+          );
           persistChanged = true;
         }
         // If explicitly removed but invite not marked -> mark removed
         if (removedList.contains(inv.uid) && inv.status != 'removed') {
-          invites[i] = CollabInvite(uid: inv.uid, email: inv.email, status: 'removed');
+          invites[i] = CollabInvite(
+            uid: inv.uid,
+            email: inv.email,
+            status: 'removed',
+          );
           persistChanged = true;
         }
       }
       if (persistChanged) {
         try {
           // Tek partner kuralı: yalnızca ilkini yaz
-          final single = healedIds.isEmpty ? <String>[] : <String>[healedIds.first];
+          final single = healedIds.isEmpty
+              ? <String>[]
+              : <String>[healedIds.first];
           await _firestore.collection(FirebasePaths.users).doc(uid).set({
             'collabInvites': invites.map((e) => e.toMap()).toList(),
             'collaborators': single,
@@ -138,9 +177,13 @@ class CollabCubit extends Cubit<CollabState> {
           try {
             await sl<UserService>().shareAllItemsWithPartner(partnerUid);
             await sl<UserService>().sharePartnerItemsWithMe(partnerUid);
-            debugPrint('[CollabCubit] Synced userItems with partner $partnerUid after remote acceptance');
+            debugPrint(
+              '[CollabCubit] Synced userItems with partner $partnerUid after remote acceptance',
+            );
           } on Exception catch (e) {
-            debugPrint('[CollabCubit] Failed dowrylist sync on remote acceptance: $e');
+            debugPrint(
+              '[CollabCubit] Failed dowrylist sync on remote acceptance: $e',
+            );
           }
         }
       }
@@ -148,7 +191,10 @@ class CollabCubit extends Cubit<CollabState> {
       final list = <CollaboratorUser>[];
       for (final id in healedIds) {
         try {
-          final u = await _firestore.collection(FirebasePaths.users).doc(id).get();
+          final u = await _firestore
+              .collection(FirebasePaths.users)
+              .doc(id)
+              .get();
           final data = u.data();
           if (data != null) {
             var email = (data['email'] as String?) ?? '';
@@ -174,7 +220,9 @@ class CollabCubit extends Cubit<CollabState> {
           debugPrint('Failed to fetch collaborator $id: $e');
         }
       }
-      emit(state.copyWith(loading: false, collaborators: list, invites: invites));
+      emit(
+        state.copyWith(loading: false, collaborators: list, invites: invites),
+      );
     } on Exception catch (e) {
       emit(state.copyWith(loading: false, error: e.toString()));
     }
@@ -189,13 +237,20 @@ class CollabCubit extends Cubit<CollabState> {
     try {
       // Tek partner kuralı: eğer zaten partner varsa yeni davet oluşturma
       try {
-        final snap = await _firestore.collection(FirebasePaths.users).doc(uid).get();
-        final existing = (snap.data()?['collaborators'] as List?)?.cast<String>() ?? const <String>[];
+        final snap = await _firestore
+            .collection(FirebasePaths.users)
+            .doc(uid)
+            .get();
+        final existing =
+            (snap.data()?['collaborators'] as List?)?.cast<String>() ??
+            const <String>[];
         if (existing.isNotEmpty) {
           emit(
             state.copyWith(
               loading: false,
-              error: context?.loc.alreadyHasPartnerError ?? 'Zaten bir partneriniz var. Önce mevcut partneri kaldırın.',
+              error:
+                  context?.loc.alreadyHasPartnerError ??
+                  'Zaten bir partneriniz var. Önce mevcut partneri kaldırın.',
             ),
           );
           return;
@@ -205,27 +260,48 @@ class CollabCubit extends Cubit<CollabState> {
       }
       // Rate limiting kaldırıldı: İstemci artık pencere başına davet sayısı ile kısıtlanmıyor.
 
-      final q = await _firestore.collection(FirebasePaths.users).where('email', isEqualTo: norm).limit(1).get();
+      final q = await _firestore
+          .collection(FirebasePaths.users)
+          .where('email', isEqualTo: norm)
+          .limit(1)
+          .get();
       if (q.docs.isEmpty) {
-        emit(state.copyWith(loading: false, error: context?.loc.userNotFoundError ?? 'Kullanıcı bulunamadı'));
+        emit(
+          state.copyWith(
+            loading: false,
+            error: context?.loc.userNotFoundError ?? 'Kullanıcı bulunamadı',
+          ),
+        );
         return;
       }
       final other = q.docs.first;
       final otherUid = other.id;
       if (otherUid == uid) {
-        emit(state.copyWith(loading: false, error: context?.loc.cannotInviteSelfError ?? 'Kendinizi ekleyemezsiniz'));
+        emit(
+          state.copyWith(
+            loading: false,
+            error:
+                context?.loc.cannotInviteSelfError ??
+                'Kendinizi ekleyemezsiniz',
+          ),
+        );
         return;
       }
       // Check if the target user has purchased the collaborator feature
       try {
         final otherData = other.data();
-        final premium = (otherData['premium'] as Map?)?.cast<String, dynamic>() ?? <String, dynamic>{};
-        final otherCollabUnlocked = (premium['collabUnlocked'] as bool?) ?? false;
+        final premium =
+            (otherData['premium'] as Map?)?.cast<String, dynamic>() ??
+            <String, dynamic>{};
+        final otherCollabUnlocked =
+            (premium['collabUnlocked'] as bool?) ?? false;
         if (!otherCollabUnlocked) {
           emit(
             state.copyWith(
               loading: false,
-              error: context?.loc.targetNotEntitledError ?? 'Kullanıcı partner ekleme özelliğini satın almamış',
+              error:
+                  context?.loc.targetNotEntitledError ??
+                  'Kullanıcı partner ekleme özelliğini satın almamış',
             ),
           );
           return;
@@ -235,18 +311,26 @@ class CollabCubit extends Cubit<CollabState> {
       }
       // Eğer zaten aynı kullanıcıya ait waiting/accepted bir davet varsa tekrar oluşturma
       try {
-        final selfSnap = await _firestore.collection(FirebasePaths.users).doc(uid).get();
+        final selfSnap = await _firestore
+            .collection(FirebasePaths.users)
+            .doc(uid)
+            .get();
         final existingInvites =
-            (selfSnap.data()?['collabInvites'] as List?)?.cast<Map<String, dynamic>>() ??
+            (selfSnap.data()?['collabInvites'] as List?)
+                ?.cast<Map<String, dynamic>>() ??
             const <Map<String, dynamic>>[];
         final already = existingInvites.any(
-          (m) => (m['uid'] as String?) == otherUid && ((m['status'] as String?) ?? 'waiting') == 'waiting',
+          (m) =>
+              (m['uid'] as String?) == otherUid &&
+              ((m['status'] as String?) ?? 'waiting') == 'waiting',
         );
         if (already) {
           emit(
             state.copyWith(
               loading: false,
-              error: context?.loc.inviteAlreadyPendingError ?? 'Bu kullanıcıya zaten bekleyen bir davet var',
+              error:
+                  context?.loc.inviteAlreadyPendingError ??
+                  'Bu kullanıcıya zaten bekleyen bir davet var',
             ),
           );
           return;
@@ -259,10 +343,17 @@ class CollabCubit extends Cubit<CollabState> {
       try {
         var inviterEmail = '';
         try {
-          final inviterSnap = await _firestore.collection(FirebasePaths.users).doc(uid).get();
-          inviterEmail = (inviterSnap.data()?['email'] as String?)?.trim().toLowerCase() ?? '';
+          final inviterSnap = await _firestore
+              .collection(FirebasePaths.users)
+              .doc(uid)
+              .get();
+          inviterEmail =
+              (inviterSnap.data()?['email'] as String?)?.trim().toLowerCase() ??
+              '';
         } on Exception catch (_) {}
-        inviterEmail = inviterEmail.isNotEmpty ? inviterEmail : (_auth.currentUser?.email?.toLowerCase() ?? '');
+        inviterEmail = inviterEmail.isNotEmpty
+            ? inviterEmail
+            : (_auth.currentUser?.email?.toLowerCase() ?? '');
         if (inviterEmail.isEmpty) inviterEmail = 'Bir kullanıcı';
         final notifData = {
           'type': 'collab_request',
@@ -274,14 +365,24 @@ class CollabCubit extends Cubit<CollabState> {
           'createdAt': FieldValue.serverTimestamp(),
           'read': false,
         };
-        debugPrint('[CollabCubit] Sending collab_request notification to $otherUid data=$notifData');
-        await _firestore.collection(FirebasePaths.users).doc(otherUid).collection('notifications').add(notifData);
+        debugPrint(
+          '[CollabCubit] Sending collab_request notification to $otherUid data=$notifData',
+        );
+        await _firestore
+            .collection(FirebasePaths.users)
+            .doc(otherUid)
+            .collection('notifications')
+            .add(notifData);
         debugPrint('[CollabCubit] Notification write success to $otherUid');
       } on FirebaseException catch (e, st) {
-        debugPrint('[CollabCubit] Notification write failed for $otherUid code=${e.code} message=${e.message}\n$st');
+        debugPrint(
+          '[CollabCubit] Notification write failed for $otherUid code=${e.code} message=${e.message}\n$st',
+        );
       } on Exception catch (e, st) {
         // bildirim gönderilemese de akışı bozma
-        debugPrint('[CollabCubit] Notification write failed for $otherUid (generic) $e\n$st');
+        debugPrint(
+          '[CollabCubit] Notification write failed for $otherUid (generic) $e\n$st',
+        );
       }
       // Kendi kullanıcı dokümanında bekleyen daveti kaydet
       try {
@@ -325,9 +426,13 @@ class CollabCubit extends Cubit<CollabState> {
           final ref = _firestore.collection(FirebasePaths.users).doc(targetUid);
           final snap = await ref.get();
           final raw =
-              (snap.data()?['collabInvites'] as List?)?.cast<Map<String, dynamic>>() ?? const <Map<String, dynamic>>[];
+              (snap.data()?['collabInvites'] as List?)
+                  ?.cast<Map<String, dynamic>>() ??
+              const <Map<String, dynamic>>[];
           if (raw.isEmpty) return;
-          final filtered = raw.where((m) => (m['uid'] as String?) != removedUid).toList();
+          final filtered = raw
+              .where((m) => (m['uid'] as String?) != removedUid)
+              .toList();
           if (filtered.length != raw.length) {
             await ref.set({'collabInvites': filtered}, SetOptions(merge: true));
           }
@@ -342,16 +447,20 @@ class CollabCubit extends Cubit<CollabState> {
       }
       // Karşı tarafa bildirim at; onlar da kendi tarafında kaldırır (simetrik etki)
       try {
-        await _firestore.collection(FirebasePaths.users).doc(otherUid).collection('notifications').add({
-          'type': 'collab_removed',
-          'title': context?.loc.partnerRemoved ?? 'Ortak kaldırıldı',
-          'body': '',
-          'itemId': '',
-          'category': '',
-          'createdBy': uid,
-          'createdAt': FieldValue.serverTimestamp(),
-          'read': false,
-        });
+        await _firestore
+            .collection(FirebasePaths.users)
+            .doc(otherUid)
+            .collection('notifications')
+            .add({
+              'type': 'collab_removed',
+              'title': context?.loc.partnerRemoved ?? 'Ortak kaldırıldı',
+              'body': '',
+              'itemId': '',
+              'category': '',
+              'createdBy': uid,
+              'createdAt': FieldValue.serverTimestamp(),
+              'read': false,
+            });
       } on Exception catch (_) {}
       await loadCollaborators();
     } on Exception catch (e) {
@@ -371,7 +480,8 @@ class CollabCubit extends Cubit<CollabState> {
         .snapshots()
         .listen(
           (_) => loadCollaborators(),
-          onError: (Object e, StackTrace _) => debugPrint('Collaborator observe error: $e'),
+          onError: (Object e, StackTrace _) =>
+              debugPrint('Collaborator observe error: $e'),
         );
     // Initial load
     unawaited(loadCollaborators());

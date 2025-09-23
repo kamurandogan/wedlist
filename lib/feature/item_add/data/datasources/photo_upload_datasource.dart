@@ -36,8 +36,13 @@ class PhotoUploadDataSourceImpl implements PhotoUploadDataSource {
     String directory = 'user_item_images',
   }) async {
     final uid = _auth.currentUser?.uid;
-    final baseDir = uid != null ? FirebasePaths.userScoped(uid, directory) : directory;
-    final ref = _storage.ref().child(baseDir).child('${DateTime.now().millisecondsSinceEpoch}_$fileName');
+    final baseDir = uid != null
+        ? FirebasePaths.userScoped(uid, directory)
+        : directory;
+    final ref = _storage
+        .ref()
+        .child(baseDir)
+        .child('${DateTime.now().millisecondsSinceEpoch}_$fileName');
 
     final metadata = SettableMetadata(contentType: contentType ?? 'image/jpeg');
     await ref.putData(bytes, metadata);
@@ -52,8 +57,13 @@ class PhotoUploadDataSourceImpl implements PhotoUploadDataSource {
     String directory = FirebasePaths.userItemImages,
   }) {
     final uid = _auth.currentUser?.uid;
-    final baseDir = uid != null ? FirebasePaths.userScoped(uid, directory) : directory;
-    final ref = _storage.ref().child(baseDir).child('${DateTime.now().millisecondsSinceEpoch}_$fileName');
+    final baseDir = uid != null
+        ? FirebasePaths.userScoped(uid, directory)
+        : directory;
+    final ref = _storage
+        .ref()
+        .child(baseDir)
+        .child('${DateTime.now().millisecondsSinceEpoch}_$fileName');
     final metadata = SettableMetadata(contentType: contentType ?? 'image/jpeg');
     final task = ref.putData(bytes, metadata);
     return task.snapshotEvents;

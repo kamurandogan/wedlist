@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:wedlist/core/utils/paddings.dart';
 
 final class CustomCard extends StatelessWidget {
-  const CustomCard({required this.cardColor, required this.cardHeight, super.key, this.children});
+  const CustomCard({
+    required this.cardColor,
+    required this.cardHeight,
+    super.key,
+    this.children,
+  });
 
   final Color cardColor;
   final double cardHeight;

@@ -1,7 +1,11 @@
 part of '../../login_page.dart';
 
 class LoginFormField extends StatelessWidget {
-  const LoginFormField({required this.emailController, required this.passwordController, super.key});
+  const LoginFormField({
+    required this.emailController,
+    required this.passwordController,
+    super.key,
+  });
 
   final TextEditingController emailController;
   final TextEditingController passwordController;

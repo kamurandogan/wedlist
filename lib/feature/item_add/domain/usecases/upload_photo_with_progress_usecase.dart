@@ -7,7 +7,11 @@ class UploadPhotoWithProgressUseCase {
 
   final PhotoRepository _repo;
 
-  Stream<double> call({required Uint8List bytes, required String fileName, String? contentType}) {
+  Stream<double> call({
+    required Uint8List bytes,
+    required String fileName,
+    String? contentType,
+  }) {
     return _repo.uploadBytesProgress(bytes, fileName, contentType: contentType);
   }
 }

@@ -33,9 +33,17 @@ class UserItemRemoteDataSourceImpl implements UserItemRemoteDataSource {
     var owners = const <String>[];
     if (uid != null) {
       try {
-        final userDoc = await firestore.collection(FirebasePaths.users).doc(uid).get();
-        final collabs = (userDoc.data()?['collaborators'] as List?)?.cast<String>() ?? const <String>[];
-        final removed = (userDoc.data()?['removedCollaborators'] as List?)?.cast<String>() ?? const <String>[];
+        final userDoc = await firestore
+            .collection(FirebasePaths.users)
+            .doc(uid)
+            .get();
+        final collabs =
+            (userDoc.data()?['collaborators'] as List?)?.cast<String>() ??
+            const <String>[];
+        final removed =
+            (userDoc.data()?['removedCollaborators'] as List?)
+                ?.cast<String>() ??
+            const <String>[];
         owners = <String>{uid, ...collabs}.toList();
         toSave = toSave.copyWith(owners: owners, createdBy: uid);
 
@@ -49,7 +57,8 @@ class UserItemRemoteDataSourceImpl implements UserItemRemoteDataSource {
           for (final d in reverseQ.docs) {
             final otherId = d.id;
             if (otherId == uid) continue;
-            if (removed.contains(otherId)) continue; // user explicitly removed them
+            if (removed.contains(otherId))
+              continue; // user explicitly removed them
             if (!owners.contains(otherId)) {
               owners.add(otherId);
             }
@@ -66,7 +75,10 @@ class UserItemRemoteDataSourceImpl implements UserItemRemoteDataSource {
         toSave = toSave.copyWith(owners: owners, createdBy: uid);
       }
     }
-    await firestore.collection(collectionPath).doc(toSave.id).set(toSave.toJson());
+    await firestore
+        .collection(collectionPath)
+        .doc(toSave.id)
+        .set(toSave.toJson());
 
     // Notify collaborators (all owners except the creator) about the new item
     try {
@@ -77,8 +89,13 @@ class UserItemRemoteDataSourceImpl implements UserItemRemoteDataSource {
           final verified = <String>[];
           for (final rid in recipients) {
             try {
-              final rs = await firestore.collection(FirebasePaths.users).doc(rid).get();
-              final collabs = (rs.data()?['collaborators'] as List?)?.cast<String>() ?? const <String>[];
+              final rs = await firestore
+                  .collection(FirebasePaths.users)
+                  .doc(rid)
+                  .get();
+              final collabs =
+                  (rs.data()?['collaborators'] as List?)?.cast<String>() ??
+                  const <String>[];
               if (collabs.contains(uid))
                 verified.add(rid);
               else
@@ -101,15 +118,23 @@ class UserItemRemoteDataSourceImpl implements UserItemRemoteDataSource {
           await Future.wait(
             verified.map(
               (rid) {
-                debugPrint('[UserItemRemoteDataSource] Sending item_added notif to $rid for item ${toSave.id}');
-                return firestore.collection(FirebasePaths.users).doc(rid).collection('notifications').add(payload);
+                debugPrint(
+                  '[UserItemRemoteDataSource] Sending item_added notif to $rid for item ${toSave.id}',
+                );
+                return firestore
+                    .collection(FirebasePaths.users)
+                    .doc(rid)
+                    .collection('notifications')
+                    .add(payload);
               },
             ),
           );
         }
       }
     } on Exception catch (e, st) {
-      debugPrint('[UserItemRemoteDataSource] item_added notification failed: $e\n$st');
+      debugPrint(
+        '[UserItemRemoteDataSource] item_added notification failed: $e\n$st',
+      );
     }
   }
 
@@ -124,13 +149,20 @@ class UserItemRemoteDataSourceImpl implements UserItemRemoteDataSource {
   Future<List<UserItemModel>> fetchAllUserItems() async {
     final uid = auth.currentUser?.uid;
     final col = firestore.collection(collectionPath);
-    final snapshot = uid != null ? await col.where('owners', arrayContains: uid).get() : await col.get();
-    return snapshot.docs.map((doc) => UserItemModel.fromJson(doc.data())).toList();
+    final snapshot = uid != null
+        ? await col.where('owners', arrayContains: uid).get()
+        : await col.get();
+    return snapshot.docs
+        .map((doc) => UserItemModel.fromJson(doc.data()))
+        .toList();
   }
 
   @override
   Future<void> updateUserItem(UserItemModel item) async {
-    await firestore.collection(collectionPath).doc(item.id).update(item.toJson());
+    await firestore
+        .collection(collectionPath)
+        .doc(item.id)
+        .update(item.toJson());
   }
 
   @override
@@ -141,7 +173,8 @@ class UserItemRemoteDataSourceImpl implements UserItemRemoteDataSource {
       try {
         final data = doc.data();
         final imgUrl = data?['imgUrl'] as String?;
-        final owners = (data?['owners'] as List?)?.cast<String>() ?? const <String>[];
+        final owners =
+            (data?['owners'] as List?)?.cast<String>() ?? const <String>[];
         final title = data?['title'] as String? ?? '';
         final category = data?['category'] as String? ?? '';
         if (imgUrl != null && imgUrl.isNotEmpty) {
@@ -172,15 +205,23 @@ class UserItemRemoteDataSourceImpl implements UserItemRemoteDataSource {
               await Future.wait(
                 recipients.map(
                   (rid) {
-                    debugPrint('[UserItemRemoteDataSource] Sending item_deleted notif to $rid for item $id');
-                    return firestore.collection(FirebasePaths.users).doc(rid).collection('notifications').add(payload);
+                    debugPrint(
+                      '[UserItemRemoteDataSource] Sending item_deleted notif to $rid for item $id',
+                    );
+                    return firestore
+                        .collection(FirebasePaths.users)
+                        .doc(rid)
+                        .collection('notifications')
+                        .add(payload);
                   },
                 ),
               );
             }
           }
         } on Exception catch (e, st) {
-          debugPrint('[UserItemRemoteDataSource] item_deleted notification failed: $e\n$st');
+          debugPrint(
+            '[UserItemRemoteDataSource] item_deleted notification failed: $e\n$st',
+          );
         }
       } on Exception {
         // Ignore parsing errors and proceed to delete the doc

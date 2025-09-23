@@ -33,7 +33,10 @@ class CountryTile extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.all(16),
-              child: Text(context.loc.changeCountry, style: Theme.of(sheetContext).textTheme.titleMedium),
+              child: Text(
+                context.loc.changeCountry,
+                style: Theme.of(sheetContext).textTheme.titleMedium,
+              ),
             ),
             Flexible(
               child: ListView.separated(
@@ -47,15 +50,20 @@ class CountryTile extends StatelessWidget {
                   return ListTile(
                     leading: CircleAvatar(
                       radius: 16,
-                      backgroundColor: Theme.of(sheetContext).colorScheme.primary.withValues(alpha: 0.08),
+                      backgroundColor: Theme.of(
+                        sheetContext,
+                      ).colorScheme.primary.withValues(alpha: 0.08),
                       child: Text(
                         code,
-                        style: Theme.of(sheetContext).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.w600),
+                        style: Theme.of(sheetContext).textTheme.labelMedium
+                            ?.copyWith(fontWeight: FontWeight.w600),
                       ),
                     ),
                     title: Text(display),
                     subtitle: Text(code),
-                    trailing: selected ? const Icon(Icons.check, color: Colors.green) : null,
+                    trailing: selected
+                        ? const Icon(Icons.check, color: Colors.green)
+                        : null,
                     onTap: () => _select(code, parentCubit, sheetContext),
                   );
                 },
@@ -68,7 +76,11 @@ class CountryTile extends StatelessWidget {
     );
   }
 
-  Future<void> _select(String code, CountryCubit cubit, BuildContext ctx) async {
+  Future<void> _select(
+    String code,
+    CountryCubit cubit,
+    BuildContext ctx,
+  ) async {
     try {
       await cubit.change(code);
       if (!ctx.mounted) return; // async gap sonrası context kontrolü

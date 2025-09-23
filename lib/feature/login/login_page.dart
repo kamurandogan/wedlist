@@ -69,7 +69,10 @@ class _LoginPageState extends State<LoginPage> {
                   if (state is AuthFailure) {
                     errorWidget = Padding(
                       padding: const EdgeInsets.only(bottom: 8),
-                      child: Text(state.message, style: const TextStyle(color: Colors.red)),
+                      child: Text(
+                        state.message,
+                        style: const TextStyle(color: Colors.red),
+                      ),
                     );
                   }
                   return Column(
@@ -82,7 +85,10 @@ class _LoginPageState extends State<LoginPage> {
                           size: Size(size.width, 50),
                           onPressed: () {
                             context.read<AuthBloc>().add(
-                              SignInRequested(emailController.text, passwordController.text),
+                              SignInRequested(
+                                emailController.text,
+                                passwordController.text,
+                              ),
                             );
                           },
                           text: 'Giriş Yap',

@@ -10,7 +10,10 @@ class RemainingDays extends StatelessWidget {
   Future<int?> _fetchRemainingDays() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return null;
-    final snap = await FirebaseFirestore.instance.collection(FirebasePaths.users).doc(user.uid).get();
+    final snap = await FirebaseFirestore.instance
+        .collection(FirebasePaths.users)
+        .doc(user.uid)
+        .get();
     final data = snap.data();
     if (data == null) return null;
     final ts = data['weddingDate'];
@@ -35,7 +38,10 @@ class RemainingDays extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(context.loc.remainingDaysTitle, style: Theme.of(context).textTheme.bodyLarge),
+            Text(
+              context.loc.remainingDaysTitle,
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
             Text(text, style: Theme.of(context).textTheme.headlineMedium),
           ],
         );

@@ -28,7 +28,11 @@ class NotificationRemoteDataSourceImpl implements NotificationRemoteDataSource {
         .orderBy('createdAt', descending: true)
         .limit(50)
         .snapshots()
-        .map((snap) => snap.docs.map((d) => AppNotificationModel.fromJson(d.data(), d.id)).toList());
+        .map(
+          (snap) => snap.docs
+              .map((d) => AppNotificationModel.fromJson(d.data(), d.id))
+              .toList(),
+        );
   }
 
   @override

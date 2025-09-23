@@ -41,16 +41,23 @@ class _CategoryButtonsState extends State<CategoryButtons> {
     try {
       final uid = FirebaseAuth.instance.currentUser?.uid;
       if (uid == null || uid.isEmpty) {
-        setState(() => _wishlistLoaded = true); // nothing to load when not logged in
+        setState(
+          () => _wishlistLoaded = true,
+        ); // nothing to load when not logged in
         return;
       }
-      final snap = await FirebaseFirestore.instance.collection('users').doc(uid).get();
-      final rawList = (snap.data()?['wishList'] as List?)?.whereType<Map<String, dynamic>>();
+      final snap = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .get();
+      final rawList = (snap.data()?['wishList'] as List?)
+          ?.whereType<Map<String, dynamic>>();
       if (rawList != null) {
         for (final j in rawList) {
           final cat = (j['category'] as String?)?.trim();
           final title = (j['title'] as String?)?.trim();
-          if (cat == null || cat.isEmpty || title == null || title.isEmpty) continue;
+          if (cat == null || cat.isEmpty || title == null || title.isEmpty)
+            continue;
           final normCat = _norm(cat);
           _wishByCategory.putIfAbsent(normCat, () => <String>{}).add(title);
         }
@@ -104,9 +111,12 @@ class _CategoryButtonsState extends State<CategoryButtons> {
 
                   // Eğer wishlist henüz yüklenmediyse, filtre uygulamadan tüm kategorileri göster.
                   // Bu, gereksiz UI titremesini önler.
-                  final wish = _wishlistLoaded ? _wishByCategory : const <String, Set<String>>{};
+                  final wish = _wishlistLoaded
+                      ? _wishByCategory
+                      : const <String, Set<String>>{};
 
-                  String keyOf(String category, String title) => '${_norm(category)}|${_norm(title)}';
+                  String keyOf(String category, String title) =>
+                      '${_norm(category)}|${_norm(title)}';
                   final ownedKeys = <String>{};
                   if (dowryState is DowryListLoaded) {
                     for (final u in dowryState.items) {
@@ -141,7 +151,9 @@ class _CategoryButtonsState extends State<CategoryButtons> {
                       !visibleCategories.contains(selectCategoryState)) {
                     WidgetsBinding.instance.addPostFrameCallback((_) {
                       if (mounted) {
-                        context.read<SelectCategoryCubit>().selectCategory(visibleCategories.first);
+                        context.read<SelectCategoryCubit>().selectCategory(
+                          visibleCategories.first,
+                        );
                       }
                     });
                   }
@@ -154,15 +166,21 @@ class _CategoryButtonsState extends State<CategoryButtons> {
                       // Leading + button
                       if (index == 0) {
                         return Padding(
-                          padding: EdgeInsets.only(right: _categoryButtonSpacing),
+                          padding: EdgeInsets.only(
+                            right: _categoryButtonSpacing,
+                          ),
                           child: OutlinedButton.icon(
                             style: OutlinedButton.styleFrom(
-                              side: BorderSide(color: AppColors.accent.withValues(alpha: 0.4)),
+                              side: BorderSide(
+                                color: AppColors.accent.withValues(alpha: 0.4),
+                              ),
                               foregroundColor: AppColors.accent,
                             ),
                             onPressed: () {
                               // Artık modal yok, sayfa içinde AddCategoryView göstereceğiz
-                              context.read<SelectCategoryCubit>().selectCategory(addCategorySelectionKey);
+                              context
+                                  .read<SelectCategoryCubit>()
+                                  .selectCategory(addCategorySelectionKey);
                             },
                             icon: const Icon(Icons.add, size: 18),
                             label: Text(context.loc.addCategoryButtonText),
@@ -182,7 +200,8 @@ class _CategoryButtonsState extends State<CategoryButtons> {
                         if (titles != null && titles.isNotEmpty) {
                           var remaining = 0;
                           for (final t in titles) {
-                            if (!ownedKeys.contains(keyOf(title, t))) remaining++;
+                            if (!ownedKeys.contains(keyOf(title, t)))
+                              remaining++;
                           }
                           displayLabel = '$title ($remaining)';
                         }
@@ -193,7 +212,9 @@ class _CategoryButtonsState extends State<CategoryButtons> {
                           categoryName: displayLabel,
                           isSelected: isSelected,
                           onPressed: () {
-                            context.read<SelectCategoryCubit>().selectCategory(title);
+                            context.read<SelectCategoryCubit>().selectCategory(
+                              title,
+                            );
                           },
                         ),
                       );

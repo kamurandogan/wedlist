@@ -32,7 +32,11 @@ class PurchaseService {
   Future<void> init() async {
     _available = await _iap.isAvailable();
     if (!_available) return;
-    _sub ??= _iap.purchaseStream.listen(_onPurchaseUpdated, onDone: () => _sub?.cancel(), onError: (_) {});
+    _sub ??= _iap.purchaseStream.listen(
+      _onPurchaseUpdated,
+      onDone: () => _sub?.cancel(),
+      onError: (_) {},
+    );
     await queryProducts();
     await _loadEntitlements();
   }
@@ -43,7 +47,10 @@ class PurchaseService {
   }
 
   Future<void> queryProducts() async {
-    final response = await _iap.queryProductDetails({kRemoveAdsId, kCollabUnlockId});
+    final response = await _iap.queryProductDetails({
+      kRemoveAdsId,
+      kCollabUnlockId,
+    });
     if (response.error != null) {
       if (kDebugMode) {
         // ignore: avoid_print
@@ -139,7 +146,9 @@ class PurchaseService {
     try {
       final doc = await _firestore.collection('users').doc(uid).get();
       final data = doc.data() ?? <String, dynamic>{};
-      final premium = (data['premium'] as Map?)?.cast<String, dynamic>() ?? <String, dynamic>{};
+      final premium =
+          (data['premium'] as Map?)?.cast<String, dynamic>() ??
+          <String, dynamic>{};
       removeAds.value = (premium['removeAds'] as bool?) ?? false;
       collabUnlocked.value = (premium['collabUnlocked'] as bool?) ?? false;
     } catch (_) {

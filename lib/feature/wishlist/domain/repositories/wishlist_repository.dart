@@ -3,6 +3,10 @@
 import 'package:wedlist/core/item/item_entity.dart';
 
 abstract class WishListRepository {
-  Future<List<ItemEntity>> getItems(String category, String langCode, String id);
+  Future<List<ItemEntity>> getItems(
+    String category,
+    String langCode,
+    String id,
+  );
   Future<void> addItems(String category, List<String> titles);
 }

@@ -20,8 +20,12 @@ class WishListView extends StatelessWidget {
           final langCode = Localizations.localeOf(context).languageCode;
 
           // Seçili kategori ve dil koduna göre ilgili wishlist ve kategori verilerini çek
-          context.read<WishListBloc>().add(FetchWishListItems(categoryState, langCode, ''));
-          context.read<CategorylistBloc>().add(FetchCategoryList(langCode, categoryState));
+          context.read<WishListBloc>().add(
+            FetchWishListItems(categoryState, langCode, ''),
+          );
+          context.read<CategorylistBloc>().add(
+            FetchCategoryList(langCode, categoryState),
+          );
           return BlocBuilder<WishListBloc, WishListState>(
             builder: (context, state) {
               // Yükleniyor durumu

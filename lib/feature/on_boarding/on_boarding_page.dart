@@ -38,7 +38,8 @@ class _OnboardingView extends StatefulWidget {
   State<_OnboardingView> createState() => _OnboardingViewState();
 }
 
-class _OnboardingViewState extends State<_OnboardingView> with OnboardingMixin<_OnboardingView> {
+class _OnboardingViewState extends State<_OnboardingView>
+    with OnboardingMixin<_OnboardingView> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PageViewCubit, PageViewCubitState>(
@@ -124,7 +125,9 @@ class _OnboardingViewState extends State<_OnboardingView> with OnboardingMixin<_
           ),
         CircleIndicatorWithButton(
           progress: progress,
-          child: state.isLastPage ? _nextButtonForNavigator(context) : _nextButtonForForward(context),
+          child: state.isLastPage
+              ? _nextButtonForNavigator(context)
+              : _nextButtonForForward(context),
         ),
       ],
     );

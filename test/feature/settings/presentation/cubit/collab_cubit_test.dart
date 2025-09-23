@@ -19,8 +19,12 @@ void main() {
         mockUser: MockUser(uid: me, email: 'me@mail.com'),
       );
       // seed users
-      await firestore.collection(FirebasePaths.users).doc(me).set({'email': 'me@mail.com'});
-      await firestore.collection(FirebasePaths.users).doc(other).set({'email': 'other@mail.com'});
+      await firestore.collection(FirebasePaths.users).doc(me).set({
+        'email': 'me@mail.com',
+      });
+      await firestore.collection(FirebasePaths.users).doc(other).set({
+        'email': 'other@mail.com',
+      });
       cubit = CollabCubit(auth, firestore);
     });
 
@@ -35,7 +39,12 @@ void main() {
       act: (c) async => c.addByEmail('other@mail.com'),
       wait: const Duration(milliseconds: 50),
       verify: (c) {
-        expect(c.state.invites.where((i) => i.uid == other && i.status == 'waiting').length, 1);
+        expect(
+          c.state.invites
+              .where((i) => i.uid == other && i.status == 'waiting')
+              .length,
+          1,
+        );
         expect(c.state.collaborators, isEmpty);
       },
     );

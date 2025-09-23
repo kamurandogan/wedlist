@@ -11,7 +11,8 @@ part 'categorylist_event.dart';
 part 'categorylist_state.dart';
 
 class CategorylistBloc extends Bloc<CategorylistEvent, CategorylistState> {
-  CategorylistBloc(this.getCategoryListItems, this._refreshBus) : super(CategorylistInitial()) {
+  CategorylistBloc(this.getCategoryListItems, this._refreshBus)
+    : super(CategorylistInitial()) {
     on<FetchCategoryList>(_onFetch);
     on<AddCustomCategory>(_onAddCustom);
 
@@ -26,11 +27,17 @@ class CategorylistBloc extends Bloc<CategorylistEvent, CategorylistState> {
   StreamSubscription<RefreshEvent>? _sub;
   _CategoryFetchParams? _lastParams;
 
-  Future<void> _onFetch(FetchCategoryList event, Emitter<CategorylistState> emit) async {
+  Future<void> _onFetch(
+    FetchCategoryList event,
+    Emitter<CategorylistState> emit,
+  ) async {
     emit(CategorylistLoading());
     try {
       _lastParams = _CategoryFetchParams(event.category, event.langCode);
-      final items = await getCategoryListItems.call(event.category, event.langCode);
+      final items = await getCategoryListItems.call(
+        event.category,
+        event.langCode,
+      );
       emit(CategorylistLoaded(items));
     } on FirebaseException catch (e) {
       emit(CategorylistError(_firebaseErrorToMessage(e)));
@@ -39,12 +46,18 @@ class CategorylistBloc extends Bloc<CategorylistEvent, CategorylistState> {
     }
   }
 
-  Future<void> _onAddCustom(AddCustomCategory event, Emitter<CategorylistState> emit) async {
+  Future<void> _onAddCustom(
+    AddCustomCategory event,
+    Emitter<CategorylistState> emit,
+  ) async {
     final current = state;
     if (current is CategorylistLoaded) {
-      final exists = current.items.any((e) => e.title.toLowerCase() == event.name.toLowerCase());
+      final exists = current.items.any(
+        (e) => e.title.toLowerCase() == event.name.toLowerCase(),
+      );
       if (exists) return; // ignore duplicates
-      final updated = List<CategoryItem>.from(current.items)..add(CategoryItem(event.name));
+      final updated = List<CategoryItem>.from(current.items)
+        ..add(CategoryItem(event.name));
       emit(CategorylistLoaded(updated));
     }
   }

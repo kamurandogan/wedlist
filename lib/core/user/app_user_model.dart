@@ -25,15 +25,20 @@ class AppUserModel extends AppUserEntity {
           .whereType<Map<String, dynamic>>()
           .map((e) => core.ItemModel.fromJson(e).toEntity())
           .toList(),
-      collaborators: (json['collaborators'] as List?)?.cast<String>() ?? const <String>[],
+      collaborators:
+          (json['collaborators'] as List?)?.cast<String>() ?? const <String>[],
     );
   }
 
   Map<String, dynamic> toJson() => {
     'email': email,
     'name': name,
-    'wishList': wishList.map((e) => core.ItemModel.fromEntity(e).toJson()).toList(),
-    'receivedList': receivedList.map((e) => core.ItemModel.fromEntity(e).toJson()).toList(),
+    'wishList': wishList
+        .map((e) => core.ItemModel.fromEntity(e).toJson())
+        .toList(),
+    'receivedList': receivedList
+        .map((e) => core.ItemModel.fromEntity(e).toJson())
+        .toList(),
     'collaborators': collaborators,
   };
 

@@ -29,7 +29,9 @@ class DowryItemListView extends StatelessWidget {
                 final filtered =
                     (selectedCategory.isEmpty
                           ? List<UserItemEntity>.of(state.items)
-                          : state.items.where((e) => e.category == selectedCategory).toList())
+                          : state.items
+                                .where((e) => e.category == selectedCategory)
+                                .toList())
                       ..sort((a, b) {
                         final epoch = DateTime.fromMillisecondsSinceEpoch(0);
                         final da = a.createdAt ?? epoch;
@@ -44,7 +46,9 @@ class DowryItemListView extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final item = filtered[index];
                     if (kDebugMode) {
-                      debugPrint('Item: ${item.title}, Category: ${item.category}, Image URL: ${item.imgUrl}');
+                      debugPrint(
+                        'Item: ${item.title}, Category: ${item.category}, Image URL: ${item.imgUrl}',
+                      );
                     }
                     return DowryItemCard(item: item);
                   },

@@ -24,14 +24,20 @@ class _DowryViewState extends State<DowryView> {
       // Kategori butonları için kategori listesini yükle
       final langCode = Localizations.localeOf(context).languageCode;
       final selected = context.read<SelectCategoryCubit>().state;
-      context.read<CategorylistBloc>().add(FetchCategoryList(langCode, selected));
+      context.read<CategorylistBloc>().add(
+        FetchCategoryList(langCode, selected),
+      );
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return const Column(
-      children: [DowryCategoryButtons(), SizedBox(height: 8), DowryItemListView()],
+      children: [
+        DowryCategoryButtons(),
+        SizedBox(height: 8),
+        DowryItemListView(),
+      ],
     );
   }
 }

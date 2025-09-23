@@ -1,7 +1,12 @@
 part of '../../add_item_screen.dart';
 
 class Line extends StatefulWidget {
-  const Line({required this.title, required this.value, this.onChanged, super.key});
+  const Line({
+    required this.title,
+    required this.value,
+    this.onChanged,
+    super.key,
+  });
   final String title;
   final String value;
   final ValueChanged<String>? onChanged;
@@ -42,15 +47,21 @@ class _LineState extends State<Line> {
 
   @override
   Widget build(BuildContext context) {
-    final isPriceField = widget.title.toLowerCase().contains('ücret') || widget.title.toLowerCase().contains('price');
+    final isPriceField =
+        widget.title.toLowerCase().contains('ücret') ||
+        widget.title.toLowerCase().contains('price');
     return Padding(
       padding: AppPaddings.smallOnlyTop,
       child: TextField(
         controller: _controller,
         onChanged: widget.onChanged,
-        keyboardType: isPriceField ? const TextInputType.numberWithOptions(decimal: true) : null,
+        keyboardType: isPriceField
+            ? const TextInputType.numberWithOptions(decimal: true)
+            : null,
         inputFormatters: isPriceField
-            ? <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp('^[0-9]*[.,]?[0-9]*'))]
+            ? <TextInputFormatter>[
+                FilteringTextInputFormatter.allow(RegExp('^[0-9]*[.,]?[0-9]*')),
+              ]
             : null,
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(

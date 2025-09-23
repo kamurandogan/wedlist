@@ -7,7 +7,9 @@ class UserTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       'User',
-      style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: Colors.black87),
+      style: Theme.of(
+        context,
+      ).textTheme.headlineMedium?.copyWith(color: Colors.black87),
     );
   }
 }

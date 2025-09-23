@@ -9,7 +9,8 @@ import 'package:wedlist/feature/item_add/domain/usecases/upload_photo_with_progr
 part 'add_photo_state.dart';
 
 class AddPhotoCubit extends Cubit<AddPhotoState> {
-  AddPhotoCubit(this._uploadPhoto, this._uploadPhotoWithProgress) : super(const AddPhotoState());
+  AddPhotoCubit(this._uploadPhoto, this._uploadPhotoWithProgress)
+    : super(const AddPhotoState());
 
   final UploadPhotoUseCase _uploadPhoto;
   final UploadPhotoWithProgressUseCase _uploadPhotoWithProgress;
@@ -26,14 +27,31 @@ class AddPhotoCubit extends Cubit<AddPhotoState> {
         if (picked != null) {
           final bytes = await picked.readAsBytes();
           final fileName = picked.name;
-          final contentType = picked.mimeType ?? lookupMimeType(fileName) ?? 'image/jpeg';
-          debugPrint('[DEBUG] Uploading image (web) $fileName (${bytes.length} bytes)');
+          final contentType =
+              picked.mimeType ?? lookupMimeType(fileName) ?? 'image/jpeg';
+          debugPrint(
+            '[DEBUG] Uploading image (web) $fileName (${bytes.length} bytes)',
+          );
           previewBytes = bytes;
           // Progress yayınla
-          await for (final p in _uploadPhotoWithProgress(bytes: bytes, fileName: fileName, contentType: contentType)) {
-            emit(state.copyWith(previewBytes: previewBytes, status: AddPhotoStatus.loading, progress: p));
+          await for (final p in _uploadPhotoWithProgress(
+            bytes: bytes,
+            fileName: fileName,
+            contentType: contentType,
+          )) {
+            emit(
+              state.copyWith(
+                previewBytes: previewBytes,
+                status: AddPhotoStatus.loading,
+                progress: p,
+              ),
+            );
           }
-          imageUrl = await _uploadPhoto(bytes: bytes, fileName: fileName, contentType: contentType);
+          imageUrl = await _uploadPhoto(
+            bytes: bytes,
+            fileName: fileName,
+            contentType: contentType,
+          );
         }
       } else {
         // mobile or desktop
@@ -42,33 +60,75 @@ class AddPhotoCubit extends Cubit<AddPhotoState> {
         if (picked != null) {
           final bytes = await picked.readAsBytes();
           final name = picked.name;
-          final contentType = picked.mimeType ?? lookupMimeType(name) ?? 'image/jpeg';
-          debugPrint('[DEBUG] Uploading image (mobile) $name (${bytes.length} bytes)');
+          final contentType =
+              picked.mimeType ?? lookupMimeType(name) ?? 'image/jpeg';
+          debugPrint(
+            '[DEBUG] Uploading image (mobile) $name (${bytes.length} bytes)',
+          );
           previewBytes = bytes;
-          await for (final p in _uploadPhotoWithProgress(bytes: bytes, fileName: name, contentType: contentType)) {
-            emit(state.copyWith(previewBytes: previewBytes, status: AddPhotoStatus.loading, progress: p));
+          await for (final p in _uploadPhotoWithProgress(
+            bytes: bytes,
+            fileName: name,
+            contentType: contentType,
+          )) {
+            emit(
+              state.copyWith(
+                previewBytes: previewBytes,
+                status: AddPhotoStatus.loading,
+                progress: p,
+              ),
+            );
           }
-          imageUrl = await _uploadPhoto(bytes: bytes, fileName: name, contentType: contentType);
+          imageUrl = await _uploadPhoto(
+            bytes: bytes,
+            fileName: name,
+            contentType: contentType,
+          );
         } else {
           // fallback to file picker for desktop
-          final result = await FilePicker.platform.pickFiles(type: FileType.image, withData: true);
+          final result = await FilePicker.platform.pickFiles(
+            type: FileType.image,
+            withData: true,
+          );
           if (result != null && result.files.single.bytes != null) {
             final bytes = result.files.single.bytes!;
             final name = result.files.single.name;
             final contentType = lookupMimeType(name) ?? 'image/jpeg';
-            debugPrint('[DEBUG] Uploading image (desktop bytes) $name (${bytes.length} bytes)');
+            debugPrint(
+              '[DEBUG] Uploading image (desktop bytes) $name (${bytes.length} bytes)',
+            );
             previewBytes = bytes;
-            await for (final p in _uploadPhotoWithProgress(bytes: bytes, fileName: name, contentType: contentType)) {
-              emit(state.copyWith(previewBytes: previewBytes, status: AddPhotoStatus.loading, progress: p));
+            await for (final p in _uploadPhotoWithProgress(
+              bytes: bytes,
+              fileName: name,
+              contentType: contentType,
+            )) {
+              emit(
+                state.copyWith(
+                  previewBytes: previewBytes,
+                  status: AddPhotoStatus.loading,
+                  progress: p,
+                ),
+              );
             }
-            imageUrl = await _uploadPhoto(bytes: bytes, fileName: name, contentType: contentType);
+            imageUrl = await _uploadPhoto(
+              bytes: bytes,
+              fileName: name,
+              contentType: contentType,
+            );
           }
         }
       }
 
       debugPrint('[DEBUG] Upload finished, imageUrl=$imageUrl');
 
-      emit(state.copyWith(previewBytes: previewBytes, imageUrl: imageUrl, status: AddPhotoStatus.success));
+      emit(
+        state.copyWith(
+          previewBytes: previewBytes,
+          imageUrl: imageUrl,
+          status: AddPhotoStatus.success,
+        ),
+      );
     } on Exception catch (e, st) {
       debugPrint('[ERROR] image upload failed: $e');
       debugPrintStack(stackTrace: st);

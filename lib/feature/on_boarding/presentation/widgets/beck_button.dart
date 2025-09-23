@@ -26,7 +26,9 @@ class BackButtonCircle extends StatelessWidget {
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
-              color: (backgroundColor ?? AppColors.primary).withValues(alpha: .3),
+              color: (backgroundColor ?? AppColors.primary).withValues(
+                alpha: .3,
+              ),
               blurRadius: 16,
               offset: const Offset(0, 8),
             ),

@@ -23,7 +23,9 @@ class RegisterTextField extends StatelessWidget {
         enabledBorder: const UnderlineInputBorder(),
         focusedBorder: const UnderlineInputBorder(),
       ),
-      keyboardType: labelText == 'Email' ? TextInputType.emailAddress : TextInputType.text,
+      keyboardType: labelText == 'Email'
+          ? TextInputType.emailAddress
+          : TextInputType.text,
       obscureText: labelText.contains('Şifre'),
     );
   }

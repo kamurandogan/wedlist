@@ -23,7 +23,8 @@ class CategoryPieChart extends StatelessWidget {
               PieChartSectionData(
                 color: palette[i % palette.length],
                 value: data[i].total,
-                title: '${((data[i].total / (total == 0 ? 1 : total)) * 100).toStringAsFixed(0)}%',
+                title:
+                    '${((data[i].total / (total == 0 ? 1 : total)) * 100).toStringAsFixed(0)}%',
                 radius: 56,
                 titleStyle: Theme.of(context).textTheme.labelSmall?.copyWith(
                   color: Colors.black,

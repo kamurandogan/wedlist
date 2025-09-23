@@ -26,7 +26,9 @@ Future<void> main() async {
   );
   // Firestore offline persistence ve cache boyutu ayarı (gerekirse artırılabilir)
   try {
-    FirebaseFirestore.instance.settings = const Settings(persistenceEnabled: true);
+    FirebaseFirestore.instance.settings = const Settings(
+      persistenceEnabled: true,
+    );
   } on Exception {
     // ignore
   }
@@ -61,10 +63,17 @@ Future<void> main() async {
         BlocProvider(create: (context) => NavigationCubit()),
         BlocProvider(create: (context) => SelectCategoryCubit()),
         BlocProvider(create: (context) => sl<CategorylistBloc>()),
-        BlocProvider(create: (context) => sl<DowryListBloc>()..add(SubscribeDowryItems())),
-        BlocProvider(create: (context) => sl<AuthBloc>()), // Added AuthBloc for login feature
+        BlocProvider(
+          create: (context) => sl<DowryListBloc>()..add(SubscribeDowryItems()),
+        ),
+        BlocProvider(
+          create: (context) => sl<AuthBloc>(),
+        ), // Added AuthBloc for login feature
         // Global notifications stream so bottom bar can show unread count badge
-        BlocProvider(create: (context) => sl<NotificationBloc>()..add(SubscribeNotifications())),
+        BlocProvider(
+          create: (context) =>
+              sl<NotificationBloc>()..add(SubscribeNotifications()),
+        ),
       ],
       child: const MyApp(),
     ),

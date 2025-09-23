@@ -16,7 +16,9 @@ class RegisterPage extends StatelessWidget {
         if (state is RegisterSuccess) {
           context.go(AppRoute.verification.path);
         } else if (state is RegisterFailure) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.message)));
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(state.message)));
         }
       },
       child: const RegisterTemplate(

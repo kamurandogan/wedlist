@@ -6,7 +6,8 @@ class RefreshBus {
   Stream<RefreshEvent> get stream => _controller.stream;
 
   void publish(RefreshEvent event) => _controller.add(event);
-  void countryChanged() => publish(const RefreshEvent(RefreshEventType.countryChanged));
+  void countryChanged() =>
+      publish(const RefreshEvent(RefreshEventType.countryChanged));
   void dispose() => _controller.close();
 }
 

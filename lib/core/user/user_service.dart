@@ -31,7 +31,9 @@ class UserService {
     if (user.wishList.isNotEmpty) return;
     // Initialize wishList with all base items if empty (country-specific)
     final country = await _resolveCountryFromData(snap.data());
-    final base = await _firestore.collection('items_${country.toUpperCase()}').get();
+    final base = await _firestore
+        .collection('items_${country.toUpperCase()}')
+        .get();
     final items = base.docs
         .map(
           (d) => core.ItemModel.fromJson({
@@ -55,13 +57,16 @@ class UserService {
     final data = snap.data() ?? <String, dynamic>{};
     final wl = (data['wishList'] as List?) ?? const <dynamic>[];
     final rl = (data['receivedList'] as List?) ?? const <dynamic>[];
-    bool isStringList(List<dynamic> list) => list.isNotEmpty && list.every((e) => e is String);
+    bool isStringList(List<dynamic> list) =>
+        list.isNotEmpty && list.every((e) => e is String);
     if (!isStringList(wl) && !isStringList(rl)) return;
 
     // Build title->ItemEntity map from base items and user-visible custom items.
     final titleMap = <String, ItemEntity>{};
     final country = (data['country'] as String?)?.toUpperCase();
-    final col = country != null && country.isNotEmpty ? 'items_$country' : 'items_US';
+    final col = country != null && country.isNotEmpty
+        ? 'items_$country'
+        : 'items_US';
     final base = await _firestore.collection(col).get();
     for (final d in base.docs) {
       final m = core.ItemModel.fromJson({
@@ -75,7 +80,10 @@ class UserService {
 
     final meModel = AppUserModel.fromJson(data, uid);
     final owners = {uid, ...meModel.collaborators}.toList();
-    final custom = await _firestore.collection('customItems').where('owners', arrayContainsAny: owners).get();
+    final custom = await _firestore
+        .collection('customItems')
+        .where('owners', arrayContainsAny: owners)
+        .get();
     for (final d in custom.docs) {
       final m = core.ItemModel.fromJson({
         'id': d.data()['id'] ?? d.id,
@@ -106,7 +114,10 @@ class UserService {
 
     final newWL = convert(wl);
     final newRL = convert(rl);
-    await ref.set({'wishList': newWL, 'receivedList': newRL}, SetOptions(merge: true));
+    await ref.set({
+      'wishList': newWL,
+      'receivedList': newRL,
+    }, SetOptions(merge: true));
   }
 
   Future<void> addCustomCategory(String category) async {
@@ -128,7 +139,10 @@ class UserService {
     final self = await selfRef.get();
     final partner = await partnerRef.get();
     final selfModel = AppUserModel.fromJson(self.data() ?? {}, uid);
-    final partnerModel = AppUserModel.fromJson(partner.data() ?? {}, partnerUid);
+    final partnerModel = AppUserModel.fromJson(
+      partner.data() ?? {},
+      partnerUid,
+    );
     String norm(String s) => s.trim().toLowerCase();
     String key(ItemEntity e) => '${norm(e.category)}|${norm(e.title)}';
     final byKey = <String, ItemEntity>{
@@ -137,7 +151,9 @@ class UserService {
     for (final e in partnerModel.wishList) {
       byKey.putIfAbsent(key(e), () => e);
     }
-    final mergedJson = byKey.values.map((e) => core.ItemModel.fromEntity(e).toJson()).toList();
+    final mergedJson = byKey.values
+        .map((e) => core.ItemModel.fromEntity(e).toJson())
+        .toList();
     await selfRef.set({'wishList': mergedJson}, SetOptions(merge: true));
   }
 
@@ -166,7 +182,9 @@ class UserService {
         // ignore and continue
       }
     }
-    final mergedJson = byKey.values.map((e) => core.ItemModel.fromEntity(e).toJson()).toList();
+    final mergedJson = byKey.values
+        .map((e) => core.ItemModel.fromEntity(e).toJson())
+        .toList();
     await selfRef.set({'wishList': mergedJson}, SetOptions(merge: true));
   }
 
@@ -185,15 +203,23 @@ class UserService {
     final selfSnap = await selfRef.get();
     final partnerSnap = await partnerRef.get();
     final selfModel = AppUserModel.fromJson(selfSnap.data() ?? {}, uid);
-    final partnerModel = AppUserModel.fromJson(partnerSnap.data() ?? {}, partnerUid);
+    final partnerModel = AppUserModel.fromJson(
+      partnerSnap.data() ?? {},
+      partnerUid,
+    );
 
-    final prevMine = selfModel.collaborators.where((e) => e != partnerUid).toSet();
-    final prevTheirs = partnerModel.collaborators.where((e) => e != uid).toSet();
+    final prevMine = selfModel.collaborators
+        .where((e) => e != partnerUid)
+        .toSet();
+    final prevTheirs = partnerModel.collaborators
+        .where((e) => e != uid)
+        .toSet();
 
     // Update self -> only partnerUid
     await selfRef.set({
       'collaborators': [partnerUid],
-      if (prevMine.isNotEmpty) 'removedCollaborators': FieldValue.arrayUnion(prevMine.toList()),
+      if (prevMine.isNotEmpty)
+        'removedCollaborators': FieldValue.arrayUnion(prevMine.toList()),
     }, SetOptions(merge: true));
 
     // Remove myself from previous partners and mark removed
@@ -212,7 +238,8 @@ class UserService {
     // Update partner -> only uid
     await partnerRef.set({
       'collaborators': [uid],
-      if (prevTheirs.isNotEmpty) 'removedCollaborators': FieldValue.arrayUnion(prevTheirs.toList()),
+      if (prevTheirs.isNotEmpty)
+        'removedCollaborators': FieldValue.arrayUnion(prevTheirs.toList()),
     }, SetOptions(merge: true));
 
     // Remove partner from their previous partners
@@ -234,7 +261,10 @@ class UserService {
     final uid = _uid;
     if (uid == null) return;
     if (uid == partnerUid) return;
-    final items = await _firestore.collection('userItems').where('owners', arrayContains: uid).get();
+    final items = await _firestore
+        .collection('userItems')
+        .where('owners', arrayContains: uid)
+        .get();
     final batch = _firestore.batch();
     for (final d in items.docs) {
       batch.update(d.reference, {
@@ -249,7 +279,10 @@ class UserService {
     final uid = _uid;
     if (uid == null) return;
     if (uid == partnerUid) return;
-    final items = await _firestore.collection('userItems').where('owners', arrayContains: partnerUid).get();
+    final items = await _firestore
+        .collection('userItems')
+        .where('owners', arrayContains: partnerUid)
+        .get();
     final batch = _firestore.batch();
     for (final d in items.docs) {
       batch.update(d.reference, {
@@ -268,7 +301,10 @@ class UserService {
     final selfSnap = await users.doc(uid).get();
     final partnerSnap = await users.doc(partnerUid).get();
     final selfModel = AppUserModel.fromJson(selfSnap.data() ?? {}, uid);
-    final partnerModel = AppUserModel.fromJson(partnerSnap.data() ?? {}, partnerUid);
+    final partnerModel = AppUserModel.fromJson(
+      partnerSnap.data() ?? {},
+      partnerUid,
+    );
     String norm(String s) => s.trim().toLowerCase();
     String key(ItemEntity e) => '${norm(e.category)}|${norm(e.title)}';
     final byKey = <String, ItemEntity>{
@@ -277,8 +313,12 @@ class UserService {
     for (final e in selfModel.wishList) {
       byKey.putIfAbsent(key(e), () => e);
     }
-    final mergedJson = byKey.values.map((e) => core.ItemModel.fromEntity(e).toJson()).toList();
-    await users.doc(partnerUid).set({'wishList': mergedJson}, SetOptions(merge: true));
+    final mergedJson = byKey.values
+        .map((e) => core.ItemModel.fromEntity(e).toJson())
+        .toList();
+    await users.doc(partnerUid).set({
+      'wishList': mergedJson,
+    }, SetOptions(merge: true));
   }
 
   /// Ensure collaborator links are symmetric: if someone has already added me,
@@ -289,9 +329,14 @@ class UserService {
     final selfRef = _firestore.collection('users').doc(uid);
     final meSnap = await selfRef.get();
     final me = AppUserModel.fromJson(meSnap.data() ?? {}, uid);
-    final removed = (meSnap.data()?['removedCollaborators'] as List?)?.cast<String>() ?? const <String>[];
+    final removed =
+        (meSnap.data()?['removedCollaborators'] as List?)?.cast<String>() ??
+        const <String>[];
     // Find users that already list me as collaborator
-    final q = await _firestore.collection('users').where('collaborators', arrayContains: uid).get();
+    final q = await _firestore
+        .collection('users')
+        .where('collaborators', arrayContains: uid)
+        .get();
     if (q.docs.isEmpty) return;
     final existing = me.collaborators.toSet();
     final toAdd = <String>{};
@@ -302,7 +347,9 @@ class UserService {
       if (!existing.contains(otherId)) toAdd.add(otherId);
     }
     if (toAdd.isEmpty) return;
-    await selfRef.set({'collaborators': FieldValue.arrayUnion(toAdd.toList())}, SetOptions(merge: true));
+    await selfRef.set({
+      'collaborators': FieldValue.arrayUnion(toAdd.toList()),
+    }, SetOptions(merge: true));
   }
 
   /// Ensure current user's profile has at least email (and name if available).
@@ -342,8 +389,12 @@ class UserService {
       try {
         final other = await _firestore.collection('users').doc(cid).get();
         final otherData = other.data() ?? <String, dynamic>{};
-        final otherCollabs = (otherData['collaborators'] as List?)?.cast<String>() ?? const <String>[];
-        final otherRemoved = (otherData['removedCollaborators'] as List?)?.cast<String>() ?? const <String>[];
+        final otherCollabs =
+            (otherData['collaborators'] as List?)?.cast<String>() ??
+            const <String>[];
+        final otherRemoved =
+            (otherData['removedCollaborators'] as List?)?.cast<String>() ??
+            const <String>[];
         final iAmListed = otherCollabs.contains(uid);
         final iAmRemoved = otherRemoved.contains(uid);
         if (!iAmListed || iAmRemoved) {
@@ -355,7 +406,9 @@ class UserService {
       }
     }
     if (toRemove.isNotEmpty) {
-      await selfRef.set({'collaborators': FieldValue.arrayRemove(toRemove)}, SetOptions(merge: true));
+      await selfRef.set({
+        'collaborators': FieldValue.arrayRemove(toRemove),
+      }, SetOptions(merge: true));
     }
   }
 
@@ -377,7 +430,8 @@ class UserService {
       final batch = _firestore.batch();
       var changed = 0;
       for (final d in mine.docs) {
-        final owners = (d.data()['owners'] as List?)?.cast<String>() ?? const <String>[];
+        final owners =
+            (d.data()['owners'] as List?)?.cast<String>() ?? const <String>[];
         if (!owners.contains(partnerUid)) {
           batch.update(d.reference, {
             'owners': FieldValue.arrayUnion([partnerUid]),

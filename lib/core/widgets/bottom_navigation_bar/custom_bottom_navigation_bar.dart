@@ -36,21 +36,27 @@ class CustomBottomNavigationBar extends StatelessWidget {
                         context,
                         icon: HugeIcons.strokeRoundedHome01,
                         selected: state == SelectedPage.home,
-                        onTap: () => context.read<NavigationCubit>().changePage(SelectedPage.home),
+                        onTap: () => context.read<NavigationCubit>().changePage(
+                          SelectedPage.home,
+                        ),
                         tooltip: 'Home',
                       ),
                       _navIcon(
                         context,
                         icon: HugeIcons.strokeRoundedMenu01,
                         selected: state == SelectedPage.wishlist,
-                        onTap: () => context.read<NavigationCubit>().changePage(SelectedPage.wishlist),
+                        onTap: () => context.read<NavigationCubit>().changePage(
+                          SelectedPage.wishlist,
+                        ),
                         tooltip: 'Wishlist',
                       ),
                       _navIcon(
                         context,
                         icon: HugeIcons.strokeRoundedFavourite,
                         selected: state == SelectedPage.dowryList,
-                        onTap: () => context.read<NavigationCubit>().changePage(SelectedPage.dowryList),
+                        onTap: () => context.read<NavigationCubit>().changePage(
+                          SelectedPage.dowryList,
+                        ),
                         tooltip: 'Dowry List',
                       ),
                       BlocBuilder<NotificationBloc, NotificationState>(
@@ -66,7 +72,9 @@ class CustomBottomNavigationBar extends StatelessWidget {
                                 context,
                                 icon: HugeIcons.strokeRoundedNotification01,
                                 selected: state == SelectedPage.notification,
-                                onTap: () => context.read<NavigationCubit>().changePage(SelectedPage.notification),
+                                onTap: () => context
+                                    .read<NavigationCubit>()
+                                    .changePage(SelectedPage.notification),
                                 tooltip: 'Notification',
                               ),
                               if (unread > 0)
@@ -74,15 +82,26 @@ class CustomBottomNavigationBar extends StatelessWidget {
                                   right: -2,
                                   top: -2,
                                   child: Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 6,
+                                      vertical: 2,
+                                    ),
                                     decoration: BoxDecoration(
-                                      color: Theme.of(context).colorScheme.error,
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.error,
                                       borderRadius: BorderRadius.circular(12),
                                     ),
-                                    constraints: const BoxConstraints(minWidth: 18, minHeight: 18),
+                                    constraints: const BoxConstraints(
+                                      minWidth: 18,
+                                      minHeight: 18,
+                                    ),
                                     child: Text(
                                       unread > 99 ? '99+' : '$unread',
-                                      style: Theme.of(context).textTheme.labelSmall?.copyWith(color: Colors.white),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelSmall
+                                          ?.copyWith(color: Colors.white),
                                     ),
                                   ),
                                 ),
@@ -118,7 +137,9 @@ class CustomBottomNavigationBar extends StatelessWidget {
         icon: HugeIcon(
           icon: icon,
           size: _iconSize,
-          color: selected ? Theme.of(context).colorScheme.primary : Theme.of(context).disabledColor,
+          color: selected
+              ? Theme.of(context).colorScheme.primary
+              : Theme.of(context).disabledColor,
         ),
         splashRadius: 28,
       ),

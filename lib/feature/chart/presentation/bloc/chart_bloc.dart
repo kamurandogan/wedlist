@@ -14,7 +14,10 @@ class ChartBloc extends Bloc<ChartEvent, ChartState> {
 
   final ComputeCategorySpending _compute;
 
-  Future<void> _onRebuild(ChartRebuildFromItems event, Emitter<ChartState> emit) async {
+  Future<void> _onRebuild(
+    ChartRebuildFromItems event,
+    Emitter<ChartState> emit,
+  ) async {
     final data = _compute(event.items);
     if (data.isEmpty) {
       emit(ChartEmpty());

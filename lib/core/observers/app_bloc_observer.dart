@@ -3,7 +3,10 @@ import 'package:bloc/bloc.dart';
 /// Uygulama genelinde Bloc transition ve hata gözlemi.
 class AppBlocObserver extends BlocObserver {
   @override
-  void onTransition(Bloc<dynamic, dynamic> bloc, Transition<dynamic, dynamic> transition) {
+  void onTransition(
+    Bloc<dynamic, dynamic> bloc,
+    Transition<dynamic, dynamic> transition,
+  ) {
     // Debug amaçlı sade log (gerekirse dev/prod ayrıştırılabilir)
     // ignore: avoid_print
     print(

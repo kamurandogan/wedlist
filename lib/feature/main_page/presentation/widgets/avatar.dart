@@ -26,7 +26,8 @@ class CustomAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = imageProvider ?? const AssetImage('assets/images/default_avatar.png');
+    final provider =
+        imageProvider ?? const AssetImage('assets/images/default_avatar.png');
     final color = borderColor ?? Theme.of(context).colorScheme.primary;
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -66,7 +67,9 @@ class CustomAvatar extends StatelessWidget {
                   Positioned.fill(
                     child: ClipOval(
                       child: ColoredBox(
-                        color: (overlayColor ?? Colors.black).withValues(alpha: 0.7),
+                        color: (overlayColor ?? Colors.black).withValues(
+                          alpha: 0.7,
+                        ),
                       ),
                     ),
                   ),
@@ -92,7 +95,12 @@ class CustomAvatar extends StatelessWidget {
                       Text(
                         overlayText ?? 'Fotoğraf yükle',
                         textAlign: TextAlign.center,
-                        style: overlayTextStyle ?? const TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+                        style:
+                            overlayTextStyle ??
+                            const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
                       ),
                     ],
                   ),

@@ -45,7 +45,8 @@ class AdsService {
   // Google Mobile Ads only supports Android/iOS. Web/desktop are not supported.
   bool get _adsSupported {
     if (kIsWeb) return false;
-    return defaultTargetPlatform == TargetPlatform.android || defaultTargetPlatform == TargetPlatform.iOS;
+    return defaultTargetPlatform == TargetPlatform.android ||
+        defaultTargetPlatform == TargetPlatform.iOS;
   }
 
   // Entitlement-based kill switch (e.g., Remove Ads purchase)
@@ -62,9 +63,12 @@ class AdsService {
       // Skip completely on unsupported platforms (Windows, Linux, macOS, Web)
       if (!adsEnabled) {
         if (kDebugMode) {
-          debugPrint('Ads disabled: platform not supported ($defaultTargetPlatform${kIsWeb ? ' web' : ''})');
+          debugPrint(
+            'Ads disabled: platform not supported ($defaultTargetPlatform${kIsWeb ? ' web' : ''})',
+          );
         }
-        _initialized = true; // mark as no-op initialized to avoid repeated attempts
+        _initialized =
+            true; // mark as no-op initialized to avoid repeated attempts
         _initializing!.complete();
         return;
       }
@@ -102,7 +106,8 @@ class AdsService {
     void Function(LoadAdError error)? onFailed,
   }) {
     if (!adsEnabled) {
-      if (kDebugMode) debugPrint('Banner ads are not supported on this platform.');
+      if (kDebugMode)
+        debugPrint('Banner ads are not supported on this platform.');
       return null;
     }
     _currentBanner?.dispose();
@@ -208,7 +213,9 @@ class AdsService {
     );
   }
 
-  Future<bool> showRewarded({required void Function(RewardItem reward) onReward}) async {
+  Future<bool> showRewarded({
+    required void Function(RewardItem reward) onReward,
+  }) async {
     if (!adsEnabled) return false;
     if (!_initialized) await init();
     if (_rewarded == null) await _loadRewarded();
@@ -255,18 +262,26 @@ class AdsService {
   String get _bannerAdUnitId {
     // Debug / profile: Google test id kullan; Release: gerçek ID.
     if (defaultTargetPlatform == TargetPlatform.android) {
-      return kDebugMode ? AppStrings.admobTestBannerAndroid : AppStrings.admobProdBannerAndroid;
+      return kDebugMode
+          ? AppStrings.admobTestBannerAndroid
+          : AppStrings.admobProdBannerAndroid;
     } else if (defaultTargetPlatform == TargetPlatform.iOS) {
-      return kDebugMode ? AppStrings.admobTestBannerIOS : AppStrings.admobProdBannerIOS;
+      return kDebugMode
+          ? AppStrings.admobTestBannerIOS
+          : AppStrings.admobProdBannerIOS;
     }
     return 'test-banner';
   }
 
   String get _interstitialAdUnitId {
     if (defaultTargetPlatform == TargetPlatform.android) {
-      return kDebugMode ? AppStrings.admobTestInterstitialAndroid : AppStrings.admobProdInterstitialAndroid;
+      return kDebugMode
+          ? AppStrings.admobTestInterstitialAndroid
+          : AppStrings.admobProdInterstitialAndroid;
     } else if (defaultTargetPlatform == TargetPlatform.iOS) {
-      return kDebugMode ? AppStrings.admobTestInterstitialIOS : AppStrings.admobProdInterstitialIOS;
+      return kDebugMode
+          ? AppStrings.admobTestInterstitialIOS
+          : AppStrings.admobProdInterstitialIOS;
     }
     return 'test-interstitial';
   }

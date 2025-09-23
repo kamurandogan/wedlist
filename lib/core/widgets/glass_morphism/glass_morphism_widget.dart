@@ -29,8 +29,10 @@ class GlassMorphism extends StatelessWidget {
         image: image == null
             ? null
             : DecorationImage(
-                image: NetworkImage(image ??
-                    'https://as1.ftcdn.net/v2/jpg/01/42/29/00/1000_F_142290090_YPNXXDIEPdWTexzA0dDjwoft119I8GfW.jpg'),
+                image: NetworkImage(
+                  image ??
+                      'https://as1.ftcdn.net/v2/jpg/01/42/29/00/1000_F_142290090_YPNXXDIEPdWTexzA0dDjwoft119I8GfW.jpg',
+                ),
                 fit: BoxFit.cover,
               ),
         color: color.withValues(alpha: opacity),

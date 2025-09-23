@@ -23,8 +23,13 @@ class ProgressWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Firestore'da ülkeye göre seçilen items_<COUNTRY> koleksiyonundan toplam item sayısını al.
-    final totalItemsFuture = _resolveItemsCollection().then<int>((collection) async {
-      final s = await FirebaseFirestore.instance.collection(collection).count().get();
+    final totalItemsFuture = _resolveItemsCollection().then<int>((
+      collection,
+    ) async {
+      final s = await FirebaseFirestore.instance
+          .collection(collection)
+          .count()
+          .get();
       return s.count ?? 0;
     });
 
@@ -68,7 +73,9 @@ class ProgressWidget extends StatelessWidget {
             return BlocBuilder<DowryListBloc, DowryListState>(
               builder: (context, state) {
                 final owned = state is DowryListLoaded ? state.items.length : 0;
-                final progress = total > 0 ? (owned / total).clamp(0.0, 1.0) : 0.0;
+                final progress = total > 0
+                    ? (owned / total).clamp(0.0, 1.0)
+                    : 0.0;
                 return Row(
                   children: [
                     // İlerleme çubuğu
@@ -125,7 +132,8 @@ class ProgressWidget extends StatelessWidget {
         code = (snap.data()?['country'] as String?)?.toUpperCase();
       } on Exception catch (_) {}
     }
-    code ??= (ui.PlatformDispatcher.instance.locale.countryCode ?? '').toUpperCase();
+    code ??= (ui.PlatformDispatcher.instance.locale.countryCode ?? '')
+        .toUpperCase();
     if (code.isEmpty) code = 'TR';
     return 'items_$code';
   }

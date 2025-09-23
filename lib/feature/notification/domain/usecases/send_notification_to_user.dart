@@ -5,5 +5,6 @@ class SendNotificationToUser {
   SendNotificationToUser(this.repo);
   final NotificationRepository repo;
 
-  Future<void> call(String toUid, AppNotificationEntity notification) => repo.sendTo(toUid, notification);
+  Future<void> call(String toUid, AppNotificationEntity notification) =>
+      repo.sendTo(toUid, notification);
 }

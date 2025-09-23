@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:wedlist/core/utils/colors.dart';
 
 class SettingsPageListtile extends StatelessWidget {
-  const SettingsPageListtile({required this.title, required this.onTap, this.trailing, super.key});
+  const SettingsPageListtile({
+    required this.title,
+    required this.onTap,
+    this.trailing,
+    super.key,
+  });
 
   final String title;
   final VoidCallback onTap;

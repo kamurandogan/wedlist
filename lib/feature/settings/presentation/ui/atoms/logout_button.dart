@@ -10,7 +10,10 @@ class LogoutButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton.icon(
       icon: const Icon(Icons.logout),
-      label: Text(context.loc.logoutButtonText, style: Theme.of(context).textTheme.labelLarge),
+      label: Text(
+        context.loc.logoutButtonText,
+        style: Theme.of(context).textTheme.labelLarge,
+      ),
       onPressed: onPressed,
     );
   }

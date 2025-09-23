@@ -8,7 +8,11 @@ import 'package:wedlist/core/item/item_model.dart' as core;
 /// Wishlist verilerini uzak kaynaktan (Firestore) çeken soyut veri kaynağı arayüzü
 abstract class WishListRemoteDataSource {
   /// Belirli bir kategoriye göre wishlist itemlarını getirir
-  Future<List<ItemEntity>> getItems(String category, String langCode, String id);
+  Future<List<ItemEntity>> getItems(
+    String category,
+    String langCode,
+    String id,
+  );
 
   /// Belirli bir kategoriye birden fazla wishlist item ekler
   Future<void> addItems(String category, List<String> titles);
@@ -16,13 +20,18 @@ abstract class WishListRemoteDataSource {
 
 /// Firestore'dan wishlist verilerini çeken veri kaynağı implementasyonu (yeni düzleştirilmiş yapı)
 class WishListRemoteDataSourceImpl implements WishListRemoteDataSource {
-  WishListRemoteDataSourceImpl(this.firestore, [FirebaseAuth? auth]) : _auth = auth ?? FirebaseAuth.instance;
+  WishListRemoteDataSourceImpl(this.firestore, [FirebaseAuth? auth])
+    : _auth = auth ?? FirebaseAuth.instance;
   final FirebaseFirestore firestore;
   final FirebaseAuth _auth;
 
   /// Firestore'dan ilgili kategoriye göre kullanıcının wishlist'ini getirir
   @override
-  Future<List<ItemEntity>> getItems(String category, String langCode, String id) async {
+  Future<List<ItemEntity>> getItems(
+    String category,
+    String langCode,
+    String id,
+  ) async {
     final uid = _auth.currentUser?.uid;
     if (uid == null || uid.isEmpty) {
       throw StateError('Giriş gerekli');
@@ -38,7 +47,9 @@ class WishListRemoteDataSourceImpl implements WishListRemoteDataSource {
       models = rawList.map(core.ItemModel.fromJson).toList();
     } else {
       // Kullanıcının listesi boşsa base items'i sadece oku (yazmadan)
-      final base = await firestore.collection('items_${country.toUpperCase()}').get();
+      final base = await firestore
+          .collection('items_${country.toUpperCase()}')
+          .get();
       models = base.docs
           .map(
             (doc) => core.ItemModel.fromJson({
@@ -65,7 +76,9 @@ class WishListRemoteDataSourceImpl implements WishListRemoteDataSource {
     if (unique.length != models.length) {
       // Persist cleaned list (best-effort)
       try {
-        await userRef.set({'wishList': unique.map((m) => m.toJson()).toList()}, SetOptions(merge: true));
+        await userRef.set({
+          'wishList': unique.map((m) => m.toJson()).toList(),
+        }, SetOptions(merge: true));
       } on Exception {
         // ignore
       }
@@ -73,7 +86,9 @@ class WishListRemoteDataSourceImpl implements WishListRemoteDataSource {
 
     // Entitiy'e çevir ve kategori filtresi uygula
     final entities = unique.map((m) => m.toEntity()).toList();
-    final filtered = category.isEmpty ? entities : entities.where((e) => e.category == category).toList();
+    final filtered = category.isEmpty
+        ? entities
+        : entities.where((e) => e.category == category).toList();
     return filtered;
   }
 
@@ -107,8 +122,10 @@ class WishListRemoteDataSourceImpl implements WishListRemoteDataSource {
       throw StateError('Giriş gerekli');
     }
 
-    String slug(String s) => s.trim().toLowerCase().replaceAll(RegExp(r'\s+'), '_');
-    String makeId(String cat, String title) => 'custom_${slug(cat)}_${slug(title)}';
+    String slug(String s) =>
+        s.trim().toLowerCase().replaceAll(RegExp(r'\s+'), '_');
+    String makeId(String cat, String title) =>
+        'custom_${slug(cat)}_${slug(title)}';
 
     final userRef = firestore.collection('users').doc(uid);
     final snap = await userRef.get();

@@ -32,7 +32,10 @@ class PhotoCardGlassContent extends StatelessWidget {
         children: [
           Text(
             title,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(color: textColor, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              color: textColor,
+              fontWeight: FontWeight.bold,
+            ),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
@@ -40,7 +43,10 @@ class PhotoCardGlassContent extends StatelessWidget {
             const SizedBox(height: 4),
             Text(
               note,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: textColor, fontStyle: FontStyle.italic),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: textColor,
+                fontStyle: FontStyle.italic,
+              ),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
@@ -51,7 +57,10 @@ class PhotoCardGlassContent extends StatelessWidget {
             children: [
               Text(
                 price.isEmpty ? r'$0' : '\$$price',
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(color: textColor, fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  color: textColor,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               if (itemId != null) ...[
                 const SizedBox(height: 8),
@@ -71,7 +80,10 @@ class PhotoCardGlassContent extends StatelessWidget {
 
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         shape: CircleBorder(
-          side: BorderSide(color: Colors.grey.withValues(alpha: .3), width: 1.2),
+          side: BorderSide(
+            color: Colors.grey.withValues(alpha: .3),
+            width: 1.2,
+          ),
         ),
         textStyle: Theme.of(context).textTheme.labelLarge,
       ),

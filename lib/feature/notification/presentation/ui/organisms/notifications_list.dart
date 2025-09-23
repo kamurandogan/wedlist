@@ -32,7 +32,9 @@ class NotificationsList extends StatelessWidget {
         }
         final icon = n.type == 'item_added'
             ? Icons.add_circle_outline
-            : (n.type == 'item_deleted' ? Icons.remove_circle_outline : Icons.notifications_none);
+            : (n.type == 'item_deleted'
+                  ? Icons.remove_circle_outline
+                  : Icons.notifications_none);
         final when = df.format(n.createdAt);
         // Lokalize suffix: item title + " " + (eklendi/silindi) gibi.
         String? suffix;
@@ -41,7 +43,9 @@ class NotificationsList extends StatelessWidget {
         } else if (n.type == 'item_deleted') {
           suffix = context.loc.notificationItemDeletedSuffix;
         }
-        final computedTitle = (suffix != null && suffix.isNotEmpty) ? '${n.title} $suffix' : n.title;
+        final computedTitle = (suffix != null && suffix.isNotEmpty)
+            ? '${n.title} $suffix'
+            : n.title;
         // Alt satırda kategori veya mevcut body.
         final displayBody = (n.category.isNotEmpty ? n.category : n.body);
         return NotificationListTile(

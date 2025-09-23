@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:wedlist/feature/wishlist/presentation/widgets/add_category_view/item_field_row.dart';
 
 class ItemsList extends StatelessWidget {
-  const ItemsList({required this.controllers, required this.onAdd, required this.onRemove, super.key});
+  const ItemsList({
+    required this.controllers,
+    required this.onAdd,
+    required this.onRemove,
+    super.key,
+  });
   final List<TextEditingController> controllers;
   final void Function() onAdd;
   final void Function(int index) onRemove;

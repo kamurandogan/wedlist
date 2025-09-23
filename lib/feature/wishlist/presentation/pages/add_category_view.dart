@@ -13,7 +13,8 @@ class AddCategoryView extends StatefulWidget {
   State<AddCategoryView> createState() => _AddCategoryViewState();
 }
 
-class _AddCategoryViewState extends State<AddCategoryView> with AddCategoryViewMixin {
+class _AddCategoryViewState extends State<AddCategoryView>
+    with AddCategoryViewMixin {
   @override
   void dispose() {
     disposeControllers();
@@ -40,7 +41,9 @@ class _AddCategoryViewState extends State<AddCategoryView> with AddCategoryViewM
           ),
           const SizedBox(height: 8),
           SubmitButton(
-            onPressed: isSubmitting ? null : () => submit(context, () => setState(() {})),
+            onPressed: isSubmitting
+                ? null
+                : () => submit(context, () => setState(() {})),
             isSubmitting: isSubmitting,
           ),
         ],

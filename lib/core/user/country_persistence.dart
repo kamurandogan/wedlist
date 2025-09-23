@@ -13,7 +13,9 @@ class CountryPersistenceService {
     final prefs = await SharedPreferences.getInstance();
     final sel = (prefs.getString('selected_country') ?? '').toUpperCase();
     if (sel.isEmpty) return;
-    await _firestore.collection('users').doc(uid).set({'country': sel}, SetOptions(merge: true));
+    await _firestore.collection('users').doc(uid).set({
+      'country': sel,
+    }, SetOptions(merge: true));
     // Clear local cache to avoid re-writing on next sessions
     await prefs.remove('selected_country');
   }
@@ -22,6 +24,8 @@ class CountryPersistenceService {
     final uid = _auth.currentUser?.uid;
     if (uid == null) return;
     final code = countryCode.toUpperCase();
-    await _firestore.collection('users').doc(uid).set({'country': code}, SetOptions(merge: true));
+    await _firestore.collection('users').doc(uid).set({
+      'country': code,
+    }, SetOptions(merge: true));
   }
 }

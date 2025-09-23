@@ -11,7 +11,8 @@ class PhotoCardGlassButtonArea extends StatelessWidget {
     return BlocBuilder<AddPhotoCubit, AddPhotoState>(
       builder: (context, state) {
         if (state.status == AddPhotoStatus.success &&
-            (state.previewBytes != null || (state.imageUrl != null && state.imageUrl!.isNotEmpty))) {
+            (state.previewBytes != null ||
+                (state.imageUrl != null && state.imageUrl!.isNotEmpty))) {
           return const SizedBox.shrink();
         }
         return Builder(

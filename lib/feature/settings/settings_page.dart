@@ -73,7 +73,9 @@ class SettingsPage extends StatelessWidget {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(
-                              ok ? context.loc.purchaseSuccess : context.loc.purchaseFailed,
+                              ok
+                                  ? context.loc.purchaseSuccess
+                                  : context.loc.purchaseFailed,
                             ),
                           ),
                         );

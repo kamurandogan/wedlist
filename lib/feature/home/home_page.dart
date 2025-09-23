@@ -34,17 +34,26 @@ class HomePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Expanded(
-                      child: HomePageCard(color: AppColors.pastelBlue, child: TotalPaid()),
+                      child: HomePageCard(
+                        color: AppColors.pastelBlue,
+                        child: TotalPaid(),
+                      ),
                     ),
                     Expanded(
-                      child: HomePageCard(color: AppColors.pastelYellow, child: RemainingDays()),
+                      child: HomePageCard(
+                        color: AppColors.pastelYellow,
+                        child: RemainingDays(),
+                      ),
                     ),
                   ],
                 ),
               ),
               Padding(
                 padding: AppPaddings.mediumOnlyTop,
-                child: HomePageCard(color: AppColors.pastelPink, child: ProgressWidget()),
+                child: HomePageCard(
+                  color: AppColors.pastelPink,
+                  child: ProgressWidget(),
+                ),
               ),
               Padding(
                 padding: AppPaddings.mediumOnlyTop,

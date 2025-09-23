@@ -9,5 +9,6 @@ class FirebasePaths {
   static const String userItemImages = 'user_item_images';
 
   // Build user scoped path
-  static String userScoped(String uid, String directory) => 'users/$uid/$directory';
+  static String userScoped(String uid, String directory) =>
+      'users/$uid/$directory';
 }

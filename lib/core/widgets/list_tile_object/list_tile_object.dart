@@ -16,7 +16,9 @@ class ListTileObject extends StatelessWidget {
       subtitle: Text(date),
       trailing: Text(
         '₺ 1000',
-        style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.green),
+        style: Theme.of(
+          context,
+        ).textTheme.titleLarge?.copyWith(color: Colors.green),
       ),
     );
   }

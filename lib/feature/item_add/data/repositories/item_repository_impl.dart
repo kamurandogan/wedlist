@@ -27,7 +27,10 @@ class ItemRepositoryImpl implements ItemRepository {
     );
   }
 
-  Future<String> _resolveItemsCollection(FirebaseFirestore firestore, FirebaseAuth auth) async {
+  Future<String> _resolveItemsCollection(
+    FirebaseFirestore firestore,
+    FirebaseAuth auth,
+  ) async {
     // Try user profile country
     final uid = auth.currentUser?.uid;
     String? code;
@@ -38,7 +41,8 @@ class ItemRepositoryImpl implements ItemRepository {
       } on Exception catch (_) {}
     }
     // Fallback to device region code
-    code ??= (ui.PlatformDispatcher.instance.locale.countryCode ?? '').toUpperCase();
+    code ??= (ui.PlatformDispatcher.instance.locale.countryCode ?? '')
+        .toUpperCase();
     if (code.isEmpty) code = 'TR';
     return 'items_$code';
   }

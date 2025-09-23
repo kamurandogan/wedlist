@@ -17,7 +17,8 @@ abstract class CategoryRemoteDataSource {
 /// Firestore'dan kategori verilerini çeken veri kaynağı implementasyonu.
 class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
   /// Firestore instance'ı ile kurucu
-  CategoryRemoteDataSourceImpl(this.firestore, [FirebaseAuth? auth]) : _auth = auth ?? FirebaseAuth.instance;
+  CategoryRemoteDataSourceImpl(this.firestore, [FirebaseAuth? auth])
+    : _auth = auth ?? FirebaseAuth.instance;
   final FirebaseFirestore firestore;
   final FirebaseAuth _auth;
 
@@ -25,7 +26,10 @@ class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
   /// [title]: Belirli bir başlık (kullanılmıyor, ileride filtre için eklenebilir)
   /// [langCode]: Dil kodu (ör. 'en', 'tr')
   @override
-  Future<List<CategoryItemModel>> getCategories(String title, String langCode) async {
+  Future<List<CategoryItemModel>> getCategories(
+    String title,
+    String langCode,
+  ) async {
     final uid = _auth.currentUser?.uid;
     final categories = <String>{};
     final country = await _resolveCountry(uid);
@@ -33,7 +37,8 @@ class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
     if (uid != null && uid.isNotEmpty) {
       // Önce kullanıcının wishlist'indeki kategoriler
       final userSnap = await firestore.collection('users').doc(uid).get();
-      final rawList = (userSnap.data()?['wishList'] as List?)?.cast<Map<String, dynamic>>();
+      final rawList = (userSnap.data()?['wishList'] as List?)
+          ?.cast<Map<String, dynamic>>();
       if (rawList != null && rawList.isNotEmpty) {
         for (final j in rawList) {
           final m = core.ItemModel.fromJson(j);
@@ -42,15 +47,21 @@ class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
       }
 
       // İşbirlikçilerinin (collaborators) wishlist kategorilerini de ekle
-      final collabs = (userSnap.data()?['collaborators'] as List?)?.whereType<String>().toList() ?? const <String>[];
+      final collabs =
+          (userSnap.data()?['collaborators'] as List?)
+              ?.whereType<String>()
+              .toList() ??
+          const <String>[];
       if (collabs.isNotEmpty) {
         try {
           final futures = <Future<DocumentSnapshot<Map<String, dynamic>>>>[
-            for (final cUid in collabs) firestore.collection('users').doc(cUid).get(),
+            for (final cUid in collabs)
+              firestore.collection('users').doc(cUid).get(),
           ];
           final snaps = await Future.wait(futures);
           for (final s in snaps) {
-            final cRaw = (s.data()?['wishList'] as List?)?.cast<Map<String, dynamic>>();
+            final cRaw = (s.data()?['wishList'] as List?)
+                ?.cast<Map<String, dynamic>>();
             if (cRaw == null || cRaw.isEmpty) continue;
             for (final j in cRaw) {
               final m = core.ItemModel.fromJson(j);
@@ -65,7 +76,9 @@ class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
 
     // Fallback: base items'tan kategoriler (ör. wishlist boşsa)
     if (categories.isEmpty) {
-      final baseQuery = await firestore.collection('items_${country.toUpperCase()}').get();
+      final baseQuery = await firestore
+          .collection('items_${country.toUpperCase()}')
+          .get();
       for (final doc in baseQuery.docs) {
         final cat = doc.data()['category'];
         if (cat is String && cat.isNotEmpty) categories.add(cat);

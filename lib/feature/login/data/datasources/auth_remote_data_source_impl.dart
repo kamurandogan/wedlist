@@ -6,16 +6,18 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<UserModel?> signIn(String email, String password) async {
     try {
-      final userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      final userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+            email: email,
+            password: password,
+          );
       final user = userCredential.user;
       if (user != null) {
         if (!user.emailVerified) {
           throw FirebaseAuthException(
             code: 'email-not-verified',
-            message: 'E-posta adresiniz doğrulanmamış. Lütfen e-postanızı kontrol edin.',
+            message:
+                'E-posta adresiniz doğrulanmamış. Lütfen e-postanızı kontrol edin.',
           );
         }
         return UserModel(id: user.uid, email: user.email ?? '');
@@ -28,7 +30,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       } else if (e.code == 'wrong-password') {
         throw Exception('Şifre yanlış.');
       } else if (e.code == 'email-not-verified') {
-        throw Exception('E-posta adresiniz doğrulanmamış. Lütfen e-postanızı kontrol edin.');
+        throw Exception(
+          'E-posta adresiniz doğrulanmamış. Lütfen e-postanızı kontrol edin.',
+        );
       } else {
         throw Exception('Giriş sırasında bir hata oluştu: ${e.message}');
       }

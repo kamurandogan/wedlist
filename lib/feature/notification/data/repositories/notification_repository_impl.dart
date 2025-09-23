@@ -8,8 +8,9 @@ class NotificationRepositoryImpl implements NotificationRepository {
   final NotificationRemoteDataSource remote;
 
   @override
-  Stream<List<AppNotificationEntity>> watchMyNotifications() =>
-      remote.watchMyNotifications().map((m) => m.map((e) => e.toEntity()).toList());
+  Stream<List<AppNotificationEntity>> watchMyNotifications() => remote
+      .watchMyNotifications()
+      .map((m) => m.map((e) => e.toEntity()).toList());
 
   @override
   Future<void> markRead(Set<String> ids) => remote.markRead(ids);

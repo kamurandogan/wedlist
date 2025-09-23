@@ -6,7 +6,12 @@ import 'package:wedlist/feature/item_add/presentation/pages/photo_card_glass.dar
 import 'package:wedlist/feature/item_add/presentation/widgets/add_photo_card/photo_card_image.dart';
 
 class AddPhotoCard extends StatelessWidget {
-  const AddPhotoCard({required this.item, required this.price, required this.note, super.key});
+  const AddPhotoCard({
+    required this.item,
+    required this.price,
+    required this.note,
+    super.key,
+  });
   final ItemEntity item;
   final String price;
   final String note;
@@ -33,11 +38,16 @@ class AddPhotoCard extends StatelessWidget {
                     child: Stack(
                       children: [
                         const Positioned.fill(child: PhotoCardImage()),
-                        PhotoCardGlass(title: item.title, price: price, note: note),
+                        PhotoCardGlass(
+                          title: item.title,
+                          price: price,
+                          note: note,
+                        ),
                         Positioned.fill(
                           child: BlocBuilder<AddPhotoCubit, AddPhotoState>(
                             builder: (context, state) {
-                              final isLoading = state.status == AddPhotoStatus.loading;
+                              final isLoading =
+                                  state.status == AddPhotoStatus.loading;
                               final p = (state.progress ?? 0.0).clamp(0.0, 1.0);
                               if (!isLoading) return const SizedBox.shrink();
                               return Column(
@@ -45,7 +55,9 @@ class AddPhotoCard extends StatelessWidget {
                                 children: [
                                   SizedBox(
                                     width: 200,
-                                    child: LinearProgressIndicator(value: p > 0 ? p : null),
+                                    child: LinearProgressIndicator(
+                                      value: p > 0 ? p : null,
+                                    ),
                                   ),
                                   const SizedBox(height: 8),
                                   Text(

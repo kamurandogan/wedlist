@@ -22,7 +22,9 @@ void main() {
         createdAt: DateTime.fromMillisecondsSinceEpoch(0),
         read: false,
       );
-      when(remote.watchMyNotifications).thenAnswer((_) => Stream.value([model]));
+      when(
+        remote.watchMyNotifications,
+      ).thenAnswer((_) => Stream.value([model]));
 
       final first = await repo.watchMyNotifications().first;
       expect(first.single.id, 'id1');

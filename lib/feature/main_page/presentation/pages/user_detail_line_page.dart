@@ -22,7 +22,10 @@ class UserDetailLinePage extends StatelessWidget {
     if (user == null) return '';
     final uid = user.uid;
     try {
-      final snap = await FirebaseFirestore.instance.collection('users').doc(uid).get();
+      final snap = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .get();
       final data = snap.data();
       final name = data != null ? data['name'] as String? : null;
       final displayOrEmail = user.displayName ?? user.email?.split('@').first;
@@ -38,18 +41,25 @@ class UserDetailLinePage extends StatelessWidget {
     return FutureBuilder<String>(
       future: _loadFirstName(),
       builder: (context, snapshot) {
-        final firstName = (snapshot.data ?? '').isNotEmpty ? snapshot.data! : '';
+        final firstName = (snapshot.data ?? '').isNotEmpty
+            ? snapshot.data!
+            : '';
         return Row(
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  firstName.isNotEmpty ? '${context.loc.helloText} $firstName' : context.loc.helloText,
+                  firstName.isNotEmpty
+                      ? '${context.loc.helloText} $firstName'
+                      : context.loc.helloText,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 const SizedBox(height: 4),
-                Text(context.loc.welcomeMessage, style: Theme.of(context).textTheme.bodySmall),
+                Text(
+                  context.loc.welcomeMessage,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
               ],
             ),
             const Expanded(

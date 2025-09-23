@@ -53,7 +53,10 @@ final GoRouter appRouter = GoRouter(
     }
 
     final isAuthRoute =
-        loc == AppRoute.login.path || loc == AppRoute.register.path || loc == AppRoute.onBoarding.path || loc == '/';
+        loc == AppRoute.login.path ||
+        loc == AppRoute.register.path ||
+        loc == AppRoute.onBoarding.path ||
+        loc == '/';
     final isProtected =
         loc == AppRoute.main.path ||
         loc == AppRoute.addItem.path ||
@@ -66,7 +69,9 @@ final GoRouter appRouter = GoRouter(
     }
 
     // Eğer kullanıcı giriş yaptı ve doğrulandıysa, auth rotalarına veya verification sayfasına gitmesin
-    if (loggedIn && isVerified && (isAuthRoute || loc == AppRoute.verification.path)) {
+    if (loggedIn &&
+        isVerified &&
+        (isAuthRoute || loc == AppRoute.verification.path)) {
       return AppRoute.main.path;
     }
 

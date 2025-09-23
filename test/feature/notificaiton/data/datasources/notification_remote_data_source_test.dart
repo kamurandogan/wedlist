@@ -33,16 +33,20 @@ void main() {
       final user = MockUser(uid: 'u1');
       final auth = MockFirebaseAuth(mockUser: user, signedIn: true);
       final ds = NotificationRemoteDataSourceImpl(fs, auth);
-      final ref = await fs.collection('users').doc('u1').collection('notifications').add({
-        'type': 't',
-        'title': 'x',
-        'body': 'b',
-        'itemId': 'i',
-        'category': 'c',
-        'createdBy': 'u2',
-        'createdAt': DateTime(2020),
-        'read': false,
-      });
+      final ref = await fs
+          .collection('users')
+          .doc('u1')
+          .collection('notifications')
+          .add({
+            'type': 't',
+            'title': 'x',
+            'body': 'b',
+            'itemId': 'i',
+            'category': 'c',
+            'createdBy': 'u2',
+            'createdAt': DateTime(2020),
+            'read': false,
+          });
 
       await ds.markRead({ref.id});
 
@@ -70,7 +74,11 @@ void main() {
 
       await ds.sendTo('u2', model);
 
-      final q = await fs.collection('users').doc('u2').collection('notifications').get();
+      final q = await fs
+          .collection('users')
+          .doc('u2')
+          .collection('notifications')
+          .get();
       expect(q.docs.length, 1);
       expect(q.docs.first.data()['title'], 'hello');
     });

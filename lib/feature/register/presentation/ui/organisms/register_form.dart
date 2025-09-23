@@ -52,7 +52,9 @@ class _RegisterFormState extends State<RegisterForm> {
   void _submit() {
     if (_formKey.currentState?.validate() ?? false) {
       if (_passwordController.text != _passwordAgainController.text) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Şifreler eşleşmiyor.')));
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Şifreler eşleşmiyor.')));
         return;
       }
       final entity = RegisterEntity(
@@ -97,7 +99,8 @@ class _RegisterFormState extends State<RegisterForm> {
               overlayText: 'Avatarı değiştir',
               imageProvider: _avatarBytes != null
                   ? MemoryImage(_avatarBytes!)
-                  : const AssetImage('assets/images/default_avatar.png') as ImageProvider,
+                  : const AssetImage('assets/images/default_avatar.png')
+                        as ImageProvider,
             ),
           ),
           RegisterTextFormfield(
@@ -144,7 +147,8 @@ class _RegisterFormState extends State<RegisterForm> {
                 return const Center(child: CircularProgressIndicator());
               }
               if (state is RegisterFailure) {
-                if (state.message.toLowerCase().contains('şifre') || state.message.toLowerCase().contains('password')) {
+                if (state.message.toLowerCase().contains('şifre') ||
+                    state.message.toLowerCase().contains('password')) {
                   return CustomFilledButton(
                     text: 'Register',
                     onPressed: _submit,

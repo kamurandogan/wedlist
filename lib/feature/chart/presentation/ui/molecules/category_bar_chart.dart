@@ -22,7 +22,10 @@ class CategoryBarChart extends StatelessWidget {
       scheme.tertiaryContainer,
     ];
 
-    final maxY = (data.map((e) => e.total).fold<double>(0, (p, e) => e > p ? e : p) * 1.15).clamp(1.0, double.infinity);
+    final maxY =
+        (data.map((e) => e.total).fold<double>(0, (p, e) => e > p ? e : p) *
+                1.15)
+            .clamp(1.0, double.infinity);
 
     return BarChart(
       BarChartData(
@@ -70,7 +73,10 @@ class CategoryBarChart extends StatelessWidget {
               final cat = data[group.x].category;
               return BarTooltipItem(
                 '$cat\n',
-                Theme.of(context).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.w600) ?? const TextStyle(),
+                Theme.of(context).textTheme.labelMedium?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ) ??
+                    const TextStyle(),
                 children: [
                   TextSpan(
                     text: rod.toY.toStringAsFixed(0),
@@ -98,7 +104,8 @@ class CategoryBarChart extends StatelessWidget {
                   backDrawRodData: BackgroundBarChartRodData(
                     show: true,
                     toY: maxY,
-                    color: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.4),
+                    color: Theme.of(context).colorScheme.surfaceContainerHighest
+                        .withValues(alpha: 0.4),
                   ),
                 ),
               ],

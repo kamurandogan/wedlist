@@ -8,7 +8,10 @@ class DigitTextfield extends StatefulWidget {
 }
 
 class _DigitTextfieldState extends State<DigitTextfield> {
-  final List<TextEditingController> _controllers = List.generate(4, (_) => TextEditingController());
+  final List<TextEditingController> _controllers = List.generate(
+    4,
+    (_) => TextEditingController(),
+  );
   final List<FocusNode> _focusNodes = List.generate(4, (_) => FocusNode());
 
   String getCode() {

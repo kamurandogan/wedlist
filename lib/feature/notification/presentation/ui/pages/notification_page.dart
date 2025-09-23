@@ -31,17 +31,24 @@ class NotificationPage extends StatelessWidget {
         }
 
         // Background-handle collab_removed
-        final removedNotifs = items.where((n) => n.type == 'collab_removed').toList();
+        final removedNotifs = items
+            .where((n) => n.type == 'collab_removed')
+            .toList();
         if (removedNotifs.isNotEmpty) {
           WidgetsBinding.instance.addPostFrameCallback((_) async {
             for (final n in removedNotifs) {
-              context.read<NotificationBloc>().add(HandleCollabRemoved(removerUid: n.createdBy, notifId: n.id));
+              context.read<NotificationBloc>().add(
+                HandleCollabRemoved(removerUid: n.createdBy, notifId: n.id),
+              );
             }
           });
         }
 
         // Mark all currently visible unread notifications as read (exclude those being auto-deleted)
-        final unreadIds = items.where((n) => !n.read && n.type != 'collab_removed').map((n) => n.id).toSet();
+        final unreadIds = items
+            .where((n) => !n.read && n.type != 'collab_removed')
+            .map((n) => n.id)
+            .toSet();
         final toMark = unreadIds.difference(_markedIds);
         if (toMark.isNotEmpty) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -53,13 +60,17 @@ class NotificationPage extends StatelessWidget {
         return NotificationsList(
           items: items,
           onAcceptCollab: (n) {
-            context.read<NotificationBloc>().add(AcceptCollab(senderUid: n.createdBy, notifId: n.id));
+            context.read<NotificationBloc>().add(
+              AcceptCollab(senderUid: n.createdBy, notifId: n.id),
+            );
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(context.loc.notificationAcceptSuccess)),
             );
           },
           onRejectCollab: (n) {
-            context.read<NotificationBloc>().add(RejectCollab(senderUid: n.createdBy, notifId: n.id));
+            context.read<NotificationBloc>().add(
+              RejectCollab(senderUid: n.createdBy, notifId: n.id),
+            );
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(context.loc.notificationRejectSuccess)),
             );

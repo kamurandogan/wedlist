@@ -21,8 +21,13 @@ class _BarChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final data = (context as Element).findAncestorWidgetOfExactType<BarChartSample3>()!.data;
-    final maxY = (data.map((e) => e.total).fold<double>(0, (p, e) => e > p ? e : p) * 1.2).clamp(1.0, double.infinity);
+    final data = (context as Element)
+        .findAncestorWidgetOfExactType<BarChartSample3>()!
+        .data;
+    final maxY =
+        (data.map((e) => e.total).fold<double>(0, (p, e) => e > p ? e : p) *
+                1.2)
+            .clamp(1.0, double.infinity);
 
     return BarChart(
       BarChartData(

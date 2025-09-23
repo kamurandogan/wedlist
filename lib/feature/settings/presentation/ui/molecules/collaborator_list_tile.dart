@@ -3,7 +3,11 @@ import 'package:wedlist/feature/settings/presentation/cubit/collab_cubit.dart';
 import 'package:wedlist/feature/settings/presentation/ui/atoms/remove_collaborator_button.dart';
 
 class CollaboratorListTile extends StatelessWidget {
-  const CollaboratorListTile({required this.user, required this.onRemove, super.key});
+  const CollaboratorListTile({
+    required this.user,
+    required this.onRemove,
+    super.key,
+  });
 
   final CollaboratorUser user;
   final VoidCallback onRemove;
@@ -11,7 +15,8 @@ class CollaboratorListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // debugPrint('Building CollaboratorListTile for ${user.email}');
-    final title = (user.name.isNotEmpty ? user.name : user.email).trim().isNotEmpty
+    final title =
+        (user.name.isNotEmpty ? user.name : user.email).trim().isNotEmpty
         ? (user.name.isNotEmpty ? user.name : user.email)
         : 'Kullanıcı';
     final subtitleText = user.email.trim().isNotEmpty ? user.email : null;

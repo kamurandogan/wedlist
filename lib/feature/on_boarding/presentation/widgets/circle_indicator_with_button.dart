@@ -25,7 +25,9 @@ class CircleIndicatorWithButton extends StatelessWidget {
               value: progress,
               strokeWidth: 5,
               backgroundColor: AppColors.bg.withValues(alpha: .3),
-              valueColor: const AlwaysStoppedAnimation<Color>(AppColors.textColor),
+              valueColor: const AlwaysStoppedAnimation<Color>(
+                AppColors.textColor,
+              ),
             ),
           ),
           child ?? const SizedBox.shrink(),

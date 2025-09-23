@@ -10,7 +10,9 @@ import 'package:wedlist/injection_container.dart';
 
 mixin AddCategoryViewMixin<T extends StatefulWidget> on State<T> {
   final TextEditingController categoryController = TextEditingController();
-  final List<TextEditingController> itemControllers = <TextEditingController>[TextEditingController()];
+  final List<TextEditingController> itemControllers = <TextEditingController>[
+    TextEditingController(),
+  ];
   bool isSubmitting = false;
 
   @mustCallSuper
@@ -44,13 +46,17 @@ mixin AddCategoryViewMixin<T extends StatefulWidget> on State<T> {
     }
     if (name.isEmpty) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.loc.needCategoryErrorText)));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(context.loc.needCategoryErrorText)),
+        );
       }
       return;
     }
     // Aynı isimde kategori varsa artık hata vermiyoruz; varsa o kategoriye yeni eşyaları ekleyeceğiz.
     final state = context.read<CategorylistBloc>().state;
-    final exists = state is CategorylistLoaded && state.items.any((e) => e.title.toLowerCase() == name.toLowerCase());
+    final exists =
+        state is CategorylistLoaded &&
+        state.items.any((e) => e.title.toLowerCase() == name.toLowerCase());
 
     isSubmitting = true;
     setState.call();
@@ -64,7 +70,13 @@ mixin AddCategoryViewMixin<T extends StatefulWidget> on State<T> {
 
       // Başarı mesajını göster (hala bu sayfadayken)
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(exists ? context.loc.categoryUpdatedText : context.loc.categoryCreatedText)),
+        SnackBar(
+          content: Text(
+            exists
+                ? context.loc.categoryUpdatedText
+                : context.loc.categoryCreatedText,
+          ),
+        ),
       );
 
       // Formu sıfırla
@@ -84,10 +96,14 @@ mixin AddCategoryViewMixin<T extends StatefulWidget> on State<T> {
       // Listeyi anında yenile: WishListBloc için fetch tetikle
       final langCode = Localizations.localeOf(context).languageCode;
       // WishListBloc üst seviyede sağlandığı için doğrudan erişilebilir
-      context.read<WishListBloc>().add(FetchWishListItems(name, langCode, name));
+      context.read<WishListBloc>().add(
+        FetchWishListItems(name, langCode, name),
+      );
     } on Exception catch (e) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Hata: $e')));
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Hata: $e')));
       }
     } finally {
       if (context.mounted) {
