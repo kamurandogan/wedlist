@@ -46,18 +46,22 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
   ) async {
     emit(NotificationLoaded(event.items));
     try {
-      final uid = FirebaseAuth.instance.currentUser?.uid;
+      // In unit tests, Firebase.initializeApp() may not be called; guard accordingly.
+      String? uid;
+      try {
+        uid = FirebaseAuth.instance.currentUser?.uid;
+      } on Exception {
+        // No Firebase app in test env; skip passive sync.
+        return;
+      }
       if (uid == null) return;
       // Bir veya daha fazla collab_accepted bildirimi varsa partner UIDs setini çıkar.
-      final accepted = event.items
-          .where((n) => n.type == AppNotificationType.collabAccepted)
-          .toList();
+      final accepted = event.items.where((n) => n.type == AppNotificationType.collabAccepted).toList();
       if (accepted.isEmpty) return;
       // processedAccepted seti ile aynı bildirimi tekrar tekrar tetiklemeyi engelle.
       // (In-memory; app restart olursa tekrar çalışır — idempotent olduğu için güvenli.)
       accepted.sort((a, b) => b.createdAt.compareTo(a.createdAt));
-      final latest =
-          accepted.first; // Tek partner kuralı olduğundan son kabul yeterli.
+      final latest = accepted.first; // Tek partner kuralı olduğundan son kabul yeterli.
       final partnerUid = latest.createdBy; // createdBy = kabul eden
       if (partnerUid.isEmpty) return;
       // Senkronizasyon çağrıları idempotent.
@@ -81,8 +85,7 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
     emit(NotificationLoading());
     _sub = watch().listen(
       (list) => add(_NotificationsUpdated(list)),
-      onError: (Object e, StackTrace _) =>
-          add(_NotificationsError(e.toString())),
+      onError: (Object e, StackTrace _) => add(_NotificationsError(e.toString())),
     );
   }
 
@@ -119,22 +122,17 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
     } on Exception catch (_) {}
     // Daveti gönderen kullanıcının (inviter) collabInvites içindeki ilgili kaydı 'accepted' olarak işaretle
     try {
-      final inviterRef = FirebaseFirestore.instance
-          .collection('users')
-          .doc(event.senderUid);
+      final inviterRef = FirebaseFirestore.instance.collection('users').doc(event.senderUid);
       final inviterSnap = await inviterRef.get();
       final inviterData = inviterSnap.data() ?? <String, dynamic>{};
       final rawInvites =
-          (inviterData['collabInvites'] as List?)
-              ?.cast<Map<String, dynamic>>() ??
-          const <Map<String, dynamic>>[];
+          (inviterData['collabInvites'] as List?)?.cast<Map<String, dynamic>>() ?? const <Map<String, dynamic>>[];
       var changed = false;
       final updated = <Map<String, dynamic>>[];
       for (final inv in rawInvites) {
         final invUid = (inv['uid'] as String?) ?? '';
         if (invUid == uid) {
-          final newMap = Map<String, dynamic>.from(inv)
-            ..['status'] = 'accepted';
+          final newMap = Map<String, dynamic>.from(inv)..['status'] = 'accepted';
           updated.add(newMap);
           changed = true;
         } else {
@@ -149,15 +147,11 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
     } on Exception catch (_) {}
     // Kabul eden kullanıcının (acceptor) kendi collabInvites listesini de normalize et (varsa)
     try {
-      final acceptorRef = FirebaseFirestore.instance
-          .collection('users')
-          .doc(uid);
+      final acceptorRef = FirebaseFirestore.instance.collection('users').doc(uid);
       final acceptorSnap = await acceptorRef.get();
       final acceptorData = acceptorSnap.data() ?? <String, dynamic>{};
       final rawInvites =
-          (acceptorData['collabInvites'] as List?)
-              ?.cast<Map<String, dynamic>>() ??
-          const <Map<String, dynamic>>[];
+          (acceptorData['collabInvites'] as List?)?.cast<Map<String, dynamic>>() ?? const <Map<String, dynamic>>[];
       if (rawInvites.isNotEmpty) {
         var changed = false;
         final updated = <Map<String, dynamic>>[];
@@ -165,8 +159,7 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
           final invUid = (inv['uid'] as String?) ?? '';
           // Eğer bu davet kabul edilen kullanıcıya aitse status'u 'accepted' yap
           if (invUid == event.senderUid) {
-            final newMap = Map<String, dynamic>.from(inv)
-              ..['status'] = 'accepted';
+            final newMap = Map<String, dynamic>.from(inv)..['status'] = 'accepted';
             updated.add(newMap);
             changed = true;
           } else {

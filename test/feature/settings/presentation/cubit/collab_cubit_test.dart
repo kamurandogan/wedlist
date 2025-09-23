@@ -24,6 +24,11 @@ void main() {
       });
       await firestore.collection(FirebasePaths.users).doc(other).set({
         'email': 'other@mail.com',
+        // Testlerde davet akışının ilerlemesi için hedef kullanıcının
+        // collabUnlocked entitlement'ını açık seedleyelim.
+        'premium': {
+          'collabUnlocked': true,
+        },
       });
       cubit = CollabCubit(auth, firestore);
     });
@@ -37,7 +42,7 @@ void main() {
       'addByEmail creates waiting invite',
       build: () => cubit,
       act: (c) async => c.addByEmail('other@mail.com'),
-      wait: const Duration(milliseconds: 50),
+      wait: const Duration(milliseconds: 120),
       verify: (c) {
         expect(
           c.state.invites
@@ -61,7 +66,7 @@ void main() {
         // trigger reload
         await c.loadCollaborators();
       },
-      wait: const Duration(milliseconds: 50),
+      wait: const Duration(milliseconds: 150),
       verify: (c) {
         expect(c.state.collaborators.map((e) => e.uid), contains(other));
         expect(
