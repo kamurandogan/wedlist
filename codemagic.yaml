@@ -1,266 +1,135 @@
-workflows:workflows:
-
-  ci:  ci:
-
-    name: CI    name: CI
-
-    max_build_duration: 45    max_build_duration: 45      
-
-    environment:    vars:
-
-      flutter: stable        BUNDLE_ID: com.kamurandev.wedlist.wedlist # Projedeki iOS Bundle ID
-
-    scripts:        CERTIFICATE_PRIVATE_KEY: $CERTIFICATE_PRIVATE_KEY
-
-      - name: Install dependencies      groups:
-
-        script: flutter pub get        - app_store_connect 
-
-      - name: Format check   environment:
-
-        script: dart format --set-exit-if-changed .      flutter: stable
-
-      - name: Analyze    scripts:
-
-        script: flutter analyze      - name: Install dependencies
-
-      - name: Run tests        script: flutter pub get
-
-        script: flutter test --test-randomize-ordering-seed=random      - name: Format check
-
-      - name: Build Android debug APK        script: dart format --set-exit-if-changed .
-
-        script: flutter build apk --debug      - name: Analyze
-
-    artifacts:        script: flutter analyze
-
-      - build/app/outputs/flutter-apk/*.apk      - name: Run tests
-
-        script: flutter test --test-randomize-ordering-seed=random
-
-  android_release:      - name: Build Android debug APK
-
-    name: Android Release (AAB)        script: flutter build apk --debug
-
-    max_build_duration: 60    artifacts:
-
-    environment:      - build/app/outputs/flutter-apk/*.apk
-
-      flutter: stable
-
-      groups:  android_release:
-
-        - keystore_credentials    name: Android Release (AAB)
-
-    scripts:    max_build_duration: 60
-
-      - name: Install dependencies    environment:
-
-        script: flutter pub get      flutter: stable
-
-      - name: Format check      groups:
-
-        script: dart format --set-exit-if-changed .        - keystore_credentials # Codemagic UI'da oluşturacağınız env grubu (aşağıdaki env'leri içermeli)
-
-      - name: Analyze    scripts:
-
-        script: flutter analyze      - name: Install dependencies
-
-      - name: Run tests        script: flutter pub get
-
-        script: flutter test --test-randomize-ordering-seed=random      - name: Format check
-
-      - name: Prepare Android keystore        script: dart format --set-exit-if-changed .
-
-        script: |      - name: Analyze
-
-          echo "$ANDROID_KEYSTORE" | base64 --decode > android/app/keystore.jks        script: flutter analyze
-
-          cat > android/key.properties <<EOF      - name: Run tests
-
-          storePassword=$ANDROID_KEYSTORE_PASSWORD        script: flutter test --test-randomize-ordering-seed=random
-
-          keyPassword=$ANDROID_KEY_PASSWORD      - name: Prepare Android keystore
-
-          keyAlias=$ANDROID_KEY_ALIAS        script: |
-
-          storeFile=app/keystore.jks          # Aşağıdaki env değişkenlerini Codemagic'de tanımlayın:
-
-          EOF          # ANDROID_KEYSTORE (base64), ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS, ANDROID_KEY_PASSWORD
-
-      - name: Build Android App Bundle (release)          echo "$ANDROID_KEYSTORE" | base64 --decode > android/app/keystore.jks
-
-        script: flutter build appbundle --release          cat > android/key.properties <<EOF
-
-    artifacts:          storePassword=$ANDROID_KEYSTORE_PASSWORD
-
-      - build/app/outputs/bundle/release/*.aab          keyPassword=$ANDROID_KEY_PASSWORD
-
-          keyAlias=$ANDROID_KEY_ALIAS
-
-  ios_debug:          storeFile=app/keystore.jks
-
-    name: iOS Debug (Automatic signing)          EOF
-
-    max_build_duration: 60      - name: Build Android App Bundle (release)
-
-    environment:        script: flutter build appbundle --release
-
-      flutter: stable    artifacts:
-
-      xcode: latest      - build/app/outputs/bundle/release/*.aab
-
-      vars:
-
-        BUNDLE_ID: com.kamurandev.wedlist.wedlist  # iOS için imzalama gereklidir. Codemagic Automatic Code Signing ile
-
-        CERTIFICATE_PRIVATE_KEY: $CERTIFICATE_PRIVATE_KEY  # kolayca kurulabilir. Hazır olduğunuzda ayrı bir iOS workflow'u ekleyebiliriz.
-
-      groups:  ios_debug:
-
-        - app_store_connect    name: iOS Debug (Automatic signing)
-
-    scripts:    max_build_duration: 60
-
-      - name: Install dependencies    environment:
-
-        script: flutter pub get      flutter: stable
-
-      - name: Format check      xcode: latest
-
-        script: dart format --set-exit-if-changed .      vars:
-
-      - name: Analyze        BUNDLE_ID: com.kamurandev.wedlist.wedlist # Projedeki iOS Bundle ID
-
-        script: flutter analyze      groups:
-
-      - name: Run tests        - app_store_connect # Codemagic UI’da APP_STORE_CONNECT_* değişkenlerini tanımlayın
-
-        script: flutter test --test-randomize-ordering-seed=random        # Gerekirse 'certificate_private_key' grubuna CERTIFICATE_PRIVATE_KEY ekleyin
-
-      - name: Fetch iOS signing files (Development)    scripts:
-
-        script: |      - name: Install dependencies
-
-          app-store-connect fetch-signing-files \        script: flutter pub get
-
-            "$BUNDLE_ID" \      - name: Format check
-
-            --type IOS_APP_DEVELOPMENT \        script: dart format --set-exit-if-changed .
-
-            --create \      - name: Analyze
-
-            --key-id "$APP_STORE_CONNECT_KEY_IDENTIFIER" \        script: flutter analyze
-
-            --issuer-id "$APP_STORE_CONNECT_ISSUER_ID" \      - name: Run tests
-
-            --private-key "$APP_STORE_CONNECT_PRIVATE_KEY"        script: flutter test --test-randomize-ordering-seed=random
-
-      - name: Add certs to keychain      - name: Fetch iOS signing files (Development)
-
-        script: keychain add-certificates        script: |
-
-      - name: Use provisioning profiles          # Aşağıdaki üç env var Codemagic’te tanımlı olmalı:
-
-        script: xcode-project use-profiles          # APP_STORE_CONNECT_KEY_IDENTIFIER, APP_STORE_CONNECT_ISSUER_ID, APP_STORE_CONNECT_PRIVATE_KEY (.p8 içeriği)
-
-      - name: Build iOS IPA (debug/development)          app-store-connect fetch-signing-files \
-
-        script: flutter build ipa --debug            "$BUNDLE_ID" \
-
-    artifacts:            --type IOS_APP_DEVELOPMENT \
-
-      - build/ios/ipa/*.ipa            --create \
-
-            --key-id "$APP_STORE_CONNECT_KEY_IDENTIFIER" \
-
-  ios_release:            --issuer-id "$APP_STORE_CONNECT_ISSUER_ID" \
-
-    name: iOS Release (App Store, automatic signing)            --private-key "$APP_STORE_CONNECT_PRIVATE_KEY"
-
-    max_build_duration: 60      - name: Add certs to keychain
-
-    environment:        script: keychain add-certificates
-
-      flutter: stable      - name: Use provisioning profiles
-
-      xcode: latest        script: xcode-project use-profiles
-
-      vars:      - name: Build iOS IPA (debug/development)
-
-        BUNDLE_ID: com.kamurandev.wedlist.wedlist        script: flutter build ipa --debug
-
-        CERTIFICATE_PRIVATE_KEY: $CERTIFICATE_PRIVATE_KEY    artifacts:
-
-      groups:      - build/ios/ipa/*.ipa
-
+workflows:
+  ci:
+    name: CI
+    max_build_duration: 45
+    vars:
+        BUNDLE_ID: com.kamurandev.wedlist.wedlist # Projedeki iOS Bundle ID
+        CERTIFICATE_PRIVATE_KEY: $CERTIFICATE_PRIVATE_KEY
+      groups:
         - app_store_connect
+   environment:
+      flutter: stable
+    scripts:
+      - name: Install dependencies
+        script: flutter pub get
+      - name: Format check
+        script: dart format --set-exit-if-changed .
+      - name: Analyze
+        script: flutter analyze
+      - name: Run tests
+        script: flutter test --test-randomize-ordering-seed=random
+      - name: Build Android debug APK
+        script: flutter build apk --debug
+    artifacts:
+      - build/app/outputs/flutter-apk/*.apk
 
-    scripts:  ios_release:
+  android_release:
+    name: Android Release (AAB)
+    max_build_duration: 60
+    environment:
+      flutter: stable
+      groups:
+        - keystore_credentials # Codemagic UI'da oluşturacağınız env grubu (aşağıdaki env'leri içermeli)
+    scripts:
+      - name: Install dependencies
+        script: flutter pub get
+      - name: Format check
+        script: dart format --set-exit-if-changed .
+      - name: Analyze
+        script: flutter analyze
+      - name: Run tests
+        script: flutter test --test-randomize-ordering-seed=random
+      - name: Prepare Android keystore
+        script: |
+          # Aşağıdaki env değişkenlerini Codemagic'de tanımlayın:
+          # ANDROID_KEYSTORE (base64), ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS, ANDROID_KEY_PASSWORD
+          echo "$ANDROID_KEYSTORE" | base64 --decode > android/app/keystore.jks
+          cat > android/key.properties <<EOF
+          storePassword=$ANDROID_KEYSTORE_PASSWORD
+          keyPassword=$ANDROID_KEY_PASSWORD
+          keyAlias=$ANDROID_KEY_ALIAS
+          storeFile=app/keystore.jks
+          EOF
+      - name: Build Android App Bundle (release)
+        script: flutter build appbundle --release
+    artifacts:
+      - build/app/outputs/bundle/release/*.aab
 
-      - name: Install dependencies    name: iOS Release (App Store, automatic signing)
+  # iOS için imzalama gereklidir. Codemagic Automatic Code Signing ile
+  # kolayca kurulabilir. Hazır olduğunuzda ayrı bir iOS workflow'u ekleyebiliriz.
+  ios_debug:
+    name: iOS Debug (Automatic signing)
+    max_build_duration: 60
+    environment:
+      flutter: stable
+      xcode: latest
+      vars:
+        BUNDLE_ID: com.kamurandev.wedlist.wedlist # Projedeki iOS Bundle ID
+      groups:
+        - app_store_connect # Codemagic UI’da APP_STORE_CONNECT_* değişkenlerini tanımlayın
+        # Gerekirse 'certificate_private_key' grubuna CERTIFICATE_PRIVATE_KEY ekleyin
+    scripts:
+      - name: Install dependencies
+        script: flutter pub get
+      - name: Format check
+        script: dart format --set-exit-if-changed .
+      - name: Analyze
+        script: flutter analyze
+      - name: Run tests
+        script: flutter test --test-randomize-ordering-seed=random
+      - name: Fetch iOS signing files (Development)
+        script: |
+          # Aşağıdaki üç env var Codemagic’te tanımlı olmalı:
+          # APP_STORE_CONNECT_KEY_IDENTIFIER, APP_STORE_CONNECT_ISSUER_ID, APP_STORE_CONNECT_PRIVATE_KEY (.p8 içeriği)
+          app-store-connect fetch-signing-files \
+            "$BUNDLE_ID" \
+            --type IOS_APP_DEVELOPMENT \
+            --create \
+            --key-id "$APP_STORE_CONNECT_KEY_IDENTIFIER" \
+            --issuer-id "$APP_STORE_CONNECT_ISSUER_ID" \
+            --private-key "$APP_STORE_CONNECT_PRIVATE_KEY"
+      - name: Add certs to keychain
+        script: keychain add-certificates
+      - name: Use provisioning profiles
+        script: xcode-project use-profiles
+      - name: Build iOS IPA (debug/development)
+        script: flutter build ipa --debug
+    artifacts:
+      - build/ios/ipa/*.ipa
 
-        script: flutter pub get    max_build_duration: 60
-
-      - name: Format check    environment:
-
-        script: dart format --set-exit-if-changed .      flutter: stable
-
-      - name: Analyze      xcode: latest
-
-        script: flutter analyze      vars:
-
-      - name: Run tests        BUNDLE_ID: com.kamurandev.wedlist.wedlist
-
-        script: flutter test --test-randomize-ordering-seed=random      groups:
-
-      - name: Fetch iOS signing files (App Store)        - app_store_connect
-
-        script: |    scripts:
-
-          app-store-connect fetch-signing-files \      - name: Install dependencies
-
-            "$BUNDLE_ID" \        script: flutter pub get
-
-            --type IOS_APP_STORE \      - name: Format check
-
-            --create \        script: dart format --set-exit-if-changed .
-
-            --key-id "$APP_STORE_CONNECT_KEY_IDENTIFIER" \      - name: Analyze
-
-            --issuer-id "$APP_STORE_CONNECT_ISSUER_ID" \        script: flutter analyze
-
-            --private-key "$APP_STORE_CONNECT_PRIVATE_KEY"      - name: Run tests
-
-      - name: Add certs to keychain        script: flutter test --test-randomize-ordering-seed=random
-
-        script: keychain add-certificates      - name: Fetch iOS signing files (App Store)
-
-      - name: Use provisioning profiles        script: |
-
-        script: xcode-project use-profiles          app-store-connect fetch-signing-files \
-
-      - name: Build iOS IPA (release)            "$BUNDLE_ID" \
-
-        script: flutter build ipa --release            --type IOS_APP_STORE \
-
-    artifacts:            --create \
-
-      - build/ios/ipa/*.ipa            --key-id "$APP_STORE_CONNECT_KEY_IDENTIFIER" \
-
-    publishing:            --issuer-id "$APP_STORE_CONNECT_ISSUER_ID" \
-
-      app_store_connect:            --private-key "$APP_STORE_CONNECT_PRIVATE_KEY"
-
-        api_key: $APP_STORE_CONNECT_PRIVATE_KEY      - name: Add certs to keychain
-
-        key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER        script: keychain add-certificates
-
-        issuer_id: $APP_STORE_CONNECT_ISSUER_ID      - name: Use provisioning profiles
-
-        submit_to_testflight: true        script: xcode-project use-profiles
-
-        submit_to_app_store: false      - name: Build iOS IPA (release)
+  ios_release:
+    name: iOS Release (App Store, automatic signing)
+    max_build_duration: 60
+    environment:
+      flutter: stable
+      xcode: latest
+      vars:
+        BUNDLE_ID: com.kamurandev.wedlist.wedlist
+      groups:
+        - app_store_connect
+    scripts:
+      - name: Install dependencies
+        script: flutter pub get
+      - name: Format check
+        script: dart format --set-exit-if-changed .
+      - name: Analyze
+        script: flutter analyze
+      - name: Run tests
+        script: flutter test --test-randomize-ordering-seed=random
+      - name: Fetch iOS signing files (App Store)
+        script: |
+          app-store-connect fetch-signing-files \
+            "$BUNDLE_ID" \
+            --type IOS_APP_STORE \
+            --create \
+            --key-id "$APP_STORE_CONNECT_KEY_IDENTIFIER" \
+            --issuer-id "$APP_STORE_CONNECT_ISSUER_ID" \
+            --private-key "$APP_STORE_CONNECT_PRIVATE_KEY"
+      - name: Add certs to keychain
+        script: keychain add-certificates
+      - name: Use provisioning profiles
+        script: xcode-project use-profiles
+      - name: Build iOS IPA (release)
         script: flutter build ipa --release
     artifacts:
       - build/ios/ipa/*.ipa
