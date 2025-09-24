@@ -55,10 +55,10 @@ workflows:
     artifacts:
       - build/app/outputs/bundle/release/*.aab
 
-  ios_release:
+  ios_workflow:
     name: iOS Release
-    instance_type: mac_mini_m2
     max_build_duration: 120
+    instance_type: mac_mini_m2
     integrations:
       app_store_connect: CodeMagicKey
     environment:
@@ -66,17 +66,10 @@ workflows:
         distribution_type: app_store
         bundle_identifier: com.kamurandev.wedlist.wedlist
       vars:
-        APP_ID: 6752911302 # App Store Connect App ID
+        APP_ID: 6752911302
       flutter: stable
       xcode: latest
       cocoapods: default
-    triggering:
-      events:
-        - push
-      branch_patterns:
-        - pattern: "main"
-          include: true
-          source: true
     scripts:
       - name: Set up code signing settings on Xcode project
         script: |
@@ -96,6 +89,7 @@ workflows:
         ignore_failure: true
       - name: Flutter build ipa and automatic versioning
         script: |
+          # See the following link about getting the latest App Store or TestFlight version - https://docs.codemagic.io/knowledge-codemagic/build-versioning/#app-store-or-testflight-latest-build-number
           flutter build ipa --release \
             --build-name=1.0.0 \
             --build-number=$(($(app-store-connect get-latest-testflight-build-number --platform=IOS "$APP_ID") + 1)) \
@@ -105,14 +99,27 @@ workflows:
       - /tmp/xcodebuild_logs/*.log
       - flutter_drive.log
     publishing:
+      # See the following link for details about email publishing - https://docs.codemagic.io/publishing-yaml/distribution/#email
       email:
         recipients:
           - kamuran.software@gmail.com
         notify:
           success: true
           failure: true
+
+        notify_on_build_start: true # To receive a notification when a build starts
+        notify:
+          success: true # To receive a notification when a build succeeds
+          failure: false # To not receive a notification when a build fails
       app_store_connect:
         auth: integration
+
+        # Configuration related to TestFlight (optional)
+        # Note: This action is performed during post-processing.
         submit_to_testflight: true
+
+        # Configuration related to App Store (optional)
+        # Note: This action is performed during post-processing.
         submit_to_app_store: false
+
 
