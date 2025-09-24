@@ -8,7 +8,7 @@ workflows:
       vars:
         BUNDLE_ID: com.kamurandev.wedlist.wedlist # Projedeki iOS Bundle ID
       groups:
-        - app_store_connect # Codemagic UI'da APP_STORE_CONNECT_* değişkenlerini tanımlayın
+        - app_store_connect
     scripts:
       - name: Install dependencies
         script: flutter pub get
@@ -29,7 +29,7 @@ workflows:
     environment:
       flutter: stable
       groups:
-        - keystore_credentials # Codemagic UI'da oluşturacağınız env grubu (aşağıdaki env'leri içermeli)
+        - keystore_credentials
     scripts:
       - name: Install dependencies
         script: flutter pub get
@@ -41,8 +41,6 @@ workflows:
         script: flutter test --test-randomize-ordering-seed=random
       - name: Prepare Android keystore
         script: |
-          # Aşağıdaki env değişkenlerini Codemagic'de tanımlayın:
-          # ANDROID_KEYSTORE (base64), ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS, ANDROID_KEY_PASSWORD
           echo "$ANDROID_KEYSTORE" | base64 --decode > android/app/keystore.jks
           cat > android/key.properties <<EOF
           storePassword=$ANDROID_KEYSTORE_PASSWORD
@@ -55,7 +53,7 @@ workflows:
     artifacts:
       - build/app/outputs/bundle/release/*.aab
 
-  ios_workflow:
+  ios_release:
     name: iOS Release
     max_build_duration: 120
     instance_type: mac_mini_m2
@@ -66,26 +64,25 @@ workflows:
         distribution_type: app_store
         bundle_identifier: com.kamurandev.wedlist.wedlist
       vars:
-        APP_ID: 6752911302
+        APP_STORE_APPLE_ID: 6752911302
       flutter: stable
       xcode: latest
       cocoapods: default
     scripts:
       - name: Set up code signing settings on Xcode project
-        script: |
-          xcode-project use-profiles
+        script: xcode-project use-profiles
       - name: Get Flutter packages
-        script: |
-          flutter packages pub get
+        script: flutter pub get
       - name: Install pods
         script: |
-          find . -name "Podfile" -execdir pod install \;
+          cd ios
+          pod repo update
+          pod install
+          cd ..
       - name: Flutter analyze
-        script: |
-          flutter analyze
+        script: flutter analyze
       - name: Flutter unit tests
-        script: |
-          flutter test
+        script: flutter test
         ignore_failure: true
       - name: Flutter build ipa
         script: |
@@ -93,65 +90,56 @@ workflows:
           flutter build ipa --release \
             --build-name=1.0.$BUILD_NUMBER \
             --build-number=$BUILD_NUMBER
-
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
       - flutter_drive.log
     publishing:
-      # See the following link for details about email publishing - https://docs.codemagic.io/publishing-yaml/distribution/#email
       email:
         recipients:
           - kamuran.software@gmail.com
         notify:
           success: true
           failure: true
-
       app_store_connect:
         auth: integration
-
-        # Configuration related to TestFlight (optional)
-        # Note: This action is performed during post-processing.
         submit_to_testflight: true
-
-        # Configuration related to App Store (optional)
-        # Note: This action is performed during post-processing.
         submit_to_app_store: false
 
-  ios_workflow_wedlist_distribution:
-    name: iOS Release wedlist-distribution
+  ios_release_distribution:
+    name: iOS Release Distribution
     integrations:
       app_store_connect: CodeMagicKey
     max_build_duration: 120
     instance_type: mac_mini_m2
     environment:
       ios_signing:
-        provisioning_profiles:  # Düzeltildi: provisioning_profiles
-          - wedlist-appstore-profile # Codemagic UI'da oluşturduğunuz provisioning profile'ın adı
+        provisioning_profiles:
+          - wedlist-appstore-profile
         certificates:
-          - wedlist-distribution # Codemagic UI'da oluşturduğunuz certificate'ın adı
+          - wedlist-distribution
       vars:
-        APP_ID: 6752911302
+        APP_STORE_APPLE_ID: 6752911302
       flutter: stable
       xcode: latest
       cocoapods: default
     scripts:
       - name: Set up code signing settings on Xcode project
-        script: |
-          xcode-project use-profiles
+        script: xcode-project use-profiles
       - name: Get Flutter packages
-        script: |
-          flutter packages pub get
+        script: flutter pub get
       - name: Install pods
         script: |
-          find . -name "Podfile" -execdir pod install \;
+          cd ios
+          pod repo update
+          pod install
+          cd ..
       - name: Flutter build ipa
         script: |
           BUILD_NUMBER=$(($(app-store-connect get-latest-app-store-build-number "$APP_STORE_APPLE_ID") + 1))
           flutter build ipa --release \
             --build-name=1.0.$BUILD_NUMBER \
             --build-number=$BUILD_NUMBER
-
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
@@ -165,8 +153,5 @@ workflows:
           failure: false
       app_store_connect:
         auth: integration
-
         submit_to_testflight: true
         submit_to_app_store: false
-
-
