@@ -86,3 +86,4 @@ coverage/
 # Secrets
 /wishlist_uploader/serviceAccountKey.json
 ios_signing_key.pem
+wedlist_cert.pem
