@@ -79,3 +79,5 @@ workflows:
         key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
         private_key: $APP_STORE_CONNECT_PRIVATE_KEY
         submit_to_testflight: true
+# testflight'a otomatik yükleme için yukarıdaki env değişkenlerini Codemagic UI'da tanımlayın.
+# Ayrıca APPLE_ID (Apple Kimliği) env değişkenini de tanımlayın.
