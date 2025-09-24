@@ -122,16 +122,21 @@ workflows:
     name: iOS Release wedlist-distribution
     environment:
       ios_signing:
-        provisioning_profile:
-          - wedlist_appstore_profile # Codemagic UI'da oluşturduğunuz provisioning profile'ın adı
+        provisioning_profiles:  # Düzeltildi: provisioning_profiles
+          - wedlist-appstore-profile # Codemagic UI'da oluşturduğunuz provisioning profile'ın adı
         certificates:
           - wedlist-distribution # Codemagic UI'da oluşturduğunuz certificate'ın adı
     scripts:
-      - script: xcode-project use-profiles
-      - script: flutter packages pub get
+      - name: Set up code signing settings on Xcode project
+        script: |
+          xcode-project use-profiles
+      - name: Get Flutter packages
+        script: |
+          flutter packages pub get
       - name: Flutter build ipa and automatic versioning
-        script: /
-          flutter build ipa --export-options-plist=/Users/builder/export_options.plist \
+        script: |
+          flutter build ipa --release \
+            --export-options-plist=/Users/builder/export_options.plist
     artifacts:
       - build/ios/ipa/*.ipa
     publishing:
