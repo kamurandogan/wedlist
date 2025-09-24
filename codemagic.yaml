@@ -48,9 +48,6 @@ workflows:
           keyAlias=$ANDROID_KEY_ALIAS
           storeFile=app/keystore.jks
           EOF
-      - name: Generate launcher icons
-        script: |
-          flutter pub run flutter_launcher_icons:main -f pubspec.yaml
       - name: Build Android App Bundle (release)
         script: flutter build appbundle --release
     artifacts:
