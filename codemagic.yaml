@@ -2,7 +2,17 @@ workflows:
   ci:
     name: CI
     max_build_duration: 45
-    environment:
+     environment:
+          - name: Run tests
+        script: flutter test --test-randomize-ordering-seed=random
+      - name: Build iOS IPA (debug/development)
+        script: flutter build ipa --debugld iOS IPA (debug/development)
+        script: flutter build ipa --debug      xcode: latest
+      ios_signing:
+        distribution_type: development
+        bundle_identifier: com.kamurandev.wedlist.wedlist
+      groups:
+        - app_store_connect # App Store Connect API credentialsonment:
       flutter: stable
       xcode: latest
       vars:
@@ -55,17 +65,19 @@ workflows:
     artifacts:
       - build/app/outputs/bundle/release/*.aab
 
+  # iOS için imzalama gereklidir. Codemagic Automatic Code Signing ile
+  # kolayca kurulabilir. Hazır olduğunuzda ayrı bir iOS workflow'u ekleyebiliriz.
   ios_debug:
     name: iOS Debug (Automatic signing)
     max_build_duration: 60
     environment:
       flutter: stable
       xcode: latest
-      ios_signing:
-        distribution_type: development
-        bundle_identifier: com.kamurandev.wedlist.wedlist
+      vars:
+        BUNDLE_ID: com.kamurandev.wedlist.wedlist # Projedeki iOS Bundle ID
       groups:
-        - app_store_connect # Codemagic UI'da APP_STORE_CONNECT_* değişkenlerini tanımlayın
+        - app_store_connect # Codemagic UI’da APP_STORE_CONNECT_* değişkenlerini tanımlayın
+        # Gerekirse 'certificate_private_key' grubuna CERTIFICATE_PRIVATE_KEY ekleyin
     scripts:
       - name: Install dependencies
         script: flutter pub get
@@ -75,6 +87,21 @@ workflows:
         script: flutter analyze
       - name: Run tests
         script: flutter test --test-randomize-ordering-seed=random
+      - name: Fetch iOS signing files (Development)
+        script: |
+          # Aşağıdaki üç env var Codemagic’te tanımlı olmalı:
+          # APP_STORE_CONNECT_KEY_IDENTIFIER, APP_STORE_CONNECT_ISSUER_ID, APP_STORE_CONNECT_PRIVATE_KEY (.p8 içeriği)
+          app-store-connect fetch-signing-files \
+            "$BUNDLE_ID" \
+            --type IOS_APP_DEVELOPMENT \
+            --create \
+            --key-id "$APP_STORE_CONNECT_KEY_IDENTIFIER" \
+            --issuer-id "$APP_STORE_CONNECT_ISSUER_ID" \
+            --private-key "$APP_STORE_CONNECT_PRIVATE_KEY"
+      - name: Add certs to keychain
+        script: keychain add-certificates
+      - name: Use provisioning profiles
+        script: xcode-project use-profiles
       - name: Build iOS IPA (debug/development)
         script: flutter build ipa --debug
     artifacts:
