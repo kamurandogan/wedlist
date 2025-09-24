@@ -87,13 +87,13 @@ workflows:
         script: |
           flutter test
         ignore_failure: true
-      - name: Flutter build ipa and automatic versioning
+      - name: Flutter build ipa
         script: |
-          # See the following link about getting the latest App Store or TestFlight version - https://docs.codemagic.io/knowledge-codemagic/build-versioning/#app-store-or-testflight-latest-build-number
+          BUILD_NUMBER=$(($(app-store-connect get-latest-app-store-build-number "$APP_STORE_APPLE_ID") + 1))
           flutter build ipa --release \
-            --build-name=1.0.0 \
-            --build-number=$(($(app-store-connect get-latest-testflight-build-number --platform=IOS "$APP_ID") + 1)) \
-            --export-options-plist=/Users/builder/export_options.plist
+            --build-name=1.0.$BUILD_NUMBER \
+            --build-number=$BUILD_NUMBER
+
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
@@ -120,12 +120,21 @@ workflows:
 
   ios_workflow_wedlist_distribution:
     name: iOS Release wedlist-distribution
+    integrations:
+      app_store_connect: CodeMagicKey
+    max_build_duration: 120
+    instance_type: mac_mini_m2
     environment:
       ios_signing:
         provisioning_profiles:  # Düzeltildi: provisioning_profiles
           - wedlist-appstore-profile # Codemagic UI'da oluşturduğunuz provisioning profile'ın adı
         certificates:
           - wedlist-distribution # Codemagic UI'da oluşturduğunuz certificate'ın adı
+      vars:
+        APP_ID: 6752911302
+      flutter: stable
+      xcode: latest
+      cocoapods: default
     scripts:
       - name: Set up code signing settings on Xcode project
         script: |
@@ -135,14 +144,25 @@ workflows:
           flutter packages pub get
       - name: Install pods
         script: |
-          find . -name "Podfile" -execdir pod install \;
-      - name: Flutter build ipa and automatic versioning
+          cd ios
+          pod deintegrate || true
+          pod install --repo-update
+      - name: Flutter build ipa
         script: |
+          BUILD_NUMBER=$(($(app-store-connect get-latest-app-store-build-number "$APP_STORE_APPLE_ID") + 1))
           flutter build ipa --release \
-            --export-options-plist=/Users/builder/export_options.plist
+            --build-name=1.0.$BUILD_NUMBER \
+            --build-number=$BUILD_NUMBER
+
     artifacts:
       - build/ios/ipa/*.ipa
     publishing:
       email:
         recipients:
           - kamuran.software@gmail.com
+      app-store-connect:
+        auth: integration
+        submit_to_testflight: true
+        submit_to_app_store: false
+
+
