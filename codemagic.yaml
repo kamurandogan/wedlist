@@ -87,11 +87,32 @@ workflows:
           fi
           echo "CERTIFICATE_PRIVATE_KEY length: ${#CERTIFICATE_PRIVATE_KEY}"
           echo "$CERTIFICATE_PRIVATE_KEY" > cert_key.pem
+          echo "==> Trying to fetch/create IOS_APP_DEVELOPMENT profile (ci debug)"
+          # Deneme: development profili oluştur (ci build'larda test cihazı yoksa hata verebilir)
+          set +e
           app-store-connect fetch-signing-files \
             "$BUNDLE_ID" \
             --type IOS_APP_DEVELOPMENT \
             --create \
-            --certificate-key "$(cat cert_key.pem)"
+            --certificate-key "$(cat cert_key.pem)" 2>dev_fetch_err.log
+          FETCH_STATUS=$?
+          set -e
+          if [ $FETCH_STATUS -ne 0 ]; then
+            if grep -q "does not include any iOS testing devices" dev_fetch_err.log; then
+              echo "[INFO] Apple Developer hesabında kayıtlı iOS test cihazı yok. Development profil oluşturulamadı."
+              echo "[INFO] Geçici çözüm: IOS_APP_STORE profiline fallback yapılıyor. (Cihaz ekleyene kadar)"
+              app-store-connect fetch-signing-files \
+                "$BUNDLE_ID" \
+                --type IOS_APP_STORE \
+                --create \
+                --certificate-key "$(cat cert_key.pem)"
+            else
+              echo "[ERROR] Development signing fetch başarısız (ci debug). Ayrıntılar:" >&2
+              cat dev_fetch_err.log >&2
+              exit $FETCH_STATUS
+            fi
+          fi
+          echo "[OK] Signing files hazır."
       - name: Add certs to keychain
         script: keychain add-certificates
       - name: Use provisioning profiles
