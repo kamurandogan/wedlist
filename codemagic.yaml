@@ -107,10 +107,6 @@ workflows:
           success: true
           failure: true
 
-        notify_on_build_start: true # To receive a notification when a build starts
-        notify:
-          success: true # To receive a notification when a build succeeds
-          failure: false # To not receive a notification when a build fails
       app_store_connect:
         auth: integration
 
