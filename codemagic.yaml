@@ -73,9 +73,13 @@ workflows:
         script: xcode-project use-profiles
       - name: Get Flutter packages
         script: flutter pub get
-      - name: Install pods
+      - name: Clean pods and install
         script: |
-          find . -name "Podfile" -execdir pod install \;
+          find . -name "Podfile.lock" -delete
+          find . -name "Pods" -exec rm -rf {} +
+          cd ios && pod cache clean --all
+          pod deintegrate || true
+          pod install --verbose
       - name: Flutter analyze
         script: flutter analyze
       - name: Flutter unit tests
