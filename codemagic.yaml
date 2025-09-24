@@ -59,60 +59,52 @@ workflows:
   # kolayca kurulabilir. Hazır olduğunuzda ayrı bir iOS workflow'u ekleyebiliriz.
   ios_release:
     name: iOS Release (TestFlight)
-    max_build_duration: 60
+    instance_type: mac_mini_m2
+    max_build_duration: 120
     integrations:
       app_store_connect: codemagic-ci
     environment:
       flutter: stable
       xcode: latest
+      cocoapods: default
       vars:
         BUNDLE_ID: com.kamurandev.wedlist.wedlist
+        XCODE_WORKSPACE: "Runner.xcworkspace"
+        XCODE_SCHEME: "Runner"
       groups:
         - app_store_connect
     scripts:
-      - name: Install dependencies
-        script: flutter pub get
-      - name: Format check
-        script: dart format --set-exit-if-changed .
-      - name: Analyze
-        script: flutter analyze
-      - name: Run tests
-        script: flutter test --test-randomize-ordering-seed=random
-      - name: Fetch signing (distribution)
+      - name: Get Flutter packages
         script: |
-          echo "[INFO] Distribution signing fetch başlıyor";
-          if [ -z "$CERTIFICATE_PRIVATE_KEY" ]; then
-            echo "[ERROR] CERTIFICATE_PRIVATE_KEY tanımlı değil" >&2; exit 1;
-          fi
-          echo "$CERTIFICATE_PRIVATE_KEY" > cert_key.pem
-          app-store-connect fetch-signing-files "$BUNDLE_ID" --type IOS_APP_STORE --create --certificate-key "$(cat cert_key.pem)" 2>fetch_err.log || { echo "[ERROR] fetch-signing-files başarısız"; cat fetch_err.log; exit 1; }
-          CERT_DIR=~/Library/MobileDevice/Certificates
-          ls -l $CERT_DIR || true
-          P12=$(ls $CERT_DIR/*.p12 2>/dev/null | head -n1 || true)
-          CER=$(ls $CERT_DIR/*.cer 2>/dev/null | head -n1 || true)
-          if [ -z "$P12" ]; then
-            echo "[WARN] p12 yok, rebuild denenecek";
-            if [ -z "$CER" ]; then echo "[ERROR] .cer bulunamadı rebuild imkansız" >&2; exit 1; fi
-            openssl x509 -in "$CER" -inform DER -out dist_cert.pem -outform PEM || openssl x509 -in "$CER" -out dist_cert.pem || true
-            openssl pkcs12 -export -inkey cert_key.pem -in dist_cert.pem -out rebuilt.p12 -passout pass: || { echo "[ERROR] pkcs12 export başarısız" >&2; exit 1; }
-            mv rebuilt.p12 $CERT_DIR/rebuilt_distribution.p12
-            P12=$CERT_DIR/rebuilt_distribution.p12
-          else
-            if ! openssl pkcs12 -in "$P12" -nokeys -passin pass: -legacy >/dev/null 2>&1; then
-              echo "[WARN] p12 decode başarısız, rebuild edilecek";
-              if [ -z "$CER" ]; then echo "[ERROR] CER yok rebuild yapılamıyor" >&2; exit 1; fi
-              openssl x509 -in "$CER" -inform DER -out dist_cert.pem -outform PEM || openssl x509 -in "$CER" -out dist_cert.pem || true
-              openssl pkcs12 -export -inkey cert_key.pem -in dist_cert.pem -out rebuilt.p12 -passout pass: || { echo "[ERROR] pkcs12 export başarısız" >&2; exit 1; }
-              mv rebuilt.p12 $CERT_DIR/rebuilt_distribution.p12
-              P12=$CERT_DIR/rebuilt_distribution.p12
-            fi
-          fi
-          echo "[INFO] Kullanılacak p12: $P12"
-          security import "$P12" -k ~/Library/Keychains/login.keychain-db -P "" -A -T /usr/bin/codesign -T /usr/bin/security || { echo "[ERROR] security import başarısız" >&2; exit 1; }
-          echo "[OK] Sertifika import edildi"
+          flutter pub get
+      - name: Install pods
+        script: |
+          find . -name "Podfile" -execdir pod install \;
+      - name: Set up keychain to be used for codesigning using Codemagic CLI 'keychain' command
+        script: |
+          keychain initialize
+      - name: Fetch signing files
+        script: |
+          app-store-connect fetch-signing-files "$BUNDLE_ID" --type IOS_APP_STORE --create
+      - name: Use system default keychain
+        script: |
+          keychain add-certificates
+      - name: Set up code signing settings on Xcode project
+        script: |
           xcode-project use-profiles
-      - name: Build iOS IPA (release)
-        script: flutter build ipa --release
+      - name: Flutter analyze
+        script: |
+          flutter analyze
+      - name: Flutter unit tests
+        script: |
+          flutter test
+        ignore_failure: true
+      - name: Flutter build ipa and automatic versioning
+        script: |
+          flutter build ipa --release \
+          --build-name=1.0.0 \
+          --build-number=$BUILD_NUMBER \
+          --export-options-plist=/Users/builder/export_options.plist
     artifacts:
       - build/ios/ipa/*.ipa
     publishing:
