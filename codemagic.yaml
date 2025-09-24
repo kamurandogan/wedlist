@@ -45,12 +45,12 @@ workflows:
           cat > android/key.properties <<EOF
           storePassword=$ANDROID_KEYSTORE_PASSWORD
           keyPassword=$ANDROID_KEY_PASSWORD
-          - name: Generate launcher icons
-            script: |
-              flutter pub run flutter_launcher_icons:main -f pubspec.yaml
           keyAlias=$ANDROID_KEY_ALIAS
           storeFile=app/keystore.jks
           EOF
+      - name: Generate launcher icons
+        script: |
+          flutter pub run flutter_launcher_icons:main -f pubspec.yaml
       - name: Build Android App Bundle (release)
         script: flutter build appbundle --release
     artifacts:
@@ -73,6 +73,14 @@ workflows:
       xcode: latest
       cocoapods: default
     scripts:
+      - name: Add Firebase iOS config
+        script: |
+          if [ -n "$FIREBASE_IOS_PLIST" ]; then
+            echo "$FIREBASE_IOS_PLIST" | base64 --decode > ios/Runner/GoogleService-Info.plist
+            echo "Wrote ios/Runner/GoogleService-Info.plist"
+          else
+            echo "FIREBASE_IOS_PLIST is empty, skipping write";
+          fi
       - name: Set up code signing settings on Xcode project
         script: xcode-project use-profiles
       - name: Clean & get packages
@@ -95,10 +103,29 @@ workflows:
         ignore_failure: true
       - name: Flutter Build ipa and automatic signing
         script: |
+          LATEST=$(app-store-connect get-latest-testflight-build-number --platform=IOS "$APP_ID" 2>/dev/null || echo 0)
+          [[ "$LATEST" =~ ^[0-9]+$ ]] || LATEST=0
+          BUILD_NUMBER=$((LATEST + 1))
+          echo "Using BUILD_NUMBER=$BUILD_NUMBER"
+          # Ensure signing is fresh
+          xcode-project use-profiles
+          # Create export options with Team ID
+          cat > export_options.plist <<EOF
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key><string>app-store</string>
+            <key>teamID</key><string>$TEAM_ID</string>
+            <key>uploadBitcode</key><false/>
+            <key>uploadSymbols</key><true/>
+          </dict>
+          </plist>
+          EOF
           flutter build ipa --release \
-            --build-name=1.0.0 \
-            --build-number=$(($(app-store-connect get-latest-testflight-build-number --platform=IOS "$APP_ID") + 1)) \
-            --export-options-plist=/Users/builder/export_options.plist
+            --build-name=1.0.$BUILD_NUMBER \
+            --build-number=$BUILD_NUMBER \
+            --export-options-plist=export_options.plist
 
     artifacts:
       - build/ios/ipa/*.ipa
