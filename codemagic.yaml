@@ -57,98 +57,6 @@ workflows:
 
   # iOS için imzalama gereklidir. Codemagic Automatic Code Signing ile
   # kolayca kurulabilir. Hazır olduğunuzda ayrı bir iOS workflow'u ekleyebiliriz.
-  ios_debug:
-    name: iOS Debug (Automatic signing)
-    max_build_duration: 60
-    integrations:
-      app_store_connect: codemagic-ci # Codemagic UI'daki Apple Developer Portal integration adı
-    environment:
-      flutter: stable
-      xcode: latest
-      vars:
-        BUNDLE_ID: com.kamurandev.wedlist.wedlist
-      groups:
-        - app_store_connect # Eğer integration adını kullanmıyorsan env değişkenleri buradan alınır
-    scripts:
-      - name: Install dependencies
-        script: flutter pub get
-      - name: Format check
-        script: dart format --set-exit-if-changed .
-      - name: Analyze
-        script: flutter analyze
-      - name: Run tests
-        script: flutter test --test-randomize-ordering-seed=random
-      - name: Fetch iOS signing files (development)
-        script: |
-          # GEREKEN: CERTIFICATE_PRIVATE_KEY (RSA 2048 PEM). Doğru flag: --certificate-key
-          if [ -z "$CERTIFICATE_PRIVATE_KEY" ]; then
-            echo "[ERROR] CERTIFICATE_PRIVATE_KEY env yok. Codemagic > Environment variables altina ekleyin." >&2
-            exit 1
-          fi
-          echo "CERTIFICATE_PRIVATE_KEY length: ${#CERTIFICATE_PRIVATE_KEY}"
-          echo "$CERTIFICATE_PRIVATE_KEY" > cert_key.pem
-          echo "==> Trying to fetch/create IOS_APP_DEVELOPMENT profile (ci debug)"
-          # Deneme: development profili oluştur (ci build'larda test cihazı yoksa hata verebilir)
-          set +e
-          app-store-connect fetch-signing-files \
-            "$BUNDLE_ID" \
-            --type IOS_APP_DEVELOPMENT \
-            --create \
-            --certificate-key "$(cat cert_key.pem)" 2>dev_fetch_err.log
-          FETCH_STATUS=$?
-          set -e
-          if [ $FETCH_STATUS -ne 0 ]; then
-            if grep -q "does not include any iOS testing devices" dev_fetch_err.log; then
-              echo "[INFO] Apple Developer hesabında kayıtlı iOS test cihazı yok. Development profil oluşturulamadı."
-              echo "[INFO] Geçici çözüm: IOS_APP_STORE profiline fallback yapılıyor. (Cihaz ekleyene kadar)"
-              app-store-connect fetch-signing-files \
-                "$BUNDLE_ID" \
-                --type IOS_APP_STORE \
-                --create \
-                --certificate-key "$(cat cert_key.pem)" 2>dist_fetch_err.log || { echo "[ERROR] Distribution fetch da başarısız"; cat dist_fetch_err.log; exit 1; }
-              echo "[INFO] Distribution fetch tamam. Sertifika klasörü listeleniyor:"
-              ls -l ~/Library/MobileDevice/Certificates || true
-              echo "[INFO] PKCS#12 (.p12) dosyası kontrol ediliyor (gerekirse rebuild)."
-              FIRST_P12=$(ls ~/Library/MobileDevice/Certificates/*.p12 2>/dev/null | head -n1 || true)
-              if [ -n "$FIRST_P12" ]; then
-                FILE_SIZE=$(stat -f%z "$FIRST_P12" 2>/dev/null || stat -c%s "$FIRST_P12" 2>/dev/null || echo 0)
-                echo "[DEBUG] Bulunan p12: $FIRST_P12 size=$FILE_SIZE"
-              fi
-              if [ -z "$FIRST_P12" ] || [ "${FILE_SIZE:-0}" -lt 1000 ]; then
-                echo "[WARN] Geçerli bir .p12 yok ya da çok küçük. CER + private key ile yeniden oluşturulacak."
-                CER_FILE=$(ls ~/Library/MobileDevice/Certificates/*.cer 2>/dev/null | head -n1 || true)
-                if [ -z "$CER_FILE" ]; then
-                  echo "[ERROR] .cer dosyası bulunamadı, p12 rebuild mümkün değil." >&2
-                  exit 1
-                fi
-                echo "[INFO] CER_FILE=$CER_FILE"
-                # .cer DER formatında olabilir, PEM'e çevirme denemesi
-                openssl x509 -in "$CER_FILE" -inform DER -out dist_cert.pem -outform PEM || openssl x509 -in "$CER_FILE" -out dist_cert.pem || true
-                openssl pkcs12 -export -inkey cert_key.pem -in dist_cert.pem -out rebuilt_distribution.p12 -passout pass: || { echo "[ERROR] openssl pkcs12 export başarısız" >&2; exit 1; }
-                ls -l rebuilt_distribution.p12
-                mv rebuilt_distribution.p12 distribution_no_pass.p12
-                echo "[INFO] Rebuilt p12: distribution_no_pass.p12"
-                mkdir -p ~/Library/MobileDevice/Certificates
-                cp distribution_no_pass.p12 ~/Library/MobileDevice/Certificates/
-              else
-                echo "[INFO] Var olan p12 dosyası yeterli görünüyor."
-              fi
-            else
-              echo "[ERROR] Development signing fetch başarısız (ci debug). Ayrıntılar:" >&2
-              cat dev_fetch_err.log >&2
-              exit $FETCH_STATUS
-            fi
-          fi
-          echo "[OK] Signing files hazır."
-      - name: Add certs to keychain
-        script: keychain add-certificates
-      - name: Use provisioning profiles
-        script: xcode-project use-profiles
-      - name: Build iOS IPA (debug/development)
-        script: flutter build ipa --debug
-    artifacts:
-      - build/ios/ipa/*.ipa
-
   ios_release:
     name: iOS Release (App Store, automatic signing)
     max_build_duration: 60
@@ -177,7 +85,7 @@ workflows:
             echo "[ERROR] CERTIFICATE_PRIVATE_KEY env yok. Codemagic > Environment variables altina ekleyin." >&2
             exit 1
           fi
-            echo "CERTIFICATE_PRIVATE_KEY length: ${#CERTIFICATE_PRIVATE_KEY}"
+          echo "CERTIFICATE_PRIVATE_KEY length: ${#CERTIFICATE_PRIVATE_KEY}"
           echo "$CERTIFICATE_PRIVATE_KEY" > cert_key.pem
           app-store-connect fetch-signing-files \
             "$BUNDLE_ID" \
