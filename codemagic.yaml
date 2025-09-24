@@ -64,55 +64,43 @@ workflows:
         distribution_type: app_store
         bundle_identifier: com.kamurandev.wedlist.wedlist
       vars:
-        APP_STORE_APPLE_ID: 6752911302
+        APP_ID: 6752911302
         TEAM_ID: BCX89L2UF2
       flutter: stable
       xcode: latest
       cocoapods: default
     scripts:
+      - name: Set up code signing settings on Xcode project
+        script: xcode-project use-profiles
       - name: Clean & get packages
         script: |
           flutter clean
           flutter pub get
+          dart format .
       - name: Install pods
         script: |
           cd ios
           rm -rf Pods Podfile.lock
           pod install --repo-update
           cd ..
-      - name: Apply signing
-        script: xcode-project use-profiles
-      - name: Build IPA
+      - name: Flutter analyze
         script: |
-          LATEST=$(app-store-connect get-latest-testflight-build-number "$APP_STORE_APPLE_ID" --platform=IOS 2>/dev/null || echo 0)
-          [[ "$LATEST" =~ ^[0-9]+$ ]] || LATEST=0
-          BUILD_NUMBER=$((LATEST + 1))
-          echo "Using build number: $BUILD_NUMBER"
-          # Re-apply signing right before the build (Flutter may upgrade project files)
-          xcode-project use-profiles
-          # Export options with explicit Team ID for reliability
-          cat > export_options.plist <<EOF
-          <?xml version="1.0" encoding="UTF-8"?>
-          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-          <plist version="1.0">
-          <dict>
-            <key>method</key><string>app-store</string>
-            <key>teamID</key><string>$TEAM_ID</string>
-            <key>uploadBitcode</key><false/>
-            <key>uploadSymbols</key><true/>
-          </dict>
-          </plist>
-          EOF
+         flutter analyze
+      - name: Flutter Unit tests
+        script: |
+          flutter test
+        ignore_failure: true
+      - name: Flutter Build ipa and automatic signing
+        script: |
           flutter build ipa --release \
-            --export-options-plist=export_options.plist \
-            --build-name=1.0.$BUILD_NUMBER \
-            --build-number=$BUILD_NUMBER
-      - name: List artifacts
-        script: |
-          find build/ios/ipa -type f -print || true
+            --build-name=1.0.0 \
+            --build-number=$(($(app-store-connect get-latest-testflight-build-number --platform=IOS "$APP_ID") + 1)) \
+            --export-options-plist=/Users/builder/export_options.plist
+
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
+      - flutter_drive.log
     publishing:
       email:
         recipients:
