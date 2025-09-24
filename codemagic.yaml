@@ -45,6 +45,9 @@ workflows:
           cat > android/key.properties <<EOF
           storePassword=$ANDROID_KEYSTORE_PASSWORD
           keyPassword=$ANDROID_KEY_PASSWORD
+          - name: Generate launcher icons
+            script: |
+              flutter pub run flutter_launcher_icons:main -f pubspec.yaml
           keyAlias=$ANDROID_KEY_ALIAS
           storeFile=app/keystore.jks
           EOF
