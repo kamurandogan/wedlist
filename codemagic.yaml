@@ -65,6 +65,7 @@ workflows:
         bundle_identifier: com.kamurandev.wedlist.wedlist
       vars:
         APP_STORE_APPLE_ID: 6752911302
+        TEAM_ID: YCXHVUB6SN
       flutter: stable
       xcode: latest
       cocoapods: default
@@ -121,6 +122,7 @@ workflows:
           - wedlist-distribution
       vars:
         APP_STORE_APPLE_ID: 6752911302
+        TEAM_ID: YCXHVUB6SN
       flutter: stable
       xcode: latest
       cocoapods: default
