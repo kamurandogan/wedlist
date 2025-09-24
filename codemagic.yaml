@@ -92,8 +92,14 @@ workflows:
             --type IOS_APP_STORE \
             --create \
             --certificate-key "$(cat cert_key.pem)"
-      - name: Add certs to keychain
-        script: keychain add-certificates
+        - name: Import certificate manually
+          script: |
+            CERT_DIR=~/Library/MobileDevice/Certificates
+            P12=$(ls $CERT_DIR/*.p12 2>/dev/null | head -n1 || true)
+            if [ -z "$P12" ]; then echo "[ERROR] Import edilecek p12 yok" >&2; exit 1; fi
+            security import "$P12" -k ~/Library/Keychains/login.keychain-db -P "" -A -T /usr/bin/codesign -T /usr/bin/security || {
+              echo "[ERROR] security import başarısız" >&2; exit 1; }
+            echo "[OK] Sertifika keychain'e import edildi."
       - name: Use provisioning profiles
         script: xcode-project use-profiles
       - name: Build iOS IPA (release)
