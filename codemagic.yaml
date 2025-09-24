@@ -92,14 +92,28 @@ workflows:
             --type IOS_APP_STORE \
             --create \
             --certificate-key "$(cat cert_key.pem)"
-        - name: Import certificate manually
-          script: |
-            CERT_DIR=~/Library/MobileDevice/Certificates
-            P12=$(ls $CERT_DIR/*.p12 2>/dev/null | head -n1 || true)
-            if [ -z "$P12" ]; then echo "[ERROR] Import edilecek p12 yok" >&2; exit 1; fi
-            security import "$P12" -k ~/Library/Keychains/login.keychain-db -P "" -A -T /usr/bin/codesign -T /usr/bin/security || {
-              echo "[ERROR] security import başarısız" >&2; exit 1; }
-            echo "[OK] Sertifika keychain'e import edildi."
+      - name: Import certificate manually
+        script: |
+          CERT_DIR=~/Library/MobileDevice/Certificates
+          P12=$(ls $CERT_DIR/*.p12 2>/dev/null | head -n1 || true)
+          if [ -z "$P12" ]; then echo "[ERROR] Import edilecek p12 yok" >&2; exit 1; fi
+          # p12 test decode
+          if ! openssl pkcs12 -in "$P12" -nokeys -passin pass: -legacy >/dev/null 2>&1; then
+            echo "[WARN] p12 decode başarısız, .cer + key ile yeniden oluşturma denenecek";
+            CER=$(ls $CERT_DIR/*.cer 2>/dev/null | head -n1 || true)
+            if [ -n "$CER" ]; then
+              openssl x509 -in "$CER" -inform DER -out dist_cert.pem -outform PEM || openssl x509 -in "$CER" -out dist_cert.pem || true
+              openssl pkcs12 -export -inkey cert_key.pem -in dist_cert.pem -out rebuilt_tmp.p12 -passout pass: || { echo "[ERROR] rebuild pkcs12 başarısız" >&2; exit 1; }
+              mv rebuilt_tmp.p12 $CERT_DIR/rebuilt_distribution.p12
+              P12=$CERT_DIR/rebuilt_distribution.p12
+              echo "[INFO] Rebuilt p12: $P12"
+            else
+              echo "[ERROR] CER bulunamadı rebuild yapılamıyor" >&2; exit 1
+            fi
+          fi
+          security import "$P12" -k ~/Library/Keychains/login.keychain-db -P "" -A -T /usr/bin/codesign -T /usr/bin/security || {
+            echo "[ERROR] security import başarısız" >&2; exit 1; }
+          echo "[OK] Sertifika keychain'e import edildi."
       - name: Use provisioning profiles
         script: xcode-project use-profiles
       - name: Build iOS IPA (release)
