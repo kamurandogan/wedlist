@@ -28,10 +28,8 @@ target 'Runner' do
   use_frameworks!
   use_modular_headers!
 
-  # Ensure Flutter framework is properly linked
-  pod 'Flutter', :path => flutter_root
 
-  flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+  flutter_install_all_ios_pods  # ← Bu zaten Flutter'ı otomatik ekliyor
 end
 
 post_install do |installer|
