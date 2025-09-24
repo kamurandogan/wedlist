@@ -80,17 +80,18 @@ workflows:
         script: flutter test --test-randomize-ordering-seed=random
       - name: Fetch iOS signing files (development)
         script: |
-          # GEREKEN: Codemagic env'de SECRET olarak CERTIFICATE_PRIVATE_KEY (PEM, RSA 2048) tanımlı olmalı.
+          # GEREKEN: CERTIFICATE_PRIVATE_KEY (RSA 2048 PEM). Doğru flag: --certificate-key
           if [ -z "$CERTIFICATE_PRIVATE_KEY" ]; then
             echo "[ERROR] CERTIFICATE_PRIVATE_KEY env yok. Codemagic > Environment variables altina ekleyin." >&2
             exit 1
           fi
           echo "CERTIFICATE_PRIVATE_KEY length: ${#CERTIFICATE_PRIVATE_KEY}"
+          echo "$CERTIFICATE_PRIVATE_KEY" > cert_key.pem
           app-store-connect fetch-signing-files \
             "$BUNDLE_ID" \
             --type IOS_APP_DEVELOPMENT \
             --create \
-            --certificate-private-key "$CERTIFICATE_PRIVATE_KEY"
+            --certificate-key "$(cat cert_key.pem)"
       - name: Add certs to keychain
         script: keychain add-certificates
       - name: Use provisioning profiles
@@ -123,17 +124,18 @@ workflows:
         script: flutter test --test-randomize-ordering-seed=random
       - name: Fetch iOS signing files (app store)
         script: |
-          # GEREKEN: CERTIFICATE_PRIVATE_KEY (aynı private key) tanımlı.
+          # GEREKEN: CERTIFICATE_PRIVATE_KEY (aynı private key). Doğru flag: --certificate-key
           if [ -z "$CERTIFICATE_PRIVATE_KEY" ]; then
             echo "[ERROR] CERTIFICATE_PRIVATE_KEY env yok. Codemagic > Environment variables altina ekleyin." >&2
             exit 1
           fi
-          echo "CERTIFICATE_PRIVATE_KEY length: ${#CERTIFICATE_PRIVATE_KEY}"
+            echo "CERTIFICATE_PRIVATE_KEY length: ${#CERTIFICATE_PRIVATE_KEY}"
+          echo "$CERTIFICATE_PRIVATE_KEY" > cert_key.pem
           app-store-connect fetch-signing-files \
             "$BUNDLE_ID" \
             --type IOS_APP_STORE \
             --create \
-            --certificate-private-key "$CERTIFICATE_PRIVATE_KEY"
+            --certificate-key "$(cat cert_key.pem)"
       - name: Add certs to keychain
         script: keychain add-certificates
       - name: Use provisioning profiles
