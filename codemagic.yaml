@@ -63,6 +63,8 @@ workflows:
       ios_signing:
         distribution_type: app_store
         bundle_identifier: com.kamurandev.wedlist.wedlist
+      groups:
+        - app_store_connect
       vars:
         APP_ID: 6752911302
         TEAM_ID: BCX89L2UF2
@@ -85,6 +87,9 @@ workflows:
           flutter clean
           flutter pub get
           dart format .
+      - name: Generate launcher icons
+        script: |
+          flutter pub run flutter_launcher_icons:main -f pubspec.yaml
       - name: Install pods
         script: |
           cd ios
@@ -104,21 +109,12 @@ workflows:
           [[ "$LATEST" =~ ^[0-9]+$ ]] || LATEST=0
           BUILD_NUMBER=$((LATEST + 1))
           echo "Using BUILD_NUMBER=$BUILD_NUMBER"
-          # Ensure signing is fresh
-          xcode-project use-profiles
-          # Create export options with Team ID
-          cat > export_options.plist <<EOF
-          <?xml version="1.0" encoding="UTF-8"?>
-          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-          <plist version="1.0">
-          <dict>
-            <key>method</key><string>app-store</string>
-            <key>teamID</key><string>$TEAM_ID</string>
-            <key>uploadBitcode</key><false/>
-            <key>uploadSymbols</key><true/>
-          </dict>
-          </plist>
-          EOF
+          # ExportOptions.plist'i profillerle birlikte otomatik üret
+          xcode-project use-profiles --export-options export_options.plist
+
+          echo "ExportOptions preview (first 200 lines):"
+          sed -n '1,200p' export_options.plist || true
+
           flutter build ipa --release \
             --build-name=1.0.$BUILD_NUMBER \
             --build-number=$BUILD_NUMBER \
