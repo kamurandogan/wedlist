@@ -123,7 +123,7 @@ workflows:
     environment:
       ios_signing:
         provisioning_profile:
-          - wedlist-appstore-profile # Codemagic UI'da oluşturduğunuz provisioning profile'ın adı
+          - wedlist_appstore_profile # Codemagic UI'da oluşturduğunuz provisioning profile'ın adı
         certificates:
           - wedlist-distribution # Codemagic UI'da oluşturduğunuz certificate'ın adı
     scripts:
