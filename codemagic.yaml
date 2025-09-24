@@ -66,8 +66,10 @@ workflows:
       groups:
         - app_store_connect # App Store Connect API credentials
       ios_signing:
-        distribution_type: app_store
-        bundle_identifier: com.kamurandev.wedlist.wedlist
+        provisioning_profiles:
+          - wedlist-appstore-profile
+        certificates:
+          - wedlist-distribution
       vars:
         XCODE_WORKSPACE: "ios/Runner.xcworkspace"
         XCODE_SCHEME: "Runner"
@@ -95,9 +97,6 @@ workflows:
       - name: Set up keychain to be used for codesigning using Codemagic CLI 'keychain' command
         script: |
           keychain initialize
-      - name: Fetch signing files
-        script: |
-          app-store-connect fetch-signing-files "$BUNDLE_ID" --type IOS_APP_STORE --create
       - name: Use system default keychain
         script: |
           keychain add-certificates
