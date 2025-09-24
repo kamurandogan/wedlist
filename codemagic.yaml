@@ -66,9 +66,13 @@ workflows:
       groups:
         - app_store_connect # App Store Connect API credentials
       ios_signing:
+        provisioning_profiles:
+          - wedlist-appstore-profile
         distribution_type: app_store
         bundle_identifier: com.kamurandev.wedlist.wedlist
-        certificate: wedlist-distribution # Upload edilmiş certificate reference
+        # provisioning_profiles yerine certificates kullanım
+        certificates:
+          - wedlist-distribution
       vars:
         XCODE_WORKSPACE: "ios/Runner.xcworkspace"
         XCODE_SCHEME: "Runner"
