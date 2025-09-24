@@ -37,5 +37,11 @@ post_install do |installer|
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
     end
   end
-  flutter_additional_ios_build_settings(installer)
+
+  # Safe Flutter additional settings call
+  begin
+    flutter_additional_ios_build_settings(installer)
+  rescue => exception
+    puts "Warning: flutter_additional_ios_build_settings failed: #{exception}"
+  end
 end
