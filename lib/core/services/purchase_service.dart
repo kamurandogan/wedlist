@@ -6,12 +6,26 @@ import 'package:flutter/foundation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 
 /// Basit IAP servisi: iki non-consumable için ürün sorgulama ve satın alma akışı.
-/// Ürün kimlikleri mağazalarda Non-Consumable olarak oluşturulmalıdır:
-/// - com.wedlist.remove_ads
-/// - com.wedlist.collab_unlock
+/// Ürün kimlikleri mağazalarda Non-Consumable olarak oluşturulmalıdır.
+/// Platforma göre farklı productId kullanırız:
+/// ANDROID (Google Play):
+///  - com.wedlist.remove_ads
+///  - com.wedlist.collab_unlock
+/// iOS (App Store):
+///  - com.kamurandev.wedlist.wedlist.remove_ads
+///  - com.kamurandev.wedlist.wedlist.collab_unlock
 class PurchaseService {
-  static const String kRemoveAdsId = 'com.wedlist.remove_ads';
-  static const String kCollabUnlockId = 'com.wedlist.collab_unlock';
+  // Android'de mevcut ID'leri koruyoruz
+  static const String kRemoveAdsIdAndroid = 'com.wedlist.remove_ads';
+  static const String kCollabUnlockIdAndroid = 'com.wedlist.collab_unlock';
+
+  // iOS için benzersiz yeni ID'ler (App Store Connect'te bunları oluşturun)
+  static const String kRemoveAdsIdIOS = 'com.kamurandev.wedlist.wedlist.remove_ads';
+  static const String kCollabUnlockIdIOS = 'com.kamurandev.wedlist.wedlist.collab_unlock';
+
+  bool get _isIOS => defaultTargetPlatform == TargetPlatform.iOS;
+  String get removeAdsId => _isIOS ? kRemoveAdsIdIOS : kRemoveAdsIdAndroid;
+  String get collabUnlockId => _isIOS ? kCollabUnlockIdIOS : kCollabUnlockIdAndroid;
 
   final InAppPurchase _iap = InAppPurchase.instance;
   StreamSubscription<List<PurchaseDetails>>? _sub;
@@ -53,8 +67,8 @@ class PurchaseService {
 
   Future<void> queryProducts() async {
     final response = await _iap.queryProductDetails({
-      kRemoveAdsId,
-      kCollabUnlockId,
+      removeAdsId,
+      collabUnlockId,
     });
     if (response.error != null) {
       if (kDebugMode) {
@@ -64,20 +78,20 @@ class PurchaseService {
       return;
     }
     for (final p in response.productDetails) {
-      if (p.id == kRemoveAdsId) removeAdsProduct = p;
-      if (p.id == kCollabUnlockId) collabUnlockProduct = p;
+      if (p.id == removeAdsId) removeAdsProduct = p;
+      if (p.id == collabUnlockId) collabUnlockProduct = p;
     }
   }
 
   Future<bool> buyRemoveAds() async {
-    final p = removeAdsProduct ?? (await _fetchSingle(kRemoveAdsId));
+    final p = removeAdsProduct ?? (await _fetchSingle(removeAdsId));
     if (p == null) return false;
     final param = PurchaseParam(productDetails: p);
     return _iap.buyNonConsumable(purchaseParam: param);
   }
 
   Future<bool> buyCollabUnlock() async {
-    final p = collabUnlockProduct ?? (await _fetchSingle(kCollabUnlockId));
+    final p = collabUnlockProduct ?? (await _fetchSingle(collabUnlockId));
     if (p == null) return false;
     final param = PurchaseParam(productDetails: p);
     return _iap.buyNonConsumable(purchaseParam: param);
@@ -120,19 +134,19 @@ class PurchaseService {
     final uid = _auth.currentUser?.uid;
     if (uid == null) {
       // Kullanıcı oturumu yoksa sadece yerel state'i güncelle (geçici)
-      if (pd.productID == kRemoveAdsId) removeAds.value = true;
-      if (pd.productID == kCollabUnlockId) collabUnlocked.value = true;
+      if (pd.productID == removeAdsId) removeAds.value = true;
+      if (pd.productID == collabUnlockId) collabUnlocked.value = true;
       return;
     }
     final ref = _firestore.collection('users').doc(uid);
     final premium = <String, dynamic>{
       'updatedAt': FieldValue.serverTimestamp(),
     };
-    if (pd.productID == kRemoveAdsId) {
+    if (pd.productID == removeAdsId) {
       premium['removeAds'] = true;
       removeAds.value = true;
     }
-    if (pd.productID == kCollabUnlockId) {
+    if (pd.productID == collabUnlockId) {
       premium['collabUnlocked'] = true;
       collabUnlocked.value = true;
     }
