@@ -12,8 +12,35 @@ import 'package:wedlist/feature/settings/presentation/ui/atoms/settings_page_lis
 import 'package:wedlist/feature/settings/presentation/ui/organisms/logout_section.dart';
 import 'package:wedlist/injection_container.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
+
+  @override
+  State<SettingsPage> createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
+  final _ps = sl<PurchaseService>();
+  bool _iapInit = false;
+  bool _iapBusy = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _initIap();
+  }
+
+  Future<void> _initIap() async {
+    setState(() => _iapBusy = true);
+    try {
+      await _ps.init();
+      setState(() => _iapInit = true);
+    } catch (_) {
+      // sessiz: iPad/iOS store unavailable durumlarını UI'da disable edeceğiz
+    } finally {
+      if (mounted) setState(() => _iapBusy = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,81 +56,106 @@ class SettingsPage extends StatelessWidget {
           child: Column(
             children: [
               const CountryTile(),
-              SettingsPageListtile(
-                title: context.loc.addPartnerTitle,
-                onTap: () async {
-                  final ps = sl<PurchaseService>();
-                  await ps.init();
-                  if (!ps.collabUnlocked.value) {
-                    if (context.mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(context.loc.partnerFeatureRequired),
-                        ),
-                      );
-                    }
-                    return;
-                  }
-                  if (context.mounted) {
-                    context.go(AppRoute.collaborators.path);
-                  }
-                },
-              ),
+              // Add Partner: yalnızca collabUnlocked ise geçişe izin ver, değilse uyarı göster
               ValueListenableBuilder<bool>(
-                valueListenable: sl<PurchaseService>().collabUnlocked,
+                valueListenable: _ps.collabUnlocked,
                 builder: (context, collabUnlocked, _) {
-                  if (collabUnlocked) return const SizedBox.shrink();
                   return SettingsPageListtile(
-                    title: context.loc.enablePartnerFeatureTitle,
+                    title: context.loc.addPartnerTitle,
+                    enabled: collabUnlocked,
                     onTap: () async {
-                      final ps = sl<PurchaseService>();
-                      await ps.init();
-                      if (!ps.isAvailable) {
+                      if (!collabUnlocked) {
                         if (context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text(context.loc.purchaseUnsupported),
+                              content:
+                                  Text(context.loc.partnerFeatureRequired),
                             ),
                           );
                         }
                         return;
                       }
-                      final ok = await ps.buyCollabUnlock();
-                      if (context.mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              ok
-                                  ? context.loc.purchaseSuccess
-                                  : context.loc.purchaseFailed,
-                            ),
-                          ),
-                        );
-                      }
+                      if (!context.mounted) return;
+                      context.go(AppRoute.collaborators.path);
                     },
                   );
                 },
               ),
+              // Enable partner feature: servis hazır ve ürün yüklü olmazsa disabled
               ValueListenableBuilder<bool>(
-                valueListenable: sl<PurchaseService>().removeAds,
-                builder: (context, removeAds, _) {
-                  if (removeAds) return const SizedBox.shrink();
-                  return _removeAdsPurchaseButton(context);
+                valueListenable: _ps.collabUnlocked,
+                builder: (context, collabUnlocked, _) {
+                  if (collabUnlocked) return const SizedBox.shrink();
+
+                  final partnerProductReady = _ps.collabUnlockProduct != null;
+                  final enabled = _iapInit && _ps.isAvailable && partnerProductReady && !_iapBusy;
+
+                  return SettingsPageListtile(
+                    title: context.loc.enablePartnerFeatureTitle,
+                    enabled: enabled,
+                    onTap: () async {
+                      if (!enabled) return;
+                      setState(() => _iapBusy = true);
+                      final ok = await _ps.buyCollabUnlock();
+                      if (!mounted) return;
+                      setState(() => _iapBusy = false);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            ok
+                                ? context.loc.purchaseSuccess
+                                : context.loc.purchaseFailed,
+                          ),
+                        ),
+                      );
+                    },
+                  );
                 },
               ),
+              // Remove ads
+              ValueListenableBuilder<bool>(
+                valueListenable: _ps.removeAds,
+                builder: (context, removeAds, _) {
+                  if (removeAds) return const SizedBox.shrink();
+                  final removeAdsReady = _ps.removeAdsProduct != null;
+                  final enabled = _iapInit && _ps.isAvailable && removeAdsReady && !_iapBusy;
+                  return SettingsPageListtile(
+                    title: context.loc.removeAdsTitle,
+                    enabled: enabled,
+                    onTap: () async {
+                      if (!enabled) return;
+                      setState(() => _iapBusy = true);
+                      final ok = await _ps.buyRemoveAds();
+                      if (!mounted) return;
+                      setState(() => _iapBusy = false);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            ok
+                                ? context.loc.purchaseSuccess
+                                : context.loc.purchaseFailed,
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+              // Restore purchases
               SettingsPageListtile(
                 title: context.loc.restorePurchasesTitle,
+                enabled: _iapInit && _ps.isAvailable && !_iapBusy,
                 onTap: () async {
-                  final ps = sl<PurchaseService>();
-                  await ps.init();
-                  await ps.restorePurchases();
-                  if (context.mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(context.loc.restoringPurchasesMessage),
-                      ),
-                    );
-                  }
+                  if (!(_iapInit && _ps.isAvailable)) return;
+                  setState(() => _iapBusy = true);
+                  await _ps.restorePurchases();
+                  if (!mounted) return;
+                  setState(() => _iapBusy = false);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(context.loc.restoringPurchasesMessage),
+                    ),
+                  );
                 },
               ),
               _logoutButton(context),
@@ -114,35 +166,7 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  SettingsPageListtile _removeAdsPurchaseButton(BuildContext context) {
-    return SettingsPageListtile(
-      title: context.loc.removeAdsTitle,
-      onTap: () async {
-        final ps = sl<PurchaseService>();
-        await ps.init();
-        if (!ps.isAvailable) {
-          if (context.mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(context.loc.purchaseUnsupported),
-              ),
-            );
-          }
-          return;
-        }
-        final ok = await ps.buyRemoveAds();
-        if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                ok ? context.loc.purchaseSuccess : context.loc.purchaseFailed,
-              ),
-            ),
-          );
-        }
-      },
-    );
-  }
+  // no-op
 
   Expanded _logoutButton(BuildContext context) {
     return Expanded(

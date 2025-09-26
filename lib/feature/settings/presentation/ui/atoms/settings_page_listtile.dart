@@ -6,12 +6,15 @@ class SettingsPageListtile extends StatelessWidget {
     required this.title,
     required this.onTap,
     this.trailing,
+    this.enabled = true,
     super.key,
   });
 
   final String title;
   final VoidCallback onTap;
   final Widget? trailing;
+  final bool enabled;
+
   static const _defaultTrailing = Icon(
     Icons.chevron_right,
     color: AppColors.primary,
@@ -19,13 +22,19 @@ class SettingsPageListtile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final textStyle = enabled
+        ? theme.textTheme.bodyMedium
+        : theme.textTheme.bodyMedium?.copyWith(color: theme.disabledColor);
+
     return Card(
       elevation: 0,
       color: Colors.white,
       child: ListTile(
-        title: Text(title),
-        onTap: onTap,
+        title: Text(title, style: textStyle),
+        onTap: enabled ? onTap : null,
         trailing: trailing ?? _defaultTrailing,
+        enabled: enabled,
       ),
     );
   }
