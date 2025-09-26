@@ -70,17 +70,24 @@ class _SettingsPageState extends State<SettingsPage> {
                 onTap: () async {
                   const url = 'https://sites.google.com/view/wedlist/support';
                   final uri = Uri.parse(url);
-                  if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+                  if (!await launchUrl(
+                    uri,
+                    mode: LaunchMode.externalApplication,
+                  )) {
                     if (mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('${context.loc.errorPrefix} $url')),
+                        SnackBar(
+                          content: Text('${context.loc.errorPrefix} $url'),
+                        ),
                       );
                     }
                   }
                 },
               ),
               // IAP uygunluk bilgilendirmesi (özellikle iPad için mağaza hesabı/yetersiz destek durumlarında)
-              if (!(_iapInit && _ps.isAvailable) || (_ps.collabUnlockProduct == null && _ps.removeAdsProduct == null))
+              if (!(_iapInit && _ps.isAvailable) ||
+                  (_ps.collabUnlockProduct == null &&
+                      _ps.removeAdsProduct == null))
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child: Row(
@@ -129,7 +136,11 @@ class _SettingsPageState extends State<SettingsPage> {
                   if (collabUnlocked) return const SizedBox.shrink();
 
                   final partnerProductReady = _ps.collabUnlockProduct != null;
-                  final enabled = _iapInit && _ps.isAvailable && partnerProductReady && !_iapBusy;
+                  final enabled =
+                      _iapInit &&
+                      _ps.isAvailable &&
+                      partnerProductReady &&
+                      !_iapBusy;
 
                   return SettingsPageListtile(
                     title: context.loc.enablePartnerFeatureTitle,
@@ -160,7 +171,11 @@ class _SettingsPageState extends State<SettingsPage> {
                 builder: (context, removeAds, _) {
                   if (removeAds) return const SizedBox.shrink();
                   final removeAdsReady = _ps.removeAdsProduct != null;
-                  final enabled = _iapInit && _ps.isAvailable && removeAdsReady && !_iapBusy;
+                  final enabled =
+                      _iapInit &&
+                      _ps.isAvailable &&
+                      removeAdsReady &&
+                      !_iapBusy;
                   return SettingsPageListtile(
                     title: context.loc.removeAdsTitle,
                     enabled: enabled,
@@ -190,7 +205,8 @@ class _SettingsPageState extends State<SettingsPage> {
                 enabled:
                     _iapInit &&
                     _ps.isAvailable &&
-                    (_ps.collabUnlockProduct != null || _ps.removeAdsProduct != null) &&
+                    (_ps.collabUnlockProduct != null ||
+                        _ps.removeAdsProduct != null) &&
                     !_iapBusy,
                 disabledMessage: context.loc.purchaseUnsupported,
                 onTap: () async {

@@ -48,7 +48,8 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
       // requires-recent-login durumunu kullanıcıya bildir.
       if (e.code == 'requires-recent-login') {
         setState(() {
-          _error = 'Güvenlik nedeniyle lütfen yeniden giriş yapın ve ardından hesabı silmeyi tekrar deneyin.';
+          _error =
+              'Güvenlik nedeniyle lütfen yeniden giriş yapın ve ardından hesabı silmeyi tekrar deneyin.';
         });
       } else {
         setState(() => _error = e.message);

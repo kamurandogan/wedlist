@@ -136,6 +136,52 @@ workflows:
         submit_to_testflight: false
         submit_to_app_store: true
 
+  ios_simulator_zip:
+    name: iOS Simulator (.app.zip)
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - name: Add Firebase iOS config (optional)
+        script: |
+          if [ -n "$FIREBASE_IOS_PLIST" ]; then
+            echo "$FIREBASE_IOS_PLIST" | base64 --decode > ios/Runner/GoogleService-Info.plist
+            echo "Wrote ios/Runner/GoogleService-Info.plist"
+          else
+            echo "FIREBASE_IOS_PLIST is empty, skipping write";
+          fi
+      - name: Clean & get packages
+        script: |
+          flutter clean
+          flutter pub get
+          dart format --set-exit-if-changed .
+      - name: Install pods
+        script: |
+          cd ios
+          rm -rf Pods Podfile.lock
+          pod install --repo-update
+          cd ..
+      - name: Build iOS Simulator app (no codesign)
+        script: |
+          flutter build ios --simulator --debug --no-codesign
+      - name: Zip the .app for cloud simulators
+        script: |
+          pushd build/ios/iphonesimulator
+          APP_DIR=$(ls -1 | grep ".app$" | head -n 1)
+          if [ -z "$APP_DIR" ]; then
+            echo "No .app found under build/ios/iphonesimulator" >&2
+            exit 1
+          fi
+          ZIP_NAME=Runner-simulator.zip
+          zip -ry "$ZIP_NAME" "$APP_DIR"
+          echo "Created $ZIP_NAME from $APP_DIR"
+          popd
+    artifacts:
+      - build/ios/iphonesimulator/*.zip
+
   # ios_release_distribution:
   #   name: iOS Release Distribution
   #   integrations:
