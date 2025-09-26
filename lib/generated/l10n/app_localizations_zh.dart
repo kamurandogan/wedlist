@@ -234,4 +234,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String collabRequestTitle(Object inviter) {
     return '$inviter 邀请您成为协作者';
   }
+
+  @override
+  String get deleteAccountTitle => '删除账户';
+
+  @override
+  String get supportAndHelpTitle => '支持与帮助';
 }

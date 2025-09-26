@@ -89,5 +89,13 @@
     "collabRequestTitle": "{inviter} invited you as a collaborator",
     "@notificationItemDeletedSuffix": {
         "description": "Suffix appended to an item title in notifications when an item is deleted (e.g. 'Toaster deleted')."
+    },
+    "deleteAccountTitle": "Delete account",
+    "@deleteAccountTitle": {
+        "description": "Menu title that navigates to the account deletion screen."
+    },
+    "supportAndHelpTitle": "Support & Help",
+    "@supportAndHelpTitle": {
+        "description": "Menu title that opens the public support/help page."
     }
 }

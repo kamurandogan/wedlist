@@ -74,5 +74,7 @@
     "targetNotEntitledError": "L'utilisateur n'a pas acheté la fonction partenaire",
     "inviteAlreadyPendingError": "Il y a déjà une invitation en attente pour cet utilisateur",
     "genericUserLabel": "Un utilisateur",
-    "collabRequestTitle": "{inviter} vous a invité comme collaborateur"
+    "collabRequestTitle": "{inviter} vous a invité comme collaborateur",
+    "deleteAccountTitle": "Supprimer le compte",
+    "supportAndHelpTitle": "Support & Aide"
 }

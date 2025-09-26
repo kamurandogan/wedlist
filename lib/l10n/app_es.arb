@@ -74,5 +74,7 @@
     "targetNotEntitledError": "El usuario no ha comprado la función de pareja",
     "inviteAlreadyPendingError": "Ya hay una invitación pendiente para este usuario",
     "genericUserLabel": "Un usuario",
-    "collabRequestTitle": "{inviter} te invitó como colaborador"
+    "collabRequestTitle": "{inviter} te invitó como colaborador",
+    "deleteAccountTitle": "Eliminar cuenta",
+    "supportAndHelpTitle": "Soporte y Ayuda"
 }

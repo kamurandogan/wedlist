@@ -565,6 +565,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{inviter} invited you as a collaborator'**
   String collabRequestTitle(Object inviter);
+
+  /// Menu title that navigates to the account deletion screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete account'**
+  String get deleteAccountTitle;
+
+  /// Menu title that opens the public support/help page.
+  ///
+  /// In en, this message translates to:
+  /// **'Support & Help'**
+  String get supportAndHelpTitle;
 }
 
 class _AppLocalizationsDelegate

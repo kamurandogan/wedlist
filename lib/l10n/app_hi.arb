@@ -74,5 +74,7 @@
     "targetNotEntitledError": "उपयोगकर्ता ने पार्टनर फीचर नहीं खरीदा है",
     "inviteAlreadyPendingError": "इस उपयोगकर्ता के लिए पहले से एक लंबित आमंत्रण है",
     "genericUserLabel": "एक उपयोगकर्ता",
-    "collabRequestTitle": "{inviter} ने आपको सहयोगी के रूप में आमंत्रित किया"
+    "collabRequestTitle": "{inviter} ने आपको सहयोगी के रूप में आमंत्रित किया",
+    "deleteAccountTitle": "खाता हटाएं",
+    "supportAndHelpTitle": "सहायता और समर्थन"
 }

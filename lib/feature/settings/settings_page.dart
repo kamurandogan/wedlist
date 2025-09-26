@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:wedlist/core/extensions/l10n_extension.dart';
 import 'package:wedlist/core/router/app_router.dart';
 import 'package:wedlist/core/services/purchase_service.dart';
@@ -20,7 +21,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  final _ps = sl<PurchaseService>();
+  final PurchaseService _ps = sl<PurchaseService>();
   bool _iapInit = false;
   bool _iapBusy = false;
 
@@ -56,6 +57,28 @@ class _SettingsPageState extends State<SettingsPage> {
           child: Column(
             children: [
               const CountryTile(),
+              // Hesabı sil
+              SettingsPageListtile(
+                title: context.loc.deleteAccountTitle,
+                onTap: () {
+                  context.push(AppRoute.deleteAccount.path);
+                },
+              ),
+              // Destek bağlantısı (App Store Connect Support URL ile aynı olmalı)
+              SettingsPageListtile(
+                title: context.loc.supportAndHelpTitle,
+                onTap: () async {
+                  const url = 'https://sites.google.com/view/wedlist/support';
+                  final uri = Uri.parse(url);
+                  if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+                    if (mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('${context.loc.errorPrefix} $url')),
+                      );
+                    }
+                  }
+                },
+              ),
               // Add Partner: yalnızca collabUnlocked ise geçişe izin ver, değilse uyarı göster
               ValueListenableBuilder<bool>(
                 valueListenable: _ps.collabUnlocked,
@@ -76,7 +99,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         return;
                       }
                       if (!context.mounted) return;
-                      context.go(AppRoute.collaborators.path);
+                      context.push(AppRoute.collaborators.path);
                     },
                   );
                 },

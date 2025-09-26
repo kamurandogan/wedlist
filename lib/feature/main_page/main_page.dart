@@ -90,27 +90,36 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return BlocBuilder<NavigationCubit, SelectedPage>(
       builder: (context, state) {
-        return Scaffold(
-          bottomNavigationBar: const CustomBottomNavigationBar(),
-          body: Padding(
-            padding: const EdgeInsets.only(left: 16, right: 16, top: 32),
-            child: Column(
-              children: [
-                // Banner sadece reklamlar açıksa gösterilir
-                ValueListenableBuilder<bool>(
-                  valueListenable: sl<PurchaseService>().removeAds,
-                  builder: (context, removed, _) {
-                    if (removed) return const SizedBox(height: 0);
-                    return const BannerAdWidget();
-                  },
-                ),
-                const SizedBox(height: 8),
-                // Aşağıdaki sayfa alanı, bounded (sınırlı) yükseklik için Expanded ile sarmalanır
-                Expanded(
-                  // NavigationCubit içindeki state'e göre sayfa gösterilir
-                  child: _getSelectedPage(state),
-                ),
-              ],
+        return PopScope(
+          canPop: state == SelectedPage.home,
+          onPopInvokedWithResult: (didPop, result) {
+            // Ana tabda değilsek, geri tuşu ana taba götürsün; uygulamadan çıkmasın
+            if (!didPop && state != SelectedPage.home) {
+              context.read<NavigationCubit>().changePage(SelectedPage.home);
+            }
+          },
+          child: Scaffold(
+            bottomNavigationBar: const CustomBottomNavigationBar(),
+            body: Padding(
+              padding: const EdgeInsets.only(left: 16, right: 16, top: 32),
+              child: Column(
+                children: [
+                  // Banner sadece reklamlar açıksa gösterilir
+                  ValueListenableBuilder<bool>(
+                    valueListenable: sl<PurchaseService>().removeAds,
+                    builder: (context, removed, _) {
+                      if (removed) return const SizedBox(height: 0);
+                      return const BannerAdWidget();
+                    },
+                  ),
+                  const SizedBox(height: 8),
+                  // Aşağıdaki sayfa alanı, bounded (sınırlı) yükseklik için Expanded ile sarmalanır
+                  Expanded(
+                    // NavigationCubit içindeki state'e göre sayfa gösterilir
+                    child: _getSelectedPage(state),
+                  ),
+                ],
+              ),
             ),
           ),
         );

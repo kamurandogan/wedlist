@@ -15,6 +15,7 @@ import 'package:wedlist/feature/on_boarding/on_boarding_page.dart';
 import 'package:wedlist/feature/register/presentation/blocs/register_bloc.dart';
 import 'package:wedlist/feature/register/presentation/ui/pages/register_page.dart';
 import 'package:wedlist/feature/settings/presentation/ui/pages/collaborators_page.dart';
+import 'package:wedlist/feature/settings/presentation/ui/pages/delete_account_page.dart';
 import 'package:wedlist/feature/settings/settings_page.dart';
 import 'package:wedlist/feature/splash/splash_page.dart';
 import 'package:wedlist/feature/verification/verification_page.dart';
@@ -133,6 +134,10 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) => const SettingsPage(),
     ),
     GoRoute(
+      path: AppRoute.deleteAccount.path,
+      builder: (context, state) => const DeleteAccountPage(),
+    ),
+    GoRoute(
       path: AppRoute.collaborators.path,
       builder: (context, state) => const CollaboratorsPage(),
     ),
@@ -154,6 +159,7 @@ enum AppRoute {
   addItem('/add-item'),
   settings('/settings'),
   collaborators('/collaborators'),
+  deleteAccount('/account/delete'),
   chart('/chart'),
   register('/register');
 

@@ -74,5 +74,7 @@
     "targetNotEntitledError": "相手はパートナー機能を購入していません",
     "inviteAlreadyPendingError": "このユーザーにはすでに保留中の招待があります",
     "genericUserLabel": "あるユーザー",
-    "collabRequestTitle": "{inviter} があなたを共同編集者として招待しました"
+    "collabRequestTitle": "{inviter} があなたを共同編集者として招待しました",
+    "deleteAccountTitle": "アカウントを削除",
+    "supportAndHelpTitle": "サポートとヘルプ"
 }

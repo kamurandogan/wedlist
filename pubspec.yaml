@@ -43,6 +43,7 @@ dependencies:
   json_annotation: ^4.9.0
   meta: ^1.15.0
   mime: ^1.0.5
+  url_launcher: ^6.3.0
   shared_preferences: ^2.5.3
   smooth_page_indicator: ^1.2.1
 

@@ -74,5 +74,7 @@
     "targetNotEntitledError": "O usuário não comprou o recurso de parceiro",
     "inviteAlreadyPendingError": "Já existe um convite pendente para este usuário",
     "genericUserLabel": "Um usuário",
-    "collabRequestTitle": "{inviter} convidou você como colaborador"
+    "collabRequestTitle": "{inviter} convidou você como colaborador",
+    "deleteAccountTitle": "Excluir conta",
+    "supportAndHelpTitle": "Suporte e Ajuda"
 }

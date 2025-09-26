@@ -245,4 +245,10 @@ class AppLocalizationsNl extends AppLocalizations {
   String collabRequestTitle(Object inviter) {
     return '$inviter heeft je uitgenodigd als medewerker';
   }
+
+  @override
+  String get deleteAccountTitle => 'Account verwijderen';
+
+  @override
+  String get supportAndHelpTitle => 'Support & Help';
 }

@@ -243,4 +243,10 @@ class AppLocalizationsTr extends AppLocalizations {
   String collabRequestTitle(Object inviter) {
     return '$inviter sizi ortak olarak davet etti';
   }
+
+  @override
+  String get deleteAccountTitle => 'Hesabı sil';
+
+  @override
+  String get supportAndHelpTitle => 'Destek ve Yardım';
 }

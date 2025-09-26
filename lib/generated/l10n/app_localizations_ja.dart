@@ -236,4 +236,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String collabRequestTitle(Object inviter) {
     return '$inviter があなたを共同編集者として招待しました';
   }
+
+  @override
+  String get deleteAccountTitle => 'アカウントを削除';
+
+  @override
+  String get supportAndHelpTitle => 'サポートとヘルプ';
 }

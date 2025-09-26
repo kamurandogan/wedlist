@@ -245,4 +245,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String collabRequestTitle(Object inviter) {
     return '$inviter convidou você como colaborador';
   }
+
+  @override
+  String get deleteAccountTitle => 'Excluir conta';
+
+  @override
+  String get supportAndHelpTitle => 'Suporte e Ajuda';
 }

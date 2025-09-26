@@ -74,5 +74,7 @@
     "targetNotEntitledError": "该用户尚未购买合作伙伴功能",
     "inviteAlreadyPendingError": "已存在发往该用户的待处理邀请",
     "genericUserLabel": "一位用户",
-    "collabRequestTitle": "{inviter} 邀请您成为协作者"
+    "collabRequestTitle": "{inviter} 邀请您成为协作者",
+    "deleteAccountTitle": "删除账户",
+    "supportAndHelpTitle": "支持与帮助"
 }

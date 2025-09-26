@@ -74,5 +74,7 @@
     "targetNotEntitledError": "De gebruiker heeft de partnerfunctie niet gekocht",
     "inviteAlreadyPendingError": "Er is al een lopende uitnodiging voor deze gebruiker",
     "genericUserLabel": "Een gebruiker",
-    "collabRequestTitle": "{inviter} heeft je uitgenodigd als medewerker"
+    "collabRequestTitle": "{inviter} heeft je uitgenodigd als medewerker",
+    "deleteAccountTitle": "Account verwijderen",
+    "supportAndHelpTitle": "Support & Help"
 }

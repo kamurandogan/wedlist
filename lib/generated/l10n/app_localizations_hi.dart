@@ -244,4 +244,10 @@ class AppLocalizationsHi extends AppLocalizations {
   String collabRequestTitle(Object inviter) {
     return '$inviter ने आपको सहयोगी के रूप में आमंत्रित किया';
   }
+
+  @override
+  String get deleteAccountTitle => 'खाता हटाएं';
+
+  @override
+  String get supportAndHelpTitle => 'सहायता और समर्थन';
 }

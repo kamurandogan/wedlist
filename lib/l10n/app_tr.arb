@@ -74,5 +74,7 @@
     "targetNotEntitledError": "Kullanıcı partner ekleme özelliğini satın almamış",
     "inviteAlreadyPendingError": "Bu kullanıcıya zaten bekleyen bir davet var",
     "genericUserLabel": "Bir kullanıcı",
-    "collabRequestTitle": "{inviter} sizi ortak olarak davet etti"
+    "collabRequestTitle": "{inviter} sizi ortak olarak davet etti",
+    "deleteAccountTitle": "Hesabı sil",
+    "supportAndHelpTitle": "Destek ve Yardım"
 }
