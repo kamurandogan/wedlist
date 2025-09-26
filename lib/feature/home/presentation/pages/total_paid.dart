@@ -11,13 +11,13 @@ class TotalPaid extends StatelessWidget {
         if (state is DowryListLoaded) {
           total = state.items.fold<double>(0, (double sum, e) => sum + e.price);
         }
-        final locale = Localizations.localeOf(context).toString();
-        final amountText = _formatCurrency(locale, total);
+        // final locale = Localizations.localeOf(context).toString();
+        // final amountText = _formatCurrency(locale, total);
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const TotalPaidTitle(),
-            TotalPaidAmount(amountText: amountText),
+            TotalPaidAmount(amountText: total.toStringAsFixed(2)),
           ],
         );
       },
