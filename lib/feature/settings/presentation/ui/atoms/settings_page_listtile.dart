@@ -7,6 +7,8 @@ class SettingsPageListtile extends StatelessWidget {
     required this.onTap,
     this.trailing,
     this.enabled = true,
+    this.onDisabledTap,
+    this.disabledMessage,
     super.key,
   });
 
@@ -14,6 +16,8 @@ class SettingsPageListtile extends StatelessWidget {
   final VoidCallback onTap;
   final Widget? trailing;
   final bool enabled;
+  final VoidCallback? onDisabledTap;
+  final String? disabledMessage;
 
   static const _defaultTrailing = Icon(
     Icons.chevron_right,
@@ -30,11 +34,27 @@ class SettingsPageListtile extends StatelessWidget {
     return Card(
       elevation: 0,
       color: Colors.white,
-      child: ListTile(
-        title: Text(title, style: textStyle),
-        onTap: enabled ? onTap : null,
-        trailing: trailing ?? _defaultTrailing,
-        enabled: enabled,
+      child: InkWell(
+        onTap: () {
+          if (enabled) {
+            onTap();
+            return;
+          }
+          if (onDisabledTap != null) {
+            onDisabledTap!();
+            return;
+          }
+          if (disabledMessage != null && disabledMessage!.isNotEmpty) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(disabledMessage!)),
+            );
+          }
+        },
+        child: ListTile(
+          title: Text(title, style: textStyle),
+          trailing: trailing ?? _defaultTrailing,
+          enabled: enabled,
+        ),
       ),
     );
   }

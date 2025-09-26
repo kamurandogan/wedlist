@@ -79,6 +79,24 @@ class _SettingsPageState extends State<SettingsPage> {
                   }
                 },
               ),
+              // IAP uygunluk bilgilendirmesi (özellikle iPad için mağaza hesabı/yetersiz destek durumlarında)
+              if (!(_iapInit && _ps.isAvailable) || (_ps.collabUnlockProduct == null && _ps.removeAdsProduct == null))
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Icon(Icons.info_outline, size: 20),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          context.loc.purchaseUnsupported,
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               // Add Partner: yalnızca collabUnlocked ise geçişe izin ver, değilse uyarı göster
               ValueListenableBuilder<bool>(
                 valueListenable: _ps.collabUnlocked,
@@ -86,20 +104,20 @@ class _SettingsPageState extends State<SettingsPage> {
                   return SettingsPageListtile(
                     title: context.loc.addPartnerTitle,
                     enabled: collabUnlocked,
+                    disabledMessage: context.loc.partnerFeatureRequired,
                     onTap: () async {
                       if (!collabUnlocked) {
                         if (context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content:
-                                  Text(context.loc.partnerFeatureRequired),
+                              content: Text(context.loc.partnerFeatureRequired),
                             ),
                           );
                         }
                         return;
                       }
                       if (!context.mounted) return;
-                      context.push(AppRoute.collaborators.path);
+                      await context.push(AppRoute.collaborators.path);
                     },
                   );
                 },
@@ -116,6 +134,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   return SettingsPageListtile(
                     title: context.loc.enablePartnerFeatureTitle,
                     enabled: enabled,
+                    disabledMessage: context.loc.purchaseUnsupported,
                     onTap: () async {
                       if (!enabled) return;
                       setState(() => _iapBusy = true);
@@ -145,6 +164,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   return SettingsPageListtile(
                     title: context.loc.removeAdsTitle,
                     enabled: enabled,
+                    disabledMessage: context.loc.purchaseUnsupported,
                     onTap: () async {
                       if (!enabled) return;
                       setState(() => _iapBusy = true);
@@ -167,7 +187,12 @@ class _SettingsPageState extends State<SettingsPage> {
               // Restore purchases
               SettingsPageListtile(
                 title: context.loc.restorePurchasesTitle,
-                enabled: _iapInit && _ps.isAvailable && !_iapBusy,
+                enabled:
+                    _iapInit &&
+                    _ps.isAvailable &&
+                    (_ps.collabUnlockProduct != null || _ps.removeAdsProduct != null) &&
+                    !_iapBusy,
+                disabledMessage: context.loc.purchaseUnsupported,
                 onTap: () async {
                   if (!(_iapInit && _ps.isAvailable)) return;
                   setState(() => _iapBusy = true);
