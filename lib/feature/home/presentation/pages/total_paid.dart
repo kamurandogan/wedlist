@@ -23,9 +23,4 @@ class TotalPaid extends StatelessWidget {
       },
     );
   }
-
-  String _formatCurrency(String locale, double value) {
-    final fmt = NumberFormat.simpleCurrency(locale: locale);
-    return fmt.format(value);
-  }
 }

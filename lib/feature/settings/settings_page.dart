@@ -36,7 +36,7 @@ class _SettingsPageState extends State<SettingsPage> {
     try {
       await _ps.init();
       setState(() => _iapInit = true);
-    } catch (_) {
+    } on Exception catch (_) {
       // sessiz: iPad/iOS store unavailable durumlarını UI'da disable edeceğiz
     } finally {
       if (mounted) setState(() => _iapBusy = false);
@@ -70,17 +70,17 @@ class _SettingsPageState extends State<SettingsPage> {
                 onTap: () async {
                   const url = 'https://sites.google.com/view/wedlist/support';
                   final uri = Uri.parse(url);
-                  if (!await launchUrl(
+                  // capture UI deps before await to avoid context across async gap
+                  final messenger = ScaffoldMessenger.of(context);
+                  final errorText = '${context.loc.errorPrefix} $url';
+                  final success = await launchUrl(
                     uri,
                     mode: LaunchMode.externalApplication,
-                  )) {
-                    if (mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('${context.loc.errorPrefix} $url'),
-                        ),
-                      );
-                    }
+                  );
+                  if (!success && mounted) {
+                    messenger.showSnackBar(
+                      SnackBar(content: Text(errorText)),
+                    );
                   }
                 },
               ),
@@ -149,17 +149,15 @@ class _SettingsPageState extends State<SettingsPage> {
                     onTap: () async {
                       if (!enabled) return;
                       setState(() => _iapBusy = true);
+                      final messenger = ScaffoldMessenger.of(context);
+                      final successText = context.loc.purchaseSuccess;
+                      final failText = context.loc.purchaseFailed;
                       final ok = await _ps.buyCollabUnlock();
                       if (!mounted) return;
                       setState(() => _iapBusy = false);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            ok
-                                ? context.loc.purchaseSuccess
-                                : context.loc.purchaseFailed,
-                          ),
-                        ),
+                      if (!mounted) return;
+                      messenger.showSnackBar(
+                        SnackBar(content: Text(ok ? successText : failText)),
                       );
                     },
                   );
@@ -183,17 +181,15 @@ class _SettingsPageState extends State<SettingsPage> {
                     onTap: () async {
                       if (!enabled) return;
                       setState(() => _iapBusy = true);
+                      final messenger = ScaffoldMessenger.of(context);
+                      final successText = context.loc.purchaseSuccess;
+                      final failText = context.loc.purchaseFailed;
                       final ok = await _ps.buyRemoveAds();
                       if (!mounted) return;
                       setState(() => _iapBusy = false);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            ok
-                                ? context.loc.purchaseSuccess
-                                : context.loc.purchaseFailed,
-                          ),
-                        ),
+                      if (!mounted) return;
+                      messenger.showSnackBar(
+                        SnackBar(content: Text(ok ? successText : failText)),
                       );
                     },
                   );
@@ -212,13 +208,14 @@ class _SettingsPageState extends State<SettingsPage> {
                 onTap: () async {
                   if (!(_iapInit && _ps.isAvailable)) return;
                   setState(() => _iapBusy = true);
+                  final messenger = ScaffoldMessenger.of(context);
+                  final restoringText = context.loc.restoringPurchasesMessage;
                   await _ps.restorePurchases();
                   if (!mounted) return;
                   setState(() => _iapBusy = false);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(context.loc.restoringPurchasesMessage),
-                    ),
+                  if (!mounted) return;
+                  messenger.showSnackBar(
+                    SnackBar(content: Text(restoringText)),
                   );
                 },
               ),

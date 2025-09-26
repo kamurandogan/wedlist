@@ -33,7 +33,7 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
       // Kullanıcıya ait temel verileri sil (varsa). Burada ana doc'u siliyoruz.
       try {
         await firestore.collection('users').doc(user.uid).delete();
-      } catch (_) {
+      } on FirebaseException catch (_) {
         // Doc olmayabilir; sorun etme.
       }
 
@@ -54,7 +54,7 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
       } else {
         setState(() => _error = e.message);
       }
-    } catch (e) {
+    } on Exception catch (e) {
       setState(() => _error = e.toString());
     } finally {
       if (mounted) setState(() => _busy = false);

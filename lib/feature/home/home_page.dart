@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:wedlist/core/utils/colors.dart';
 import 'package:wedlist/core/utils/paddings.dart';
 import 'package:wedlist/feature/chart/presentation/ui/pages/chart_page.dart';
