@@ -250,4 +250,74 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get supportAndHelpTitle => 'सहायता और समर्थन';
+
+  @override
+  String get loginTitle => 'लॉगिन';
+
+  @override
+  String get signInButtonText => 'लॉगिन';
+
+  @override
+  String get dontHaveAccount => 'क्या आपका खाता नहीं है?';
+
+  @override
+  String get registerHere => 'यहाँ पंजीकरण करें';
+
+  @override
+  String get signInWithApple => 'Apple से साइन इन करें';
+
+  @override
+  String get signInWithGoogle => 'Google से साइन इन करें';
+
+  @override
+  String get loginRequiredForSection =>
+      'इस अनुभाग को देखने के लिए कृपया लॉगिन करें।';
+
+  @override
+  String get loginRequiredForWishlist =>
+      'अपनी विशलिस्ट देखने के लिए लॉगिन करें।';
+
+  @override
+  String get verificationEmailResent => 'सत्यापन ईमेल पुनः भेजा गया।';
+
+  @override
+  String get emailNotVerifiedYet =>
+      'आपका ईमेल अभी सत्यापित नहीं है। कृपया इनबॉक्स देखें और लिंक पर क्लिक करें।';
+
+  @override
+  String get verificationTitle => 'सत्यापन';
+
+  @override
+  String get verificationInstruction =>
+      'कृपया आपके ईमेल पर भेजे गए सत्यापन लिंक पर क्लिक करें।';
+
+  @override
+  String verificationInstructionWithEmail(String email) {
+    return '$email पर भेजे गए सत्यापन लिंक पर क्लिक करें।';
+  }
+
+  @override
+  String get resendButton => 'पुनः भेजें';
+
+  @override
+  String get checkVerificationButton => 'सत्यापन जांचें';
+
+  @override
+  String get accountDeletedPermanently =>
+      'आपका खाता स्थायी रूप से हटा दिया गया है।';
+
+  @override
+  String get reauthRequiredMessage =>
+      'सुरक्षा कारणों से कृपया दोबारा लॉगिन करें और फिर अपना खाता हटाने का प्रयास करें।';
+
+  @override
+  String get deleteAccountWarning =>
+      'आप अपना खाता और संबंधित डेटा स्थायी रूप से हटाने वाले हैं। यह क्रिया वापस नहीं की जा सकती।';
+
+  @override
+  String get deleteAccountExportNotice =>
+      'आगे बढ़ने से पहले महत्वपूर्ण डेटा निर्यात करना सुनिश्चित करें।';
+
+  @override
+  String get deleteAccountConfirmButton => 'मेरा खाता स्थायी रूप से हटाएं';
 }

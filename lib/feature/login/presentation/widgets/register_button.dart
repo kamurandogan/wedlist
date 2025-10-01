@@ -10,7 +10,7 @@ class RegisterButton extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text("Don't have an account? "),
+        Text(context.loc.dontHaveAccount),
         TextButton(
           onPressed: () {
             context.go(AppRoute.register.path);
@@ -18,9 +18,9 @@ class RegisterButton extends StatelessWidget {
           style: TextButton.styleFrom(
             foregroundColor: AppColors.primary,
           ),
-          child: const Text(
-            'Register Here',
-            style: TextStyle(fontWeight: FontWeight.bold),
+          child: Text(
+            context.loc.registerHere,
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
       ],

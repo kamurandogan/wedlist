@@ -577,6 +577,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Support & Help'**
   String get supportAndHelpTitle;
+
+  /// Title on the login page.
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get loginTitle;
+
+  /// Primary sign-in button label.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign In'**
+  String get signInButtonText;
+
+  /// Prompt shown before register link on login page.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account?'**
+  String get dontHaveAccount;
+
+  /// Register link label on login page.
+  ///
+  /// In en, this message translates to:
+  /// **'Register Here'**
+  String get registerHere;
+
+  /// No description provided for @signInWithApple.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with Apple'**
+  String get signInWithApple;
+
+  /// No description provided for @signInWithGoogle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with Google'**
+  String get signInWithGoogle;
+
+  /// No description provided for @loginRequiredForSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Please sign in to view this section.'**
+  String get loginRequiredForSection;
+
+  /// No description provided for @loginRequiredForWishlist.
+  ///
+  /// In en, this message translates to:
+  /// **'Please sign in to view your wish list.'**
+  String get loginRequiredForWishlist;
+
+  /// No description provided for @verificationEmailResent.
+  ///
+  /// In en, this message translates to:
+  /// **'Verification email has been resent.'**
+  String get verificationEmailResent;
+
+  /// No description provided for @emailNotVerifiedYet.
+  ///
+  /// In en, this message translates to:
+  /// **'Your email address is not verified yet. Please check your inbox and click the link.'**
+  String get emailNotVerifiedYet;
+
+  /// No description provided for @verificationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Verification'**
+  String get verificationTitle;
+
+  /// No description provided for @verificationInstruction.
+  ///
+  /// In en, this message translates to:
+  /// **'Please click the verification link sent to your email.'**
+  String get verificationInstruction;
+
+  /// No description provided for @verificationInstructionWithEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Please click the verification link sent to {email}.'**
+  String verificationInstructionWithEmail(String email);
+
+  /// No description provided for @resendButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend'**
+  String get resendButton;
+
+  /// No description provided for @checkVerificationButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Check Verification'**
+  String get checkVerificationButton;
+
+  /// No description provided for @accountDeletedPermanently.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account has been permanently deleted.'**
+  String get accountDeletedPermanently;
+
+  /// No description provided for @reauthRequiredMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'For security reasons, please sign in again and then retry deleting your account.'**
+  String get reauthRequiredMessage;
+
+  /// No description provided for @deleteAccountWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'You are about to permanently delete your account and associated data. This action cannot be undone.'**
+  String get deleteAccountWarning;
+
+  /// No description provided for @deleteAccountExportNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'Make sure you export any important data before proceeding.'**
+  String get deleteAccountExportNotice;
+
+  /// No description provided for @deleteAccountConfirmButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Permanently delete my account'**
+  String get deleteAccountConfirmButton;
 }
 
 class _AppLocalizationsDelegate

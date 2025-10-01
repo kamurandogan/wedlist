@@ -19,6 +19,7 @@ import 'package:wedlist/feature/settings/presentation/ui/pages/delete_account_pa
 import 'package:wedlist/feature/settings/settings_page.dart';
 import 'package:wedlist/feature/splash/splash_page.dart';
 import 'package:wedlist/feature/verification/verification_page.dart';
+import 'package:wedlist/generated/l10n/app_localizations.dart';
 import 'package:wedlist/injection_container.dart';
 
 class GoRouterRefreshStream extends ChangeNotifier {
@@ -117,8 +118,12 @@ final GoRouter appRouter = GoRouter(
         final item = state.extra as ItemEntity?;
         if (item == null) {
           // Hata ekranı, fallback veya yönlendirme
-          return const Scaffold(
-            body: Center(child: Text('Hata: Ürün bilgisi bulunamadı')),
+          return Scaffold(
+            body: Center(
+              child: Text(
+                '${AppLocalizations.of(context).errorPrefix} Ürün bilgisi bulunamadı',
+              ),
+            ),
           );
         }
         return BlocProvider(

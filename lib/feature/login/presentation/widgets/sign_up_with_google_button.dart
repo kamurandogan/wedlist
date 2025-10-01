@@ -5,27 +5,29 @@ class SignUpWithGoogleButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: 50,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(0),
-        border: Border.all(color: Colors.grey.shade300),
-      ),
-      child: const Padding(
-        padding: EdgeInsets.all(8),
+      child: OutlinedButton(
+        style: OutlinedButton.styleFrom(
+          backgroundColor: Colors.white,
+          side: BorderSide(color: Colors.grey.shade300),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(0),
+          ),
+        ),
+        onPressed: () {
+          context.read<AuthBloc>().add(SignInWithGoogleRequested());
+        },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            HugeIcon(
+            const HugeIcon(
               icon: HugeIcons.strokeRoundedGoogle,
               color: AppColors.textColor,
             ),
-            SizedBox(width: 16),
-            Text(
-              'Google ile Giriş Yap',
-            ),
+            const SizedBox(width: 16),
+            Text(context.loc.signInWithGoogle),
           ],
         ),
       ),

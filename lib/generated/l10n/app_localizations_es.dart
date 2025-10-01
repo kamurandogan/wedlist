@@ -253,4 +253,74 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get supportAndHelpTitle => 'Soporte y Ayuda';
+
+  @override
+  String get loginTitle => 'Iniciar sesión';
+
+  @override
+  String get signInButtonText => 'Iniciar sesión';
+
+  @override
+  String get dontHaveAccount => '¿No tienes una cuenta?';
+
+  @override
+  String get registerHere => 'Regístrate aquí';
+
+  @override
+  String get signInWithApple => 'Iniciar con Apple';
+
+  @override
+  String get signInWithGoogle => 'Iniciar con Google';
+
+  @override
+  String get loginRequiredForSection => 'Inicia sesión para ver esta sección.';
+
+  @override
+  String get loginRequiredForWishlist =>
+      'Inicia sesión para ver tu lista de deseos.';
+
+  @override
+  String get verificationEmailResent =>
+      'El correo de verificación ha sido reenviado.';
+
+  @override
+  String get emailNotVerifiedYet =>
+      'Tu correo aún no está verificado. Revisa tu bandeja e haz clic en el enlace.';
+
+  @override
+  String get verificationTitle => 'Verificación';
+
+  @override
+  String get verificationInstruction =>
+      'Haz clic en el enlace de verificación enviado a tu correo.';
+
+  @override
+  String verificationInstructionWithEmail(String email) {
+    return 'Haz clic en el enlace de verificación enviado a $email.';
+  }
+
+  @override
+  String get resendButton => 'Reenviar';
+
+  @override
+  String get checkVerificationButton => 'Comprobar verificación';
+
+  @override
+  String get accountDeletedPermanently =>
+      'Tu cuenta ha sido eliminada permanentemente.';
+
+  @override
+  String get reauthRequiredMessage =>
+      'Por seguridad, inicia sesión de nuevo y vuelve a intentar eliminar tu cuenta.';
+
+  @override
+  String get deleteAccountWarning =>
+      'Vas a eliminar permanentemente tu cuenta y los datos asociados. Esta acción no se puede deshacer.';
+
+  @override
+  String get deleteAccountExportNotice =>
+      'Asegúrate de exportar los datos importantes antes de continuar.';
+
+  @override
+  String get deleteAccountConfirmButton => 'Eliminar mi cuenta permanentemente';
 }

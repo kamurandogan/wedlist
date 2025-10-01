@@ -242,4 +242,68 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get supportAndHelpTitle => 'サポートとヘルプ';
+
+  @override
+  String get loginTitle => 'ログイン';
+
+  @override
+  String get signInButtonText => 'ログイン';
+
+  @override
+  String get dontHaveAccount => 'アカウントをお持ちではありませんか？';
+
+  @override
+  String get registerHere => 'こちらで登録';
+
+  @override
+  String get signInWithApple => 'Appleでサインイン';
+
+  @override
+  String get signInWithGoogle => 'Googleでサインイン';
+
+  @override
+  String get loginRequiredForSection => 'このセクションを見るにはログインしてください。';
+
+  @override
+  String get loginRequiredForWishlist => 'ウィッシュリストを見るにはログインしてください。';
+
+  @override
+  String get verificationEmailResent => '確認メールを再送しました。';
+
+  @override
+  String get emailNotVerifiedYet =>
+      'メールアドレスはまだ確認されていません。受信ボックスを確認してリンクをクリックしてください。';
+
+  @override
+  String get verificationTitle => '確認';
+
+  @override
+  String get verificationInstruction => 'メールで送信された確認リンクをクリックしてください。';
+
+  @override
+  String verificationInstructionWithEmail(String email) {
+    return '$email に送信された確認リンクをクリックしてください。';
+  }
+
+  @override
+  String get resendButton => '再送';
+
+  @override
+  String get checkVerificationButton => '確認をチェック';
+
+  @override
+  String get accountDeletedPermanently => 'アカウントは永久に削除されました。';
+
+  @override
+  String get reauthRequiredMessage =>
+      'セキュリティ上の理由から、再度ログインしてからアカウントの削除をお試しください。';
+
+  @override
+  String get deleteAccountWarning => 'アカウントと関連データを永久に削除しようとしています。この操作は元に戻せません。';
+
+  @override
+  String get deleteAccountExportNotice => '続行する前に重要なデータをエクスポートしてください。';
+
+  @override
+  String get deleteAccountConfirmButton => 'アカウントを永久に削除';
 }

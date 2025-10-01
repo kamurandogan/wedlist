@@ -251,4 +251,73 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get supportAndHelpTitle => 'Support & Help';
+
+  @override
+  String get loginTitle => 'Login';
+
+  @override
+  String get signInButtonText => 'Sign In';
+
+  @override
+  String get dontHaveAccount => 'Don\'t have an account?';
+
+  @override
+  String get registerHere => 'Register Here';
+
+  @override
+  String get signInWithApple => 'Sign in with Apple';
+
+  @override
+  String get signInWithGoogle => 'Sign in with Google';
+
+  @override
+  String get loginRequiredForSection => 'Please sign in to view this section.';
+
+  @override
+  String get loginRequiredForWishlist =>
+      'Please sign in to view your wish list.';
+
+  @override
+  String get verificationEmailResent => 'Verification email has been resent.';
+
+  @override
+  String get emailNotVerifiedYet =>
+      'Your email address is not verified yet. Please check your inbox and click the link.';
+
+  @override
+  String get verificationTitle => 'Verification';
+
+  @override
+  String get verificationInstruction =>
+      'Please click the verification link sent to your email.';
+
+  @override
+  String verificationInstructionWithEmail(String email) {
+    return 'Please click the verification link sent to $email.';
+  }
+
+  @override
+  String get resendButton => 'Resend';
+
+  @override
+  String get checkVerificationButton => 'Check Verification';
+
+  @override
+  String get accountDeletedPermanently =>
+      'Your account has been permanently deleted.';
+
+  @override
+  String get reauthRequiredMessage =>
+      'For security reasons, please sign in again and then retry deleting your account.';
+
+  @override
+  String get deleteAccountWarning =>
+      'You are about to permanently delete your account and associated data. This action cannot be undone.';
+
+  @override
+  String get deleteAccountExportNotice =>
+      'Make sure you export any important data before proceeding.';
+
+  @override
+  String get deleteAccountConfirmButton => 'Permanently delete my account';
 }

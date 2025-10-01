@@ -251,4 +251,74 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get supportAndHelpTitle => 'Support & Hilfe';
+
+  @override
+  String get loginTitle => 'Anmelden';
+
+  @override
+  String get signInButtonText => 'Anmelden';
+
+  @override
+  String get dontHaveAccount => 'Noch kein Konto?';
+
+  @override
+  String get registerHere => 'Hier registrieren';
+
+  @override
+  String get signInWithApple => 'Mit Apple anmelden';
+
+  @override
+  String get signInWithGoogle => 'Mit Google anmelden';
+
+  @override
+  String get loginRequiredForSection =>
+      'Bitte melden Sie sich an, um diesen Bereich zu sehen.';
+
+  @override
+  String get loginRequiredForWishlist =>
+      'Bitte melden Sie sich an, um Ihre Wunschliste zu sehen.';
+
+  @override
+  String get verificationEmailResent =>
+      'Bestätigungs-E-Mail wurde erneut gesendet.';
+
+  @override
+  String get emailNotVerifiedYet =>
+      'Ihre E-Mail-Adresse ist noch nicht verifiziert. Bitte prüfen Sie Ihr Postfach und klicken Sie auf den Link.';
+
+  @override
+  String get verificationTitle => 'Verifizierung';
+
+  @override
+  String get verificationInstruction =>
+      'Bitte klicken Sie auf den Bestätigungslink, der an Ihre E-Mail gesendet wurde.';
+
+  @override
+  String verificationInstructionWithEmail(String email) {
+    return 'Bitte klicken Sie auf den Bestätigungslink, der an $email gesendet wurde.';
+  }
+
+  @override
+  String get resendButton => 'Erneut senden';
+
+  @override
+  String get checkVerificationButton => 'Verifizierung prüfen';
+
+  @override
+  String get accountDeletedPermanently => 'Ihr Konto wurde dauerhaft gelöscht.';
+
+  @override
+  String get reauthRequiredMessage =>
+      'Aus Sicherheitsgründen melden Sie sich bitte erneut an und versuchen Sie dann, Ihr Konto zu löschen.';
+
+  @override
+  String get deleteAccountWarning =>
+      'Sie sind dabei, Ihr Konto und zugehörige Daten dauerhaft zu löschen. Dieser Vorgang kann nicht rückgängig gemacht werden.';
+
+  @override
+  String get deleteAccountExportNotice =>
+      'Stellen Sie sicher, dass Sie wichtige Daten exportiert haben, bevor Sie fortfahren.';
+
+  @override
+  String get deleteAccountConfirmButton => 'Konto dauerhaft löschen';
 }

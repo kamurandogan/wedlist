@@ -97,5 +97,45 @@
     "supportAndHelpTitle": "Support & Help",
     "@supportAndHelpTitle": {
         "description": "Menu title that opens the public support/help page."
-    }
+    },
+    "loginTitle": "Login",
+    "@loginTitle": {
+        "description": "Title on the login page."
+    },
+    "signInButtonText": "Sign In",
+    "@signInButtonText": {
+        "description": "Primary sign-in button label."
+    },
+    "dontHaveAccount": "Don't have an account?",
+    "@dontHaveAccount": {
+        "description": "Prompt shown before register link on login page."
+    },
+    "registerHere": "Register Here",
+    "@registerHere": {
+        "description": "Register link label on login page."
+    },
+    "signInWithApple": "Sign in with Apple",
+    "signInWithGoogle": "Sign in with Google",
+    "loginRequiredForSection": "Please sign in to view this section.",
+    "loginRequiredForWishlist": "Please sign in to view your wish list.",
+    "verificationEmailResent": "Verification email has been resent.",
+    "emailNotVerifiedYet": "Your email address is not verified yet. Please check your inbox and click the link.",
+    "verificationTitle": "Verification",
+    "verificationInstruction": "Please click the verification link sent to your email.",
+    "verificationInstructionWithEmail": "Please click the verification link sent to {email}.",
+    "@verificationInstructionWithEmail": {
+        "placeholders": {
+            "email": {
+                "type": "String",
+                "example": "user@example.com"
+            }
+        }
+    },
+    "resendButton": "Resend",
+    "checkVerificationButton": "Check Verification",
+    "accountDeletedPermanently": "Your account has been permanently deleted.",
+    "reauthRequiredMessage": "For security reasons, please sign in again and then retry deleting your account.",
+    "deleteAccountWarning": "You are about to permanently delete your account and associated data. This action cannot be undone.",
+    "deleteAccountExportNotice": "Make sure you export any important data before proceeding.",
+    "deleteAccountConfirmButton": "Permanently delete my account"
 }

@@ -251,4 +251,75 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get supportAndHelpTitle => 'Supporto e Aiuto';
+
+  @override
+  String get loginTitle => 'Accesso';
+
+  @override
+  String get signInButtonText => 'Accedi';
+
+  @override
+  String get dontHaveAccount => 'Non hai un account?';
+
+  @override
+  String get registerHere => 'Registrati qui';
+
+  @override
+  String get signInWithApple => 'Accedi con Apple';
+
+  @override
+  String get signInWithGoogle => 'Accedi con Google';
+
+  @override
+  String get loginRequiredForSection =>
+      'Accedi per visualizzare questa sezione.';
+
+  @override
+  String get loginRequiredForWishlist =>
+      'Accedi per visualizzare la tua lista dei desideri.';
+
+  @override
+  String get verificationEmailResent => 'Email di verifica reinviata.';
+
+  @override
+  String get emailNotVerifiedYet =>
+      'La tua email non è ancora verificata. Controlla la posta e clicca sul link.';
+
+  @override
+  String get verificationTitle => 'Verifica';
+
+  @override
+  String get verificationInstruction =>
+      'Clicca sul link di verifica inviato alla tua email.';
+
+  @override
+  String verificationInstructionWithEmail(String email) {
+    return 'Clicca sul link inviato a $email.';
+  }
+
+  @override
+  String get resendButton => 'Reinvia';
+
+  @override
+  String get checkVerificationButton => 'Controlla verifica';
+
+  @override
+  String get accountDeletedPermanently =>
+      'Il tuo account è stato eliminato definitivamente.';
+
+  @override
+  String get reauthRequiredMessage =>
+      'Per motivi di sicurezza, accedi di nuovo e riprova a eliminare l\'account.';
+
+  @override
+  String get deleteAccountWarning =>
+      'Stai per eliminare definitivamente il tuo account e i dati associati. Questa azione non può essere annullata.';
+
+  @override
+  String get deleteAccountExportNotice =>
+      'Assicurati di esportare i dati importanti prima di procedere.';
+
+  @override
+  String get deleteAccountConfirmButton =>
+      'Elimina definitivamente il mio account';
 }

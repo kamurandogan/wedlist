@@ -253,4 +253,75 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get supportAndHelpTitle => 'Support & Aide';
+
+  @override
+  String get loginTitle => 'Connexion';
+
+  @override
+  String get signInButtonText => 'Se connecter';
+
+  @override
+  String get dontHaveAccount => 'Vous n\'avez pas de compte ?';
+
+  @override
+  String get registerHere => 'Inscrivez-vous ici';
+
+  @override
+  String get signInWithApple => 'Se connecter avec Apple';
+
+  @override
+  String get signInWithGoogle => 'Se connecter avec Google';
+
+  @override
+  String get loginRequiredForSection =>
+      'Veuillez vous connecter pour voir cette section.';
+
+  @override
+  String get loginRequiredForWishlist =>
+      'Veuillez vous connecter pour voir votre liste de souhaits.';
+
+  @override
+  String get verificationEmailResent => 'E-mail de vérification renvoyé.';
+
+  @override
+  String get emailNotVerifiedYet =>
+      'Votre adresse e-mail n\'est pas encore vérifiée. Veuillez vérifier votre boîte et cliquer sur le lien.';
+
+  @override
+  String get verificationTitle => 'Vérification';
+
+  @override
+  String get verificationInstruction =>
+      'Veuillez cliquer sur le lien de vérification envoyé à votre e-mail.';
+
+  @override
+  String verificationInstructionWithEmail(String email) {
+    return 'Veuillez cliquer sur le lien envoyé à $email.';
+  }
+
+  @override
+  String get resendButton => 'Renvoyer';
+
+  @override
+  String get checkVerificationButton => 'Vérifier';
+
+  @override
+  String get accountDeletedPermanently =>
+      'Votre compte a été supprimé définitivement.';
+
+  @override
+  String get reauthRequiredMessage =>
+      'Pour des raisons de sécurité, reconnectez-vous puis réessayez de supprimer votre compte.';
+
+  @override
+  String get deleteAccountWarning =>
+      'Vous êtes sur le point de supprimer définitivement votre compte et ses données. Cette action est irréversible.';
+
+  @override
+  String get deleteAccountExportNotice =>
+      'Assurez-vous d\'exporter les données importantes avant de continuer.';
+
+  @override
+  String get deleteAccountConfirmButton =>
+      'Supprimer mon compte définitivement';
 }

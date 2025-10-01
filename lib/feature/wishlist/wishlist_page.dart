@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:wedlist/core/extensions/l10n_extension.dart';
 import 'package:wedlist/core/router/app_router.dart';
 import 'package:wedlist/core/utils/colors.dart';
 import 'package:wedlist/core/utils/paddings.dart';
@@ -30,14 +31,14 @@ class WishlistPage extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text(
-                'Bu bölümü görmek için lütfen giriş yapın.',
+              Text(
+                context.loc.loginRequiredForSection,
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () => context.go(AppRoute.login.path),
-                child: const Text('Giriş Yap'),
+                child: Text(context.loc.signInButtonText),
               ),
             ],
           ),

@@ -251,4 +251,74 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get supportAndHelpTitle => 'Suporte e Ajuda';
+
+  @override
+  String get loginTitle => 'Entrar';
+
+  @override
+  String get signInButtonText => 'Entrar';
+
+  @override
+  String get dontHaveAccount => 'Não tem uma conta?';
+
+  @override
+  String get registerHere => 'Registre-se aqui';
+
+  @override
+  String get signInWithApple => 'Entrar com Apple';
+
+  @override
+  String get signInWithGoogle => 'Entrar com Google';
+
+  @override
+  String get loginRequiredForSection => 'Faça login para ver esta seção.';
+
+  @override
+  String get loginRequiredForWishlist =>
+      'Faça login para ver sua lista de desejos.';
+
+  @override
+  String get verificationEmailResent => 'E-mail de verificação reenviado.';
+
+  @override
+  String get emailNotVerifiedYet =>
+      'Seu e-mail ainda não está verificado. Verifique sua caixa de entrada e clique no link.';
+
+  @override
+  String get verificationTitle => 'Verificação';
+
+  @override
+  String get verificationInstruction =>
+      'Clique no link de verificação enviado para seu e-mail.';
+
+  @override
+  String verificationInstructionWithEmail(String email) {
+    return 'Clique no link enviado para $email.';
+  }
+
+  @override
+  String get resendButton => 'Reenviar';
+
+  @override
+  String get checkVerificationButton => 'Verificar';
+
+  @override
+  String get accountDeletedPermanently =>
+      'Sua conta foi excluída permanentemente.';
+
+  @override
+  String get reauthRequiredMessage =>
+      'Por motivos de segurança, faça login novamente e tente excluir sua conta.';
+
+  @override
+  String get deleteAccountWarning =>
+      'Você está prestes a excluir permanentemente sua conta e dados associados. Esta ação não pode ser desfeita.';
+
+  @override
+  String get deleteAccountExportNotice =>
+      'Certifique-se de exportar dados importantes antes de continuar.';
+
+  @override
+  String get deleteAccountConfirmButton =>
+      'Excluir minha conta permanentemente';
 }

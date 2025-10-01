@@ -249,4 +249,74 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get supportAndHelpTitle => 'Destek ve Yardım';
+
+  @override
+  String get loginTitle => 'Giriş';
+
+  @override
+  String get signInButtonText => 'Giriş Yap';
+
+  @override
+  String get dontHaveAccount => 'Hesabın yok mu?';
+
+  @override
+  String get registerHere => 'Kayıt Ol';
+
+  @override
+  String get signInWithApple => 'Apple ile Giriş Yap';
+
+  @override
+  String get signInWithGoogle => 'Google ile Giriş Yap';
+
+  @override
+  String get loginRequiredForSection =>
+      'Bu bölümü görmek için lütfen giriş yapın.';
+
+  @override
+  String get loginRequiredForWishlist =>
+      'İstek listenizi görmek için lütfen giriş yapın.';
+
+  @override
+  String get verificationEmailResent =>
+      'Doğrulama e-postası tekrar gönderildi.';
+
+  @override
+  String get emailNotVerifiedYet =>
+      'E-posta adresiniz henüz doğrulanmadı. Lütfen e-postanızı kontrol edip gelen linke tıklayın.';
+
+  @override
+  String get verificationTitle => 'Doğrulama';
+
+  @override
+  String get verificationInstruction =>
+      'Lütfen e-postanıza gönderilen doğrulama linkine tıklayın.';
+
+  @override
+  String verificationInstructionWithEmail(String email) {
+    return 'Lütfen $email adresine gönderilen doğrulama linkine tıklayın.';
+  }
+
+  @override
+  String get resendButton => 'Tekrar Gönder';
+
+  @override
+  String get checkVerificationButton => 'Doğrulamayı Kontrol Et';
+
+  @override
+  String get accountDeletedPermanently => 'Hesabınız kalıcı olarak silindi.';
+
+  @override
+  String get reauthRequiredMessage =>
+      'Güvenlik nedeniyle lütfen yeniden giriş yapın ve ardından hesabı silmeyi tekrar deneyin.';
+
+  @override
+  String get deleteAccountWarning =>
+      'Hesabınızı ve ilişkili verileri kalıcı olarak silmek üzeresiniz. Bu işlem geri alınamaz.';
+
+  @override
+  String get deleteAccountExportNotice =>
+      'Devam etmeden önce önemli verilerinizi dışa aktardığınızdan emin olun.';
+
+  @override
+  String get deleteAccountConfirmButton => 'Hesabımı kalıcı olarak sil';
 }

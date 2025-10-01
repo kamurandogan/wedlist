@@ -39,6 +39,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
                         onTap: () => context.read<NavigationCubit>().changePage(
                           SelectedPage.home,
                         ),
+
                         tooltip: 'Home',
                       ),
                       _navIcon(
@@ -134,6 +135,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
       child: IconButton(
         onPressed: onTap,
         tooltip: tooltip,
+
         icon: HugeIcon(
           icon: icon,
           size: _iconSize,

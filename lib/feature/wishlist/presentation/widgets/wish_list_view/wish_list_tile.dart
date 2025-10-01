@@ -12,6 +12,14 @@ class WishListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       dense: true,
+      onTap: () {
+        // GoRouter ile yönlendirme ve id+category'yi extra parametresiyle gönder
+        GoRouter.of(context).push(
+          AppRoute.addItem.path,
+          extra: item,
+        );
+        debugPrint('DEBUG: ITEM $item');
+      },
       contentPadding: EdgeInsets.zero,
       // Atom: Bullet
       leading: const WishListBullet(),

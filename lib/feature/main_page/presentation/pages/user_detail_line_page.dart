@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -46,34 +47,27 @@ class UserDetailLinePage extends StatelessWidget {
             : '';
         return Row(
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  firstName.isNotEmpty
-                      ? '${context.loc.helloText} $firstName'
-                      : context.loc.helloText,
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  context.loc.welcomeMessage,
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-              ],
-            ),
-            const Expanded(
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    SettingsButton(),
-                    // NotificationWidget(),
-                  ],
-                ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AutoSizeText(
+                    firstName.isNotEmpty
+                        ? '${context.loc.helloText} $firstName'
+                        : context.loc.helloText,
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  const SizedBox(height: 4),
+                  AutoSizeText(
+                    context.loc.welcomeMessage,
+                    style: Theme.of(context).textTheme.bodySmall,
+                    minFontSize: 10,
+                  ),
+                ],
               ),
             ),
+            const SizedBox(width: 8),
+            const SettingsButton(),
           ],
         );
       },

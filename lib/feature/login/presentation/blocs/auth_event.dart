@@ -7,3 +7,7 @@ class SignInRequested extends AuthEvent {
   final String email;
   final String password;
 }
+
+class SignInWithAppleRequested extends AuthEvent {}
+
+class SignInWithGoogleRequested extends AuthEvent {}

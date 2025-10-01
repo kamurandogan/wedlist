@@ -32,14 +32,14 @@ class WishListView extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text(
-                  'İstek listenizi görmek için lütfen giriş yapın.',
+                Text(
+                  context.loc.loginRequiredForWishlist,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () => context.go(AppRoute.login.path),
-                  child: const Text('Giriş Yap'),
+                  child: Text(context.loc.signInButtonText),
                 ),
               ],
             ),

@@ -240,4 +240,66 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get supportAndHelpTitle => '支持与帮助';
+
+  @override
+  String get loginTitle => '登录';
+
+  @override
+  String get signInButtonText => '登录';
+
+  @override
+  String get dontHaveAccount => '还没有账号？';
+
+  @override
+  String get registerHere => '在此注册';
+
+  @override
+  String get signInWithApple => '使用 Apple 登录';
+
+  @override
+  String get signInWithGoogle => '使用 Google 登录';
+
+  @override
+  String get loginRequiredForSection => '请登录以查看此部分。';
+
+  @override
+  String get loginRequiredForWishlist => '请登录以查看你的心愿单。';
+
+  @override
+  String get verificationEmailResent => '验证邮件已重新发送。';
+
+  @override
+  String get emailNotVerifiedYet => '你的邮箱尚未验证。请检查邮箱并点击链接。';
+
+  @override
+  String get verificationTitle => '验证';
+
+  @override
+  String get verificationInstruction => '请点击发送到你邮箱的验证链接。';
+
+  @override
+  String verificationInstructionWithEmail(String email) {
+    return '请点击发送到 $email 的验证链接。';
+  }
+
+  @override
+  String get resendButton => '重新发送';
+
+  @override
+  String get checkVerificationButton => '检查验证';
+
+  @override
+  String get accountDeletedPermanently => '你的账号已被永久删除。';
+
+  @override
+  String get reauthRequiredMessage => '出于安全原因，请重新登录，然后再次尝试删除账号。';
+
+  @override
+  String get deleteAccountWarning => '你将永久删除你的账号及相关数据。此操作无法撤销。';
+
+  @override
+  String get deleteAccountExportNotice => '继续之前，请确保导出重要数据。';
+
+  @override
+  String get deleteAccountConfirmButton => '永久删除我的账号';
 }

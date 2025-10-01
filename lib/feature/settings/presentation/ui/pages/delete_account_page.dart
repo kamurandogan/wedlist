@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wedlist/core/extensions/l10n_extension.dart';
 import 'package:wedlist/core/router/app_router.dart';
 
 class DeleteAccountPage extends StatefulWidget {
@@ -41,15 +42,14 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
 
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Hesabınız kalıcı olarak silindi.')),
+        SnackBar(content: Text(context.loc.accountDeletedPermanently)),
       );
       Navigator.of(context).pop(true);
     } on FirebaseAuthException catch (e) {
       // requires-recent-login durumunu kullanıcıya bildir.
       if (e.code == 'requires-recent-login') {
         setState(() {
-          _error =
-              'Güvenlik nedeniyle lütfen yeniden giriş yapın ve ardından hesabı silmeyi tekrar deneyin.';
+          _error = context.loc.reauthRequiredMessage;
         });
       } else {
         setState(() => _error = e.message);
@@ -65,7 +65,7 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Hesabı sil'),
+        title: Text(context.loc.deleteAccountTitle),
         leading: _prevNavigationButton(context),
       ),
       body: Padding(
@@ -73,13 +73,11 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Hesabınızı ve ilişkili verileri kalıcı olarak silmek üzeresiniz. Bu işlem geri alınamaz.',
-            ),
+            Text(context.loc.deleteAccountWarning),
             const SizedBox(height: 12),
-            const Text(
-              'Devam etmeden önce önemli verilerinizi dışa aktardığınızdan emin olun.',
-              style: TextStyle(color: Colors.black54),
+            Text(
+              context.loc.deleteAccountExportNotice,
+              style: const TextStyle(color: Colors.black54),
             ),
             const SizedBox(height: 16),
             if (_error != null)
@@ -99,7 +97,7 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
                             height: 18,
                             child: CircularProgressIndicator(strokeWidth: 2),
                           )
-                        : const Text('Hesabımı kalıcı olarak sil'),
+                        : Text(context.loc.deleteAccountConfirmButton),
                   ),
                 ),
               ],

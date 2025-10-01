@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:wedlist/core/extensions/l10n_extension.dart';
 import 'package:wedlist/core/router/app_router.dart';
 import 'package:wedlist/core/utils/colors.dart';
 import 'package:wedlist/core/utils/paddings.dart';
@@ -10,6 +11,7 @@ import 'package:wedlist/feature/login/presentation/blocs/auth_bloc.dart';
 
 part 'presentation/pages/login_formfield.dart';
 part 'presentation/widgets/register_button.dart';
+part 'presentation/widgets/sign_in_with_apple_button.dart';
 part 'presentation/widgets/sign_up_with_google_button.dart';
 
 class LoginPage extends StatefulWidget {
@@ -52,7 +54,10 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Sign In', style: Theme.of(context).textTheme.headlineLarge),
+              Text(
+                context.loc.loginTitle,
+                style: Theme.of(context).textTheme.headlineLarge,
+              ),
               const SizedBox(height: 40),
               LoginFormField(
                 emailController: emailController,
@@ -89,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             );
                           },
-                          text: 'Giriş Yap',
+                          text: context.loc.signInButtonText,
                         ),
                       ],
                     ],
@@ -97,7 +102,10 @@ class _LoginPageState extends State<LoginPage> {
                 },
               ),
               const SizedBox(height: 16),
-              // const SignUpWithGoogleButton(),
+              // if (Platform.isIOS)
+              const SignInWithAppleButton(),
+              const SizedBox(height: 12),
+              const SignUpWithGoogleButton(),
             ],
           ),
         ),

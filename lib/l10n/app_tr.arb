@@ -76,5 +76,33 @@
     "genericUserLabel": "Bir kullanıcı",
     "collabRequestTitle": "{inviter} sizi ortak olarak davet etti",
     "deleteAccountTitle": "Hesabı sil",
-    "supportAndHelpTitle": "Destek ve Yardım"
+    "supportAndHelpTitle": "Destek ve Yardım",
+    "loginTitle": "Giriş",
+    "signInButtonText": "Giriş Yap",
+    "dontHaveAccount": "Hesabın yok mu?",
+    "registerHere": "Kayıt Ol",
+    "signInWithApple": "Apple ile Giriş Yap",
+    "signInWithGoogle": "Google ile Giriş Yap",
+    "loginRequiredForSection": "Bu bölümü görmek için lütfen giriş yapın.",
+    "loginRequiredForWishlist": "İstek listenizi görmek için lütfen giriş yapın.",
+    "verificationEmailResent": "Doğrulama e-postası tekrar gönderildi.",
+    "emailNotVerifiedYet": "E-posta adresiniz henüz doğrulanmadı. Lütfen e-postanızı kontrol edip gelen linke tıklayın.",
+    "verificationTitle": "Doğrulama",
+    "verificationInstruction": "Lütfen e-postanıza gönderilen doğrulama linkine tıklayın.",
+    "verificationInstructionWithEmail": "Lütfen {email} adresine gönderilen doğrulama linkine tıklayın.",
+    "@verificationInstructionWithEmail": {
+        "placeholders": {
+            "email": {
+                "type": "String",
+                "example": "kullanici@ornek.com"
+            }
+        }
+    },
+    "resendButton": "Tekrar Gönder",
+    "checkVerificationButton": "Doğrulamayı Kontrol Et",
+    "accountDeletedPermanently": "Hesabınız kalıcı olarak silindi.",
+    "reauthRequiredMessage": "Güvenlik nedeniyle lütfen yeniden giriş yapın ve ardından hesabı silmeyi tekrar deneyin.",
+    "deleteAccountWarning": "Hesabınızı ve ilişkili verileri kalıcı olarak silmek üzeresiniz. Bu işlem geri alınamaz.",
+    "deleteAccountExportNotice": "Devam etmeden önce önemli verilerinizi dışa aktardığınızdan emin olun.",
+    "deleteAccountConfirmButton": "Hesabımı kalıcı olarak sil"
 }

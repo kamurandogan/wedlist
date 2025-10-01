@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wedlist/core/extensions/l10n_extension.dart';
 import 'package:wedlist/core/router/app_router.dart';
 import 'package:wedlist/core/utils/paddings.dart';
 import 'package:wedlist/core/widgets/custom_filled_button/custom_filled_button.dart';
@@ -23,7 +24,7 @@ class _VerificationPageState extends State<VerificationPage> {
       await user.sendEmailVerification();
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Doğrulama e-postası tekrar gönderildi.')),
+        SnackBar(content: Text(context.loc.verificationEmailResent)),
       );
     }
   }
@@ -41,8 +42,7 @@ class _VerificationPageState extends State<VerificationPage> {
       context.go(AppRoute.main.path);
     } else {
       setState(() {
-        errorText =
-            'E-posta adresiniz henüz doğrulanmadı. Lütfen e-postanızı kontrol edin ve gelen linke tıklayın.';
+        errorText = context.loc.emailNotVerifiedYet;
       });
     }
   }
@@ -57,13 +57,13 @@ class _VerificationPageState extends State<VerificationPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Verification',
+                context.loc.verificationTitle,
                 style: Theme.of(context).textTheme.headlineLarge,
               ),
               Text(
                 _userEmail != null
-                    ? 'Lütfen $_userEmail adresine gönderilen doğrulama linkine tıklayın.'
-                    : 'Please click the verification link sent to your email.',
+                    ? context.loc.verificationInstructionWithEmail(_userEmail!)
+                    : context.loc.verificationInstruction,
                 style: Theme.of(context).textTheme.bodyLarge,
                 textAlign: TextAlign.center,
               ),
@@ -71,7 +71,7 @@ class _VerificationPageState extends State<VerificationPage> {
               if (_userEmail != null)
                 TextButton(
                   onPressed: _resendVerificationEmail,
-                  child: const Text('Tekrar Gönder'),
+                  child: Text(context.loc.resendButton),
                 ),
               const SizedBox(height: 40),
               if (errorText != null)
@@ -83,7 +83,7 @@ class _VerificationPageState extends State<VerificationPage> {
                   ),
                 ),
               CustomFilledButton(
-                text: 'Doğrulamayı Kontrol Et',
+                text: context.loc.checkVerificationButton,
                 onPressed: _validateAndSubmit,
                 size: const Size(double.infinity, 56),
               ),

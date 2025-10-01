@@ -33,6 +33,8 @@ import 'package:wedlist/feature/login/data/repositories/auth_repository_impl.dar
 import 'package:wedlist/feature/login/domain/repositories/auth_repository.dart';
 // Login Feature Imports
 import 'package:wedlist/feature/login/domain/usecases/sign_in.dart';
+import 'package:wedlist/feature/login/domain/usecases/sign_in_with_apple.dart';
+import 'package:wedlist/feature/login/domain/usecases/sign_in_with_google.dart';
 import 'package:wedlist/feature/login/presentation/blocs/auth_bloc.dart';
 import 'package:wedlist/feature/notification/data/datasources/notification_remote_data_source.dart';
 import 'package:wedlist/feature/notification/data/repositories/notification_repository_impl.dart';
@@ -144,6 +146,12 @@ Future<void> init() async {
       () => AuthRepositoryImpl(sl<AuthRemoteDataSource>()),
     )
     ..registerLazySingleton<SignIn>(() => SignIn(sl<AuthRepository>()))
+    ..registerLazySingleton<SignInWithApple>(
+      () => SignInWithApple(sl<AuthRepository>()),
+    )
+    ..registerLazySingleton<SignInWithGoogle>(
+      () => SignInWithGoogle(sl<AuthRepository>()),
+    )
     ..registerLazySingleton<CountryPersistenceService>(
       () => CountryPersistenceService(
         FirebaseFirestore.instance,
@@ -180,7 +188,12 @@ Future<void> init() async {
       ),
     )
     ..registerFactory(
-      () => AuthBloc(sl<SignIn>(), sl<CountryPersistenceService>()),
+      () => AuthBloc(
+        sl<SignIn>(),
+        sl<CountryPersistenceService>(),
+        sl<SignInWithApple>(),
+        sl<SignInWithGoogle>(),
+      ),
     )
     ..registerLazySingleton(() => sharedPreferences)
     // Core

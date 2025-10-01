@@ -20,12 +20,15 @@ class PurchaseService {
   static const String kCollabUnlockIdAndroid = 'com.wedlist.collab_unlock';
 
   // iOS için benzersiz yeni ID'ler (App Store Connect'te bunları oluşturun)
-  static const String kRemoveAdsIdIOS = 'com.kamurandev.wedlist.wedlist.remove_ads';
-  static const String kCollabUnlockIdIOS = 'com.kamurandev.wedlist.wedlist.collab_unlock';
+  static const String kRemoveAdsIdIOS =
+      'com.kamurandev.wedlist.wedlist.remove_ads';
+  static const String kCollabUnlockIdIOS =
+      'com.kamurandev.wedlist.wedlist.collab_unlock';
 
   bool get _isIOS => defaultTargetPlatform == TargetPlatform.iOS;
   String get removeAdsId => _isIOS ? kRemoveAdsIdIOS : kRemoveAdsIdAndroid;
-  String get collabUnlockId => _isIOS ? kCollabUnlockIdIOS : kCollabUnlockIdAndroid;
+  String get collabUnlockId =>
+      _isIOS ? kCollabUnlockIdIOS : kCollabUnlockIdAndroid;
 
   final InAppPurchase _iap = InAppPurchase.instance;
   StreamSubscription<List<PurchaseDetails>>? _sub;

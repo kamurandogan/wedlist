@@ -251,4 +251,72 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get supportAndHelpTitle => 'Support & Help';
+
+  @override
+  String get loginTitle => 'Inloggen';
+
+  @override
+  String get signInButtonText => 'Inloggen';
+
+  @override
+  String get dontHaveAccount => 'Nog geen account?';
+
+  @override
+  String get registerHere => 'Registreer hier';
+
+  @override
+  String get signInWithApple => 'Inloggen met Apple';
+
+  @override
+  String get signInWithGoogle => 'Inloggen met Google';
+
+  @override
+  String get loginRequiredForSection => 'Log in om deze sectie te bekijken.';
+
+  @override
+  String get loginRequiredForWishlist =>
+      'Log in om je verlanglijst te bekijken.';
+
+  @override
+  String get verificationEmailResent => 'Verificatie-e-mail opnieuw verzonden.';
+
+  @override
+  String get emailNotVerifiedYet =>
+      'Je e-mailadres is nog niet geverifieerd. Controleer je inbox en klik op de link.';
+
+  @override
+  String get verificationTitle => 'Verificatie';
+
+  @override
+  String get verificationInstruction =>
+      'Klik op de verificatielink die naar je e-mail is verzonden.';
+
+  @override
+  String verificationInstructionWithEmail(String email) {
+    return 'Klik op de verificatielink die naar $email is verzonden.';
+  }
+
+  @override
+  String get resendButton => 'Opnieuw verzenden';
+
+  @override
+  String get checkVerificationButton => 'Verificatie controleren';
+
+  @override
+  String get accountDeletedPermanently => 'Je account is permanent verwijderd.';
+
+  @override
+  String get reauthRequiredMessage =>
+      'Log om veiligheidsredenen opnieuw in en probeer vervolgens je account te verwijderen.';
+
+  @override
+  String get deleteAccountWarning =>
+      'Je staat op het punt je account en bijbehorende gegevens permanent te verwijderen. Deze actie kan niet ongedaan worden gemaakt.';
+
+  @override
+  String get deleteAccountExportNotice =>
+      'Zorg ervoor dat je belangrijke gegevens exporteert voordat je doorgaat.';
+
+  @override
+  String get deleteAccountConfirmButton => 'Mijn account permanent verwijderen';
 }

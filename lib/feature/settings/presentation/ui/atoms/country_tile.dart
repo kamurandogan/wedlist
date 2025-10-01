@@ -85,12 +85,12 @@ class CountryTile extends StatelessWidget {
       await cubit.change(code);
       if (!ctx.mounted) return; // async gap sonrası context kontrolü
       ScaffoldMessenger.of(ctx).showSnackBar(
-        SnackBar(content: Text('Ülke güncellendi: $code')),
+        SnackBar(content: Text('${ctx.loc.changeCountry}: $code')),
       );
     } on Exception catch (e) {
       if (!ctx.mounted) return;
       ScaffoldMessenger.of(ctx).showSnackBar(
-        SnackBar(content: Text('Güncelleme hatası: $e')),
+        SnackBar(content: Text('${ctx.loc.errorPrefix} $e')),
       );
     } finally {
       if (ctx.mounted) {
