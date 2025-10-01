@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "835425852476-4ant65t2dcald209b0h3en4nevpmvha7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kamurandev.wedlist.wedlist",
+            "certificate_hash": "8ac204d7af4b9714cac3e8c23fa609dd8c47e645"
+          }
+        },
+        {
           "client_id": "835425852476-ve3ccgjiqb69k9shm67h4g0euae6iqme.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
