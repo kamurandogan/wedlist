@@ -40,15 +40,17 @@
               "client_type": 3
             },
             {
-              "client_id": "835425852476-p7dc5ghk5tt5tmq3fp4edmplmn35nm5u.apps.googleusercontent.com",
+              "client_id": "835425852476-jqu8kcsr64k9167ua0tfil7oogre6714.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.kamurandev.wedlist.wedlist"
+                "bundle_id": "com.kamurandev.wedlist.wedlist",
+                "app_store_id": "6752911302"
               }
             }
           ]
         }
-      }
+      },
+      "admob_app_id": "ca-app-pub-4956813096612262~8250787154"
     }
   ],
   "configuration_version": "1"
