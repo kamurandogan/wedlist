@@ -21,9 +21,10 @@ class RegisterPage extends StatelessWidget {
           ).showSnackBar(SnackBar(content: Text(state.message)));
         }
       },
-      child: const RegisterTemplate(
+      child: RegisterTemplate(
         title: 'Register Page',
-        child: RegisterForm(),
+        onBack: () => context.go(AppRoute.login.path),
+        child: const RegisterForm(),
       ),
     );
   }

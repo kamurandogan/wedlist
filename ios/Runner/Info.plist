@@ -54,6 +54,10 @@
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-4956813096612262~3677288766</string>
 
+	<!-- Google Sign-In client identifier -->
+	<key>GIDClientID</key>
+	<string>835425852476-jqu8kcsr64k9167ua0tfil7oogre6714.apps.googleusercontent.com</string>
+
 	<!-- Photo Library permissions for image picking (required by App Store review) -->
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We need access to your photo library to let you pick photos.</string>

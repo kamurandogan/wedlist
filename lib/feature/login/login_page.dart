@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -102,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                 },
               ),
               const SizedBox(height: 16),
-              // if (Platform.isIOS)
+              if (Platform.isIOS)
               const SignInWithAppleButton(),
               const SizedBox(height: 12),
               const SignUpWithGoogleButton(),
