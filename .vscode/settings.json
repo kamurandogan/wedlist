@@ -1,31 +1,32 @@
 {
-  // Kaydederken otomatik format
-  "editor.formatOnSave": true,
+  // Analiz server’dan daha fazla bilgi gelsin
+  "dart.analysisServer.enableNotifications": true,
+  // pubspec değişince otomatik pub get çalıştır
+  "dart.runPubGetOnPubspecChanges": true,
+  // Hangi lint kuralı uyarı veriyor görünsün
+  "dart.showLintNames": true,
   // Lint + import düzenleme
   "editor.codeActionsOnSave": {
+    "source.dcm.fixAll": "explicit",
     "source.fixAll": "explicit",
     "source.organizeImports": "explicit"
   },
-  // Hangi lint kuralı uyarı veriyor görünsün
-  "dart.showLintNames": true,
-  // pubspec değişince otomatik pub get çalıştır
-  "dart.runPubGetOnPubspecChanges": true,
-  // Analiz server’dan daha fazla bilgi gelsin
-  "dart.analysisServer.enableNotifications": true,
+  // Kaydederken otomatik format
+  "editor.formatOnSave": true,
+  // Inline öneriler (örneğin Copilot tarzı)
+  "editor.inlineSuggest.enabled": true,
+  // Fonksiyon parametre ipuçları
+  "editor.parameterHints.enabled": true,
   // Kod yazarken string içinde bile öneri çıksın
   "editor.quickSuggestions": {
     "strings": true
   },
   // Snippet önerileri otomatik tamamlama engellemesin
   "editor.suggest.snippetsPreventQuickSuggestions": false,
-  // Fonksiyon parametre ipuçları
-  "editor.parameterHints.enabled": true,
-  // Inline öneriler (örneğin Copilot tarzı)
-  "editor.inlineSuggest.enabled": true,
   // Dosya sonunda newline olsun (clean code için)
   "files.insertFinalNewline": true,
   // Satır sonu boşlukları sil
-  "files.trimTrailingWhitespace": true,
+  "files.trimTrailingWhitespace": true
   // Otomatik kaydet (1.5 sn sonra)
   // "files.autoSave": "afterDelay",
   // "files.autoSaveDelay": 1500

@@ -10,25 +10,12 @@ class SignInWithAppleButton extends StatelessWidget {
       child: SizedBox(
         width: double.infinity,
         height: 50,
-        child: OutlinedButton(
-          style: OutlinedButton.styleFrom(
-            backgroundColor: Colors.white,
-            side: BorderSide(color: Colors.grey.shade300),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(0),
-            ),
-          ),
+        child: apple.SignInWithAppleButton(
+          style: apple.SignInWithAppleButtonStyle.white,
+          borderRadius: const BorderRadius.all(Radius.circular(0)),
           onPressed: () {
             context.read<AuthBloc>().add(SignInWithAppleRequested());
           },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(Icons.apple, color: AppColors.textColor),
-              const SizedBox(width: 12),
-              Text(context.loc.signInWithApple),
-            ],
-          ),
         ),
       ),
     );

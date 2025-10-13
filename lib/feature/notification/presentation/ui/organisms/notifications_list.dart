@@ -53,7 +53,7 @@ class NotificationsList extends StatelessWidget {
           title: computedTitle,
           subtitle: '$displayBody • $when',
           unread: !n.read,
-          onTap: () {},
+          // onTap: () {},
         );
       },
     );

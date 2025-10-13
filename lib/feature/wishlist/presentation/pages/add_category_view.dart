@@ -1,3 +1,5 @@
+// ignore_for_file: no-empty-block
+
 import 'package:flutter/material.dart';
 import 'package:wedlist/core/extensions/l10n_extension.dart';
 import 'package:wedlist/core/utils/paddings.dart';

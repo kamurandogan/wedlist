@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart' as apple;
 import 'package:wedlist/core/extensions/l10n_extension.dart';
 import 'package:wedlist/core/router/app_router.dart';
 import 'package:wedlist/core/utils/colors.dart';
@@ -104,8 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                 },
               ),
               const SizedBox(height: 16),
-              if (Platform.isIOS)
-              const SignInWithAppleButton(),
+              if (Platform.isIOS) const SignInWithAppleButton(),
               const SizedBox(height: 12),
               const SignUpWithGoogleButton(),
             ],

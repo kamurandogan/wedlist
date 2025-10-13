@@ -37,7 +37,7 @@ class _BarChart extends StatelessWidget {
         borderData: FlBorderData(show: false),
         titlesData: _titlesData(context, data),
         barTouchData: const BarTouchData(enabled: false),
-        barGroups: _barGroups(context, data, maxY),
+        barGroups: _barGroups(context, data),
       ),
     );
   }
@@ -76,7 +76,7 @@ class _BarChart extends StatelessWidget {
   List<BarChartGroupData> _barGroups(
     BuildContext context,
     List<CategorySpending> data,
-    double maxY,
+    // double maxY,
   ) {
     final primary = Theme.of(context).colorScheme.primary;
     final secondary = Theme.of(context).colorScheme.secondary;

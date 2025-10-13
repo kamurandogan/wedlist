@@ -21,5 +21,6 @@ class ChartPalette {
   ];
 
   /// Returns a palette that can be adapted in future for dark/light.
+  // ignore: avoid-unused-parameters
   static List<Color> adaptive(BuildContext context) => pastel;
 }

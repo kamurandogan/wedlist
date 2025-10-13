@@ -30,7 +30,9 @@ class RegisterTemplate extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     child: IconButton(
                       icon: const Icon(Icons.arrow_back),
-                      tooltip: MaterialLocalizations.of(context).backButtonTooltip,
+                      tooltip: MaterialLocalizations.of(
+                        context,
+                      ).backButtonTooltip,
                       onPressed: onBack,
                     ),
                   ),
