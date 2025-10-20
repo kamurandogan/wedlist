@@ -12,7 +12,7 @@ class SignInWithAppleButton extends StatelessWidget {
         height: 50,
         child: apple.SignInWithAppleButton(
           style: apple.SignInWithAppleButtonStyle.white,
-          borderRadius: const BorderRadius.all(Radius.circular(0)),
+          borderRadius: BorderRadius.zero,
           onPressed: () {
             context.read<AuthBloc>().add(SignInWithAppleRequested());
           },

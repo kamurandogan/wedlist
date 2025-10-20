@@ -9,10 +9,56 @@
 				"analyze"
 			],
 			"isBackground": false,
-			"problemMatcher": [
-				"$dart"
-			],
+			"problemMatcher": [],
 			"group": "build"
+		},
+		{
+			"label": "flutter_test_coverage",
+			"type": "shell",
+			"command": "flutter",
+			"args": [
+				"test",
+				"--coverage"
+			],
+			"isBackground": false,
+			"group": {
+				"kind": "test",
+				"isDefault": true
+			},
+			"presentation": {
+				"reveal": "always",
+				"panel": "new"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "dcm_analyze",
+			"type": "shell",
+			"command": "dcm",
+			"args": [
+				"analyze",
+				"lib"
+			],
+			"isBackground": false,
+			"group": "test",
+			"presentation": {
+				"reveal": "always"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "dcm_fix",
+			"type": "shell",
+			"command": "dcm",
+			"args": [
+				"fix",
+				"lib"
+			],
+			"isBackground": false,
+			"group": "build",
+			"presentation": {
+				"reveal": "always"
+			}
 		}
 	]
 }

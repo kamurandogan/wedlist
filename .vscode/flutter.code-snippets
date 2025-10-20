@@ -1,0 +1,83 @@
+{
+  // Flutter Widget Snippets - WedList özelleştirilmiş
+  "BLoC State Listener": {
+    "prefix": "bloclisten",
+    "body": [
+      "BlocListener<${1:Cubit}, ${2:State}>(",
+      "  listener: (context, state) {",
+      "    $3",
+      "  },",
+      "  child: $4,",
+      ")"
+    ],
+    "description": "BlocListener widget"
+  },
+  "BLoC Builder": {
+    "prefix": "blocbuild",
+    "body": [
+      "BlocBuilder<${1:Cubit}, ${2:State}>(",
+      "  builder: (context, state) {",
+      "    return $3;",
+      "  },",
+      ")"
+    ],
+    "description": "BlocBuilder widget"
+  },
+  "Cubit Class": {
+    "prefix": "newcubit",
+    "body": [
+      "import 'package:bloc/bloc.dart';",
+      "import 'package:equatable/equatable.dart';",
+      "",
+      "part '${1:name}_state.dart';",
+      "",
+      "class ${2:Name}Cubit extends Cubit<${2}State> {",
+      "  ${2}Cubit() : super(${2}Initial());",
+      "",
+      "  $3",
+      "}"
+    ],
+    "description": "Create new Cubit class"
+  },
+  "GetIt Register Factory": {
+    "prefix": "getitfactory",
+    "body": [
+      "sl.registerFactory<${1:Type}>(",
+      "  () => ${1}($2),",
+      ");"
+    ],
+    "description": "Register GetIt factory"
+  },
+  "GetIt Register Singleton": {
+    "prefix": "getitsingleton",
+    "body": [
+      "sl.registerLazySingleton<${1:Type}>(",
+      "  () => ${1}($2),",
+      ");"
+    ],
+    "description": "Register GetIt lazy singleton"
+  },
+  "Localization String": {
+    "prefix": "l10n",
+    "body": [
+      "context.l10n.${1:key}"
+    ],
+    "description": "Access localized string"
+  },
+  "Firestore Collection Reference": {
+    "prefix": "firecoll",
+    "body": [
+      "FirebaseFirestore.instance.collection('${1:collectionName}')"
+    ],
+    "description": "Firestore collection reference"
+  },
+  "Firestore Document Reference": {
+    "prefix": "firedoc",
+    "body": [
+      "FirebaseFirestore.instance",
+      "  .collection('${1:collectionName}')",
+      "  .doc('${2:docId}')"
+    ],
+    "description": "Firestore document reference"
+  }
+}

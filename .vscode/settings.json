@@ -1,33 +1,99 @@
 {
-  // Analiz server’dan daha fazla bilgi gelsin
-  "dart.analysisServer.enableNotifications": true,
-  // pubspec değişince otomatik pub get çalıştır
-  "dart.runPubGetOnPubspecChanges": true,
-  // Hangi lint kuralı uyarı veriyor görünsün
-  "dart.showLintNames": true,
-  // Lint + import düzenleme
-  "editor.codeActionsOnSave": {
-    "source.dcm.fixAll": "explicit",
-    "source.fixAll": "explicit",
-    "source.organizeImports": "explicit"
+  // === Copilot ===
+  "github.copilot.chat.experimental": true,
+  "github.copilot.chat.enabled": true,
+  // === Copilot Tools & MCP ===
+  "github.copilot.chat.tools": {
+    "builtIn": [
+      "edit",
+      "search",
+      "runCommands",
+      "todos",
+      "problems"
+    ],
+    "extensions": [
+      "dart",
+      "python",
+      "localizely.flutter-intl",
+      "google.arb-editor",
+      "toba.vsfire",
+      "felixangelov.bloc",
+      "usernamehw.errorlens",
+      "ryanluker.vscode-coverage-gutters"
+    ],
+    "mcpServers": [
+      "DCM MCP Server",
+      "github/github-mcp-server",
+      "pylance mcp server"
+    ]
   },
-  // Kaydederken otomatik format
+  // === DCM ===
+  "dcm.configPath": "pubspec.yaml",
+  "dcm.enableAnalysis": true,
+  "dcm.enableAutoDocumentation": true, // otomatik dokümantasyon önerilerini açar
+  // === Dart ve Flutter ===
+  "dart.analysisServer.launchArgs": [
+    "--client-id=VSCode",
+    "--client-version=3.32.0"
+  ],
+  "dart.flutterHotReloadOnSave": "manual",
+  "dart.debugExternalLibraries": false,
+  "dart.debugSdkLibraries": false,
+  "dart.showTodos": true,
+  "dart.lineLength": 100,
+  "dart.enableSdkFormatter": true,
+  "dart.previewFlutterUiGuides": true, // Widget sınırlarını gösterir
+  "dart.renameFilesWithClasses": "prompt", // sınıf adını değiştirince dosya adını da önerir
+  // === Format & Lint ===
   "editor.formatOnSave": true,
-  // Inline öneriler (örneğin Copilot tarzı)
-  "editor.inlineSuggest.enabled": true,
-  // Fonksiyon parametre ipuçları
-  "editor.parameterHints.enabled": true,
-  // Kod yazarken string içinde bile öneri çıksın
-  "editor.quickSuggestions": {
-    "strings": true
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
   },
-  // Snippet önerileri otomatik tamamlama engellemesin
-  "editor.suggest.snippetsPreventQuickSuggestions": false,
-  // Dosya sonunda newline olsun (clean code için)
-  "files.insertFinalNewline": true,
-  // Satır sonu boşlukları sil
-  "files.trimTrailingWhitespace": true
-  // Otomatik kaydet (1.5 sn sonra)
-  // "files.autoSave": "afterDelay",
-  // "files.autoSaveDelay": 1500
+  "editor.defaultFormatter": "Dart-Code.dart-code", // Dart formatlayıcısını sabitler
+  "files.exclude": {
+    "**/.dart_tool": true,
+    "**/.idea": true,
+    "**/.vscode": true,
+    "**/build": true
+  },
+  "search.exclude": {
+    "**/.dart_tool": true,
+    "**/build": true
+  },
+  // === Python (opsiyonel ama backend için iyi olur) ===
+  "python.analysis.typeCheckingMode": "basic",
+  "python.languageServer": "Pylance",
+  "python.analysis.autoImportCompletions": true, // import önerilerini açar
+  // === Firebase ===
+  "files.associations": {
+    "*.rules": "firebase-rules",
+    "firestore.rules": "firebase-rules",
+    "storage.rules": "firebase-rules"
+  },
+  // === Flutter Intl / Localization ===
+  "flutter-intl.arb-dir": "lib/l10n",
+  "flutter-intl.main-locale": "en",
+  // === Error Lens (Inline Hata Gösterimi) ===
+  "errorLens.enabled": true,
+  "errorLens.enabledDiagnosticLevels": ["error", "warning", "info"],
+  "errorLens.followCursor": "closestProblem",
+  // === Coverage Gutters (Test Coverage) ===
+  "coverage-gutters.showGutterCoverage": true,
+  "coverage-gutters.showLineCoverage": true,
+  "coverage-gutters.coverageFileNames": ["lcov.info", "coverage/lcov.info"],
+  // === Flutter Testing ===
+  "dart.flutterTestAdditionalArgs": [
+    "--coverage"
+  ],
+  // === Terminal & Git ===
+  "terminal.integrated.defaultProfile.linux": "bash",
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
+  "git.enableSmartCommit": true,
+  "git.autofetch": true,
+  // === Genel ===
+  "workbench.startupEditor": "none",
+  "explorer.confirmDragAndDrop": false,
+  "editor.minimap.enabled": false,
+  "editor.tabSize": 2,
+  "window.zoomLevel": 0
 }
