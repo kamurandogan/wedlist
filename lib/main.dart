@@ -1,8 +1,13 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:wedlist/core/logging/app_logger.dart';
 import 'package:wedlist/core/observers/app_bloc_observer.dart';
 import 'package:wedlist/core/router/app_router.dart';
 import 'package:wedlist/core/services/ads_service.dart';
@@ -24,13 +29,23 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  // Initialize Firebase Crashlytics
+  if (!kDebugMode) {
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+    PlatformDispatcher.instance.onError = (error, stack) {
+      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+      return true;
+    };
+  }
+
   // Firestore offline persistence ve cache boyutu ayarı (gerekirse artırılabilir)
   try {
     FirebaseFirestore.instance.settings = const Settings(
       persistenceEnabled: true,
     );
-  } on Exception {
-    // ignore
+  } on Exception catch (e) {
+    AppLogger.warning('Failed to set Firestore settings', e);
   }
   // Global Bloc gözlemcisi (debug transition & error log)
   Bloc.observer = AppBlocObserver();
@@ -38,8 +53,8 @@ Future<void> main() async {
   // Reklamları başlat (bloklamayan ön ısınma)
   try {
     await sl<AdsService>().init();
-  } on Exception {
-    // reklam init hatasını yoksay
+  } on Exception catch (e, stackTrace) {
+    AppLogger.warning('Ads initialization failed', e, stackTrace);
   }
   // Kullanıcı giriş yaptıysa, wishlist başlangıç verilerini hazırla
   try {
@@ -52,8 +67,8 @@ Future<void> main() async {
       sl<UserService>().cleanUpAsymmetricCollaborators(),
       sl<UserService>().ensureUserItemsSymmetric(),
     ]);
-  } on Exception {
-    // Best-effort başlangıç
+  } on Exception catch (e, stackTrace) {
+    AppLogger.error('User service initialization failed', e, stackTrace);
   }
 
   runApp(
