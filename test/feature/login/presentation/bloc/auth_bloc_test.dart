@@ -55,10 +55,12 @@ void main() {
       blocTest<AuthBloc, AuthState>(
         'emits [AuthLoading, AuthSuccess] when sign in is successful',
         build: () {
-          when(() => mockSignIn(tEmail, tPassword))
-              .thenAnswer((_) async => tUser);
-          when(() => mockCountryService.syncSelectedCountryIfAny())
-              .thenAnswer((_) async => {});
+          when(
+            () => mockSignIn(tEmail, tPassword),
+          ).thenAnswer((_) async => tUser);
+          when(
+            () => mockCountryService.syncSelectedCountryIfAny(),
+          ).thenAnswer((_) async => {});
           return authBloc;
         },
         act: (bloc) => bloc.add(SignInRequested(tEmail, tPassword)),
@@ -68,16 +70,16 @@ void main() {
         ],
         verify: (_) {
           verify(() => mockSignIn(tEmail, tPassword)).called(1);
-          verify(() => mockCountryService.syncSelectedCountryIfAny())
-              .called(1);
+          verify(() => mockCountryService.syncSelectedCountryIfAny()).called(1);
         },
       );
 
       blocTest<AuthBloc, AuthState>(
         'emits [AuthLoading, AuthFailure] when sign in returns null',
         build: () {
-          when(() => mockSignIn(tEmail, tPassword))
-              .thenAnswer((_) async => null);
+          when(
+            () => mockSignIn(tEmail, tPassword),
+          ).thenAnswer((_) async => null);
           return authBloc;
         },
         act: (bloc) => bloc.add(SignInRequested(tEmail, tPassword)),
@@ -98,8 +100,9 @@ void main() {
       blocTest<AuthBloc, AuthState>(
         'emits [AuthLoading, AuthFailure] when exception occurs',
         build: () {
-          when(() => mockSignIn(tEmail, tPassword))
-              .thenThrow(Exception('Network error'));
+          when(
+            () => mockSignIn(tEmail, tPassword),
+          ).thenThrow(Exception('Network error'));
           return authBloc;
         },
         act: (bloc) => bloc.add(SignInRequested(tEmail, tPassword)),
@@ -116,8 +119,9 @@ void main() {
       blocTest<AuthBloc, AuthState>(
         'emits [AuthLoading, AuthFailure] with cleaned error message',
         build: () {
-          when(() => mockSignIn(tEmail, tPassword))
-              .thenThrow(Exception('Invalid credentials'));
+          when(
+            () => mockSignIn(tEmail, tPassword),
+          ).thenThrow(Exception('Invalid credentials'));
           return authBloc;
         },
         act: (bloc) => bloc.add(SignInRequested(tEmail, tPassword)),
@@ -134,10 +138,12 @@ void main() {
       blocTest<AuthBloc, AuthState>(
         'emits [AuthLoading, AuthFailure] when country sync fails but sign in succeeds',
         build: () {
-          when(() => mockSignIn(tEmail, tPassword))
-              .thenAnswer((_) async => tUser);
-          when(() => mockCountryService.syncSelectedCountryIfAny())
-              .thenThrow(Exception('Country sync failed'));
+          when(
+            () => mockSignIn(tEmail, tPassword),
+          ).thenAnswer((_) async => tUser);
+          when(
+            () => mockCountryService.syncSelectedCountryIfAny(),
+          ).thenThrow(Exception('Country sync failed'));
           return authBloc;
         },
         act: (bloc) => bloc.add(SignInRequested(tEmail, tPassword)),
@@ -158,9 +164,12 @@ void main() {
       blocTest<AuthBloc, AuthState>(
         'emits [AuthLoading, AuthSuccess] when Google sign in is successful',
         build: () {
-          when(() => mockSignInWithGoogle()).thenAnswer((_) async => tGoogleUser);
-          when(() => mockCountryService.syncSelectedCountryIfAny())
-              .thenAnswer((_) async => {});
+          when(
+            () => mockSignInWithGoogle(),
+          ).thenAnswer((_) async => tGoogleUser);
+          when(
+            () => mockCountryService.syncSelectedCountryIfAny(),
+          ).thenAnswer((_) async => {});
           return authBloc;
         },
         act: (bloc) => bloc.add(SignInWithGoogleRequested()),
@@ -170,8 +179,7 @@ void main() {
         ],
         verify: (_) {
           verify(() => mockSignInWithGoogle()).called(1);
-          verify(() => mockCountryService.syncSelectedCountryIfAny())
-              .called(1);
+          verify(() => mockCountryService.syncSelectedCountryIfAny()).called(1);
         },
       );
 
@@ -195,8 +203,9 @@ void main() {
       blocTest<AuthBloc, AuthState>(
         'emits [AuthLoading, AuthFailure] when Google sign in throws exception',
         build: () {
-          when(() => mockSignInWithGoogle())
-              .thenThrow(Exception('Google sign in cancelled'));
+          when(
+            () => mockSignInWithGoogle(),
+          ).thenThrow(Exception('Google sign in cancelled'));
           return authBloc;
         },
         act: (bloc) => bloc.add(SignInWithGoogleRequested()),
@@ -218,8 +227,9 @@ void main() {
         'emits [AuthLoading, AuthSuccess] when Apple sign in is successful',
         build: () {
           when(() => mockSignInWithApple()).thenAnswer((_) async => tAppleUser);
-          when(() => mockCountryService.syncSelectedCountryIfAny())
-              .thenAnswer((_) async => {});
+          when(
+            () => mockCountryService.syncSelectedCountryIfAny(),
+          ).thenAnswer((_) async => {});
           return authBloc;
         },
         act: (bloc) => bloc.add(SignInWithAppleRequested()),
@@ -229,8 +239,7 @@ void main() {
         ],
         verify: (_) {
           verify(() => mockSignInWithApple()).called(1);
-          verify(() => mockCountryService.syncSelectedCountryIfAny())
-              .called(1);
+          verify(() => mockCountryService.syncSelectedCountryIfAny()).called(1);
         },
       );
 
@@ -254,8 +263,9 @@ void main() {
       blocTest<AuthBloc, AuthState>(
         'emits [AuthLoading, AuthFailure] when Apple sign in throws exception',
         build: () {
-          when(() => mockSignInWithApple())
-              .thenThrow(Exception('Apple sign in failed'));
+          when(
+            () => mockSignInWithApple(),
+          ).thenThrow(Exception('Apple sign in failed'));
           return authBloc;
         },
         act: (bloc) => bloc.add(SignInWithAppleRequested()),
@@ -274,10 +284,12 @@ void main() {
       blocTest<AuthBloc, AuthState>(
         'handles multiple rapid sign in requests correctly',
         build: () {
-          when(() => mockSignIn(tEmail, tPassword))
-              .thenAnswer((_) async => tUser);
-          when(() => mockCountryService.syncSelectedCountryIfAny())
-              .thenAnswer((_) async => {});
+          when(
+            () => mockSignIn(tEmail, tPassword),
+          ).thenAnswer((_) async => tUser);
+          when(
+            () => mockCountryService.syncSelectedCountryIfAny(),
+          ).thenAnswer((_) async => {});
           return authBloc;
         },
         act: (bloc) => bloc
@@ -294,8 +306,9 @@ void main() {
       blocTest<AuthBloc, AuthState>(
         'handles empty email gracefully',
         build: () {
-          when(() => mockSignIn('', tPassword))
-              .thenThrow(Exception('Email cannot be empty'));
+          when(
+            () => mockSignIn('', tPassword),
+          ).thenThrow(Exception('Email cannot be empty'));
           return authBloc;
         },
         act: (bloc) => bloc.add(SignInRequested('', tPassword)),

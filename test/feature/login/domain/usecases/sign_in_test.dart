@@ -22,8 +22,9 @@ void main() {
 
     test('should return User when sign in is successful', () async {
       // Arrange
-      when(() => mockAuthRepository.signIn(tEmail, tPassword))
-          .thenAnswer((_) async => tUser);
+      when(
+        () => mockAuthRepository.signIn(tEmail, tPassword),
+      ).thenAnswer((_) async => tUser);
 
       // Act
       final result = await useCase(tEmail, tPassword);
@@ -36,8 +37,9 @@ void main() {
 
     test('should return null when sign in fails', () async {
       // Arrange
-      when(() => mockAuthRepository.signIn(tEmail, tPassword))
-          .thenAnswer((_) async => null);
+      when(
+        () => mockAuthRepository.signIn(tEmail, tPassword),
+      ).thenAnswer((_) async => null);
 
       // Act
       final result = await useCase(tEmail, tPassword);
@@ -49,8 +51,9 @@ void main() {
 
     test('should throw exception when repository throws', () async {
       // Arrange
-      when(() => mockAuthRepository.signIn(tEmail, tPassword))
-          .thenThrow(Exception('Network error'));
+      when(
+        () => mockAuthRepository.signIn(tEmail, tPassword),
+      ).thenThrow(Exception('Network error'));
 
       // Act & Assert
       expect(
@@ -63,8 +66,9 @@ void main() {
     test('should handle empty email', () async {
       // Arrange
       const emptyEmail = '';
-      when(() => mockAuthRepository.signIn(emptyEmail, tPassword))
-          .thenThrow(Exception('Email cannot be empty'));
+      when(
+        () => mockAuthRepository.signIn(emptyEmail, tPassword),
+      ).thenThrow(Exception('Email cannot be empty'));
 
       // Act & Assert
       expect(
@@ -76,8 +80,9 @@ void main() {
     test('should handle empty password', () async {
       // Arrange
       const emptyPassword = '';
-      when(() => mockAuthRepository.signIn(tEmail, emptyPassword))
-          .thenThrow(Exception('Password cannot be empty'));
+      when(
+        () => mockAuthRepository.signIn(tEmail, emptyPassword),
+      ).thenThrow(Exception('Password cannot be empty'));
 
       // Act & Assert
       expect(

@@ -20,8 +20,9 @@ void main() {
 
     test('should return User when Apple sign in is successful', () async {
       // Arrange
-      when(() => mockAuthRepository.signInWithApple())
-          .thenAnswer((_) async => tUser);
+      when(
+        () => mockAuthRepository.signInWithApple(),
+      ).thenAnswer((_) async => tUser);
 
       // Act
       final result = await useCase();
@@ -34,8 +35,9 @@ void main() {
 
     test('should return null when Apple sign in is cancelled', () async {
       // Arrange
-      when(() => mockAuthRepository.signInWithApple())
-          .thenAnswer((_) async => null);
+      when(
+        () => mockAuthRepository.signInWithApple(),
+      ).thenAnswer((_) async => null);
 
       // Act
       final result = await useCase();
@@ -47,8 +49,9 @@ void main() {
 
     test('should throw exception when Apple sign in fails', () async {
       // Arrange
-      when(() => mockAuthRepository.signInWithApple())
-          .thenThrow(Exception('Apple sign in failed'));
+      when(
+        () => mockAuthRepository.signInWithApple(),
+      ).thenThrow(Exception('Apple sign in failed'));
 
       // Act & Assert
       expect(
@@ -60,8 +63,9 @@ void main() {
 
     test('should handle network errors during Apple sign in', () async {
       // Arrange
-      when(() => mockAuthRepository.signInWithApple())
-          .thenThrow(Exception('Network error'));
+      when(
+        () => mockAuthRepository.signInWithApple(),
+      ).thenThrow(Exception('Network error'));
 
       // Act & Assert
       expect(
@@ -78,8 +82,9 @@ void main() {
 
     test('should handle Sign in with Apple not available', () async {
       // Arrange
-      when(() => mockAuthRepository.signInWithApple())
-          .thenThrow(Exception('Sign in with Apple not available'));
+      when(
+        () => mockAuthRepository.signInWithApple(),
+      ).thenThrow(Exception('Sign in with Apple not available'));
 
       // Act & Assert
       expect(
@@ -96,8 +101,9 @@ void main() {
 
     test('should handle authorization error', () async {
       // Arrange
-      when(() => mockAuthRepository.signInWithApple())
-          .thenThrow(Exception('Authorization failed'));
+      when(
+        () => mockAuthRepository.signInWithApple(),
+      ).thenThrow(Exception('Authorization failed'));
 
       // Act & Assert
       expect(

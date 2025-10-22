@@ -20,8 +20,9 @@ void main() {
 
     test('should return User when Google sign in is successful', () async {
       // Arrange
-      when(() => mockAuthRepository.signInWithGoogle())
-          .thenAnswer((_) async => tUser);
+      when(
+        () => mockAuthRepository.signInWithGoogle(),
+      ).thenAnswer((_) async => tUser);
 
       // Act
       final result = await useCase();
@@ -34,8 +35,9 @@ void main() {
 
     test('should return null when Google sign in is cancelled', () async {
       // Arrange
-      when(() => mockAuthRepository.signInWithGoogle())
-          .thenAnswer((_) async => null);
+      when(
+        () => mockAuthRepository.signInWithGoogle(),
+      ).thenAnswer((_) async => null);
 
       // Act
       final result = await useCase();
@@ -47,8 +49,9 @@ void main() {
 
     test('should throw exception when Google sign in fails', () async {
       // Arrange
-      when(() => mockAuthRepository.signInWithGoogle())
-          .thenThrow(Exception('Google sign in failed'));
+      when(
+        () => mockAuthRepository.signInWithGoogle(),
+      ).thenThrow(Exception('Google sign in failed'));
 
       // Act & Assert
       expect(
@@ -60,8 +63,9 @@ void main() {
 
     test('should handle network errors during Google sign in', () async {
       // Arrange
-      when(() => mockAuthRepository.signInWithGoogle())
-          .thenThrow(Exception('Network error'));
+      when(
+        () => mockAuthRepository.signInWithGoogle(),
+      ).thenThrow(Exception('Network error'));
 
       // Act & Assert
       expect(
@@ -78,8 +82,9 @@ void main() {
 
     test('should handle Google Play Services not available', () async {
       // Arrange
-      when(() => mockAuthRepository.signInWithGoogle())
-          .thenThrow(Exception('Google Play Services not available'));
+      when(
+        () => mockAuthRepository.signInWithGoogle(),
+      ).thenThrow(Exception('Google Play Services not available'));
 
       // Act & Assert
       expect(

@@ -37,8 +37,7 @@ void main() {
 
     test('should call repository.register with entity', () async {
       // Arrange
-      when(() => mockRepository.register(any()))
-          .thenAnswer((_) async => {});
+      when(() => mockRepository.register(any())).thenAnswer((_) async => {});
 
       // Act
       await useCase(tEntity);
@@ -50,8 +49,7 @@ void main() {
 
     test('should complete successfully when registration succeeds', () async {
       // Arrange
-      when(() => mockRepository.register(any()))
-          .thenAnswer((_) async => {});
+      when(() => mockRepository.register(any())).thenAnswer((_) async => {});
 
       // Act & Assert
       await expectLater(
@@ -62,8 +60,9 @@ void main() {
 
     test('should throw exception when repository throws', () async {
       // Arrange
-      when(() => mockRepository.register(any()))
-          .thenThrow(Exception('Registration failed'));
+      when(
+        () => mockRepository.register(any()),
+      ).thenThrow(Exception('Registration failed'));
 
       // Act & Assert
       expect(
@@ -75,8 +74,9 @@ void main() {
 
     test('should handle network errors', () async {
       // Arrange
-      when(() => mockRepository.register(any()))
-          .thenThrow(Exception('Network error'));
+      when(
+        () => mockRepository.register(any()),
+      ).thenThrow(Exception('Network error'));
 
       // Act & Assert
       expect(
@@ -93,8 +93,9 @@ void main() {
 
     test('should handle email already exists error', () async {
       // Arrange
-      when(() => mockRepository.register(any()))
-          .thenThrow(Exception('Email already in use'));
+      when(
+        () => mockRepository.register(any()),
+      ).thenThrow(Exception('Email already in use'));
 
       // Act & Assert
       expect(
@@ -111,8 +112,9 @@ void main() {
 
     test('should handle weak password error', () async {
       // Arrange
-      when(() => mockRepository.register(any()))
-          .thenThrow(Exception('Password is too weak'));
+      when(
+        () => mockRepository.register(any()),
+      ).thenThrow(Exception('Password is too weak'));
 
       // Act & Assert
       expect(
@@ -134,8 +136,7 @@ void main() {
         email: 'jane@example.com',
         password: 'password456',
       );
-      when(() => mockRepository.register(any()))
-          .thenAnswer((_) async => {});
+      when(() => mockRepository.register(any())).thenAnswer((_) async => {});
 
       // Act
       await useCase(entityWithoutDate);
@@ -152,8 +153,7 @@ void main() {
         password: 'password789',
         avatarBytes: Uint8List.fromList([1, 2, 3, 4, 5]),
       );
-      when(() => mockRepository.register(any()))
-          .thenAnswer((_) async => {});
+      when(() => mockRepository.register(any())).thenAnswer((_) async => {});
 
       // Act
       await useCase(entityWithAvatar);
