@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:wedlist/feature/login/data/datasources/auth_remote_data_source.dart';
@@ -95,6 +96,13 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         nonce: nonce,
       );
 
+      // Debug logging
+      debugPrint('🍎 Apple Sign In - Got credential');
+      debugPrint(
+        '🍎 Identity Token: ${appleCredential.identityToken != null ? 'Present' : 'NULL'}',
+      );
+      debugPrint('🍎 User: ${appleCredential.userIdentifier}');
+
       final oauthCredential = OAuthProvider('apple.com').credential(
         idToken: appleCredential.identityToken,
         rawNonce: rawNonce,
@@ -148,8 +156,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       }
       throw Exception('Apple ile giriş başarısız: ${e.message}');
     } on FirebaseAuthException catch (e) {
+      debugPrint('🔴 Firebase Auth Error: ${e.code} - ${e.message}');
       throw Exception('Firebase hata: ${e.message}');
     } catch (e) {
+      debugPrint('🔴 Apple Sign In Error: $e');
       throw Exception('Apple ile giriş sırasında bir hata oluştu: $e');
     }
   }

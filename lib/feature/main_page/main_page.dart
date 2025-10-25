@@ -7,7 +7,6 @@ import 'package:wedlist/core/services/ads_service.dart';
 import 'package:wedlist/core/services/purchase_service.dart';
 import 'package:wedlist/core/utils/colors.dart';
 import 'package:wedlist/core/utils/paddings.dart';
-import 'package:wedlist/core/widgets/ads/banner_ad_widget.dart';
 import 'package:wedlist/core/widgets/bottom_navigation_bar/custom_bottom_navigation_bar.dart';
 import 'package:wedlist/feature/dowrylist/dowy_view.dart';
 import 'package:wedlist/feature/home/home_page.dart';
@@ -105,15 +104,15 @@ class _MainPageState extends State<MainPage> {
               child: Column(
                 children: [
                   // Banner sadece reklamlar açıksa gösterilir
-                  ValueListenableBuilder<bool>(
-                    valueListenable: sl<PurchaseService>().removeAds,
-                    builder: (context, removed, _) {
-                      if (removed) return const SizedBox(height: 0);
-                      return const BannerAdWidget();
-                    },
-                  ),
-                  const SizedBox(height: 8),
-                  // Aşağıdaki sayfa alanı, bounded (sınırlı) yükseklik için Expanded ile sarmalanır
+                  // ValueListenableBuilder<bool>(
+                  //   valueListenable: sl<PurchaseService>().removeAds,
+                  //   builder: (context, removed, _) {
+                  //     if (removed) return const SizedBox(height: 0);
+                  //     return const BannerAdWidget();
+                  //   },
+                  // ),
+                  // const SizedBox(height: 8),
+                  // // Aşağıdaki sayfa alanı, bounded (sınırlı) yükseklik için Expanded ile sarmalanır
                   Expanded(
                     // NavigationCubit içindeki state'e göre sayfa gösterilir
                     child: _getSelectedPage(state),
