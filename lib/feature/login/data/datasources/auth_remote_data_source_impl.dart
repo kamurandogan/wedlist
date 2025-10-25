@@ -83,73 +83,14 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<UserModel?> signInWithApple() async {
     try {
-      // Create a nonce to protect against replay attacks.
-      final rawNonce = _generateNonce();
-      final nonce = _sha256ofString(rawNonce);
-
-      // Request Apple ID credential.
-      final appleCredential = await SignInWithApple.getAppleIDCredential(
-        scopes: [
-          AppleIDAuthorizationScopes.email,
-          AppleIDAuthorizationScopes.fullName,
-        ],
-        nonce: nonce,
-      );
-
-      // Debug logging
-      debugPrint('🍎 Apple Sign In - Got credential');
-      debugPrint(
-        '🍎 Identity Token: ${appleCredential.identityToken != null ? 'Present' : 'NULL'}',
-      );
-      debugPrint('🍎 User: ${appleCredential.userIdentifier}');
-
-      final oauthCredential = OAuthProvider('apple.com').credential(
-        idToken: appleCredential.identityToken,
-        rawNonce: rawNonce,
-      );
-
-      final userCredential = await FirebaseAuth.instance.signInWithCredential(
-        oauthCredential,
-      );
-      final user = userCredential.user;
-      if (user != null) {
-        // Build candidate name from Apple fullName info or fallback
-        final appleFullName = [
-          appleCredential.givenName,
-          appleCredential.familyName,
-        ].whereType<String>().join(' ').trim();
-        final candidateName = appleFullName.isNotEmpty
-            ? appleFullName
-            : (user.displayName ?? user.email?.split('@').first);
-
-        // Update FirebaseAuth displayName if missing
-        if ((user.displayName == null || user.displayName!.isEmpty) &&
-            candidateName != null &&
-            candidateName.isNotEmpty) {
-          await user.updateDisplayName(candidateName);
-        }
-
-        // Upsert Firestore users/{uid}.name if absent/empty
-        final userRef = FirebaseFirestore.instance
-            .collection('users')
-            .doc(user.uid);
-        final snap = await userRef.get();
-        final currentName = snap.data()?['name'] as String?;
-        if (currentName == null || currentName.trim().isEmpty) {
-          if (candidateName != null && candidateName.isNotEmpty) {
-            await userRef.set(
-              {
-                'name': candidateName,
-                if (user.email != null) 'email': user.email,
-              },
-              SetOptions(merge: true),
-            );
-          }
-        }
-
-        return UserModel(id: user.uid, email: user.email ?? '');
+      // Web uses Firebase popup, native uses sign_in_with_apple package
+      if (kIsWeb) {
+        debugPrint('🍎 Apple Sign In - Web flow');
+        return _signInWithAppleWeb();
+      } else {
+        debugPrint('🍎 Apple Sign In - Native flow');
+        return _signInWithAppleNative();
       }
-      return null;
     } on SignInWithAppleAuthorizationException catch (e) {
       if (e.code == AuthorizationErrorCode.canceled) {
         throw Exception('İşlem iptal edildi.');
@@ -161,6 +102,131 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     } catch (e) {
       debugPrint('🔴 Apple Sign In Error: $e');
       throw Exception('Apple ile giriş sırasında bir hata oluştu: $e');
+    }
+  }
+
+  // Web-specific Apple Sign In using Firebase popup
+  Future<UserModel?> _signInWithAppleWeb() async {
+    final appleProvider = OAuthProvider('apple.com')
+      ..addScope('email')
+      ..addScope('name');
+
+    final userCredential = await FirebaseAuth.instance.signInWithPopup(
+      appleProvider,
+    );
+    final user = userCredential.user;
+
+    if (user != null) {
+      debugPrint('🍎 Web - Signed in: ${user.uid}');
+      await _updateUserProfile(user, userCredential);
+      return UserModel(id: user.uid, email: user.email ?? '');
+    }
+    return null;
+  }
+
+  // Native iOS/macOS Apple Sign In
+  Future<UserModel?> _signInWithAppleNative() async {
+    // Create a nonce to protect against replay attacks.
+    final rawNonce = _generateNonce();
+    final nonce = _sha256ofString(rawNonce);
+
+    // Request Apple ID credential.
+    final appleCredential = await SignInWithApple.getAppleIDCredential(
+      scopes: [
+        AppleIDAuthorizationScopes.email,
+        AppleIDAuthorizationScopes.fullName,
+      ],
+      nonce: nonce,
+    );
+
+    // Debug logging
+    debugPrint('🍎 Native - Got credential');
+    debugPrint(
+      '🍎 Identity Token: ${appleCredential.identityToken != null ? 'Present' : 'NULL'}',
+    );
+    debugPrint('🍎 User: ${appleCredential.userIdentifier}');
+
+    final oauthCredential = OAuthProvider('apple.com').credential(
+      idToken: appleCredential.identityToken,
+      rawNonce: rawNonce,
+    );
+
+    final userCredential = await FirebaseAuth.instance.signInWithCredential(
+      oauthCredential,
+    );
+    final user = userCredential.user;
+    if (user != null) {
+      // Build candidate name from Apple fullName info or fallback
+      final appleFullName = [
+        appleCredential.givenName,
+        appleCredential.familyName,
+      ].whereType<String>().join(' ').trim();
+      final candidateName = appleFullName.isNotEmpty
+          ? appleFullName
+          : (user.displayName ?? user.email?.split('@').first);
+
+      // Update FirebaseAuth displayName if missing
+      if ((user.displayName == null || user.displayName!.isEmpty) &&
+          candidateName != null &&
+          candidateName.isNotEmpty) {
+        await user.updateDisplayName(candidateName);
+      }
+
+      // Upsert Firestore users/{uid}.name if absent/empty
+      final userRef = FirebaseFirestore.instance
+          .collection('users')
+          .doc(
+            user.uid,
+          );
+      final snap = await userRef.get();
+      final currentName = snap.data()?['name'] as String?;
+      if (currentName == null || currentName.trim().isEmpty) {
+        if (candidateName != null && candidateName.isNotEmpty) {
+          await userRef.set(
+            {
+              'name': candidateName,
+              if (user.email != null) 'email': user.email,
+            },
+            SetOptions(merge: true),
+          );
+        }
+      }
+
+      return UserModel(id: user.uid, email: user.email ?? '');
+    }
+    return null;
+  }
+
+  // Helper method to update user profile in Firestore
+  Future<void> _updateUserProfile(
+    User user,
+    UserCredential _,
+  ) async {
+    final candidateName = user.displayName ?? user.email?.split('@').first;
+
+    // Update FirebaseAuth displayName if missing
+    if ((user.displayName == null || user.displayName!.isEmpty) &&
+        candidateName != null &&
+        candidateName.isNotEmpty) {
+      await user.updateDisplayName(candidateName);
+    }
+
+    // Upsert Firestore users/{uid}
+    final userRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid);
+    final snap = await userRef.get();
+    final currentName = snap.data()?['name'] as String?;
+    if (currentName == null || currentName.trim().isEmpty) {
+      if (candidateName != null && candidateName.isNotEmpty) {
+        await userRef.set(
+          {
+            'name': candidateName,
+            if (user.email != null) 'email': user.email,
+          },
+          SetOptions(merge: true),
+        );
+      }
     }
   }
 
