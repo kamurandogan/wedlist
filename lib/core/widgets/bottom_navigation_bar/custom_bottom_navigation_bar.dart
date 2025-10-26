@@ -9,7 +9,7 @@ import 'package:wedlist/feature/notification/presentation/bloc/notification_bloc
 class CustomBottomNavigationBar extends StatelessWidget {
   const CustomBottomNavigationBar({super.key});
 
-  static const double _barHeight = 80;
+  static const double _barHeight = 100;
   static const double _iconSize = 32;
   static const double _radius = 60;
 
@@ -19,7 +19,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
       child: BlocBuilder<NavigationCubit, SelectedPage>(
         builder: (context, state) {
           return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
             child: SizedBox(
               height: _barHeight,
               child: Card(
@@ -30,7 +30,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(8),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       _navIcon(
                         context,
@@ -73,9 +73,9 @@ class CustomBottomNavigationBar extends StatelessWidget {
                                 context,
                                 icon: HugeIcons.strokeRoundedNotification01,
                                 selected: state == SelectedPage.notification,
-                                onTap: () => context
-                                    .read<NavigationCubit>()
-                                    .changePage(SelectedPage.notification),
+                                onTap: () => context.read<NavigationCubit>().changePage(
+                                  SelectedPage.notification,
+                                ),
                                 tooltip: 'Notification',
                               ),
                               if (unread > 0)
@@ -99,10 +99,9 @@ class CustomBottomNavigationBar extends StatelessWidget {
                                     ),
                                     child: Text(
                                       unread > 99 ? '99+' : '$unread',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelSmall
-                                          ?.copyWith(color: Colors.white),
+                                      style: Theme.of(
+                                        context,
+                                      ).textTheme.labelSmall?.copyWith(color: Colors.white),
                                     ),
                                   ),
                                 ),
@@ -131,19 +130,33 @@ class CustomBottomNavigationBar extends StatelessWidget {
     return Semantics(
       selected: selected,
       label: tooltip,
-      button: true,
-      child: IconButton(
-        onPressed: onTap,
-        tooltip: tooltip,
 
-        icon: HugeIcon(
-          icon: icon,
-          size: _iconSize,
-          color: selected
-              ? Theme.of(context).colorScheme.primary
-              : Theme.of(context).disabledColor,
-        ),
-        splashRadius: 28,
+      button: true,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          IconButton(
+            onPressed: onTap,
+            tooltip: tooltip,
+
+            icon: HugeIcon(
+              icon: icon,
+              size: _iconSize,
+              color: selected
+                  ? Theme.of(context).colorScheme.primary
+                  : Theme.of(context).disabledColor,
+            ),
+            splashRadius: 28,
+          ),
+          Text(
+            tooltip,
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: selected
+                  ? Theme.of(context).colorScheme.primary
+                  : Theme.of(context).disabledColor,
+            ),
+          ),
+        ],
       ),
     );
   }
