@@ -15,9 +15,12 @@ class ProfileService {
   Future<AppUserModel?> loadCurrent() async {
     final uid = _uid;
     if (uid == null) return null;
-    
+
     try {
-      final doc = await _firestore.collection(FirebaseCollections.users).doc(uid).get();
+      final doc = await _firestore
+          .collection(FirebaseCollections.users)
+          .doc(uid)
+          .get();
       if (!doc.exists) return null;
       return AppUserModel.fromJson(doc.data() ?? {}, doc.id);
     } catch (e, s) {
@@ -39,11 +42,11 @@ class ProfileService {
       final data = snap.data() ?? {};
 
       final updates = <String, dynamic>{};
-      
+
       if (data['name'] == null || (data['name'] as String).isEmpty) {
         updates['name'] = user.displayName ?? 'User';
       }
-      
+
       if (data['email'] == null || (data['email'] as String).isEmpty) {
         updates['email'] = user.email ?? 'no-email';
       }

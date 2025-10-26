@@ -7,7 +7,7 @@ import 'package:wedlist/core/services/user/wishlist_initialization_service.dart'
 import 'package:wedlist/core/user/app_user_model.dart';
 
 /// Facade for user-related services.
-/// 
+///
 /// Delegates to specialized services:
 /// - ProfileService: User profile management
 /// - WishlistInitializationService: Wishlist initialization
@@ -17,10 +17,10 @@ class UserService {
   UserService(
     FirebaseFirestore firestore,
     FirebaseAuth auth,
-  )   : _profileService = ProfileService(firestore, auth),
-        _wishlistService = WishlistInitializationService(firestore, auth),
-        _collaborationService = CollaborationService(firestore, auth),
-        _migrationService = DataMigrationService(firestore, auth);
+  ) : _profileService = ProfileService(firestore, auth),
+      _wishlistService = WishlistInitializationService(firestore, auth),
+      _collaborationService = CollaborationService(firestore, auth),
+      _migrationService = DataMigrationService(firestore, auth);
 
   final ProfileService _profileService;
   final WishlistInitializationService _wishlistService;

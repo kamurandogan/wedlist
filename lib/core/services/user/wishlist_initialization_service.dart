@@ -18,23 +18,30 @@ class WishlistInitializationService {
   Future<void> ensureWishListInitialized() async {
     final uid = _uid;
     if (uid == null) return;
-    
+
     try {
       final ref = _firestore.collection(FirebaseCollections.users).doc(uid);
       final snap = await ref.get();
       final user = AppUserModel.fromJson(snap.data() ?? {}, uid);
-      
+
       if (user.wishList.isNotEmpty) return;
-      
+
       final country = await _resolveCountryFromData(snap.data());
-      final base = await _firestore.collection(FirebaseCollections.itemsByCountry(country)).get();
-      
-      final items = base.docs.map((d) => core.ItemModel.fromJson({
-        'id': d.data()['id'] ?? d.id,
-        'title': d.data()['title'],
-        'category': d.data()['category'],
-      })).map((m) => m.toJson()).toList();
-      
+      final base = await _firestore
+          .collection(FirebaseCollections.itemsByCountry(country))
+          .get();
+
+      final items = base.docs
+          .map(
+            (d) => core.ItemModel.fromJson({
+              'id': d.data()['id'] ?? d.id,
+              'title': d.data()['title'],
+              'category': d.data()['category'],
+            }),
+          )
+          .map((m) => m.toJson())
+          .toList();
+
       await ref.set({'wishList': items}, SetOptions(merge: true));
     } catch (e, s) {
       AppLogger.error('Failed to initialize wishlist', e, s);
@@ -44,25 +51,28 @@ class WishlistInitializationService {
   Future<void> mergeWishListWithCollaborators() async {
     final uid = _uid;
     if (uid == null) return;
-    
+
     try {
       final selfRef = _firestore.collection(FirebaseCollections.users).doc(uid);
       final selfSnap = await selfRef.get();
       final selfModel = AppUserModel.fromJson(selfSnap.data() ?? {}, uid);
       final collabIds = selfModel.collaborators;
-      
+
       if (collabIds.isEmpty) return;
-      
+
       String norm(String s) => s.trim().toLowerCase();
       String key(ItemEntity e) => '${norm(e.category)}|${norm(e.title)}';
-      
+
       final byKey = <String, ItemEntity>{
         for (final e in selfModel.wishList) key(e): e,
       };
-      
+
       for (final cid in collabIds) {
         try {
-          final p = await _firestore.collection(FirebaseCollections.users).doc(cid).get();
+          final p = await _firestore
+              .collection(FirebaseCollections.users)
+              .doc(cid)
+              .get();
           final pm = AppUserModel.fromJson(p.data() ?? {}, cid);
           for (final e in pm.wishList) {
             byKey.putIfAbsent(key(e), () => e);
@@ -71,8 +81,10 @@ class WishlistInitializationService {
           // ignore
         }
       }
-      
-      final mergedJson = byKey.values.map((e) => core.ItemModel.fromEntity(e).toJson()).toList();
+
+      final mergedJson = byKey.values
+          .map((e) => core.ItemModel.fromEntity(e).toJson())
+          .toList();
       await selfRef.set({'wishList': mergedJson}, SetOptions(merge: true));
     } catch (e, s) {
       AppLogger.error('Failed to merge wishlist with collaborators', e, s);
@@ -85,11 +97,16 @@ class WishlistInitializationService {
 
     try {
       final selfRef = _firestore.collection(FirebaseCollections.users).doc(uid);
-      final partnerRef = _firestore.collection(FirebaseCollections.users).doc(partnerUid);
+      final partnerRef = _firestore
+          .collection(FirebaseCollections.users)
+          .doc(partnerUid);
       final self = await selfRef.get();
       final partner = await partnerRef.get();
       final selfModel = AppUserModel.fromJson(self.data() ?? {}, uid);
-      final partnerModel = AppUserModel.fromJson(partner.data() ?? {}, partnerUid);
+      final partnerModel = AppUserModel.fromJson(
+        partner.data() ?? {},
+        partnerUid,
+      );
 
       String norm(String s) => s.trim().toLowerCase();
       String key(ItemEntity e) => '${norm(e.category)}|${norm(e.title)}';
@@ -101,7 +118,9 @@ class WishlistInitializationService {
         byKey.putIfAbsent(key(e), () => e);
       }
 
-      final mergedJson = byKey.values.map((e) => core.ItemModel.fromEntity(e).toJson()).toList();
+      final mergedJson = byKey.values
+          .map((e) => core.ItemModel.fromEntity(e).toJson())
+          .toList();
       await selfRef.set({'wishList': mergedJson}, SetOptions(merge: true));
     } catch (e, s) {
       AppLogger.error('Failed to import partner wishlist', e, s);
@@ -117,7 +136,10 @@ class WishlistInitializationService {
       final selfSnap = await users.doc(uid).get();
       final partnerSnap = await users.doc(partnerUid).get();
       final selfModel = AppUserModel.fromJson(selfSnap.data() ?? {}, uid);
-      final partnerModel = AppUserModel.fromJson(partnerSnap.data() ?? {}, partnerUid);
+      final partnerModel = AppUserModel.fromJson(
+        partnerSnap.data() ?? {},
+        partnerUid,
+      );
 
       String norm(String s) => s.trim().toLowerCase();
       String key(ItemEntity e) => '${norm(e.category)}|${norm(e.title)}';
@@ -129,8 +151,12 @@ class WishlistInitializationService {
         byKey.putIfAbsent(key(e), () => e);
       }
 
-      final mergedJson = byKey.values.map((e) => core.ItemModel.fromEntity(e).toJson()).toList();
-      await users.doc(partnerUid).set({'wishList': mergedJson}, SetOptions(merge: true));
+      final mergedJson = byKey.values
+          .map((e) => core.ItemModel.fromEntity(e).toJson())
+          .toList();
+      await users.doc(partnerUid).set({
+        'wishList': mergedJson,
+      }, SetOptions(merge: true));
     } catch (e, s) {
       AppLogger.error('Failed to import self wishlist into partner', e, s);
     }

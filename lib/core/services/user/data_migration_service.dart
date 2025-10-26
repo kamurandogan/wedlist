@@ -17,22 +17,23 @@ class DataMigrationService {
   Future<void> migrateLegacyStringListsIfNeeded() async {
     final uid = _uid;
     if (uid == null) return;
-    
+
     try {
       final ref = _firestore.collection(FirebaseCollections.users).doc(uid);
       final snap = await ref.get();
       if (!snap.exists) return;
-      
+
       final data = snap.data() ?? {};
       final wl = (data['wishList'] as List?) ?? [];
       final rl = (data['receivedList'] as List?) ?? [];
-      
-      bool isStringList(List<dynamic> list) => list.isNotEmpty && list.every((e) => e is String);
-      
+
+      bool isStringList(List<dynamic> list) =>
+          list.isNotEmpty && list.every((e) => e is String);
+
       if (!isStringList(wl) && !isStringList(rl)) return;
-      
+
       final titleMap = await _buildTitleMap(data, uid);
-      
+
       List<Map<String, dynamic>> convert(List<dynamic> list) {
         if (isStringList(list)) {
           final res = <Map<String, dynamic>>[];
@@ -50,10 +51,10 @@ class DataMigrationService {
         }
         return list.whereType<Map<String, dynamic>>().toList();
       }
-      
+
       final newWL = convert(wl);
       final newRL = convert(rl);
-      
+
       await ref.set({
         'wishList': newWL,
         'receivedList': newRL,
@@ -63,11 +64,16 @@ class DataMigrationService {
     }
   }
 
-  Future<Map<String, ItemEntity>> _buildTitleMap(Map<String, dynamic> data, String uid) async {
+  Future<Map<String, ItemEntity>> _buildTitleMap(
+    Map<String, dynamic> data,
+    String uid,
+  ) async {
     final titleMap = <String, ItemEntity>{};
     final country = (data['country'] as String?)?.toUpperCase();
-    final col = country != null && country.isNotEmpty ? 'items_$country' : 'items_US';
-    
+    final col = country != null && country.isNotEmpty
+        ? 'items_$country'
+        : 'items_US';
+
     final base = await _firestore.collection(col).get();
     for (final d in base.docs) {
       final m = core.ItemModel.fromJson({
@@ -78,11 +84,14 @@ class DataMigrationService {
       final e = m.toEntity();
       titleMap[e.title.trim().toLowerCase()] = e;
     }
-    
+
     final meModel = AppUserModel.fromJson(data, uid);
     final owners = {uid, ...meModel.collaborators}.toList();
-    final custom = await _firestore.collection(FirebaseCollections.customItems).where('owners', arrayContainsAny: owners).get();
-    
+    final custom = await _firestore
+        .collection(FirebaseCollections.customItems)
+        .where('owners', arrayContainsAny: owners)
+        .get();
+
     for (final d in custom.docs) {
       final m = core.ItemModel.fromJson({
         'id': d.data()['id'] ?? d.id,
@@ -92,7 +101,7 @@ class DataMigrationService {
       final e = m.toEntity();
       titleMap[e.title.trim().toLowerCase()] = e;
     }
-    
+
     return titleMap;
   }
 }

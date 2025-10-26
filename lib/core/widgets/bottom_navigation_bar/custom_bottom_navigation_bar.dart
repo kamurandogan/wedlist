@@ -77,9 +77,10 @@ class CustomBottomNavigationBar extends StatelessWidget {
                                 context,
                                 icon: HugeIcons.strokeRoundedNotification01,
                                 selected: state == SelectedPage.notification,
-                                onTap: () => context.read<NavigationCubit>().changePage(
-                                  SelectedPage.notification,
-                                ),
+                                onTap: () =>
+                                    context.read<NavigationCubit>().changePage(
+                                      SelectedPage.notification,
+                                    ),
                                 tooltip: context.loc.bottomNavNotification,
                               ),
                               if (unread > 0)
@@ -103,9 +104,12 @@ class CustomBottomNavigationBar extends StatelessWidget {
                                     ),
                                     child: Text(
                                       unread > 99 ? '99+' : '$unread',
-                                      style: Theme.of(
-                                        context,
-                                      ).textTheme.labelSmall?.copyWith(color: Colors.white),
+                                      style:
+                                          Theme.of(
+                                            context,
+                                          ).textTheme.labelSmall?.copyWith(
+                                            color: Colors.white,
+                                          ),
                                     ),
                                   ),
                                 ),
