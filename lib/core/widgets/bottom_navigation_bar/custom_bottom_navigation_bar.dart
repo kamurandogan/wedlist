@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:wedlist/core/utils/colors.dart';
 import 'package:wedlist/feature/main_page/presentation/blocs/cubit/navigation_cubit.dart';
 import 'package:wedlist/feature/notification/presentation/bloc/notification_bloc.dart';
 
@@ -23,7 +24,9 @@ class CustomBottomNavigationBar extends StatelessWidget {
             child: SizedBox(
               height: _barHeight,
               child: Card(
+                color: Colors.white,
                 elevation: 3,
+                shadowColor: Colors.white10,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(_radius),
                 ),
@@ -143,7 +146,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
               icon: icon,
               size: _iconSize,
               color: selected
-                  ? Theme.of(context).colorScheme.primary
+                  ? AppColors.accent
                   : Theme.of(context).disabledColor,
             ),
             splashRadius: 28,
@@ -152,7 +155,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
             tooltip,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color: selected
-                  ? Theme.of(context).colorScheme.primary
+                  ? AppColors.accent
                   : Theme.of(context).disabledColor,
             ),
           ),
