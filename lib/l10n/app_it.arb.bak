@@ -128,9 +128,5 @@
                 "type": "int"
             }
         }
-    },
-    "adOptionFreeLabel": "Gratis",
-    "adOptionPremiumLabel": "Funzionalità premium",
-    "adOptionRecommendedBadge": "CONSIGLIATO",
-    "adLoadingText": "Caricamento annuncio..."
+    }
 }

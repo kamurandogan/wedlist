@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:wedlist/core/extensions/l10n_extension.dart';
 import 'package:wedlist/core/utils/colors.dart';
 import 'package:wedlist/feature/main_page/presentation/blocs/cubit/navigation_cubit.dart';
 import 'package:wedlist/feature/notification/presentation/bloc/notification_bloc.dart';
@@ -43,7 +44,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
                           SelectedPage.home,
                         ),
 
-                        tooltip: 'Home',
+                        tooltip: context.loc.bottomNavHome,
                       ),
                       _navIcon(
                         context,
@@ -52,7 +53,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
                         onTap: () => context.read<NavigationCubit>().changePage(
                           SelectedPage.wishlist,
                         ),
-                        tooltip: 'Wishlist',
+                        tooltip: context.loc.bottomNavWishlist,
                       ),
                       _navIcon(
                         context,
@@ -61,7 +62,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
                         onTap: () => context.read<NavigationCubit>().changePage(
                           SelectedPage.dowryList,
                         ),
-                        tooltip: 'Dowry List',
+                        tooltip: context.loc.bottomNavDowryList,
                       ),
                       BlocBuilder<NotificationBloc, NotificationState>(
                         builder: (context, nstate) {
@@ -79,7 +80,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
                                 onTap: () => context.read<NavigationCubit>().changePage(
                                   SelectedPage.notification,
                                 ),
-                                tooltip: 'Notification',
+                                tooltip: context.loc.bottomNavNotification,
                               ),
                               if (unread > 0)
                                 Positioned(

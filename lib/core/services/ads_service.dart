@@ -290,9 +290,13 @@ class AdsService {
 
   String get _rewardedAdUnitId {
     if (defaultTargetPlatform == TargetPlatform.android) {
-      return AppStrings.admobTestRewardedAndroid;
+      return kDebugMode
+          ? AppStrings.admobTestRewardedAndroid
+          : AppStrings.admobProdRewardedAndroid;
     } else if (defaultTargetPlatform == TargetPlatform.iOS) {
-      return AppStrings.admobTestRewardedIOS; // iOS prod rewarded henüz yok
+      return kDebugMode
+          ? AppStrings.admobTestRewardedIOS
+          : AppStrings.admobProdRewardedIOS;
     }
     return 'test-rewarded';
   }

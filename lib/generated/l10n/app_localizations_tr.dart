@@ -319,4 +319,55 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get deleteAccountConfirmButton => 'Hesabımı kalıcı olarak sil';
+
+  @override
+  String get bottomNavHome => 'Ana Sayfa';
+
+  @override
+  String get bottomNavWishlist => 'Dilek Listesi';
+
+  @override
+  String get bottomNavDowryList => 'Çeyiz Listesi';
+
+  @override
+  String get bottomNavNotification => 'Bildirimler';
+
+  @override
+  String get cancel => 'İptal';
+
+  @override
+  String get itemLimitReachedTitle => 'Item Limiti Doldu';
+
+  @override
+  String itemLimitReachedMessage(int count) {
+    return '$count item eklediniz. Devam etmek için:';
+  }
+
+  @override
+  String get watchAdForItemsButton => 'Reklam İzle (+5 item)';
+
+  @override
+  String get buyRemoveAdsButton => 'Reklamsız Satın Al (Sınırsız)';
+
+  @override
+  String itemsRemainingInfo(int count) {
+    return '$count item hakkınız kaldı';
+  }
+
+  @override
+  String freeItemsRemaining(int count) {
+    return 'Ücretsiz: $count item kaldı';
+  }
+
+  @override
+  String get adOptionFreeLabel => 'Ücretsiz';
+
+  @override
+  String get adOptionPremiumLabel => 'Premium özellikler';
+
+  @override
+  String get adOptionRecommendedBadge => 'ÖNERİLEN';
+
+  @override
+  String get adLoadingText => 'Reklam yükleniyor...';
 }

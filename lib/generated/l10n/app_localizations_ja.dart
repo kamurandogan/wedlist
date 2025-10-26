@@ -306,4 +306,55 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get deleteAccountConfirmButton => 'アカウントを永久に削除';
+
+  @override
+  String get bottomNavHome => 'ホーム';
+
+  @override
+  String get bottomNavWishlist => 'ウィッシュリスト';
+
+  @override
+  String get bottomNavDowryList => '持参金リスト';
+
+  @override
+  String get bottomNavNotification => '通知';
+
+  @override
+  String get cancel => 'キャンセル';
+
+  @override
+  String get itemLimitReachedTitle => 'アイテム制限に達しました';
+
+  @override
+  String itemLimitReachedMessage(int count) {
+    return '$count個のアイテムを追加しました。続行するには:';
+  }
+
+  @override
+  String get watchAdForItemsButton => '広告を見る（+5アイテム）';
+
+  @override
+  String get buyRemoveAdsButton => '広告を削除（無制限）';
+
+  @override
+  String itemsRemainingInfo(int count) {
+    return '残り$countアイテム';
+  }
+
+  @override
+  String freeItemsRemaining(int count) {
+    return '無料：残り$countアイテム';
+  }
+
+  @override
+  String get adOptionFreeLabel => '無料';
+
+  @override
+  String get adOptionPremiumLabel => 'プレミアム機能';
+
+  @override
+  String get adOptionRecommendedBadge => 'おすすめ';
+
+  @override
+  String get adLoadingText => '広告を読み込んでいます...';
 }

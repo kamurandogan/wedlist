@@ -302,4 +302,55 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get deleteAccountConfirmButton => '永久删除我的账号';
+
+  @override
+  String get bottomNavHome => '主页';
+
+  @override
+  String get bottomNavWishlist => '愿望清单';
+
+  @override
+  String get bottomNavDowryList => '嫁妆清单';
+
+  @override
+  String get bottomNavNotification => '通知';
+
+  @override
+  String get cancel => '取消';
+
+  @override
+  String get itemLimitReachedTitle => '已达物品限制';
+
+  @override
+  String itemLimitReachedMessage(int count) {
+    return '您已添加$count个物品。继续操作：';
+  }
+
+  @override
+  String get watchAdForItemsButton => '观看广告（+5个物品）';
+
+  @override
+  String get buyRemoveAdsButton => '移除广告（无限制）';
+
+  @override
+  String itemsRemainingInfo(int count) {
+    return '剩余$count个物品';
+  }
+
+  @override
+  String freeItemsRemaining(int count) {
+    return '免费：剩余$count个物品';
+  }
+
+  @override
+  String get adOptionFreeLabel => '免费';
+
+  @override
+  String get adOptionPremiumLabel => '高级功能';
+
+  @override
+  String get adOptionRecommendedBadge => '推荐';
+
+  @override
+  String get adLoadingText => '加载广告中...';
 }

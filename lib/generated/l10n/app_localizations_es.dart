@@ -323,4 +323,55 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get deleteAccountConfirmButton => 'Eliminar mi cuenta permanentemente';
+
+  @override
+  String get bottomNavHome => 'Inicio';
+
+  @override
+  String get bottomNavWishlist => 'Lista de Deseos';
+
+  @override
+  String get bottomNavDowryList => 'Lista de Dote';
+
+  @override
+  String get bottomNavNotification => 'Notificaciones';
+
+  @override
+  String get cancel => 'Cancelar';
+
+  @override
+  String get itemLimitReachedTitle => 'Límite de artículos alcanzado';
+
+  @override
+  String itemLimitReachedMessage(int count) {
+    return 'Has añadido $count artículos. Para continuar:';
+  }
+
+  @override
+  String get watchAdForItemsButton => 'Ver anuncio (+5 artículos)';
+
+  @override
+  String get buyRemoveAdsButton => 'Quitar anuncios (Ilimitado)';
+
+  @override
+  String itemsRemainingInfo(int count) {
+    return '$count artículos restantes';
+  }
+
+  @override
+  String freeItemsRemaining(int count) {
+    return 'Gratis: $count artículos restantes';
+  }
+
+  @override
+  String get adOptionFreeLabel => 'Gratis';
+
+  @override
+  String get adOptionPremiumLabel => 'Funciones premium';
+
+  @override
+  String get adOptionRecommendedBadge => 'RECOMENDADO';
+
+  @override
+  String get adLoadingText => 'Cargando anuncio...';
 }

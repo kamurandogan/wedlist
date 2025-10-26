@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -105,15 +106,17 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                 ),
               // Add Partner: yalnızca collabUnlocked ise geçişe izin ver, değilse uyarı göster
+              // Debug modda test için her zaman aktif
               ValueListenableBuilder<bool>(
                 valueListenable: _ps.collabUnlocked,
                 builder: (context, collabUnlocked, _) {
+                  final isEnabled = kDebugMode || collabUnlocked;
                   return SettingsPageListtile(
                     title: context.loc.addPartnerTitle,
-                    enabled: collabUnlocked,
+                    enabled: isEnabled,
                     disabledMessage: context.loc.partnerFeatureRequired,
                     onTap: () async {
-                      if (!collabUnlocked) {
+                      if (!isEnabled) {
                         if (context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(

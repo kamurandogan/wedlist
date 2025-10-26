@@ -128,9 +128,5 @@
                 "type": "int"
             }
         }
-    },
-    "adOptionFreeLabel": "免费",
-    "adOptionPremiumLabel": "高级功能",
-    "adOptionRecommendedBadge": "推荐",
-    "adLoadingText": "加载广告中..."
+    }
 }

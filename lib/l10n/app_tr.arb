@@ -104,5 +104,41 @@
     "reauthRequiredMessage": "Güvenlik nedeniyle lütfen yeniden giriş yapın ve ardından hesabı silmeyi tekrar deneyin.",
     "deleteAccountWarning": "Hesabınızı ve ilişkili verileri kalıcı olarak silmek üzeresiniz. Bu işlem geri alınamaz.",
     "deleteAccountExportNotice": "Devam etmeden önce önemli verilerinizi dışa aktardığınızdan emin olun.",
-    "deleteAccountConfirmButton": "Hesabımı kalıcı olarak sil"
+    "deleteAccountConfirmButton": "Hesabımı kalıcı olarak sil",
+    "bottomNavHome": "Ana Sayfa",
+    "bottomNavWishlist": "Dilek Listesi",
+    "bottomNavDowryList": "Çeyiz Listesi",
+    "bottomNavNotification": "Bildirimler",
+    "cancel": "İptal",
+    "itemLimitReachedTitle": "Item Limiti Doldu",
+    "itemLimitReachedMessage": "{count} item eklediniz. Devam etmek için:",
+    "@itemLimitReachedMessage": {
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "watchAdForItemsButton": "Reklam İzle (+5 item)",
+    "buyRemoveAdsButton": "Reklamsız Satın Al (Sınırsız)",
+    "itemsRemainingInfo": "{count} item hakkınız kaldı",
+    "@itemsRemainingInfo": {
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "freeItemsRemaining": "Ücretsiz: {count} item kaldı",
+    "@freeItemsRemaining": {
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "adOptionFreeLabel": "Ücretsiz",
+    "adOptionPremiumLabel": "Premium özellikler",
+    "adOptionRecommendedBadge": "ÖNERİLEN",
+    "adLoadingText": "Reklam yükleniyor..."
 }

@@ -697,6 +697,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Permanently delete my account'**
   String get deleteAccountConfirmButton;
+
+  /// Bottom navigation bar tooltip for Home page.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get bottomNavHome;
+
+  /// Bottom navigation bar tooltip for Wishlist page.
+  ///
+  /// In en, this message translates to:
+  /// **'Wishlist'**
+  String get bottomNavWishlist;
+
+  /// Bottom navigation bar tooltip for Dowry List page.
+  ///
+  /// In en, this message translates to:
+  /// **'Dowry List'**
+  String get bottomNavDowryList;
+
+  /// Bottom navigation bar tooltip for Notification page.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification'**
+  String get bottomNavNotification;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @itemLimitReachedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Item Limit Reached'**
+  String get itemLimitReachedTitle;
+
+  /// No description provided for @itemLimitReachedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ve added {count} items. To continue:'**
+  String itemLimitReachedMessage(int count);
+
+  /// No description provided for @watchAdForItemsButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch Ad (+5 items)'**
+  String get watchAdForItemsButton;
+
+  /// No description provided for @buyRemoveAdsButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Ads (Unlimited)'**
+  String get buyRemoveAdsButton;
+
+  /// No description provided for @itemsRemainingInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} items remaining'**
+  String itemsRemainingInfo(int count);
+
+  /// No description provided for @freeItemsRemaining.
+  ///
+  /// In en, this message translates to:
+  /// **'Free: {count} items left'**
+  String freeItemsRemaining(int count);
+
+  /// No description provided for @adOptionFreeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Free'**
+  String get adOptionFreeLabel;
+
+  /// No description provided for @adOptionPremiumLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Premium features'**
+  String get adOptionPremiumLabel;
+
+  /// No description provided for @adOptionRecommendedBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'RECOMMENDED'**
+  String get adOptionRecommendedBadge;
+
+  /// No description provided for @adLoadingText.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading ad...'**
+  String get adLoadingText;
 }
 
 class _AppLocalizationsDelegate

@@ -28,5 +28,10 @@ class AppStrings {
       'ca-app-pub-4956813096612262/8738043756';
   static const String admobProdInterstitialIOS =
       'ca-app-pub-4956813096612262/5186150869';
-  // Interstitial/Rewarded iOS prod ID'leri kullanılmaya başlanınca buraya ekleyin.
+
+  // Rewarded
+  static const String admobProdRewardedAndroid =
+      'ca-app-pub-4956813096612262/3147690510';
+  static const String admobProdRewardedIOS =
+      'ca-app-pub-4956813096612262/2556485968';
 }

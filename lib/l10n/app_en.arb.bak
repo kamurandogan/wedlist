@@ -181,9 +181,5 @@
                 "type": "int"
             }
         }
-    },
-    "adOptionFreeLabel": "Free",
-    "adOptionPremiumLabel": "Premium features",
-    "adOptionRecommendedBadge": "RECOMMENDED",
-    "adLoadingText": "Loading ad..."
+    }
 }

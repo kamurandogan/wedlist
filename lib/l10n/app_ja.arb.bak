@@ -128,9 +128,5 @@
                 "type": "int"
             }
         }
-    },
-    "adOptionFreeLabel": "無料",
-    "adOptionPremiumLabel": "プレミアム機能",
-    "adOptionRecommendedBadge": "おすすめ",
-    "adLoadingText": "広告を読み込んでいます..."
+    }
 }

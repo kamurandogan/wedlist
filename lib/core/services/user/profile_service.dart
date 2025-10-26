@@ -55,4 +55,19 @@ class ProfileService {
       AppLogger.error('Failed to ensure profile info', e, s);
     }
   }
+
+  Future<void> addCustomCategory(String category) async {
+    final uid = _uid;
+    if (uid == null) return;
+
+    try {
+      final ref = _firestore.collection(FirebaseCollections.users).doc(uid);
+      await ref.set({
+        'customCategories': FieldValue.arrayUnion([category]),
+      }, SetOptions(merge: true));
+    } catch (e, s) {
+      AppLogger.error('Failed to add custom category', e, s);
+      rethrow;
+    }
+  }
 }

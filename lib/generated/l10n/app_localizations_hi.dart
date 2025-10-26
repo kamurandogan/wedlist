@@ -320,4 +320,55 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get deleteAccountConfirmButton => 'मेरा खाता स्थायी रूप से हटाएं';
+
+  @override
+  String get bottomNavHome => 'होम';
+
+  @override
+  String get bottomNavWishlist => 'इच्छा सूची';
+
+  @override
+  String get bottomNavDowryList => 'दहेज सूची';
+
+  @override
+  String get bottomNavNotification => 'सूचनाएं';
+
+  @override
+  String get cancel => 'रद्द करें';
+
+  @override
+  String get itemLimitReachedTitle => 'आइटम सीमा पूर्ण';
+
+  @override
+  String itemLimitReachedMessage(int count) {
+    return 'आपने $count आइटम जोड़े हैं। जारी रखने के लिए:';
+  }
+
+  @override
+  String get watchAdForItemsButton => 'विज्ञापन देखें (+5 आइटम)';
+
+  @override
+  String get buyRemoveAdsButton => 'विज्ञापन हटाएं (असीमित)';
+
+  @override
+  String itemsRemainingInfo(int count) {
+    return '$count आइटम शेष';
+  }
+
+  @override
+  String freeItemsRemaining(int count) {
+    return 'मुफ़्त: $count आइटम शेष';
+  }
+
+  @override
+  String get adOptionFreeLabel => 'मुफ़्त';
+
+  @override
+  String get adOptionPremiumLabel => 'प्रीमियम सुविधाएं';
+
+  @override
+  String get adOptionRecommendedBadge => 'अनुशंसित';
+
+  @override
+  String get adLoadingText => 'विज्ञापन लोड हो रहा है...';
 }

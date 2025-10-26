@@ -128,9 +128,5 @@
                 "type": "int"
             }
         }
-    },
-    "adOptionFreeLabel": "मुफ़्त",
-    "adOptionPremiumLabel": "प्रीमियम सुविधाएं",
-    "adOptionRecommendedBadge": "अनुशंसित",
-    "adLoadingText": "विज्ञापन लोड हो रहा है..."
+    }
 }

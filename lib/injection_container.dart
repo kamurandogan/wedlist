@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wedlist/core/refresh/refresh_bus.dart';
 import 'package:wedlist/core/services/ads_service.dart';
+import 'package:wedlist/core/services/item_limit_service.dart';
 import 'package:wedlist/core/services/purchase_service.dart';
 import 'package:wedlist/core/user/country_persistence.dart';
 import 'package:wedlist/core/user/user_service.dart';
@@ -239,6 +240,10 @@ Future<void> init() async {
     ..registerLazySingleton<AdsService>(AdsService.new)
     // Purchase Service
     ..registerLazySingleton<PurchaseService>(PurchaseService.new)
+    // Item Limit Service (item count tracking and rewarded ad gating)
+    ..registerLazySingleton<ItemLimitService>(
+      () => ItemLimitService(purchaseService: sl<PurchaseService>()),
+    )
     // Notifications
     ..registerLazySingleton<NotificationRemoteDataSource>(
       () => NotificationRemoteDataSourceImpl(

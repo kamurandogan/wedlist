@@ -30,6 +30,8 @@ class UserService {
   // Profile operations
   Future<AppUserModel?> loadCurrent() => _profileService.loadCurrent();
   Future<void> ensureProfileInfo() => _profileService.ensureProfileInfo();
+  Future<void> addCustomCategory(String category) =>
+      _profileService.addCustomCategory(category);
 
   // Wishlist operations
   Future<void> ensureWishListInitialized() =>
