@@ -149,6 +149,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     final oauthCredential = OAuthProvider('apple.com').credential(
       idToken: appleCredential.identityToken,
       rawNonce: rawNonce,
+      accessToken: appleCredential.authorizationCode,
     );
 
     final userCredential = await FirebaseAuth.instance.signInWithCredential(
