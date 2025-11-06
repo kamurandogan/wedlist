@@ -23,9 +23,6 @@ class _CategoryButtonsState extends State<CategoryButtons> {
   final Map<String, Set<String>> _wishByCategory = {};
   bool _wishlistLoaded = false;
 
-  double get _categoryButtonHeightRatio => 0.05;
-  double get _categoryButtonSpacing => 16;
-
   // Colors are defined within button styles when needed.
 
   @override
@@ -72,12 +69,7 @@ class _CategoryButtonsState extends State<CategoryButtons> {
 
   @override
   Widget build(BuildContext context) {
-    // final languageCode = context.deviceLocale.languageCode;
-    final size = MediaQuery.of(context).size;
-    return SizedBox(
-      height: size.height * _categoryButtonHeightRatio,
-      child: _categoryButtonBuilder(),
-    );
+    return _categoryButtonBuilder();
   }
 
   BlocBuilder<CategorylistBloc, CategorylistState> _categoryButtonBuilder() {
@@ -154,68 +146,86 @@ class _CategoryButtonsState extends State<CategoryButtons> {
                     });
                   }
 
-                  return ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: visibleCategories.length + 1,
-                    physics: const BouncingScrollPhysics(),
-                    itemBuilder: (context, index) {
+                  return Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: [
                       // Leading + button
-                      if (index == 0) {
-                        return Padding(
-                          padding: EdgeInsets.only(
-                            right: _categoryButtonSpacing,
-                          ),
-                          child: OutlinedButton.icon(
-                            style: OutlinedButton.styleFrom(
-                              side: BorderSide(
+                      Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: () {
+                            // Artık modal yok, sayfa içinde AddCategoryView göstereceğiz
+                            context
+                                .read<SelectCategoryCubit>()
+                                .selectCategory(addCategorySelectionKey);
+                          },
+                          borderRadius: BorderRadius.circular(8),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 6,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
                                 color: AppColors.accent.withValues(alpha: 0.4),
                               ),
-                              foregroundColor: AppColors.accent,
                             ),
-                            onPressed: () {
-                              // Artık modal yok, sayfa içinde AddCategoryView göstereceğiz
-                              context
-                                  .read<SelectCategoryCubit>()
-                                  .selectCategory(addCategorySelectionKey);
-                            },
-                            icon: const Icon(Icons.add, size: 18),
-                            label: Text(context.loc.addCategoryButtonText),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Icon(
+                                  Icons.add,
+                                  size: 14,
+                                  color: AppColors.accent,
+                                ),
+                                const SizedBox(width: 4),
+                                Text(
+                                  context.loc.addCategoryButtonText,
+                                  style: const TextStyle(
+                                    color: AppColors.accent,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        );
-                      }
-                      // Categories follow after the add button
-                      final title = visibleCategories[index - 1];
-                      final isSelected = title == selectCategoryState;
+                        ),
+                      ),
+                      // Categories
+                      ...visibleCategories.map((title) {
+                        final isSelected = title == selectCategoryState;
 
-                      // Label with item counts: always show remaining count => "Category (remaining)"
-                      // Remaining = wishlist items not yet owned. If dowry not loaded, owned set is empty
-                      // and remaining == total wishlist items in that category.
-                      var displayLabel = title;
-                      if (_wishlistLoaded) {
-                        final titles = wish[_norm(title)];
-                        if (titles != null && titles.isNotEmpty) {
-                          var remaining = 0;
-                          for (final t in titles) {
-                            if (!ownedKeys.contains(keyOf(title, t))) {
-                              remaining++;
+                        // Label with item counts: always show remaining count => "Category (remaining)"
+                        // Remaining = wishlist items not yet owned. If dowry not loaded, owned set is empty
+                        // and remaining == total wishlist items in that category.
+                        var displayLabel = title;
+                        if (_wishlistLoaded) {
+                          final titles = wish[_norm(title)];
+                          if (titles != null && titles.isNotEmpty) {
+                            var remaining = 0;
+                            for (final t in titles) {
+                              if (!ownedKeys.contains(keyOf(title, t))) {
+                                remaining++;
+                              }
                             }
+                            displayLabel = '$title ($remaining)';
                           }
-                          displayLabel = '$title ($remaining)';
                         }
-                      }
-                      return Padding(
-                        padding: EdgeInsets.only(right: _categoryButtonSpacing),
-                        child: CategoryButton(
+                        return CategoryButton(
                           categoryName: displayLabel,
                           isSelected: isSelected,
                           onPressed: () {
                             context.read<SelectCategoryCubit>().selectCategory(
-                              title,
-                            );
+                                  title,
+                                );
                           },
-                        ),
-                      );
-                    },
+                        );
+                      }),
+                    ],
                   );
                 },
               );
