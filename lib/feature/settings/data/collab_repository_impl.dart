@@ -243,16 +243,22 @@ class CollabRepositoryImpl implements CollabRepository {
       // Hedef kullanıcıya (B) daveti kaydet - kimden geldiğini gösterir
       fs.collection(FirebasePaths.users).doc(otherUid).set({
         'collabInvites': FieldValue.arrayUnion([
-          CollabInvite(uid: meUid, email: inviterEmail, status: 'waiting')
-              .toMap(),
+          CollabInvite(
+            uid: meUid,
+            email: inviterEmail,
+            status: 'waiting',
+          ).toMap(),
         ]),
         'removedCollaborators': FieldValue.arrayRemove([meUid]),
       }, SetOptions(merge: true)),
       // Davet eden kullanıcıya (A) daveti kaydet - kime gönderdiğini gösterir
       fs.collection(FirebasePaths.users).doc(meUid).set({
         'collabInvites': FieldValue.arrayUnion([
-          CollabInvite(uid: otherUid, email: targetEmail, status: 'waiting')
-              .toMap(),
+          CollabInvite(
+            uid: otherUid,
+            email: targetEmail,
+            status: 'waiting',
+          ).toMap(),
         ]),
         'removedCollaborators': FieldValue.arrayRemove([otherUid]),
       }, SetOptions(merge: true)),

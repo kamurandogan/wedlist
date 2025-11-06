@@ -93,7 +93,8 @@ class _SettingsPageState extends State<SettingsPage> {
                 },
               ),
               // IAP uygunluk bilgilendirmesi (özellikle iPad için mağaza hesabı/yetersiz destek durumlarında)
-              if (!(_iapInit && _ps.isAvailable) || _ps.removeAdsProduct == null)
+              if (!(_iapInit && _ps.isAvailable) ||
+                  _ps.removeAdsProduct == null)
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child: Row(
@@ -117,7 +118,11 @@ class _SettingsPageState extends State<SettingsPage> {
                 builder: (context, removeAds, _) {
                   if (removeAds) return const SizedBox.shrink();
                   final removeAdsReady = _ps.removeAdsProduct != null;
-                  final enabled = _iapInit && _ps.isAvailable && removeAdsReady && !_iapBusy;
+                  final enabled =
+                      _iapInit &&
+                      _ps.isAvailable &&
+                      removeAdsReady &&
+                      !_iapBusy;
                   return SettingsPageListtile(
                     title: context.loc.removeAdsTitle,
                     enabled: enabled,
@@ -142,7 +147,11 @@ class _SettingsPageState extends State<SettingsPage> {
               // Restore purchases
               SettingsPageListtile(
                 title: context.loc.restorePurchasesTitle,
-                enabled: _iapInit && _ps.isAvailable && _ps.removeAdsProduct != null && !_iapBusy,
+                enabled:
+                    _iapInit &&
+                    _ps.isAvailable &&
+                    _ps.removeAdsProduct != null &&
+                    !_iapBusy,
                 disabledMessage: context.loc.purchaseUnsupported,
                 onTap: () async {
                   if (!(_iapInit && _ps.isAvailable)) return;
