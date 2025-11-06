@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
@@ -23,6 +24,9 @@ import 'package:wedlist/feature/wishlist/presentation/blocs/cubit/select_categor
 import 'package:wedlist/firebase_options.dart';
 import 'package:wedlist/generated/l10n/app_localizations.dart';
 import 'package:wedlist/injection_container.dart';
+
+// Firebase Analytics instance
+final FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -12,30 +12,43 @@ class DowryCategoryButton extends StatelessWidget {
   final bool isSelected;
   final VoidCallback onPressed;
 
+  double get _buttonCircularRadius => 8;
+
   @override
   Widget build(BuildContext context) {
-    final bg = isSelected ? AppColors.primary : Colors.transparent;
-
-    return OutlinedButton(
-      style: OutlinedButton.styleFrom(
-        backgroundColor: bg,
-        side: BorderSide(
-          color: isSelected
-              ? AppColors.primary
-              : Colors.grey.withValues(alpha: 0.4),
-          width: 1.2,
-        ),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(24)),
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-      ),
-      onPressed: onPressed,
-      child: Text(
-        categoryName,
-        style: TextStyle(
-          color: isSelected ? Colors.white : Colors.black,
-          fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onPressed,
+        borderRadius: BorderRadius.circular(_buttonCircularRadius),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          decoration: BoxDecoration(
+            color: isSelected ? AppColors.primary : Colors.white,
+            borderRadius: BorderRadius.circular(_buttonCircularRadius),
+            border: Border.all(
+              color: isSelected
+                  ? AppColors.primary
+                  : Colors.grey.withValues(alpha: 0.3),
+            ),
+            boxShadow: isSelected
+                ? [
+                    BoxShadow(
+                      color: AppColors.primary.withValues(alpha: 0.3),
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
+                    ),
+                  ]
+                : null,
+          ),
+          child: Text(
+            categoryName,
+            style: TextStyle(
+              color: isSelected ? Colors.white : Colors.black87,
+              fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+              fontSize: 12,
+            ),
+          ),
         ),
       ),
     );

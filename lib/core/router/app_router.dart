@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,10 +40,14 @@ class GoRouterRefreshStream extends ChangeNotifier {
 }
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
+final FirebaseAnalytics _analytics = FirebaseAnalytics.instance;
 
 final GoRouter appRouter = GoRouter(
   navigatorKey: NavigationService.navigatorKey,
   refreshListenable: GoRouterRefreshStream(_auth.authStateChanges()),
+  observers: [
+    FirebaseAnalyticsObserver(analytics: _analytics),
+  ],
   redirect: (context, state) {
     final user = _auth.currentUser;
     final loggedIn = user != null;
