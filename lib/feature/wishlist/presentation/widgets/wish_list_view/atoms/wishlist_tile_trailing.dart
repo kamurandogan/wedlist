@@ -18,7 +18,6 @@ class WishListTileTrailing extends StatelessWidget {
     return const HugeIcon(
       icon: HugeIcons.strokeRoundedAdd01,
       color: AppColors.primary,
-      
     );
   }
 }

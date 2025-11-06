@@ -156,9 +156,9 @@ class _CategoryButtonsState extends State<CategoryButtons> {
                         child: InkWell(
                           onTap: () {
                             // Artık modal yok, sayfa içinde AddCategoryView göstereceğiz
-                            context
-                                .read<SelectCategoryCubit>()
-                                .selectCategory(addCategorySelectionKey);
+                            context.read<SelectCategoryCubit>().selectCategory(
+                              addCategorySelectionKey,
+                            );
                           },
                           borderRadius: BorderRadius.circular(8),
                           child: Container(
@@ -220,8 +220,8 @@ class _CategoryButtonsState extends State<CategoryButtons> {
                           isSelected: isSelected,
                           onPressed: () {
                             context.read<SelectCategoryCubit>().selectCategory(
-                                  title,
-                                );
+                              title,
+                            );
                           },
                         );
                       }),

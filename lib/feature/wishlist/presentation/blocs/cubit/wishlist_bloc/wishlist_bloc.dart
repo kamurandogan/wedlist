@@ -95,8 +95,8 @@ class WishListBloc extends Bloc<WishListEvent, WishListState> {
     final filtered = ownedKeys.isEmpty
         ? wishItems
         : wishItems
-            .where((w) => !ownedKeys.contains(keyOf(w.category, w.title)))
-            .toList();
+              .where((w) => !ownedKeys.contains(keyOf(w.category, w.title)))
+              .toList();
 
     // Deduplication: Aynı category+title'dan birden fazla varsa sadece birini al
     String norm(String s) => s.trim().toLowerCase();

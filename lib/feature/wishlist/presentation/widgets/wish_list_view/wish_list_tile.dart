@@ -27,7 +27,10 @@ class WishListTile extends StatelessWidget {
           // Atom: Bullet
           leading: const WishListBullet(),
           // Molekül: Başlık ve kategori
-          title: WishListTileContent(title: item.title, categoryKey: item.category),
+          title: WishListTileContent(
+            title: item.title,
+            categoryKey: item.category,
+          ),
           // Atom: Trailing buton/ikon
           trailing: WishListTileTrailing(title: item.title, item: item),
         ),

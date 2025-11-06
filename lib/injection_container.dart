@@ -222,7 +222,9 @@ Future<void> init() async {
     )
     ..registerLazySingleton(() => GetWishListItems(sl()))
     ..registerLazySingleton(() => AddWishlistItems(sl()))
-    ..registerFactory(() => WishListBloc(sl(), sl<RefreshBus>(), sl<DowryListBloc>()))
+    ..registerFactory(
+      () => WishListBloc(sl(), sl<RefreshBus>(), sl<DowryListBloc>()),
+    )
     // Category Injection
     ..registerLazySingleton<CategoryRemoteDataSource>(
       () => CategoryRemoteDataSourceImpl(sl(), FirebaseAuth.instance),
