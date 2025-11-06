@@ -5,30 +5,23 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 
-/// Basit IAP servisi: iki non-consumable için ürün sorgulama ve satın alma akışı.
+/// Basit IAP servisi: non-consumable ürün sorgulama ve satın alma akışı.
 /// Ürün kimlikleri mağazalarda Non-Consumable olarak oluşturulmalıdır.
 /// Platforma göre farklı productId kullanırız:
 /// ANDROID (Google Play):
 ///  - com.wedlist.remove_ads
-///  - com.wedlist.collab_unlock
 /// iOS (App Store):
 ///  - com.kamurandev.wedlist.wedlist.remove_ads
-///  - com.kamurandev.wedlist.wedlist.collab_unlock
 class PurchaseService {
   // Android'de mevcut ID'leri koruyoruz
   static const String kRemoveAdsIdAndroid = 'com.wedlist.remove_ads';
-  static const String kCollabUnlockIdAndroid = 'com.wedlist.collab_unlock';
 
   // iOS için benzersiz yeni ID'ler (App Store Connect'te bunları oluşturun)
   static const String kRemoveAdsIdIOS =
       'com.kamurandev.wedlist.wedlist.remove_ads';
-  static const String kCollabUnlockIdIOS =
-      'com.kamurandev.wedlist.wedlist.collab_unlock';
 
   bool get _isIOS => defaultTargetPlatform == TargetPlatform.iOS;
   String get removeAdsId => _isIOS ? kRemoveAdsIdIOS : kRemoveAdsIdAndroid;
-  String get collabUnlockId =>
-      _isIOS ? kCollabUnlockIdIOS : kCollabUnlockIdAndroid;
 
   final InAppPurchase _iap = InAppPurchase.instance;
   StreamSubscription<List<PurchaseDetails>>? _sub;
@@ -37,11 +30,9 @@ class PurchaseService {
   bool get isAvailable => _available;
 
   ProductDetails? removeAdsProduct;
-  ProductDetails? collabUnlockProduct;
 
   // Entitlement state (kept in-memory and observable for UI)
   final ValueNotifier<bool> removeAds = ValueNotifier<bool>(false);
-  final ValueNotifier<bool> collabUnlocked = ValueNotifier<bool>(false);
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -69,10 +60,7 @@ class PurchaseService {
   }
 
   Future<void> queryProducts() async {
-    final response = await _iap.queryProductDetails({
-      removeAdsId,
-      collabUnlockId,
-    });
+    final response = await _iap.queryProductDetails({removeAdsId});
     if (response.error != null) {
       if (kDebugMode) {
         // ignore: avoid_print
@@ -82,19 +70,11 @@ class PurchaseService {
     }
     for (final p in response.productDetails) {
       if (p.id == removeAdsId) removeAdsProduct = p;
-      if (p.id == collabUnlockId) collabUnlockProduct = p;
     }
   }
 
   Future<bool> buyRemoveAds() async {
     final p = removeAdsProduct ?? (await _fetchSingle(removeAdsId));
-    if (p == null) return false;
-    final param = PurchaseParam(productDetails: p);
-    return _iap.buyNonConsumable(purchaseParam: param);
-  }
-
-  Future<bool> buyCollabUnlock() async {
-    final p = collabUnlockProduct ?? (await _fetchSingle(collabUnlockId));
     if (p == null) return false;
     final param = PurchaseParam(productDetails: p);
     return _iap.buyNonConsumable(purchaseParam: param);
@@ -138,7 +118,6 @@ class PurchaseService {
     if (uid == null) {
       // Kullanıcı oturumu yoksa sadece yerel state'i güncelle (geçici)
       if (pd.productID == removeAdsId) removeAds.value = true;
-      if (pd.productID == collabUnlockId) collabUnlocked.value = true;
       return;
     }
     final ref = _firestore.collection('users').doc(uid);
@@ -148,10 +127,6 @@ class PurchaseService {
     if (pd.productID == removeAdsId) {
       premium['removeAds'] = true;
       removeAds.value = true;
-    }
-    if (pd.productID == collabUnlockId) {
-      premium['collabUnlocked'] = true;
-      collabUnlocked.value = true;
     }
     final patch = <String, dynamic>{'premium': premium};
     try {
@@ -173,7 +148,6 @@ class PurchaseService {
           ? (data['premium'] as Map).cast<String, dynamic>()
           : <String, dynamic>{};
       removeAds.value = (premium['removeAds'] as bool?) ?? false;
-      collabUnlocked.value = (premium['collabUnlocked'] as bool?) ?? false;
     } on FirebaseException catch (_) {
       // ignore
     } on Exception catch (_) {

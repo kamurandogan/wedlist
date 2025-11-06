@@ -217,6 +217,72 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
   ) async {
     final uid = FirebaseAuth.instance.currentUser?.uid;
     if (uid == null) return;
+
+    // Daveti gönderen kullanıcının (inviter) collabInvites içindeki kaydı 'rejected' olarak işaretle
+    try {
+      final inviterRef = FirebaseFirestore.instance
+          .collection('users')
+          .doc(event.senderUid);
+      final inviterSnap = await inviterRef.get();
+      final inviterData = inviterSnap.data() ?? <String, dynamic>{};
+      final rawInvites =
+          (inviterData['collabInvites'] as List?)
+              ?.cast<Map<String, dynamic>>() ??
+          const <Map<String, dynamic>>[];
+      var changed = false;
+      final updated = <Map<String, dynamic>>[];
+      for (final inv in rawInvites) {
+        final invUid = (inv['uid'] as String?) ?? '';
+        if (invUid == uid) {
+          // Rejector'un invite'ını rejected yap
+          final newMap = Map<String, dynamic>.from(inv)
+            ..['status'] = 'rejected';
+          updated.add(newMap);
+          changed = true;
+        } else {
+          updated.add(inv);
+        }
+      }
+      if (changed) {
+        await inviterRef.set({
+          'collabInvites': updated,
+        }, SetOptions(merge: true));
+      }
+    } on Exception catch (_) {}
+
+    // Reddeden kullanıcının (rejector) kendi collabInvites listesini de güncelle (varsa)
+    try {
+      final rejectorRef = FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid);
+      final rejectorSnap = await rejectorRef.get();
+      final rejectorData = rejectorSnap.data() ?? <String, dynamic>{};
+      final rawInvites =
+          (rejectorData['collabInvites'] as List?)
+              ?.cast<Map<String, dynamic>>() ??
+          const <Map<String, dynamic>>[];
+      if (rawInvites.isNotEmpty) {
+        var changed = false;
+        final updated = <Map<String, dynamic>>[];
+        for (final inv in rawInvites) {
+          final invUid = (inv['uid'] as String?) ?? '';
+          if (invUid == event.senderUid) {
+            final newMap = Map<String, dynamic>.from(inv)
+              ..['status'] = 'rejected';
+            updated.add(newMap);
+            changed = true;
+          } else {
+            updated.add(inv);
+          }
+        }
+        if (changed) {
+          await rejectorRef.set({
+            'collabInvites': updated,
+          }, SetOptions(merge: true));
+        }
+      }
+    } on Exception catch (_) {}
+
     try {
       await deleteNotification(event.notifId);
     } on Exception catch (_) {}

@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -58,6 +57,14 @@ class _SettingsPageState extends State<SettingsPage> {
           child: Column(
             children: [
               const CountryTile(),
+              // Add Partner - artık tüm kullanıcılar için ücretsiz
+              SettingsPageListtile(
+                title: context.loc.addPartnerTitle,
+                onTap: () async {
+                  if (!context.mounted) return;
+                  await context.push(AppRoute.collaborators.path);
+                },
+              ),
               // Hesabı sil
               SettingsPageListtile(
                 title: context.loc.deleteAccountTitle,
@@ -86,9 +93,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 },
               ),
               // IAP uygunluk bilgilendirmesi (özellikle iPad için mağaza hesabı/yetersiz destek durumlarında)
-              if (!(_iapInit && _ps.isAvailable) ||
-                  (_ps.collabUnlockProduct == null &&
-                      _ps.removeAdsProduct == null))
+              if (!(_iapInit && _ps.isAvailable) || _ps.removeAdsProduct == null)
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child: Row(
@@ -105,78 +110,14 @@ class _SettingsPageState extends State<SettingsPage> {
                     ],
                   ),
                 ),
-              // Add Partner: yalnızca collabUnlocked ise geçişe izin ver, değilse uyarı göster
-              // Debug modda test için her zaman aktif
-              ValueListenableBuilder<bool>(
-                valueListenable: _ps.collabUnlocked,
-                builder: (context, collabUnlocked, _) {
-                  final isEnabled = kDebugMode || collabUnlocked;
-                  return SettingsPageListtile(
-                    title: context.loc.addPartnerTitle,
-                    enabled: isEnabled,
-                    disabledMessage: context.loc.partnerFeatureRequired,
-                    onTap: () async {
-                      if (!isEnabled) {
-                        if (context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(context.loc.partnerFeatureRequired),
-                            ),
-                          );
-                        }
-                        return;
-                      }
-                      if (!context.mounted) return;
-                      await context.push(AppRoute.collaborators.path);
-                    },
-                  );
-                },
-              ),
-              // Enable partner feature: servis hazır ve ürün yüklü olmazsa disabled
-              ValueListenableBuilder<bool>(
-                valueListenable: _ps.collabUnlocked,
-                builder: (context, collabUnlocked, _) {
-                  if (collabUnlocked) return const SizedBox.shrink();
 
-                  final partnerProductReady = _ps.collabUnlockProduct != null;
-                  final enabled =
-                      _iapInit &&
-                      _ps.isAvailable &&
-                      partnerProductReady &&
-                      !_iapBusy;
-
-                  return SettingsPageListtile(
-                    title: context.loc.enablePartnerFeatureTitle,
-                    enabled: enabled,
-                    disabledMessage: context.loc.purchaseUnsupported,
-                    onTap: () async {
-                      if (!enabled) return;
-                      setState(() => _iapBusy = true);
-                      final messenger = ScaffoldMessenger.of(context);
-                      final successText = context.loc.purchaseSuccess;
-                      final failText = context.loc.purchaseFailed;
-                      final ok = await _ps.buyCollabUnlock();
-                      if (!mounted) return;
-                      setState(() => _iapBusy = false);
-                      if (!mounted) return;
-                      messenger.showSnackBar(
-                        SnackBar(content: Text(ok ? successText : failText)),
-                      );
-                    },
-                  );
-                },
-              ),
               // Remove ads
               ValueListenableBuilder<bool>(
                 valueListenable: _ps.removeAds,
                 builder: (context, removeAds, _) {
                   if (removeAds) return const SizedBox.shrink();
                   final removeAdsReady = _ps.removeAdsProduct != null;
-                  final enabled =
-                      _iapInit &&
-                      _ps.isAvailable &&
-                      removeAdsReady &&
-                      !_iapBusy;
+                  final enabled = _iapInit && _ps.isAvailable && removeAdsReady && !_iapBusy;
                   return SettingsPageListtile(
                     title: context.loc.removeAdsTitle,
                     enabled: enabled,
@@ -201,12 +142,7 @@ class _SettingsPageState extends State<SettingsPage> {
               // Restore purchases
               SettingsPageListtile(
                 title: context.loc.restorePurchasesTitle,
-                enabled:
-                    _iapInit &&
-                    _ps.isAvailable &&
-                    (_ps.collabUnlockProduct != null ||
-                        _ps.removeAdsProduct != null) &&
-                    !_iapBusy,
+                enabled: _iapInit && _ps.isAvailable && _ps.removeAdsProduct != null && !_iapBusy,
                 disabledMessage: context.loc.purchaseUnsupported,
                 onTap: () async {
                   if (!(_iapInit && _ps.isAvailable)) return;

@@ -85,8 +85,15 @@ service cloud.firestore {
     // Read is allowed for authenticated users to support email lookup for collaborators.
     match /users/{uid} {
       allow read: if request.auth != null;
-  // Only the owner can write; collaborators list now unrestricted in length.
-  allow write: if request.auth != null && request.auth.uid == uid;
+      // Only the owner can write; collaborators list now unrestricted in length.
+      allow write: if request.auth != null && request.auth.uid == uid;
+
+      // Allow authenticated users to update ONLY collabInvites field in other users' documents
+      // (Required for sending invites and updating invite status)
+      allow update: if request.auth != null
+        && request.auth.uid != uid  // Not their own document
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['collabInvites'])
+        && request.resource.data.collabInvites is list;
 
       // Notifications subcollection under a user
       match /notifications/{nid} {

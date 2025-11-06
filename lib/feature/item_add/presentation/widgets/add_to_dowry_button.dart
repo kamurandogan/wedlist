@@ -50,6 +50,10 @@ class _AddToDowryButtonState extends State<AddToDowryButton>
 
   @override
   void dispose() {
+    // Animasyon çalışıyorsa durdur ve iptal et
+    if (_controller.isAnimating) {
+      _controller.stop(canceled: true);
+    }
     _controller.dispose();
     super.dispose();
   }
@@ -74,6 +78,7 @@ class _AddToDowryButtonState extends State<AddToDowryButton>
     }
 
     // Item ekleme işlemine devam et
+    if (!mounted) return;
     setState(() => _clicked = true);
     final imgUrl = context.read<AddPhotoCubit>().state.imageUrl;
     context.read<AddItemBloc>().add(
@@ -87,7 +92,9 @@ class _AddToDowryButtonState extends State<AddToDowryButton>
       ),
     );
     // Başarılı olduğunda dinleyici içinde yönlendireceğiz; burada sadece animasyonu başlatıyoruz
-    await _controller.forward();
+    if (mounted && !_controller.isAnimating) {
+      await _controller.forward();
+    }
   }
 
   @override
@@ -114,10 +121,14 @@ class _AddToDowryButtonState extends State<AddToDowryButton>
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.message)),
           );
-          setState(() {
-            _clicked = false;
-          });
-          await _controller.reverse();
+          if (mounted) {
+            setState(() {
+              _clicked = false;
+            });
+            if (!_controller.isAnimating) {
+              await _controller.reverse();
+            }
+          }
         }
       },
       child: Padding(

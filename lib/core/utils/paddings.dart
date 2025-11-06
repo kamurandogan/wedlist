@@ -38,7 +38,7 @@ final class AppPaddings {
   static const EdgeInsets columnPadding = EdgeInsets.only(
     left: 16,
     right: 16,
-    top: 16,
-    bottom: 30,
+    top: 55,
+    bottom: 50,
   );
 }

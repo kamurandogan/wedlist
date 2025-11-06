@@ -189,12 +189,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get collaboratorEmailLabel => '通过电子邮件添加协作者';
 
   @override
-  String get partnerFeatureRequired => '需要合作伙伴功能';
-
-  @override
-  String get enablePartnerFeatureTitle => '启用合作伙伴功能';
-
-  @override
   String get purchaseUnsupported => '此设备不支持应用内购买，或没有可用的商店账户。';
 
   @override
@@ -220,9 +214,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get cannotInviteSelfError => '不能邀请自己';
-
-  @override
-  String get targetNotEntitledError => '该用户尚未购买合作伙伴功能';
 
   @override
   String get inviteAlreadyPendingError => '已存在发往该用户的待处理邀请';

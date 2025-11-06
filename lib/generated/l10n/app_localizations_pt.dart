@@ -196,12 +196,6 @@ class AppLocalizationsPt extends AppLocalizations {
   String get collaboratorEmailLabel => 'Adicionar colaborador por e-mail';
 
   @override
-  String get partnerFeatureRequired => 'Recurso de parceiro necessário';
-
-  @override
-  String get enablePartnerFeatureTitle => 'Ativar recurso de parceiro';
-
-  @override
   String get purchaseUnsupported =>
       'Compras no aplicativo não são suportadas neste dispositivo ou nenhuma conta da loja está disponível.';
 
@@ -229,10 +223,6 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get cannotInviteSelfError => 'Você não pode se convidar';
-
-  @override
-  String get targetNotEntitledError =>
-      'O usuário não comprou o recurso de parceiro';
 
   @override
   String get inviteAlreadyPendingError =>

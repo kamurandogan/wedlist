@@ -190,12 +190,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get collaboratorEmailLabel => 'メールで共同作業者を追加';
 
   @override
-  String get partnerFeatureRequired => 'パートナー機能が必要です';
-
-  @override
-  String get enablePartnerFeatureTitle => 'パートナー機能を有効にする';
-
-  @override
   String get purchaseUnsupported =>
       'このデバイスではアプリ内購入がサポートされていないか、利用可能なストアアカウントがありません。';
 
@@ -222,9 +216,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get cannotInviteSelfError => '自分自身を招待することはできません';
-
-  @override
-  String get targetNotEntitledError => '相手はパートナー機能を購入していません';
 
   @override
   String get inviteAlreadyPendingError => 'このユーザーにはすでに保留中の招待があります';

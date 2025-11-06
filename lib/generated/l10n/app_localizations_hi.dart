@@ -195,12 +195,6 @@ class AppLocalizationsHi extends AppLocalizations {
   String get collaboratorEmailLabel => 'ईमेल से सहयोगी जोड़ें';
 
   @override
-  String get partnerFeatureRequired => 'पार्टनर फीचर आवश्यक है';
-
-  @override
-  String get enablePartnerFeatureTitle => 'पार्टनर फीचर सक्षम करें';
-
-  @override
   String get purchaseUnsupported =>
       'इस डिवाइस पर इन-ऐप खरीदारी समर्थित नहीं है या कोई स्टोर खाता उपलब्ध नहीं है।';
 
@@ -228,10 +222,6 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get cannotInviteSelfError => 'आप स्वयं को आमंत्रित नहीं कर सकते';
-
-  @override
-  String get targetNotEntitledError =>
-      'उपयोगकर्ता ने पार्टनर फीचर नहीं खरीदा है';
 
   @override
   String get inviteAlreadyPendingError =>

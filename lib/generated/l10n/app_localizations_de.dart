@@ -196,12 +196,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get collaboratorEmailLabel => 'Mit E-Mail Mitwirkenden hinzufügen';
 
   @override
-  String get partnerFeatureRequired => 'Partner-Funktion erforderlich';
-
-  @override
-  String get enablePartnerFeatureTitle => 'Partner-Funktion aktivieren';
-
-  @override
   String get purchaseUnsupported =>
       'In-App-Käufe werden auf diesem Gerät nicht unterstützt oder kein Store-Konto verfügbar.';
 
@@ -229,10 +223,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get cannotInviteSelfError => 'Sie können sich nicht selbst einladen';
-
-  @override
-  String get targetNotEntitledError =>
-      'Der Benutzer hat die Partnerfunktion nicht gekauft';
 
   @override
   String get inviteAlreadyPendingError =>

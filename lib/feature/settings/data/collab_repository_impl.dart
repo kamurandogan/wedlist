@@ -163,20 +163,6 @@ class CollabRepositoryImpl implements CollabRepository {
       throw Exception('cannot_invite_self');
     }
 
-    // entitlement kontrolü
-    try {
-      final otherData = other.data();
-      final premium =
-          (otherData['premium'] as Map?)?.cast<String, dynamic>() ??
-          <String, dynamic>{};
-      final otherCollabUnlocked = (premium['collabUnlocked'] as bool?) ?? false;
-      if (!otherCollabUnlocked) {
-        throw Exception('target_not_entitled');
-      }
-    } on Exception {
-      /* ignore */
-    }
-
     // aynı bekleyen davet var mı
     try {
       final selfSnap = await fs
@@ -199,24 +185,25 @@ class CollabRepositoryImpl implements CollabRepository {
       /* ignore */
     }
 
+    // Davet eden kişinin email'ini al
+    var inviterEmail = '';
+    try {
+      final inviterSnap = await fs
+          .collection(FirebasePaths.users)
+          .doc(meUid)
+          .get();
+      inviterEmail =
+          (inviterSnap.data()?['email'] as String?)?.trim().toLowerCase() ?? '';
+    } on Exception {
+      /* ignore */
+    }
+    inviterEmail = inviterEmail.isNotEmpty
+        ? inviterEmail
+        : (auth.currentUser?.email?.toLowerCase() ?? '');
+    if (inviterEmail.isEmpty) inviterEmail = 'Bir kullanıcı';
+
     // bildirim gönder (best-effort)
     try {
-      var inviterEmail = '';
-      try {
-        final inviterSnap = await fs
-            .collection(FirebasePaths.users)
-            .doc(meUid)
-            .get();
-        inviterEmail =
-            (inviterSnap.data()?['email'] as String?)?.trim().toLowerCase() ??
-            '';
-      } on Exception {
-        /* ignore */
-      }
-      inviterEmail = inviterEmail.isNotEmpty
-          ? inviterEmail
-          : (auth.currentUser?.email?.toLowerCase() ?? '');
-      if (inviterEmail.isEmpty) inviterEmail = 'Bir kullanıcı';
       await fs
           .collection(FirebasePaths.users)
           .doc(otherUid)
@@ -235,13 +222,41 @@ class CollabRepositoryImpl implements CollabRepository {
       debugPrint('[CollabRepo] Notification write failed: $e');
     }
 
-    // bekleyen daveti kaydet
-    await fs.collection(FirebasePaths.users).doc(meUid).set({
-      'collabInvites': FieldValue.arrayUnion([
-        CollabInvite(uid: otherUid, email: norm, status: 'waiting').toMap(),
-      ]),
-      'removedCollaborators': FieldValue.arrayRemove([otherUid]),
-    }, SetOptions(merge: true));
+    // hedef kullanıcının email'ini al (A kullanıcısı B'nin collabInvites'ında kendi bilgisini görmek için)
+    var targetEmail = '';
+    try {
+      final targetSnap = await fs
+          .collection(FirebasePaths.users)
+          .doc(otherUid)
+          .get();
+      targetEmail =
+          (targetSnap.data()?['email'] as String?)?.trim().toLowerCase() ?? '';
+    } on Exception {
+      /* ignore */
+    }
+    targetEmail = targetEmail.isNotEmpty ? targetEmail : norm;
+
+    // bekleyen daveti HER İKİ kullanıcıya kaydet
+    // B kullanıcısı: A'dan gelen daveti görür (uid: meUid)
+    // A kullanıcısı: B'ye gönderdiği daveti görür (uid: otherUid)
+    await Future.wait([
+      // Hedef kullanıcıya (B) daveti kaydet - kimden geldiğini gösterir
+      fs.collection(FirebasePaths.users).doc(otherUid).set({
+        'collabInvites': FieldValue.arrayUnion([
+          CollabInvite(uid: meUid, email: inviterEmail, status: 'waiting')
+              .toMap(),
+        ]),
+        'removedCollaborators': FieldValue.arrayRemove([meUid]),
+      }, SetOptions(merge: true)),
+      // Davet eden kullanıcıya (A) daveti kaydet - kime gönderdiğini gösterir
+      fs.collection(FirebasePaths.users).doc(meUid).set({
+        'collabInvites': FieldValue.arrayUnion([
+          CollabInvite(uid: otherUid, email: targetEmail, status: 'waiting')
+              .toMap(),
+        ]),
+        'removedCollaborators': FieldValue.arrayRemove([otherUid]),
+      }, SetOptions(merge: true)),
+    ]);
   }
 
   @override

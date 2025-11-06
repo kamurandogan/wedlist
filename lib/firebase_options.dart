@@ -46,6 +46,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '835425852476',
     projectId: 'wedlist-bb058',
     authDomain: 'wedlist-bb058.firebaseapp.com',
+    databaseURL: 'https://wedlist-bb058-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'wedlist-bb058.firebasestorage.app',
     measurementId: 'G-GDJ0FH69SM',
   );
@@ -55,6 +56,7 @@ class DefaultFirebaseOptions {
     appId: '1:835425852476:android:91dddf42db3f33f5ebb739',
     messagingSenderId: '835425852476',
     projectId: 'wedlist-bb058',
+    databaseURL: 'https://wedlist-bb058-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'wedlist-bb058.firebasestorage.app',
   );
 
@@ -63,7 +65,10 @@ class DefaultFirebaseOptions {
     appId: '1:835425852476:ios:4f4af773a2a63d9aebb739',
     messagingSenderId: '835425852476',
     projectId: 'wedlist-bb058',
+    databaseURL: 'https://wedlist-bb058-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'wedlist-bb058.firebasestorage.app',
+    androidClientId: '835425852476-4ant65t2dcald209b0h3en4nevpmvha7.apps.googleusercontent.com',
+    iosClientId: '835425852476-jqu8kcsr64k9167ua0tfil7oogre6714.apps.googleusercontent.com',
     iosBundleId: 'com.kamurandev.wedlist.wedlist',
   );
 
@@ -72,7 +77,10 @@ class DefaultFirebaseOptions {
     appId: '1:835425852476:ios:4f4af773a2a63d9aebb739',
     messagingSenderId: '835425852476',
     projectId: 'wedlist-bb058',
+    databaseURL: 'https://wedlist-bb058-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'wedlist-bb058.firebasestorage.app',
+    androidClientId: '835425852476-4ant65t2dcald209b0h3en4nevpmvha7.apps.googleusercontent.com',
+    iosClientId: '835425852476-jqu8kcsr64k9167ua0tfil7oogre6714.apps.googleusercontent.com',
     iosBundleId: 'com.kamurandev.wedlist.wedlist',
   );
 
@@ -82,7 +90,9 @@ class DefaultFirebaseOptions {
     messagingSenderId: '835425852476',
     projectId: 'wedlist-bb058',
     authDomain: 'wedlist-bb058.firebaseapp.com',
+    databaseURL: 'https://wedlist-bb058-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'wedlist-bb058.firebasestorage.app',
     measurementId: 'G-QWG04B3PMT',
   );
+
 }

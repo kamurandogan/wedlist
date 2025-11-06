@@ -194,12 +194,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get collaboratorEmailLabel => 'E-posta ile ortak ekle';
 
   @override
-  String get partnerFeatureRequired => 'Partner ekleme özelliği gereklidir';
-
-  @override
-  String get enablePartnerFeatureTitle => 'Partner Ekleme Özelliğini Aç';
-
-  @override
   String get purchaseUnsupported =>
       'Bu cihazda mağaza faturalandırması desteklenmiyor veya mağaza hesabı bulunamadı.';
 
@@ -227,10 +221,6 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get cannotInviteSelfError => 'Kendinizi ekleyemezsiniz';
-
-  @override
-  String get targetNotEntitledError =>
-      'Kullanıcı partner ekleme özelliğini satın almamış';
 
   @override
   String get inviteAlreadyPendingError =>

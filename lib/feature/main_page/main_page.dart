@@ -100,7 +100,7 @@ class _MainPageState extends State<MainPage> {
           child: Scaffold(
             bottomNavigationBar: const CustomBottomNavigationBar(),
             body: Padding(
-              padding: const EdgeInsets.only(left: 16, right: 16, top: 32),
+              padding: const EdgeInsets.only(left: 16, right: 16, top: 55),
               child: Column(
                 children: [
                   // Banner sadece reklamlar açıksa gösterilir

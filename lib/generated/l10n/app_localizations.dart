@@ -476,18 +476,6 @@ abstract class AppLocalizations {
   /// **'Add collaborator by email'**
   String get collaboratorEmailLabel;
 
-  /// No description provided for @partnerFeatureRequired.
-  ///
-  /// In en, this message translates to:
-  /// **'Partner feature required'**
-  String get partnerFeatureRequired;
-
-  /// No description provided for @enablePartnerFeatureTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Enable partner feature'**
-  String get enablePartnerFeatureTitle;
-
   /// No description provided for @purchaseUnsupported.
   ///
   /// In en, this message translates to:
@@ -541,12 +529,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You cannot invite yourself'**
   String get cannotInviteSelfError;
-
-  /// No description provided for @targetNotEntitledError.
-  ///
-  /// In en, this message translates to:
-  /// **'The user has not purchased the partner feature'**
-  String get targetNotEntitledError;
 
   /// No description provided for @inviteAlreadyPendingError.
   ///

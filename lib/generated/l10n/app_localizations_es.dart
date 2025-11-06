@@ -198,12 +198,6 @@ class AppLocalizationsEs extends AppLocalizations {
       'Agregar colaborador por correo electrónico';
 
   @override
-  String get partnerFeatureRequired => 'Se requiere la función de pareja';
-
-  @override
-  String get enablePartnerFeatureTitle => 'Habilitar función de pareja';
-
-  @override
   String get purchaseUnsupported =>
       'Las compras dentro de la aplicación no son compatibles en este dispositivo o no hay una cuenta de tienda disponible.';
 
@@ -231,10 +225,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get cannotInviteSelfError => 'No puedes invitarte a ti mismo';
-
-  @override
-  String get targetNotEntitledError =>
-      'El usuario no ha comprado la función de pareja';
 
   @override
   String get inviteAlreadyPendingError =>
