@@ -151,7 +151,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
               icon: icon,
               size: _iconSize,
               color: selected
-                  ? AppColors.accent
+                  ? AppColors.primary
                   : Theme.of(context).disabledColor,
             ),
             splashRadius: 28,
@@ -160,7 +160,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
             tooltip,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color: selected
-                  ? AppColors.accent
+                  ? AppColors.primary
                   : Theme.of(context).disabledColor,
             ),
           ),

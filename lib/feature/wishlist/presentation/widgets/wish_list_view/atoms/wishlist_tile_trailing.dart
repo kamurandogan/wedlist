@@ -16,8 +16,9 @@ class WishListTileTrailing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const HugeIcon(
-      icon: HugeIcons.strokeRoundedArrowRight01,
-      color: AppColors.accent,
+      icon: HugeIcons.strokeRoundedAdd01,
+      color: AppColors.primary,
+      
     );
   }
 }

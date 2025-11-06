@@ -11,7 +11,7 @@ class WishListBullet extends StatelessWidget {
       width: 12,
       height: 12,
       decoration: const BoxDecoration(
-        color: AppColors.accent,
+        color: AppColors.primary,
         shape: BoxShape.circle,
       ),
     );

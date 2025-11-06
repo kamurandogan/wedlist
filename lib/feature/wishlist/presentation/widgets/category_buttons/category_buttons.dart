@@ -76,12 +76,7 @@ class _CategoryButtonsState extends State<CategoryButtons> {
     final size = MediaQuery.of(context).size;
     return SizedBox(
       height: size.height * _categoryButtonHeightRatio,
-      child: BlocBuilder<SelectCategoryCubit, String>(
-        builder: (context, state) {
-          /// Kategori butonlarını yatay olarak gösteren ana widget.
-          return _categoryButtonBuilder();
-        },
-      ),
+      child: _categoryButtonBuilder(),
     );
   }
 
