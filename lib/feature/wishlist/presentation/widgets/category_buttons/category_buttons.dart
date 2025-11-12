@@ -87,7 +87,11 @@ class _CategoryButtonsState extends State<CategoryButtons> {
     /// ⚡ PERFORMANS: Üçlü nested BlocBuilder yerine BlocSelector kullanıyoruz
     /// Bu sayede her state değişiminde tüm widget ağacı rebuild olmuyor
 
-    return BlocSelector<CategorylistBloc, CategorylistState, CategorylistLoaded?>(
+    return BlocSelector<
+      CategorylistBloc,
+      CategorylistState,
+      CategorylistLoaded?
+    >(
       // Sadece CategorylistLoaded state'ini dinle
       selector: (state) => state is CategorylistLoaded ? state : null,
       builder: (context, categoryLoaded) {

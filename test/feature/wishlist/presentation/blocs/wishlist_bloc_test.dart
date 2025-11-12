@@ -36,7 +36,11 @@ void main() {
     );
     when(() => mockDowryListBloc.state).thenReturn(DowryListInitial());
 
-    bloc = WishListBloc(mockGetWishListItems, mockRefreshBus, mockDowryListBloc);
+    bloc = WishListBloc(
+      mockGetWishListItems,
+      mockRefreshBus,
+      mockDowryListBloc,
+    );
   });
 
   tearDown(() {
