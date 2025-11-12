@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:wedlist/core/item/item_entity.dart';
 import 'package:wedlist/core/refresh/refresh_bus.dart';
+import 'package:wedlist/feature/dowrylist/presentation/blocs/bloc/dowry_list_bloc.dart';
 import 'package:wedlist/feature/wishlist/domain/usecases/get_wishlist_items.dart';
 import 'package:wedlist/feature/wishlist/presentation/blocs/cubit/wishlist_bloc/wishlist_bloc.dart';
 
@@ -11,21 +12,31 @@ class MockGetWishListItems extends Mock implements GetWishListItems {}
 
 class MockRefreshBus extends Mock implements RefreshBus {}
 
+class MockDowryListBloc extends Mock implements DowryListBloc {}
+
 void main() {
   late WishListBloc bloc;
   late MockGetWishListItems mockGetWishListItems;
   late MockRefreshBus mockRefreshBus;
+  late MockDowryListBloc mockDowryListBloc;
 
   setUp(() {
     mockGetWishListItems = MockGetWishListItems();
     mockRefreshBus = MockRefreshBus();
+    mockDowryListBloc = MockDowryListBloc();
 
     // Mock RefreshBus stream
     when(() => mockRefreshBus.stream).thenAnswer(
       (_) => const Stream<RefreshEvent>.empty(),
     );
 
-    bloc = WishListBloc(mockGetWishListItems, mockRefreshBus);
+    // Mock DowryListBloc stream and state
+    when(() => mockDowryListBloc.stream).thenAnswer(
+      (_) => const Stream<DowryListState>.empty(),
+    );
+    when(() => mockDowryListBloc.state).thenReturn(DowryListInitial());
+
+    bloc = WishListBloc(mockGetWishListItems, mockRefreshBus, mockDowryListBloc);
   });
 
   tearDown(() {
@@ -41,12 +52,12 @@ void main() {
       ItemEntity(id: '2', title: 'Item 2', category: tCategory),
     ];
 
-    test('initial state should be WishListInitial', () {
-      expect(bloc.state, isA<WishListInitial>());
+    test('initial state should be WishListState.initial', () {
+      expect(bloc.state, const WishListState.initial());
     });
 
     blocTest<WishListBloc, WishListState>(
-      'emits [WishListLoading, WishListLoaded] when FetchWishListItems succeeds',
+      'emits [loading, loaded] when FetchWishListItems succeeds',
       build: () {
         when(
           () => mockGetWishListItems.call(any(), any(), any()),
@@ -55,8 +66,8 @@ void main() {
       },
       act: (bloc) => bloc.add(FetchWishListItems(tCategory, tLangCode, tId)),
       expect: () => [
-        isA<WishListLoading>(),
-        isA<WishListLoaded>().having((state) => state.items, 'items', tItems),
+        const WishListState.loading(),
+        WishListState.loaded(tItems),
       ],
       verify: (_) {
         verify(
@@ -66,7 +77,7 @@ void main() {
     );
 
     blocTest<WishListBloc, WishListState>(
-      'emits [WishListLoading, WishListLoaded] with empty list',
+      'emits [loading, loaded] with empty list',
       build: () {
         when(
           () => mockGetWishListItems.call(any(), any(), any()),
@@ -75,13 +86,13 @@ void main() {
       },
       act: (bloc) => bloc.add(FetchWishListItems(tCategory, tLangCode, tId)),
       expect: () => [
-        isA<WishListLoading>(),
-        isA<WishListLoaded>().having((state) => state.items, 'items', isEmpty),
+        const WishListState.loading(),
+        const WishListState.loaded([]),
       ],
     );
 
     blocTest<WishListBloc, WishListState>(
-      'emits [WishListLoading, WishListError] when Firebase exception occurs',
+      'emits [loading, error] when Firebase exception occurs',
       build: () {
         when(() => mockGetWishListItems.call(any(), any(), any())).thenThrow(
           FirebaseException(
@@ -94,17 +105,19 @@ void main() {
       },
       act: (bloc) => bloc.add(FetchWishListItems(tCategory, tLangCode, tId)),
       expect: () => [
-        isA<WishListLoading>(),
-        isA<WishListError>().having(
-          (state) => state.message,
-          'message',
-          isNotEmpty,
-        ),
+        const WishListState.loading(),
+        // Freezed state'ler için when/maybeWhen kullanarak test edebiliriz
+        predicate<WishListState>((state) {
+          return state.maybeWhen(
+            error: (message) => message.isNotEmpty,
+            orElse: () => false,
+          );
+        }),
       ],
     );
 
     blocTest<WishListBloc, WishListState>(
-      'emits [WishListLoading, WishListError] when generic exception occurs',
+      'emits [loading, error] when generic exception occurs',
       build: () {
         when(
           () => mockGetWishListItems.call(any(), any(), any()),
@@ -113,12 +126,13 @@ void main() {
       },
       act: (bloc) => bloc.add(FetchWishListItems(tCategory, tLangCode, tId)),
       expect: () => [
-        isA<WishListLoading>(),
-        isA<WishListError>().having(
-          (state) => state.message,
-          'message',
-          contains('Exception: Network error'),
-        ),
+        const WishListState.loading(),
+        predicate<WishListState>((state) {
+          return state.maybeWhen(
+            error: (message) => message.contains('Exception: Network error'),
+            orElse: () => false,
+          );
+        }),
       ],
     );
   });

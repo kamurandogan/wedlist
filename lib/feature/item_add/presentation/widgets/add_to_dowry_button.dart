@@ -52,7 +52,7 @@ class _AddToDowryButtonState extends State<AddToDowryButton>
   void dispose() {
     // Animasyon çalışıyorsa durdur ve iptal et
     if (_controller.isAnimating) {
-      _controller.stop(canceled: true);
+      _controller.stop();
     }
     _controller.dispose();
     super.dispose();
@@ -61,6 +61,10 @@ class _AddToDowryButtonState extends State<AddToDowryButton>
   Future<void> _handlePressed(BuildContext context) async {
     if (_clicked) return;
 
+    // Context'i await'lerden önce alalım
+    final photoCubit = context.read<AddPhotoCubit>();
+    final addItemBloc = context.read<AddItemBloc>();
+
     // Item limit kontrolü
     final limitService = sl<ItemLimitService>();
     final canAdd = await limitService.canAddItem();
@@ -68,7 +72,9 @@ class _AddToDowryButtonState extends State<AddToDowryButton>
     if (!canAdd) {
       // Limit doldu, dialog göster
       if (!mounted) return;
-      final result = await showItemLimitDialog(context);
+      final dialogContext = context;
+      // ignore: use_build_context_synchronously
+      final result = await showItemLimitDialog(dialogContext);
 
       // Kullanıcı iptal etti veya rewarded ad başarısız
       if (result != true) {
@@ -80,8 +86,8 @@ class _AddToDowryButtonState extends State<AddToDowryButton>
     // Item ekleme işlemine devam et
     if (!mounted) return;
     setState(() => _clicked = true);
-    final imgUrl = context.read<AddPhotoCubit>().state.imageUrl;
-    context.read<AddItemBloc>().add(
+    final imgUrl = photoCubit.state.imageUrl;
+    addItemBloc.add(
       AddItemButtonPressed(
         id: widget.item.id,
         title: widget.item.title,
@@ -108,14 +114,21 @@ class _AddToDowryButtonState extends State<AddToDowryButton>
           // Item başarıyla eklendi, limit service'i güncelle
           await sl<ItemLimitService>().onItemAdded();
 
+          // Context'i await'lerden önce alalım
+          if (!mounted) return;
+          // ignore: use_build_context_synchronously
+          final dowryListBloc = context.read<DowryListBloc>();
+          // ignore: use_build_context_synchronously
+          final router = GoRouter.of(context);
+
           // Çeyiz listesi tazelenmeli ki Wishlist filtre anında güncellensin
-          context.read<DowryListBloc>().add(FetchDowryListItems());
+          dowryListBloc.add(FetchDowryListItems());
           // Partner sahiplik simetrisini hızlıca iyileştir (özellikle acceptance sonrası ilk ekleme senaryosu)
           try {
             await sl<UserService>().ensureUserItemsSymmetric();
           } on Exception catch (_) {}
-          if (!mounted || !context.mounted) return;
-          context.go(AppRoute.main.path);
+          if (!mounted) return;
+          router.go(AppRoute.main.path);
         } else if (state is AddItemFailure) {
           if (!mounted || !context.mounted) return;
           ScaffoldMessenger.of(context).showSnackBar(

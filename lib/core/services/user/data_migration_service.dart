@@ -59,7 +59,7 @@ class DataMigrationService {
         'wishList': newWL,
         'receivedList': newRL,
       }, SetOptions(merge: true));
-    } catch (e, s) {
+    } on Exception catch (e, s) {
       AppLogger.error('Failed to migrate legacy string lists', e, s);
     }
   }

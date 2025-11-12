@@ -5,7 +5,13 @@ class GetWishListItems {
   GetWishListItems(this.repository);
   final WishListRepository repository;
 
+  /// One-time fetch (existing - backward compatible)
   Future<List<ItemEntity>> call(String category, String langCode, String id) {
     return repository.getItems(category, langCode, id);
+  }
+
+  /// ⚡ Real-time stream (NEW - for reactive updates)
+  Stream<List<ItemEntity>> stream(String category, String langCode, String id) {
+    return repository.getItemsStream(category, langCode, id);
   }
 }

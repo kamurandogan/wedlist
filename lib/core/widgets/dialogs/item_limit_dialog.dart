@@ -85,7 +85,7 @@ class _ItemLimitDialogState extends State<_ItemLimitDialog> {
           );
         }
       }
-    } catch (e) {
+    } on Exception catch (e) {
       setState(() => _isLoadingAd = false);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

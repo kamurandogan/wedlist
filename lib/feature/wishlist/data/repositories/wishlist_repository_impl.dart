@@ -16,6 +16,16 @@ class WishListRepositoryImpl implements WishListRepository {
     return remoteDataSource.getItems(category, langCode, id);
   }
 
+  /// ⚡ Real-time stream method
+  @override
+  Stream<List<ItemEntity>> getItemsStream(
+    String category,
+    String langCode,
+    String id,
+  ) {
+    return remoteDataSource.getItemsStream(category, langCode, id);
+  }
+
   @override
   Future<void> addItems(String category, List<String> titles) {
     return remoteDataSource.addItems(category, titles);

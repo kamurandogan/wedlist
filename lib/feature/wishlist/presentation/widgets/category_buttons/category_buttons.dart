@@ -69,170 +69,177 @@ class _CategoryButtonsState extends State<CategoryButtons> {
 
   @override
   Widget build(BuildContext context) {
-    return _categoryButtonBuilder();
+    // ⚡ Error handling için ayrı listener
+    return BlocListener<CategorylistBloc, CategorylistState>(
+      listenWhen: (previous, current) => current is CategorylistError,
+      listener: (context, state) {
+        if (state is CategorylistError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.message)),
+          );
+        }
+      },
+      child: _categoryButtonBuilder(),
+    );
   }
 
-  BlocBuilder<CategorylistBloc, CategorylistState> _categoryButtonBuilder() {
-    /// Tek bir kategori butonunu temsil eden widget (ayrıntı için category_button.dart'a bakınız)
-    return BlocBuilder<CategorylistBloc, CategorylistState>(
-      builder: (context, categorystate) {
-        if (categorystate is CategorylistLoading) {
+  Widget _categoryButtonBuilder() {
+    /// ⚡ PERFORMANS: Üçlü nested BlocBuilder yerine BlocSelector kullanıyoruz
+    /// Bu sayede her state değişiminde tüm widget ağacı rebuild olmuyor
+
+    return BlocSelector<CategorylistBloc, CategorylistState, CategorylistLoaded?>(
+      // Sadece CategorylistLoaded state'ini dinle
+      selector: (state) => state is CategorylistLoaded ? state : null,
+      builder: (context, categoryLoaded) {
+        // Loading durumu
+        if (categoryLoaded == null) {
           return const SizedBox.shrink();
+        }
 
-          /// Buton yüksekliğinin ekrana oranı
-        } else if (categorystate is CategorylistError) {
-          /// Hata durumunda kullanıcıya üstte SnackBar ile bilgi verelim
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            final contextFromBuilder = context;
-            ScaffoldMessenger.of(contextFromBuilder).showSnackBar(
-              SnackBar(content: Text(categorystate.message)),
-            );
-          });
-          return const SizedBox.shrink();
-        } else if (categorystate is CategorylistLoaded) {
-          // Kategori butonlarını; tamamlanmış (tüm öğeleri eklenmiş) kategorileri gizleyerek göster.
-          return BlocBuilder<DowryListBloc, DowryListState>(
-            builder: (context, dowryState) {
-              return BlocBuilder<SelectCategoryCubit, String>(
-                builder: (context, selectCategoryState) {
-                  final allCategories = categorystate.items;
+        // ⚡ İkinci selector: DowryList state'ini dinle
+        return BlocSelector<DowryListBloc, DowryListState, DowryListLoaded?>(
+          selector: (state) => state is DowryListLoaded ? state : null,
+          builder: (context, dowryLoaded) {
+            // ⚡ Üçüncü selector: Seçili kategoriyi dinle
+            return BlocSelector<SelectCategoryCubit, String, String>(
+              selector: (state) => state,
+              builder: (context, selectCategoryState) {
+                final allCategories = categoryLoaded.items;
 
-                  // Eğer wishlist henüz yüklenmediyse, filtre uygulamadan tüm kategorileri göster.
-                  // Bu, gereksiz UI titremesini önler.
-                  final wish = _wishlistLoaded
-                      ? _wishByCategory
-                      : const <String, Set<String>>{};
+                // Eğer wishlist henüz yüklenmediyse, filtre uygulamadan tüm kategorileri göster.
+                // Bu, gereksiz UI titremesini önler.
+                final wish = _wishlistLoaded
+                    ? _wishByCategory
+                    : const <String, Set<String>>{};
 
-                  String keyOf(String category, String title) =>
-                      '${_norm(category)}|${_norm(title)}';
-                  final ownedKeys = <String>{};
-                  if (dowryState is DowryListLoaded) {
-                    for (final u in dowryState.items) {
-                      ownedKeys.add(keyOf(u.category, u.title));
-                    }
+                String keyOf(String category, String title) =>
+                    '${_norm(category)}|${_norm(title)}';
+                final ownedKeys = <String>{};
+                if (dowryLoaded != null) {
+                  for (final u in dowryLoaded.items) {
+                    ownedKeys.add(keyOf(u.category, u.title));
                   }
+                }
 
-                  bool categoryHasRemaining(String category) {
-                    final titles = wish[_norm(category)];
-                    if (titles == null || titles.isEmpty) {
-                      // Wishlist bilgisi yoksa emin olamıyoruz; gösterelim.
-                      return true;
-                    }
-                    for (final t in titles) {
-                      if (!ownedKeys.contains(keyOf(category, t))) return true;
-                    }
-                    return false;
+                bool categoryHasRemaining(String category) {
+                  final titles = wish[_norm(category)];
+                  if (titles == null || titles.isEmpty) {
+                    // Wishlist bilgisi yoksa emin olamıyoruz; gösterelim.
+                    return true;
                   }
-
-                  final visibleCategories = <String>[
-                    for (final c in allCategories)
-                      if (categoryHasRemaining(c.title)) c.title,
-                  ];
-
-                  // Açılışta veya veri güncellenince: Seçili kategori görünür listede değilse
-                  // (yani tamamlanmışsa veya artık mevcut değilse), ilk tamamlanmamış kategoriyi seç.
-                  // Kullanıcı AddCategory görünümünü özellikle açtıysa (addCategorySelectionKey), dokunma.
-                  if (_wishlistLoaded &&
-                      dowryState is DowryListLoaded &&
-                      selectCategoryState != addCategorySelectionKey &&
-                      visibleCategories.isNotEmpty &&
-                      !visibleCategories.contains(selectCategoryState)) {
-                    WidgetsBinding.instance.addPostFrameCallback((_) {
-                      if (mounted) {
-                        context.read<SelectCategoryCubit>().selectCategory(
-                          visibleCategories.first,
-                        );
-                      }
-                    });
+                  for (final t in titles) {
+                    if (!ownedKeys.contains(keyOf(category, t))) return true;
                   }
+                  return false;
+                }
 
-                  return Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: [
-                      // Leading + button
-                      Material(
-                        color: Colors.transparent,
-                        child: InkWell(
-                          onTap: () {
-                            // Artık modal yok, sayfa içinde AddCategoryView göstereceğiz
-                            context.read<SelectCategoryCubit>().selectCategory(
-                              addCategorySelectionKey,
-                            );
-                          },
-                          borderRadius: BorderRadius.circular(8),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 12,
-                              vertical: 6,
+                final visibleCategories = <String>[
+                  for (final c in allCategories)
+                    if (categoryHasRemaining(c.title)) c.title,
+                ];
+
+                // Açılışta veya veri güncellenince: Seçili kategori görünür listede değilse
+                // (yani tamamlanmışsa veya artık mevcut değilse), ilk tamamlanmamış kategoriyi seç.
+                // Kullanıcı AddCategory görünümünü özellikle açtıysa (addCategorySelectionKey), dokunma.
+                if (_wishlistLoaded &&
+                    dowryLoaded != null &&
+                    selectCategoryState != addCategorySelectionKey &&
+                    visibleCategories.isNotEmpty &&
+                    !visibleCategories.contains(selectCategoryState)) {
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    if (mounted) {
+                      context.read<SelectCategoryCubit>().selectCategory(
+                        visibleCategories.first,
+                      );
+                    }
+                  });
+                }
+
+                return Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: [
+                    // Leading + button
+                    Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: () {
+                          // Artık modal yok, sayfa içinde AddCategoryView göstereceğiz
+                          context.read<SelectCategoryCubit>().selectCategory(
+                            addCategorySelectionKey,
+                          );
+                        },
+                        borderRadius: BorderRadius.circular(8),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 6,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: AppColors.accent.withValues(alpha: 0.4),
                             ),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(
-                                color: AppColors.accent.withValues(alpha: 0.4),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(
+                                Icons.add,
+                                size: 14,
+                                color: AppColors.accent,
                               ),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                const Icon(
-                                  Icons.add,
-                                  size: 14,
+                              const SizedBox(width: 4),
+                              Text(
+                                context.loc.addCategoryButtonText,
+                                style: const TextStyle(
                                   color: AppColors.accent,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 12,
                                 ),
-                                const SizedBox(width: 4),
-                                Text(
-                                  context.loc.addCategoryButtonText,
-                                  style: const TextStyle(
-                                    color: AppColors.accent,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                      // Categories
-                      ...visibleCategories.map((title) {
-                        final isSelected = title == selectCategoryState;
+                    ),
+                    // Categories
+                    ...visibleCategories.map((title) {
+                      final isSelected = title == selectCategoryState;
 
-                        // Label with item counts: always show remaining count => "Category (remaining)"
-                        // Remaining = wishlist items not yet owned. If dowry not loaded, owned set is empty
-                        // and remaining == total wishlist items in that category.
-                        var displayLabel = title;
-                        if (_wishlistLoaded) {
-                          final titles = wish[_norm(title)];
-                          if (titles != null && titles.isNotEmpty) {
-                            var remaining = 0;
-                            for (final t in titles) {
-                              if (!ownedKeys.contains(keyOf(title, t))) {
-                                remaining++;
-                              }
+                      // Label with item counts: always show remaining count => "Category (remaining)"
+                      // Remaining = wishlist items not yet owned. If dowry not loaded, owned set is empty
+                      // and remaining == total wishlist items in that category.
+                      var displayLabel = title;
+                      if (_wishlistLoaded) {
+                        final titles = wish[_norm(title)];
+                        if (titles != null && titles.isNotEmpty) {
+                          var remaining = 0;
+                          for (final t in titles) {
+                            if (!ownedKeys.contains(keyOf(title, t))) {
+                              remaining++;
                             }
-                            displayLabel = '$title ($remaining)';
                           }
+                          displayLabel = '$title ($remaining)';
                         }
-                        return CategoryButton(
-                          categoryName: displayLabel,
-                          isSelected: isSelected,
-                          onPressed: () {
-                            context.read<SelectCategoryCubit>().selectCategory(
-                              title,
-                            );
-                          },
-                        );
-                      }),
-                    ],
-                  );
-                },
-              );
-            },
-          );
-        }
-        return const SizedBox();
+                      }
+                      return CategoryButton(
+                        categoryName: displayLabel,
+                        isSelected: isSelected,
+                        onPressed: () {
+                          context.read<SelectCategoryCubit>().selectCategory(
+                            title,
+                          );
+                        },
+                      );
+                    }),
+                  ],
+                );
+              },
+            );
+          },
+        );
       },
     );
   }

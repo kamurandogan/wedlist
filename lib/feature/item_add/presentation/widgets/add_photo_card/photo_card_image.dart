@@ -8,6 +8,10 @@ class PhotoCardImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AddPhotoCubit, AddPhotoState>(
+      // ⚡ PERFORMANS: Sadece image verileri değiştiğinde rebuild et
+      buildWhen: (previous, current) =>
+          previous.previewBytes != current.previewBytes ||
+          previous.imageUrl != current.imageUrl,
       builder: (context, state) {
         final previewBytes = state.previewBytes;
         final imageUrl = state.imageUrl;

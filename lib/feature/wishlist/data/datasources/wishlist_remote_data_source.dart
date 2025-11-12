@@ -7,8 +7,15 @@ import 'package:wedlist/core/item/item_model.dart' as core;
 
 /// Wishlist verilerini uzak kaynaktan (Firestore) çeken soyut veri kaynağı arayüzü
 abstract class WishListRemoteDataSource {
-  /// Belirli bir kategoriye göre wishlist itemlarını getirir
+  /// Belirli bir kategoriye göre wishlist itemlarını getirir (one-time)
   Future<List<ItemEntity>> getItems(
+    String category,
+    String langCode,
+    String id,
+  );
+
+  /// ⚡ Real-time stream: Firestore değişikliklerini dinler
+  Stream<List<ItemEntity>> getItemsStream(
     String category,
     String langCode,
     String id,
@@ -113,6 +120,64 @@ class WishListRemoteDataSourceImpl implements WishListRemoteDataSource {
       default:
         return 'US';
     }
+  }
+
+  /// ⚡ Real-time stream implementation
+  @override
+  Stream<List<ItemEntity>> getItemsStream(
+    String category,
+    String langCode,
+    String id,
+  ) {
+    final uid = _auth.currentUser?.uid;
+    if (uid == null || uid.isEmpty) {
+      return Stream.error(StateError('Giriş gerekli'));
+    }
+
+    final userRef = firestore.collection('users').doc(uid);
+
+    // Firestore snapshot'larını dinle ve her değişiklikte yeni liste yayınla
+    return userRef.snapshots().asyncMap((snapshot) async {
+      final data = snapshot.data() ?? <String, dynamic>{};
+      final rawList = (data['wishList'] as List?)?.cast<Map<String, dynamic>>();
+      final country = await _resolveCountryFromData(data);
+
+      List<core.ItemModel> models;
+      if (rawList != null && rawList.isNotEmpty) {
+        models = rawList.map(core.ItemModel.fromJson).toList();
+      } else {
+        // Kullanıcının listesi boşsa base items'i sadece oku
+        final base = await firestore
+            .collection('items_${country.toUpperCase()}')
+            .get();
+        models = base.docs
+            .map(
+              (doc) => core.ItemModel.fromJson({
+                'id': doc.data()['id'] ?? doc.id,
+                'title': doc.data()['title'],
+                'category': doc.data()['category'],
+              }),
+            )
+            .toList();
+      }
+
+      // Deduplicate by normalized category+title
+      String norm(String s) => s.trim().toLowerCase();
+      String keyOf(core.ItemModel m) => '${norm(m.category)}|${norm(m.title)}';
+      final seen = <String>{};
+      final unique = <core.ItemModel>[];
+      for (final m in models) {
+        final k = keyOf(m);
+        if (seen.add(k)) unique.add(m);
+      }
+
+      // Entity'e çevir ve kategori filtresi uygula
+      final entities = unique.map((m) => m.toEntity()).toList();
+      final filtered = category.isEmpty
+          ? entities
+          : entities.where((e) => e.category == category).toList();
+      return filtered;
+    });
   }
 
   @override

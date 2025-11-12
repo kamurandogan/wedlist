@@ -2,7 +2,7 @@ part of 'add_photo_cubit.dart';
 
 enum AddPhotoStatus { initial, loading, success, failure }
 
-class AddPhotoState {
+class AddPhotoState extends Equatable {
   const AddPhotoState({
     this.previewBytes,
     this.imageUrl,
@@ -10,7 +10,7 @@ class AddPhotoState {
     this.progress,
   });
   final Uint8List? previewBytes; // Platform bağımsız önizleme verisi
-  final String? imageUrl; // Yüklenen görselin URL’si
+  final String? imageUrl; // Yüklenen görselin URL'si
   final AddPhotoStatus status;
   final double? progress; // 0.0 - 1.0
 
@@ -27,4 +27,7 @@ class AddPhotoState {
       progress: progress ?? this.progress,
     );
   }
+
+  @override
+  List<Object?> get props => [previewBytes, imageUrl, status, progress];
 }

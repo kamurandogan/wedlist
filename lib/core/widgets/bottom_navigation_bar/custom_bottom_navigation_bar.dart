@@ -19,6 +19,8 @@ class CustomBottomNavigationBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: BlocBuilder<NavigationCubit, SelectedPage>(
+        // ⚡ PERFORMANS: Sadece sayfa değiştiğinde rebuild
+        buildWhen: (previous, current) => previous != current,
         builder: (context, state) {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),

@@ -9,6 +9,11 @@ class PhotoCardGlassButtonArea extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AddPhotoCubit, AddPhotoState>(
+      // ⚡ PERFORMANS: Sadece status veya image değiştiğinde rebuild
+      buildWhen: (previous, current) =>
+          previous.status != current.status ||
+          previous.previewBytes != current.previewBytes ||
+          previous.imageUrl != current.imageUrl,
       builder: (context, state) {
         if (state.status == AddPhotoStatus.success &&
             (state.previewBytes != null ||

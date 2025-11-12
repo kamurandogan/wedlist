@@ -43,7 +43,7 @@ class WishlistInitializationService {
           .toList();
 
       await ref.set({'wishList': items}, SetOptions(merge: true));
-    } catch (e, s) {
+    } on Exception catch (e, s) {
       AppLogger.error('Failed to initialize wishlist', e, s);
     }
   }
@@ -77,7 +77,7 @@ class WishlistInitializationService {
           for (final e in pm.wishList) {
             byKey.putIfAbsent(key(e), () => e);
           }
-        } catch (e) {
+        } on Exception {
           // ignore
         }
       }
@@ -86,7 +86,7 @@ class WishlistInitializationService {
           .map((e) => core.ItemModel.fromEntity(e).toJson())
           .toList();
       await selfRef.set({'wishList': mergedJson}, SetOptions(merge: true));
-    } catch (e, s) {
+    } on Exception catch (e, s) {
       AppLogger.error('Failed to merge wishlist with collaborators', e, s);
     }
   }
@@ -122,7 +122,7 @@ class WishlistInitializationService {
           .map((e) => core.ItemModel.fromEntity(e).toJson())
           .toList();
       await selfRef.set({'wishList': mergedJson}, SetOptions(merge: true));
-    } catch (e, s) {
+    } on Exception catch (e, s) {
       AppLogger.error('Failed to import partner wishlist', e, s);
     }
   }
@@ -157,7 +157,7 @@ class WishlistInitializationService {
       await users.doc(partnerUid).set({
         'wishList': mergedJson,
       }, SetOptions(merge: true));
-    } catch (e, s) {
+    } on Exception catch (e, s) {
       AppLogger.error('Failed to import self wishlist into partner', e, s);
     }
   }

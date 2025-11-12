@@ -69,8 +69,9 @@ class _WishListViewContentState extends State<_WishListViewContent> {
       final initialCategory = selectCubit.state;
       final langCode = Localizations.localeOf(context).languageCode;
 
+      // ⚡ Artık WatchWishListItems kullanıyoruz - gerçek zamanlı güncellemeler!
       context.read<WishListBloc>().add(
-        FetchWishListItems(initialCategory, langCode, initialCategory),
+        WatchWishListItems(initialCategory, langCode, initialCategory),
       );
       context.read<CategorylistBloc>().add(
         FetchCategoryList(langCode, initialCategory),
@@ -84,67 +85,70 @@ class _WishListViewContentState extends State<_WishListViewContent> {
       listener: (context, categoryState) {
         final langCode = Localizations.localeOf(context).languageCode;
 
-        // State değiştiğinde event dispatch et
+        // ⚡ State değiştiğinde stream-based watch başlat
         context.read<WishListBloc>().add(
-          FetchWishListItems(categoryState, langCode, categoryState),
+          WatchWishListItems(categoryState, langCode, categoryState),
         );
         context.read<CategorylistBloc>().add(
           FetchCategoryList(langCode, categoryState),
         );
       },
       child: BlocConsumer<WishListBloc, WishListState>(
+        // ⚡ Performans: Sadece state tipi değiştiğinde listener çalışsın
+        listenWhen: (previous, current) =>
+            previous.runtimeType != current.runtimeType,
         listener: (context, state) {
-          if (state is WishListError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message)),
-            );
-          }
+          state.maybeWhen(
+            error: (message) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(message)),
+              );
+            },
+            orElse: () {},
+          );
         },
+        // ⚡ Performans: Sadece state gerçekten değiştiğinde rebuild et
+        buildWhen: (previous, current) => previous != current,
         builder: (context, state) {
-          // Yükleniyor durumu
-          if (state is WishListLoading) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          // Veri başarıyla yüklendiğinde
-          else if (state is WishListLoaded) {
-            // ✅ Filtering artık BLoC'ta yapılıyor! UI sadece render ediyor
-            final finalList = state.items;
-
-            if (finalList.isEmpty) {
-              return Expanded(
-                child: Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const ComplatedImage(),
-                      Text(context.loc.completedCategoryText),
-                    ],
+          return state.when(
+            // Başlangıç durumu
+            initial: () => const SizedBox(),
+            // Yükleniyor durumu
+            loading: () => const Center(child: CircularProgressIndicator()),
+            // Veri başarıyla yüklendiğinde
+            loaded: (items) {
+              // ✅ Filtering artık BLoC'ta yapılıyor! UI sadece render ediyor
+              if (items.isEmpty) {
+                return Expanded(
+                  child: Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const ComplatedImage(),
+                        Text(context.loc.completedCategoryText),
+                      ],
+                    ),
                   ),
+                );
+              }
+
+              return Expanded(
+                child: ListView.builder(
+                  itemCount: items.length,
+                  itemExtent: 70, // ListTile + Divider approximate height
+                  itemBuilder: (context, index) {
+                    final item = items[index];
+                    return WishListTile(item: item);
+                  },
                 ),
               );
-            }
-
-            return Expanded(
-              child: ListView.builder(
-                itemCount: finalList.length,
-                itemExtent: 70, // ListTile + Divider approximate height
-                itemBuilder: (context, index) {
-                  final item = finalList[index];
-                  return WishListTile(item: item);
-                },
-              ),
-            );
-          }
-          // Hata durumu
-          else if (state is WishListError) {
-            // Ayrıca sayfada da kısa bir bilgi gösterelim
-            return Center(
+            },
+            // Hata durumu
+            error: (message) => Center(
               child: Text(context.loc.somethingWentWrongErrorText),
-            );
-          }
-          // Varsayılan boş durum
-          return const SizedBox();
+            ),
+          );
         },
       ),
     );

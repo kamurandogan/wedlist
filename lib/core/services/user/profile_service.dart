@@ -54,7 +54,7 @@ class ProfileService {
       if (updates.isNotEmpty) {
         await ref.set(updates, SetOptions(merge: true));
       }
-    } catch (e, s) {
+    } on Exception catch (e, s) {
       AppLogger.error('Failed to ensure profile info', e, s);
     }
   }

@@ -1,17 +1,9 @@
 part of 'wishlist_bloc.dart';
 
-abstract class WishListState {}
-
-class WishListInitial extends WishListState {}
-
-class WishListLoading extends WishListState {}
-
-class WishListLoaded extends WishListState {
-  WishListLoaded(this.items);
-  final List<ItemEntity> items;
-}
-
-class WishListError extends WishListState {
-  WishListError(this.message);
-  final String message;
+@freezed
+class WishListState with _$WishListState {
+  const factory WishListState.initial() = _Initial;
+  const factory WishListState.loading() = _Loading;
+  const factory WishListState.loaded(List<ItemEntity> items) = _Loaded;
+  const factory WishListState.error(String message) = _Error;
 }

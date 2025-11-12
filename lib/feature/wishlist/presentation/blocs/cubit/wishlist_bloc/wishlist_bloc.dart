@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:equatable/equatable.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:wedlist/core/item/item_entity.dart';
 import 'package:wedlist/core/refresh/refresh_bus.dart';
 import 'package:wedlist/feature/dowrylist/presentation/blocs/bloc/dowry_list_bloc.dart';
@@ -9,20 +11,23 @@ import 'package:wedlist/feature/wishlist/domain/usecases/get_wishlist_items.dart
 
 part 'wishlist_event.dart';
 part 'wishlist_state.dart';
+part 'wishlist_bloc.freezed.dart';
 
 class WishListBloc extends Bloc<WishListEvent, WishListState> {
   WishListBloc(
     this.getWishListItems,
     this._refreshBus,
     this._dowryListBloc,
-  ) : super(WishListInitial()) {
+  ) : super(const WishListState.initial()) {
     on<FetchWishListItems>(_onFetch);
+    on<WatchWishListItems>(_onWatch); // ⚡ NEW: Stream-based watch
 
     // Ülke değiştiğinde son parametrelerle otomatik refresh
     _sub = _refreshBus.stream.listen((evt) {
       if (evt.type == RefreshEventType.countryChanged && _lastParams != null) {
+        // ⚡ Stream-based watch kullan
         add(
-          FetchWishListItems(
+          WatchWishListItems(
             _lastParams!.category,
             _lastParams!.langCode,
             _lastParams!.id,
@@ -33,13 +38,19 @@ class WishListBloc extends Bloc<WishListEvent, WishListState> {
 
     // DowryListBloc değiştiğinde filtering'i yeniden yap
     _dowrySub = _dowryListBloc.stream.listen((_) {
-      if (_lastParams != null && state is WishListLoaded) {
-        add(
-          FetchWishListItems(
-            _lastParams!.category,
-            _lastParams!.langCode,
-            _lastParams!.id,
-          ),
+      if (_lastParams != null) {
+        state.maybeWhen(
+          loaded: (_) {
+            // ⚡ Stream-based watch kullan
+            add(
+              WatchWishListItems(
+                _lastParams!.category,
+                _lastParams!.langCode,
+                _lastParams!.id,
+              ),
+            );
+          },
+          orElse: () {},
         );
       }
     });
@@ -51,11 +62,12 @@ class WishListBloc extends Bloc<WishListEvent, WishListState> {
   StreamSubscription<DowryListState>? _dowrySub;
   _FetchParams? _lastParams;
 
+  /// One-time fetch (existing method)
   Future<void> _onFetch(
     FetchWishListItems event,
     Emitter<WishListState> emit,
   ) async {
-    emit(WishListLoading());
+    emit(const WishListState.loading());
     try {
       _lastParams = _FetchParams(event.category, event.langCode, event.id);
       final items = await getWishListItems.call(
@@ -67,11 +79,41 @@ class WishListBloc extends Bloc<WishListEvent, WishListState> {
       // Filtering logic: DowryList'teki item'ları wishlist'ten çıkar
       final filteredItems = _filterItems(items);
 
-      emit(WishListLoaded(filteredItems));
+      emit(WishListState.loaded(filteredItems));
     } on FirebaseException catch (e) {
-      emit(WishListError(_firebaseErrorToMessage(e)));
+      emit(WishListState.error(_firebaseErrorToMessage(e)));
     } on Exception catch (e) {
-      emit(WishListError('Veriler yüklenemedi  : $e'));
+      emit(WishListState.error('Veriler yüklenemedi  : $e'));
+    }
+  }
+
+  /// ⚡ Real-time stream watch (NEW - ChatGPT sohbetindeki emit.forEach kullanımı)
+  Future<void> _onWatch(
+    WatchWishListItems event,
+    Emitter<WishListState> emit,
+  ) async {
+    emit(const WishListState.loading());
+    _lastParams = _FetchParams(event.category, event.langCode, event.id);
+
+    try {
+      // 🔥 Bu ChatGPT sohbetinde öğrendiğimiz emit.forEach kullanımı!
+      // Stream'deki her yeni değer geldiğinde otomatik olarak state yayınlar
+      await emit.forEach<List<ItemEntity>>(
+        getWishListItems.stream(event.category, event.langCode, event.id),
+        onData: (items) {
+          // Her yeni veri geldiğinde filtering uygula ve yayınla
+          final filteredItems = _filterItems(items);
+          return WishListState.loaded(filteredItems);
+        },
+        onError: (error, stackTrace) {
+          if (error is FirebaseException) {
+            return WishListState.error(_firebaseErrorToMessage(error));
+          }
+          return WishListState.error('Veriler yüklenemedi: $error');
+        },
+      );
+    } on Exception catch (e) {
+      emit(WishListState.error('Stream hatası: $e'));
     }
   }
 

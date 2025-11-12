@@ -9,64 +9,93 @@ version: 1.0.0+21
 environment:
   sdk: ">=3.8.0 <4.0.0"
 
+# ignore_for_file: sort_pub_dependencies
+
 dependencies:
-  auto_size_text: ^3.0.0
+  # Flutter SDK
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # State Management
   bloc: ^9.0.0
-  cached_network_image: ^3.3.1
-  cloud_firestore: ^6.0.3
-  crypto: ^3.0.3
-  cupertino_icons: ^1.0.8
-  dart_code_metrics_presets: ^2.25.0
+  flutter_bloc: ^9.1.0
   equatable: ^2.0.7
-  file_picker: ^10.3.2
+
+  # Firebase
+  cloud_firestore: ^6.0.3
   firebase_analytics: ^12.0.4
   firebase_auth: ^6.1.1
   firebase_core: ^4.2.0
   firebase_crashlytics: ^5.0.3
-  firebase_database: ^12.0.3
   firebase_storage: ^13.0.3
-  fl_chart: ^1.1.0
-  flutter:
-    sdk: flutter
-  flutter_bloc: ^9.1.0
-  flutter_localizations:
-    sdk: flutter
-  flutter_svg: ^2.2.0
-  fpdart: ^1.1.1
-  freezed_annotation: ^3.1.0
+
+  # Dependency Injection
   get_it: ^8.0.3
+
+  # Routing
   go_router: ^16.3.0
+
+  # UI Components
+  auto_size_text: ^3.0.0
+  cached_network_image: ^3.3.1
+  cupertino_icons: ^1.0.8
+  fl_chart: ^1.1.0
+  flutter_svg: ^2.2.0
   google_fonts: ^6.2.1
-  google_mobile_ads: ^6.0.0
-  google_sign_in: ^6.2.1
-  gradient_borders: ^1.0.1
   hugeicons: ^0.0.11
-  image: ^4.5.4
-  image_picker: ^1.2.0
-  in_app_purchase: ^3.1.11
-  intl: ^0.20.2
+
+  # Functional Programming
+  fpdart: ^1.1.1
+
+  # Code Generation
+  freezed_annotation: ^3.1.0
   json_annotation: ^4.9.0
+
+  # Authentication
+  google_sign_in: ^6.2.1
+  sign_in_with_apple: ^7.0.1
+
+  # File & Image Handling
+  file_picker: ^10.3.2
+  image_picker: ^1.2.0
+  mime: ^2.0.0
+
+  # Monetization
+  google_mobile_ads: ^6.0.0
+  in_app_purchase: ^3.1.11
+
+  # Utilities
+  crypto: ^3.0.3
+  intl: ^0.20.2
   logger: ^2.4.0
   meta: ^1.15.0
-  mime: ^2.0.0
   shared_preferences: ^2.5.3
-  sign_in_with_apple: ^7.0.1
-  smooth_page_indicator: ^1.2.1
   url_launcher: ^6.3.0
 
 dev_dependencies:
-  bloc_test: ^10.0.0
-  build_runner: ^2.7.0
-  fake_cloud_firestore: ^4.0.0
-  firebase_auth_mocks: ^0.15.1
-  flutter_launcher_icons: ^0.14.4
-  flutter_lints: ^6.0.0
+  # Flutter SDK
   flutter_test:
     sdk: flutter
+
+  # Testing
+  bloc_test: ^10.0.0
+  fake_cloud_firestore: ^4.0.0
+  firebase_auth_mocks: ^0.15.1
+  mocktail: ^1.0.3
+
+  # Code Generation
+  build_runner: ^2.7.0
   freezed: ^3.2.0
   json_serializable: ^6.10.0
-  mocktail: ^1.0.3
+
+  # Linting & Analysis
+  flutter_lints: ^6.0.0
   very_good_analysis: ^9.0.0
+
+  # Build Tools
+  flutter_launcher_icons: ^0.14.4
 
 flutter_icons:
   android: true
