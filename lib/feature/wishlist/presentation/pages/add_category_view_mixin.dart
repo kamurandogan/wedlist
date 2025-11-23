@@ -97,7 +97,7 @@ mixin AddCategoryViewMixin<T extends StatefulWidget> on State<T> {
       final langCode = Localizations.localeOf(context).languageCode;
       // WishListBloc üst seviyede sağlandığı için doğrudan erişilebilir
       context.read<WishListBloc>().add(
-        FetchWishListItems(name, langCode, name),
+        WishListEvent.fetch(name, langCode, name),
       );
     } on Exception catch (e) {
       if (context.mounted) {

@@ -1,5 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:wedlist/core/error/failures.dart';
 import 'package:wedlist/core/item/item_entity.dart';
 import 'package:wedlist/feature/wishlist/domain/repositories/wishlist_repository.dart';
 import 'package:wedlist/feature/wishlist/domain/usecases/get_wishlist_items.dart';
@@ -36,13 +38,13 @@ void main() {
       // arrange
       when(
         () => mockRepository.getItems(any(), any(), any()),
-      ).thenAnswer((_) async => tItems);
+      ).thenAnswer((_) async => right<Failure, List<ItemEntity>>(tItems));
 
       // act
       final result = await usecase.call(tCategory, tLangCode, tId);
 
       // assert
-      expect(result, equals(tItems));
+      expect(result, equals(right<Failure, List<ItemEntity>>(tItems)));
       verify(() => mockRepository.getItems(tCategory, tLangCode, tId));
       verifyNoMoreInteractions(mockRepository);
     });
@@ -51,27 +53,32 @@ void main() {
       // arrange
       when(
         () => mockRepository.getItems(any(), any(), any()),
-      ).thenAnswer((_) async => <ItemEntity>[]);
+      ).thenAnswer((_) async => right<Failure, List<ItemEntity>>(<ItemEntity>[]));
 
       // act
       final result = await usecase.call(tCategory, tLangCode, tId);
 
       // assert
-      expect(result, isEmpty);
+      result.fold(
+        (failure) => fail('Should return Right'),
+        (items) => expect(items, isEmpty),
+      );
       verify(() => mockRepository.getItems(tCategory, tLangCode, tId));
     });
 
-    test('should propagate exception when repository throws', () async {
+    test('should return Left when repository returns failure', () async {
       // arrange
+      const tFailure = UnexpectedFailure('Network error');
       when(
         () => mockRepository.getItems(any(), any(), any()),
-      ).thenThrow(Exception('Network error'));
+      ).thenAnswer((_) async => left<Failure, List<ItemEntity>>(tFailure));
 
-      // act & assert
-      expect(
-        () => usecase.call(tCategory, tLangCode, tId),
-        throwsException,
-      );
+      // act
+      final result = await usecase.call(tCategory, tLangCode, tId);
+
+      // assert
+      expect(result, equals(left<Failure, List<ItemEntity>>(tFailure)));
+      verify(() => mockRepository.getItems(tCategory, tLangCode, tId));
     });
   });
 }

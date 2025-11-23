@@ -71,7 +71,7 @@ class _WishListViewContentState extends State<_WishListViewContent> {
 
       // ⚡ Artık WatchWishListItems kullanıyoruz - gerçek zamanlı güncellemeler!
       context.read<WishListBloc>().add(
-        WatchWishListItems(initialCategory, langCode, initialCategory),
+        WishListEvent.watch(initialCategory, langCode, initialCategory),
       );
       context.read<CategorylistBloc>().add(
         FetchCategoryList(langCode, initialCategory),
@@ -87,7 +87,7 @@ class _WishListViewContentState extends State<_WishListViewContent> {
 
         // ⚡ State değiştiğinde stream-based watch başlat
         context.read<WishListBloc>().add(
-          WatchWishListItems(categoryState, langCode, categoryState),
+          WishListEvent.watch(categoryState, langCode, categoryState),
         );
         context.read<CategorylistBloc>().add(
           FetchCategoryList(langCode, categoryState),

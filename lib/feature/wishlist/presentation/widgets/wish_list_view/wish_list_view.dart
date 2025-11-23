@@ -22,7 +22,7 @@ class WishListView extends StatelessWidget {
 
           // ⚡ Seçili kategori ve dil koduna göre stream-based watch başlat
           context.read<WishListBloc>().add(
-            WatchWishListItems(categoryState, langCode, ''),
+            WishListEvent.watch(categoryState, langCode, ''),
           );
           context.read<CategorylistBloc>().add(
             FetchCategoryList(langCode, categoryState),

@@ -12,6 +12,13 @@ class DowryCategoryButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CategorylistBloc, CategorylistState>(
+      buildWhen: (previous, current) {
+        // Only rebuild when category list actually changes
+        if (previous is CategorylistLoaded && current is CategorylistLoaded) {
+          return previous.items.length != current.items.length;
+        }
+        return true;
+      },
       builder: (context, categoryState) {
         if (categoryState is CategorylistLoading) {
           return const SizedBox.shrink();
@@ -20,27 +27,26 @@ class DowryCategoryButtons extends StatelessWidget {
           return Center(child: Text('Hata: ${categoryState.message}'));
         }
         if (categoryState is CategorylistLoaded) {
-          return BlocBuilder<SelectCategoryCubit, String>(
-            builder: (context, selected) {
-              final items = categoryState.items;
-              return Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: items.map((item) {
-                  final cat = item.title;
-                  final isSelected = cat == selected;
+          final items = categoryState.items;
+          return Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: items.map((item) {
+              final cat = item.title;
+              // Use BlocSelector to only rebuild this button when its selection state changes
+              return BlocSelector<SelectCategoryCubit, String, bool>(
+                selector: (selected) => selected == cat,
+                builder: (context, isSelected) {
                   return DowryCategoryButton(
                     categoryName: cat,
                     isSelected: isSelected,
                     onPressed: () {
-                      context.read<SelectCategoryCubit>().selectCategory(
-                        cat,
-                      );
+                      context.read<SelectCategoryCubit>().selectCategory(cat);
                     },
                   );
-                }).toList(),
+                },
               );
-            },
+            }).toList(),
           );
         }
         return const SizedBox();

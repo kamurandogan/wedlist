@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:equatable/equatable.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:wedlist/core/error/failures.dart';
 import 'package:wedlist/core/item/item_entity.dart';
 import 'package:wedlist/core/refresh/refresh_bus.dart';
 import 'package:wedlist/feature/dowrylist/presentation/blocs/bloc/dowry_list_bloc.dart';
@@ -27,7 +27,7 @@ class WishListBloc extends Bloc<WishListEvent, WishListState> {
       if (evt.type == RefreshEventType.countryChanged && _lastParams != null) {
         // ⚡ Stream-based watch kullan
         add(
-          WatchWishListItems(
+          WishListEvent.watch(
             _lastParams!.category,
             _lastParams!.langCode,
             _lastParams!.id,
@@ -43,7 +43,7 @@ class WishListBloc extends Bloc<WishListEvent, WishListState> {
           loaded: (_) {
             // ⚡ Stream-based watch kullan
             add(
-              WatchWishListItems(
+              WishListEvent.watch(
                 _lastParams!.category,
                 _lastParams!.langCode,
                 _lastParams!.id,
@@ -68,23 +68,21 @@ class WishListBloc extends Bloc<WishListEvent, WishListState> {
     Emitter<WishListState> emit,
   ) async {
     emit(const WishListState.loading());
-    try {
-      _lastParams = _FetchParams(event.category, event.langCode, event.id);
-      final items = await getWishListItems.call(
-        event.category,
-        event.langCode,
-        event.id,
-      );
+    _lastParams = _FetchParams(event.category, event.langCode, event.id);
 
-      // Filtering logic: DowryList'teki item'ları wishlist'ten çıkar
-      final filteredItems = _filterItems(items);
+    final result = await getWishListItems.call(
+      event.category,
+      event.langCode,
+      event.id,
+    );
 
-      emit(WishListState.loaded(filteredItems));
-    } on FirebaseException catch (e) {
-      emit(WishListState.error(_firebaseErrorToMessage(e)));
-    } on Exception catch (e) {
-      emit(WishListState.error('Veriler yüklenemedi  : $e'));
-    }
+    result.fold(
+      (failure) => emit(WishListState.error(_failureToMessage(failure))),
+      (items) {
+        final filteredItems = _filterItems(items);
+        emit(WishListState.loaded(filteredItems));
+      },
+    );
   }
 
   /// ⚡ Real-time stream watch (NEW - ChatGPT sohbetindeki emit.forEach kullanımı)
@@ -95,26 +93,19 @@ class WishListBloc extends Bloc<WishListEvent, WishListState> {
     emit(const WishListState.loading());
     _lastParams = _FetchParams(event.category, event.langCode, event.id);
 
-    try {
-      // 🔥 Bu ChatGPT sohbetinde öğrendiğimiz emit.forEach kullanımı!
-      // Stream'deki her yeni değer geldiğinde otomatik olarak state yayınlar
-      await emit.forEach<List<ItemEntity>>(
-        getWishListItems.stream(event.category, event.langCode, event.id),
-        onData: (items) {
-          // Her yeni veri geldiğinde filtering uygula ve yayınla
-          final filteredItems = _filterItems(items);
-          return WishListState.loaded(filteredItems);
-        },
-        onError: (error, stackTrace) {
-          if (error is FirebaseException) {
-            return WishListState.error(_firebaseErrorToMessage(error));
-          }
-          return WishListState.error('Veriler yüklenemedi: $error');
-        },
-      );
-    } on Exception catch (e) {
-      emit(WishListState.error('Stream hatası: $e'));
-    }
+    // 🔥 Stream<Either<Failure, List<ItemEntity>>> kullanımı
+    await emit.forEach<Either<Failure, List<ItemEntity>>>(
+      getWishListItems.stream(event.category, event.langCode, event.id),
+      onData: (either) {
+        return either.fold(
+          (failure) => WishListState.error(_failureToMessage(failure)),
+          (items) {
+            final filteredItems = _filterItems(items);
+            return WishListState.loaded(filteredItems);
+          },
+        );
+      },
+    );
   }
 
   /// Wishlist item'larını filtreler: DowryList'te olanları çıkarır
@@ -161,19 +152,8 @@ class WishListBloc extends Bloc<WishListEvent, WishListState> {
     return super.close();
   }
 
-  String _firebaseErrorToMessage(FirebaseException e) {
-    switch (e.code) {
-      case 'permission-denied':
-        return 'Bu içerik için yetkiniz yok. Lütfen oturum açtığınızdan ve erişim izniniz olduğundan emin olun.';
-      case 'unavailable':
-        return 'Hizmet geçici olarak kullanılamıyor. Lütfen internet bağlantınızı kontrol edin ve tekrar deneyin.';
-      case 'cancelled':
-        return 'İşlem iptal edildi. Lütfen tekrar deneyin.';
-      case 'not-found':
-        return 'Kayıt bulunamadı.';
-      default:
-        return e.message ?? 'Bir hata oluştu.';
-    }
+  String _failureToMessage(Failure failure) {
+    return failure.toString();
   }
 }
 

@@ -68,7 +68,7 @@ import 'package:wedlist/feature/wishlist/data/datasources/category_remote_data_s
 import 'package:wedlist/feature/wishlist/data/datasources/wishlist_remote_data_source.dart';
 import 'package:wedlist/feature/wishlist/data/repositories/category_repository_impl.dart';
 import 'package:wedlist/feature/wishlist/data/repositories/wishlist_repository_impl.dart';
-import 'package:wedlist/feature/wishlist/domain/repositories/categort_repository.dart';
+import 'package:wedlist/feature/wishlist/domain/repositories/category_repository.dart';
 import 'package:wedlist/feature/wishlist/domain/repositories/wishlist_repository.dart';
 import 'package:wedlist/feature/wishlist/domain/usecases/add_wishlist_items.dart';
 import 'package:wedlist/feature/wishlist/domain/usecases/get_category_items.dart';

@@ -1,5 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:wedlist/core/error/failures.dart';
 import 'package:wedlist/core/item/item_entity.dart';
 import 'package:wedlist/feature/wishlist/data/datasources/wishlist_remote_data_source.dart';
 import 'package:wedlist/feature/wishlist/data/repositories/wishlist_repository_impl.dart';
@@ -26,7 +28,7 @@ void main() {
     ];
 
     group('getItems', () {
-      test('should return items from remote data source', () async {
+      test('should return Right with items from remote data source', () async {
         // arrange
         when(
           () => mockDataSource.getItems(any(), any(), any()),
@@ -36,14 +38,14 @@ void main() {
         final result = await repository.getItems(tCategory, tLangCode, tId);
 
         // assert
-        expect(result, equals(tItems));
+        expect(result, equals(right<Failure, List<ItemEntity>>(tItems)));
         verify(
           () => mockDataSource.getItems(tCategory, tLangCode, tId),
         ).called(1);
         verifyNoMoreInteractions(mockDataSource);
       });
 
-      test('should return empty list when data source returns empty', () async {
+      test('should return Right with empty list when data source returns empty', () async {
         // arrange
         when(
           () => mockDataSource.getItems(any(), any(), any()),
@@ -53,22 +55,28 @@ void main() {
         final result = await repository.getItems(tCategory, tLangCode, tId);
 
         // assert
-        expect(result, isEmpty);
+        result.fold(
+          (failure) => fail('Should return Right'),
+          (items) => expect(items, isEmpty),
+        );
         verify(
           () => mockDataSource.getItems(tCategory, tLangCode, tId),
         ).called(1);
       });
 
-      test('should propagate exception from data source', () async {
+      test('should return Left with UnexpectedFailure when exception occurs', () async {
         // arrange
         when(
           () => mockDataSource.getItems(any(), any(), any()),
         ).thenThrow(Exception('Network error'));
 
-        // act & assert
-        expect(
-          () => repository.getItems(tCategory, tLangCode, tId),
-          throwsException,
+        // act
+        final result = await repository.getItems(tCategory, tLangCode, tId);
+
+        // assert
+        result.fold(
+          (failure) => expect(failure, isA<UnexpectedFailure>()),
+          (items) => fail('Should return Left'),
         );
         verify(
           () => mockDataSource.getItems(tCategory, tLangCode, tId),
@@ -79,30 +87,34 @@ void main() {
     group('addItems', () {
       const tTitles = ['New Item 1', 'New Item 2'];
 
-      test('should call data source addItems', () async {
+      test('should return Right when addItems succeeds', () async {
         // arrange
         when(
           () => mockDataSource.addItems(any(), any()),
         ).thenAnswer((_) async => Future<void>.value());
 
         // act
-        await repository.addItems(tCategory, tTitles);
+        final result = await repository.addItems(tCategory, tTitles);
 
         // assert
+        expect(result, equals(right<Failure, void>(null)));
         verify(() => mockDataSource.addItems(tCategory, tTitles)).called(1);
         verifyNoMoreInteractions(mockDataSource);
       });
 
-      test('should propagate exception when addItems fails', () async {
+      test('should return Left when addItems fails', () async {
         // arrange
         when(
           () => mockDataSource.addItems(any(), any()),
         ).thenThrow(Exception('Add failed'));
 
-        // act & assert
-        expect(
-          () => repository.addItems(tCategory, tTitles),
-          throwsException,
+        // act
+        final result = await repository.addItems(tCategory, tTitles);
+
+        // assert
+        result.fold(
+          (failure) => expect(failure, isA<UnexpectedFailure>()),
+          (_) => fail('Should return Left'),
         );
         verify(() => mockDataSource.addItems(tCategory, tTitles)).called(1);
       });

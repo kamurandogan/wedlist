@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:meta/meta.dart';
 import 'package:wedlist/core/refresh/refresh_bus.dart';
 import 'package:wedlist/feature/wishlist/domain/entities/category_item.dart';
@@ -32,18 +31,17 @@ class CategorylistBloc extends Bloc<CategorylistEvent, CategorylistState> {
     Emitter<CategorylistState> emit,
   ) async {
     emit(CategorylistLoading());
-    try {
-      _lastParams = _CategoryFetchParams(event.category, event.langCode);
-      final items = await getCategoryListItems.call(
-        event.category,
-        event.langCode,
-      );
-      emit(CategorylistLoaded(items));
-    } on FirebaseException catch (e) {
-      emit(CategorylistError(_firebaseErrorToMessage(e)));
-    } on Exception catch (e) {
-      emit(CategorylistError(e.toString()));
-    }
+    _lastParams = _CategoryFetchParams(event.category, event.langCode);
+
+    final result = await getCategoryListItems.call(
+      event.category,
+      event.langCode,
+    );
+
+    result.fold(
+      (failure) => emit(CategorylistError(failure.toString())),
+      (items) => emit(CategorylistLoaded(items)),
+    );
   }
 
   Future<void> _onAddCustom(
@@ -68,18 +66,6 @@ class CategorylistBloc extends Bloc<CategorylistEvent, CategorylistState> {
     return super.close();
   }
 
-  String _firebaseErrorToMessage(FirebaseException e) {
-    switch (e.code) {
-      case 'permission-denied':
-        return 'Kategorileri görüntüleme yetkiniz yok. Lütfen oturum açın veya erişim izninizi kontrol edin.';
-      case 'unavailable':
-        return 'Hizmet geçici olarak kullanılamıyor. Lütfen internet bağlantınızı kontrol edin ve tekrar deneyin.';
-      case 'cancelled':
-        return 'İşlem iptal edildi. Lütfen tekrar deneyin.';
-      default:
-        return e.message ?? 'Bir hata oluştu.';
-    }
-  }
 }
 
 class _CategoryFetchParams {

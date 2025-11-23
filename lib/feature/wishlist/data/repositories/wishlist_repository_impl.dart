@@ -1,3 +1,5 @@
+import 'package:fpdart/fpdart.dart';
+import 'package:wedlist/core/error/failures.dart';
 import 'package:wedlist/core/item/item_entity.dart';
 import 'package:wedlist/feature/wishlist/data/datasources/wishlist_remote_data_source.dart';
 import 'package:wedlist/feature/wishlist/domain/repositories/wishlist_repository.dart';
@@ -7,27 +9,48 @@ class WishListRepositoryImpl implements WishListRepository {
   final WishListRemoteDataSource remoteDataSource;
 
   @override
-  // ignore: lines_longer_than_80_chars
-  Future<List<ItemEntity>> getItems(
+  Future<Either<Failure, List<ItemEntity>>> getItems(
     String category,
     String langCode,
     String id,
-  ) {
-    return remoteDataSource.getItems(category, langCode, id);
+  ) async {
+    try {
+      final items = await remoteDataSource.getItems(category, langCode, id);
+      return right(items);
+    } catch (e) {
+      return left(UnexpectedFailure(e.toString()));
+    }
   }
 
   /// ⚡ Real-time stream method
   @override
-  Stream<List<ItemEntity>> getItemsStream(
+  Stream<Either<Failure, List<ItemEntity>>> getItemsStream(
     String category,
     String langCode,
     String id,
   ) {
-    return remoteDataSource.getItemsStream(category, langCode, id);
+    return remoteDataSource
+        .getItemsStream(category, langCode, id)
+        .map(
+          (items) => right<Failure, List<ItemEntity>>(items),
+        )
+        .handleError((Object error) {
+          return left<Failure, List<ItemEntity>>(
+            UnexpectedFailure(error.toString()),
+          );
+        });
   }
 
   @override
-  Future<void> addItems(String category, List<String> titles) {
-    return remoteDataSource.addItems(category, titles);
+  Future<Either<Failure, void>> addItems(
+    String category,
+    List<String> titles,
+  ) async {
+    try {
+      await remoteDataSource.addItems(category, titles);
+      return right(null);
+    } catch (e) {
+      return left(UnexpectedFailure(e.toString()));
+    }
   }
 }

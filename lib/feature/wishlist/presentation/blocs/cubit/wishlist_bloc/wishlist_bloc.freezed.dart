@@ -12,6 +12,345 @@ part of 'wishlist_bloc.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
+mixin _$WishListEvent {
+
+ String get category; String get langCode; String get id;
+/// Create a copy of WishListEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$WishListEventCopyWith<WishListEvent> get copyWith => _$WishListEventCopyWithImpl<WishListEvent>(this as WishListEvent, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is WishListEvent&&(identical(other.category, category) || other.category == category)&&(identical(other.langCode, langCode) || other.langCode == langCode)&&(identical(other.id, id) || other.id == id));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,category,langCode,id);
+
+@override
+String toString() {
+  return 'WishListEvent(category: $category, langCode: $langCode, id: $id)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $WishListEventCopyWith<$Res>  {
+  factory $WishListEventCopyWith(WishListEvent value, $Res Function(WishListEvent) _then) = _$WishListEventCopyWithImpl;
+@useResult
+$Res call({
+ String category, String langCode, String id
+});
+
+
+
+
+}
+/// @nodoc
+class _$WishListEventCopyWithImpl<$Res>
+    implements $WishListEventCopyWith<$Res> {
+  _$WishListEventCopyWithImpl(this._self, this._then);
+
+  final WishListEvent _self;
+  final $Res Function(WishListEvent) _then;
+
+/// Create a copy of WishListEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? category = null,Object? langCode = null,Object? id = null,}) {
+  return _then(_self.copyWith(
+category: null == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
+as String,langCode: null == langCode ? _self.langCode : langCode // ignore: cast_nullable_to_non_nullable
+as String,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [WishListEvent].
+extension WishListEventPatterns on WishListEvent {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( FetchWishListItems value)?  fetch,TResult Function( WatchWishListItems value)?  watch,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case FetchWishListItems() when fetch != null:
+return fetch(_that);case WatchWishListItems() when watch != null:
+return watch(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( FetchWishListItems value)  fetch,required TResult Function( WatchWishListItems value)  watch,}){
+final _that = this;
+switch (_that) {
+case FetchWishListItems():
+return fetch(_that);case WatchWishListItems():
+return watch(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( FetchWishListItems value)?  fetch,TResult? Function( WatchWishListItems value)?  watch,}){
+final _that = this;
+switch (_that) {
+case FetchWishListItems() when fetch != null:
+return fetch(_that);case WatchWishListItems() when watch != null:
+return watch(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String category,  String langCode,  String id)?  fetch,TResult Function( String category,  String langCode,  String id)?  watch,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case FetchWishListItems() when fetch != null:
+return fetch(_that.category,_that.langCode,_that.id);case WatchWishListItems() when watch != null:
+return watch(_that.category,_that.langCode,_that.id);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String category,  String langCode,  String id)  fetch,required TResult Function( String category,  String langCode,  String id)  watch,}) {final _that = this;
+switch (_that) {
+case FetchWishListItems():
+return fetch(_that.category,_that.langCode,_that.id);case WatchWishListItems():
+return watch(_that.category,_that.langCode,_that.id);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String category,  String langCode,  String id)?  fetch,TResult? Function( String category,  String langCode,  String id)?  watch,}) {final _that = this;
+switch (_that) {
+case FetchWishListItems() when fetch != null:
+return fetch(_that.category,_that.langCode,_that.id);case WatchWishListItems() when watch != null:
+return watch(_that.category,_that.langCode,_that.id);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+
+
+class FetchWishListItems implements WishListEvent {
+  const FetchWishListItems(this.category, this.langCode, this.id);
+  
+
+@override final  String category;
+@override final  String langCode;
+@override final  String id;
+
+/// Create a copy of WishListEvent
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$FetchWishListItemsCopyWith<FetchWishListItems> get copyWith => _$FetchWishListItemsCopyWithImpl<FetchWishListItems>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FetchWishListItems&&(identical(other.category, category) || other.category == category)&&(identical(other.langCode, langCode) || other.langCode == langCode)&&(identical(other.id, id) || other.id == id));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,category,langCode,id);
+
+@override
+String toString() {
+  return 'WishListEvent.fetch(category: $category, langCode: $langCode, id: $id)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $FetchWishListItemsCopyWith<$Res> implements $WishListEventCopyWith<$Res> {
+  factory $FetchWishListItemsCopyWith(FetchWishListItems value, $Res Function(FetchWishListItems) _then) = _$FetchWishListItemsCopyWithImpl;
+@override @useResult
+$Res call({
+ String category, String langCode, String id
+});
+
+
+
+
+}
+/// @nodoc
+class _$FetchWishListItemsCopyWithImpl<$Res>
+    implements $FetchWishListItemsCopyWith<$Res> {
+  _$FetchWishListItemsCopyWithImpl(this._self, this._then);
+
+  final FetchWishListItems _self;
+  final $Res Function(FetchWishListItems) _then;
+
+/// Create a copy of WishListEvent
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? category = null,Object? langCode = null,Object? id = null,}) {
+  return _then(FetchWishListItems(
+null == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
+as String,null == langCode ? _self.langCode : langCode // ignore: cast_nullable_to_non_nullable
+as String,null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class WatchWishListItems implements WishListEvent {
+  const WatchWishListItems(this.category, this.langCode, this.id);
+  
+
+@override final  String category;
+@override final  String langCode;
+@override final  String id;
+
+/// Create a copy of WishListEvent
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$WatchWishListItemsCopyWith<WatchWishListItems> get copyWith => _$WatchWishListItemsCopyWithImpl<WatchWishListItems>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is WatchWishListItems&&(identical(other.category, category) || other.category == category)&&(identical(other.langCode, langCode) || other.langCode == langCode)&&(identical(other.id, id) || other.id == id));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,category,langCode,id);
+
+@override
+String toString() {
+  return 'WishListEvent.watch(category: $category, langCode: $langCode, id: $id)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $WatchWishListItemsCopyWith<$Res> implements $WishListEventCopyWith<$Res> {
+  factory $WatchWishListItemsCopyWith(WatchWishListItems value, $Res Function(WatchWishListItems) _then) = _$WatchWishListItemsCopyWithImpl;
+@override @useResult
+$Res call({
+ String category, String langCode, String id
+});
+
+
+
+
+}
+/// @nodoc
+class _$WatchWishListItemsCopyWithImpl<$Res>
+    implements $WatchWishListItemsCopyWith<$Res> {
+  _$WatchWishListItemsCopyWithImpl(this._self, this._then);
+
+  final WatchWishListItems _self;
+  final $Res Function(WatchWishListItems) _then;
+
+/// Create a copy of WishListEvent
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? category = null,Object? langCode = null,Object? id = null,}) {
+  return _then(WatchWishListItems(
+null == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
+as String,null == langCode ? _self.langCode : langCode // ignore: cast_nullable_to_non_nullable
+as String,null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
 mixin _$WishListState {
 
 
