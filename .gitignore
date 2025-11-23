@@ -91,3 +91,6 @@ wedlist_cert.pem
 # Claude Code MCP Configuration
 .claude/
 nul
+
+# Generated translation file
+untranslated.txt
