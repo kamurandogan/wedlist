@@ -1,5 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:wedlist/core/error/failures.dart';
 import 'package:wedlist/feature/login/domain/entities/user.dart';
 import 'package:wedlist/feature/login/domain/repositories/auth_repository.dart';
 import 'package:wedlist/feature/login/domain/usecases/sign_in_with_google.dart';
@@ -17,86 +19,35 @@ void main() {
 
   group('SignInWithGoogle UseCase', () {
     final tUser = User(id: 'google_user123', email: 'test@gmail.com');
+    const tFailure = AuthFailure('Google ile giriş başarısız.');
 
     test('should return User when Google sign in is successful', () async {
       // Arrange
       when(
         () => mockAuthRepository.signInWithGoogle(),
-      ).thenAnswer((_) async => tUser);
+      ).thenAnswer((_) async => Right<Failure, User>(tUser));
 
       // Act
       final result = await useCase();
 
       // Assert
-      expect(result, equals(tUser));
+      expect(result, Right<Failure, User>(tUser));
       verify(() => mockAuthRepository.signInWithGoogle()).called(1);
       verifyNoMoreInteractions(mockAuthRepository);
     });
 
-    test('should return null when Google sign in is cancelled', () async {
+    test('should return Failure when Google sign in fails', () async {
       // Arrange
       when(
         () => mockAuthRepository.signInWithGoogle(),
-      ).thenAnswer((_) async => null);
+      ).thenAnswer((_) async => const Left<Failure, User>(tFailure));
 
       // Act
       final result = await useCase();
 
       // Assert
-      expect(result, isNull);
+      expect(result, const Left<Failure, User>(tFailure));
       verify(() => mockAuthRepository.signInWithGoogle()).called(1);
-    });
-
-    test('should throw exception when Google sign in fails', () async {
-      // Arrange
-      when(
-        () => mockAuthRepository.signInWithGoogle(),
-      ).thenThrow(Exception('Google sign in failed'));
-
-      // Act & Assert
-      expect(
-        () => useCase(),
-        throwsA(isA<Exception>()),
-      );
-      verify(() => mockAuthRepository.signInWithGoogle()).called(1);
-    });
-
-    test('should handle network errors during Google sign in', () async {
-      // Arrange
-      when(
-        () => mockAuthRepository.signInWithGoogle(),
-      ).thenThrow(Exception('Network error'));
-
-      // Act & Assert
-      expect(
-        () => useCase(),
-        throwsA(
-          isA<Exception>().having(
-            (e) => e.toString(),
-            'message',
-            contains('Network error'),
-          ),
-        ),
-      );
-    });
-
-    test('should handle Google Play Services not available', () async {
-      // Arrange
-      when(
-        () => mockAuthRepository.signInWithGoogle(),
-      ).thenThrow(Exception('Google Play Services not available'));
-
-      // Act & Assert
-      expect(
-        () => useCase(),
-        throwsA(
-          isA<Exception>().having(
-            (e) => e.toString(),
-            'message',
-            contains('Google Play Services'),
-          ),
-        ),
-      );
     });
   });
 }

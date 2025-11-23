@@ -9,9 +9,9 @@ import 'package:wedlist/core/refresh/refresh_bus.dart';
 import 'package:wedlist/feature/dowrylist/presentation/blocs/bloc/dowry_list_bloc.dart';
 import 'package:wedlist/feature/wishlist/domain/usecases/get_wishlist_items.dart';
 
+part 'wishlist_bloc.freezed.dart';
 part 'wishlist_event.dart';
 part 'wishlist_state.dart';
-part 'wishlist_bloc.freezed.dart';
 
 class WishListBloc extends Bloc<WishListEvent, WishListState> {
   WishListBloc(
@@ -127,11 +127,14 @@ class WishListBloc extends Bloc<WishListEvent, WishListState> {
 
     // DowryList'teki item'ların key'lerini topla
     final ownedKeys = <String>{};
-    if (dowryState is DowryListLoaded) {
-      for (final u in dowryState.items) {
-        ownedKeys.add(keyOf(u.category, u.title));
-      }
-    }
+    dowryState.maybeWhen(
+      loaded: (items) {
+        for (final u in items) {
+          ownedKeys.add(keyOf(u.category, u.title));
+        }
+      },
+      orElse: () {},
+    );
 
     // Filtrele: owned olmayan item'ları al
     final filtered = ownedKeys.isEmpty

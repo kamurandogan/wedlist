@@ -83,7 +83,7 @@ Future<void> main() async {
         BlocProvider(create: (context) => SelectCategoryCubit()),
         BlocProvider(create: (context) => sl<CategorylistBloc>()),
         BlocProvider(
-          create: (context) => sl<DowryListBloc>()..add(SubscribeDowryItems()),
+          create: (context) => sl<DowryListBloc>()..add(const DowryListEvent.subscribeDowryItems()),
         ),
         BlocProvider(
           create: (context) => sl<AuthBloc>(),

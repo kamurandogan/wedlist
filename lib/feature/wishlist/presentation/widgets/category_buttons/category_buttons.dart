@@ -101,8 +101,11 @@ class _CategoryButtonsState extends State<CategoryButtons> {
         }
 
         // ⚡ İkinci selector: DowryList state'ini dinle
-        return BlocSelector<DowryListBloc, DowryListState, DowryListLoaded?>(
-          selector: (state) => state is DowryListLoaded ? state : null,
+        return BlocSelector<DowryListBloc, DowryListState, DowryListState?>(
+          selector: (state) => state.maybeWhen(
+            loaded: (_) => state,
+            orElse: () => null,
+          ),
           builder: (context, dowryLoaded) {
             // ⚡ Üçüncü selector: Seçili kategoriyi dinle
             return BlocSelector<SelectCategoryCubit, String, String>(
@@ -120,9 +123,14 @@ class _CategoryButtonsState extends State<CategoryButtons> {
                     '${_norm(category)}|${_norm(title)}';
                 final ownedKeys = <String>{};
                 if (dowryLoaded != null) {
-                  for (final u in dowryLoaded.items) {
-                    ownedKeys.add(keyOf(u.category, u.title));
-                  }
+                  dowryLoaded.maybeWhen(
+                    loaded: (items) {
+                      for (final u in items) {
+                        ownedKeys.add(keyOf(u.category, u.title));
+                      }
+                    },
+                    orElse: () {},
+                  );
                 }
 
                 bool categoryHasRemaining(String category) {

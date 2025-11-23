@@ -1,29 +1,13 @@
 part of 'dowry_list_bloc.dart';
 
-@immutable
-sealed class DowryListState {}
-
-final class DowryListInitial extends DowryListState {}
-
-final class DowryListLoading extends DowryListState {}
-
-final class DowryListLoaded extends DowryListState {
-  DowryListLoaded(this.items);
-  final List<UserItemEntity> items;
+@freezed
+class DowryListState with _$DowryListState {
+  const factory DowryListState.initial() = DowryListInitial;
+  const factory DowryListState.loading() = DowryListLoading;
+  const factory DowryListState.loaded(List<UserItemEntity> items) = DowryListLoaded;
+  const factory DowryListState.error(String message) = DowryListError;
+  const factory DowryListState.empty(String message) = DowryListEmpty;
+  const factory DowryListState.itemAdded() = DowryItemAdded;
+  const factory DowryListState.itemDeleted() = DowryItemDeleted;
+  const factory DowryListState.itemUpdated() = DowryItemUpdated;
 }
-
-final class DowryListError extends DowryListState {
-  DowryListError(this.message);
-  final String message;
-}
-
-final class DowryListEmpty extends DowryListState {
-  DowryListEmpty(this.message);
-  final String message;
-}
-
-final class DowryItemAdded extends DowryListState {}
-
-final class DowryItemDeleted extends DowryListState {}
-
-final class DowryItemUpdated extends DowryListState {}

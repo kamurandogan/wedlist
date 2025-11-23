@@ -42,15 +42,17 @@ mixin SplashPageMixin on State<SplashPage> {
 
           // DowryList verilerini bekle: Loaded/Empty/Error durumlarından biri gelene kadar (maks 4 sn)
           final dowryBloc = context.read<DowryListBloc>()
-            ..add(FetchDowryListItems());
+            ..add(const DowryListEvent.fetchDowryListItems());
           // Var olan bir fetch yoksa tetikle
           try {
             await dowryBloc.stream
                 .firstWhere(
-                  (s) =>
-                      s is DowryListLoaded ||
-                      s is DowryListEmpty ||
-                      s is DowryListError,
+                  (s) => s.maybeWhen(
+                    loaded: (_) => true,
+                    empty: (_) => true,
+                    error: (_) => true,
+                    orElse: () => false,
+                  ),
                 )
                 .timeout(const Duration(seconds: 4));
           } on Exception {

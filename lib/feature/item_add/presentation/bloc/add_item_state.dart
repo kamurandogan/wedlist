@@ -1,14 +1,9 @@
 part of 'add_item_bloc.dart';
 
-abstract class AddItemState {}
-
-class AddItemInitial extends AddItemState {}
-
-class AddItemLoading extends AddItemState {}
-
-class AddItemSuccess extends AddItemState {}
-
-class AddItemFailure extends AddItemState {
-  AddItemFailure(this.message);
-  final String message;
+@freezed
+class AddItemState with _$AddItemState {
+  const factory AddItemState.initial() = AddItemInitial;
+  const factory AddItemState.loading() = AddItemLoading;
+  const factory AddItemState.success() = AddItemSuccess;
+  const factory AddItemState.failure(String message) = AddItemFailure;
 }

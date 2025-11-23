@@ -136,7 +136,7 @@ class _WishListViewContentState extends State<_WishListViewContent> {
               return Expanded(
                 child: ListView.builder(
                   itemCount: items.length,
-                  itemExtent: 70, // ListTile + Divider approximate height
+                  // itemExtent: 70, // ListTile + Divider approximate height
                   itemBuilder: (context, index) {
                     final item = items[index];
                     return WishListTile(item: item);

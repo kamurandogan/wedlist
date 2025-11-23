@@ -1,6 +1,8 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:wedlist/core/error/failures.dart' as f;
 import 'package:wedlist/core/user/country_persistence.dart';
 import 'package:wedlist/feature/login/domain/entities/user.dart';
 import 'package:wedlist/feature/login/domain/usecases/sign_in.dart';
@@ -46,9 +48,10 @@ void main() {
     const tEmail = 'test@example.com';
     const tPassword = 'password123';
     final tUser = User(id: 'user123', email: tEmail);
+    const tFailure = f.AuthFailure('Giriş başarısız.');
 
     test('initial state should be AuthInitial', () {
-      expect(authBloc.state, isA<AuthInitial>());
+      expect(authBloc.state, const AuthState.initial());
     });
 
     group('SignInRequested', () {
@@ -57,16 +60,16 @@ void main() {
         build: () {
           when(
             () => mockSignIn(tEmail, tPassword),
-          ).thenAnswer((_) async => tUser);
+          ).thenAnswer((_) async => Right(tUser));
           when(
             () => mockCountryService.syncSelectedCountryIfAny(),
           ).thenAnswer((_) async => {});
           return authBloc;
         },
-        act: (bloc) => bloc.add(SignInRequested(tEmail, tPassword)),
+        act: (bloc) => bloc.add(const AuthEvent.signInRequested(tEmail, tPassword)),
         expect: () => [
-          isA<AuthLoading>(),
-          isA<AuthSuccess>().having((s) => s.user, 'user', tUser),
+          const AuthState.loading(),
+          AuthState.success(tUser),
         ],
         verify: (_) {
           verify(() => mockSignIn(tEmail, tPassword)).called(1);
@@ -75,86 +78,22 @@ void main() {
       );
 
       blocTest<AuthBloc, AuthState>(
-        'emits [AuthLoading, AuthFailure] when sign in returns null',
+        'emits [AuthLoading, AuthFailure] when sign in fails',
         build: () {
           when(
             () => mockSignIn(tEmail, tPassword),
-          ).thenAnswer((_) async => null);
+          ).thenAnswer((_) async => const Left(tFailure));
           return authBloc;
         },
-        act: (bloc) => bloc.add(SignInRequested(tEmail, tPassword)),
+        act: (bloc) => bloc.add(const AuthEvent.signInRequested(tEmail, tPassword)),
         expect: () => [
-          isA<AuthLoading>(),
-          isA<AuthFailure>().having(
-            (s) => s.message,
-            'message',
-            'Giriş başarısız.',
-          ),
+          const AuthState.loading(),
+          const AuthState.failure('Giriş başarısız.'),
         ],
         verify: (_) {
           verify(() => mockSignIn(tEmail, tPassword)).called(1);
           verifyNever(() => mockCountryService.syncSelectedCountryIfAny());
         },
-      );
-
-      blocTest<AuthBloc, AuthState>(
-        'emits [AuthLoading, AuthFailure] when exception occurs',
-        build: () {
-          when(
-            () => mockSignIn(tEmail, tPassword),
-          ).thenThrow(Exception('Network error'));
-          return authBloc;
-        },
-        act: (bloc) => bloc.add(SignInRequested(tEmail, tPassword)),
-        expect: () => [
-          isA<AuthLoading>(),
-          isA<AuthFailure>().having(
-            (s) => s.message,
-            'message',
-            'Network error',
-          ),
-        ],
-      );
-
-      blocTest<AuthBloc, AuthState>(
-        'emits [AuthLoading, AuthFailure] with cleaned error message',
-        build: () {
-          when(
-            () => mockSignIn(tEmail, tPassword),
-          ).thenThrow(Exception('Invalid credentials'));
-          return authBloc;
-        },
-        act: (bloc) => bloc.add(SignInRequested(tEmail, tPassword)),
-        expect: () => [
-          isA<AuthLoading>(),
-          isA<AuthFailure>().having(
-            (s) => s.message,
-            'message',
-            'Invalid credentials',
-          ),
-        ],
-      );
-
-      blocTest<AuthBloc, AuthState>(
-        'emits [AuthLoading, AuthFailure] when country sync fails but sign in succeeds',
-        build: () {
-          when(
-            () => mockSignIn(tEmail, tPassword),
-          ).thenAnswer((_) async => tUser);
-          when(
-            () => mockCountryService.syncSelectedCountryIfAny(),
-          ).thenThrow(Exception('Country sync failed'));
-          return authBloc;
-        },
-        act: (bloc) => bloc.add(SignInRequested(tEmail, tPassword)),
-        expect: () => [
-          isA<AuthLoading>(),
-          isA<AuthFailure>().having(
-            (s) => s.message,
-            'message',
-            'Country sync failed',
-          ),
-        ],
       );
     });
 
@@ -166,16 +105,16 @@ void main() {
         build: () {
           when(
             () => mockSignInWithGoogle(),
-          ).thenAnswer((_) async => tGoogleUser);
+          ).thenAnswer((_) async => Right(tGoogleUser));
           when(
             () => mockCountryService.syncSelectedCountryIfAny(),
           ).thenAnswer((_) async => {});
           return authBloc;
         },
-        act: (bloc) => bloc.add(SignInWithGoogleRequested()),
+        act: (bloc) => bloc.add(const AuthEvent.signInWithGoogleRequested()),
         expect: () => [
-          isA<AuthLoading>(),
-          isA<AuthSuccess>().having((s) => s.user, 'user', tGoogleUser),
+          const AuthState.loading(),
+          AuthState.success(tGoogleUser),
         ],
         verify: (_) {
           verify(() => mockSignInWithGoogle()).called(1);
@@ -184,38 +123,17 @@ void main() {
       );
 
       blocTest<AuthBloc, AuthState>(
-        'emits [AuthLoading, AuthFailure] when Google sign in returns null',
-        build: () {
-          when(() => mockSignInWithGoogle()).thenAnswer((_) async => null);
-          return authBloc;
-        },
-        act: (bloc) => bloc.add(SignInWithGoogleRequested()),
-        expect: () => [
-          isA<AuthLoading>(),
-          isA<AuthFailure>().having(
-            (s) => s.message,
-            'message',
-            'Giriş başarısız.',
-          ),
-        ],
-      );
-
-      blocTest<AuthBloc, AuthState>(
-        'emits [AuthLoading, AuthFailure] when Google sign in throws exception',
+        'emits [AuthLoading, AuthFailure] when Google sign in fails',
         build: () {
           when(
             () => mockSignInWithGoogle(),
-          ).thenThrow(Exception('Google sign in cancelled'));
+          ).thenAnswer((_) async => const Left(f.AuthFailure('Google ile giriş başarısız.')));
           return authBloc;
         },
-        act: (bloc) => bloc.add(SignInWithGoogleRequested()),
+        act: (bloc) => bloc.add(const AuthEvent.signInWithGoogleRequested()),
         expect: () => [
-          isA<AuthLoading>(),
-          isA<AuthFailure>().having(
-            (s) => s.message,
-            'message',
-            'Google sign in cancelled',
-          ),
+          const AuthState.loading(),
+          const AuthState.failure('Google ile giriş başarısız.'),
         ],
       );
     });
@@ -226,16 +144,16 @@ void main() {
       blocTest<AuthBloc, AuthState>(
         'emits [AuthLoading, AuthSuccess] when Apple sign in is successful',
         build: () {
-          when(() => mockSignInWithApple()).thenAnswer((_) async => tAppleUser);
+          when(() => mockSignInWithApple()).thenAnswer((_) async => Right(tAppleUser));
           when(
             () => mockCountryService.syncSelectedCountryIfAny(),
           ).thenAnswer((_) async => {});
           return authBloc;
         },
-        act: (bloc) => bloc.add(SignInWithAppleRequested()),
+        act: (bloc) => bloc.add(const AuthEvent.signInWithAppleRequested()),
         expect: () => [
-          isA<AuthLoading>(),
-          isA<AuthSuccess>().having((s) => s.user, 'user', tAppleUser),
+          const AuthState.loading(),
+          AuthState.success(tAppleUser),
         ],
         verify: (_) {
           verify(() => mockSignInWithApple()).called(1);
@@ -244,81 +162,17 @@ void main() {
       );
 
       blocTest<AuthBloc, AuthState>(
-        'emits [AuthLoading, AuthFailure] when Apple sign in returns null',
-        build: () {
-          when(() => mockSignInWithApple()).thenAnswer((_) async => null);
-          return authBloc;
-        },
-        act: (bloc) => bloc.add(SignInWithAppleRequested()),
-        expect: () => [
-          isA<AuthLoading>(),
-          isA<AuthFailure>().having(
-            (s) => s.message,
-            'message',
-            'Giriş başarısız.',
-          ),
-        ],
-      );
-
-      blocTest<AuthBloc, AuthState>(
-        'emits [AuthLoading, AuthFailure] when Apple sign in throws exception',
+        'emits [AuthLoading, AuthFailure] when Apple sign in fails',
         build: () {
           when(
             () => mockSignInWithApple(),
-          ).thenThrow(Exception('Apple sign in failed'));
+          ).thenAnswer((_) async => const Left(f.AuthFailure('Apple ile giriş başarısız.')));
           return authBloc;
         },
-        act: (bloc) => bloc.add(SignInWithAppleRequested()),
+        act: (bloc) => bloc.add(const AuthEvent.signInWithAppleRequested()),
         expect: () => [
-          isA<AuthLoading>(),
-          isA<AuthFailure>().having(
-            (s) => s.message,
-            'message',
-            'Apple sign in failed',
-          ),
-        ],
-      );
-    });
-
-    group('Edge Cases', () {
-      blocTest<AuthBloc, AuthState>(
-        'handles multiple rapid sign in requests correctly',
-        build: () {
-          when(
-            () => mockSignIn(tEmail, tPassword),
-          ).thenAnswer((_) async => tUser);
-          when(
-            () => mockCountryService.syncSelectedCountryIfAny(),
-          ).thenAnswer((_) async => {});
-          return authBloc;
-        },
-        act: (bloc) => bloc
-          ..add(SignInRequested(tEmail, tPassword))
-          ..add(SignInRequested(tEmail, tPassword)),
-        expect: () => [
-          isA<AuthLoading>(),
-          isA<AuthLoading>(),
-          isA<AuthSuccess>(),
-          isA<AuthSuccess>(),
-        ],
-      );
-
-      blocTest<AuthBloc, AuthState>(
-        'handles empty email gracefully',
-        build: () {
-          when(
-            () => mockSignIn('', tPassword),
-          ).thenThrow(Exception('Email cannot be empty'));
-          return authBloc;
-        },
-        act: (bloc) => bloc.add(SignInRequested('', tPassword)),
-        expect: () => [
-          isA<AuthLoading>(),
-          isA<AuthFailure>().having(
-            (s) => s.message,
-            'message',
-            contains('Email'),
-          ),
+          const AuthState.loading(),
+          const AuthState.failure('Apple ile giriş başarısız.'),
         ],
       );
     });

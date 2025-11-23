@@ -1,5 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:wedlist/core/error/failures.dart';
 import 'package:wedlist/feature/login/domain/entities/user.dart';
 import 'package:wedlist/feature/login/domain/repositories/auth_repository.dart';
 import 'package:wedlist/feature/login/domain/usecases/sign_in.dart';
@@ -19,76 +21,35 @@ void main() {
     const tEmail = 'test@example.com';
     const tPassword = 'password123';
     final tUser = User(id: 'user123', email: tEmail);
+    const tFailure = AuthFailure('Giriş başarısız.');
 
     test('should return User when sign in is successful', () async {
       // Arrange
       when(
         () => mockAuthRepository.signIn(tEmail, tPassword),
-      ).thenAnswer((_) async => tUser);
+      ).thenAnswer((_) async => Right<Failure, User>(tUser));
 
       // Act
       final result = await useCase(tEmail, tPassword);
 
       // Assert
-      expect(result, equals(tUser));
+      expect(result, Right<Failure, User>(tUser));
       verify(() => mockAuthRepository.signIn(tEmail, tPassword)).called(1);
       verifyNoMoreInteractions(mockAuthRepository);
     });
 
-    test('should return null when sign in fails', () async {
+    test('should return Failure when sign in fails', () async {
       // Arrange
       when(
         () => mockAuthRepository.signIn(tEmail, tPassword),
-      ).thenAnswer((_) async => null);
+      ).thenAnswer((_) async => const Left<Failure, User>(tFailure));
 
       // Act
       final result = await useCase(tEmail, tPassword);
 
       // Assert
-      expect(result, isNull);
+      expect(result, const Left<Failure, User>(tFailure));
       verify(() => mockAuthRepository.signIn(tEmail, tPassword)).called(1);
-    });
-
-    test('should throw exception when repository throws', () async {
-      // Arrange
-      when(
-        () => mockAuthRepository.signIn(tEmail, tPassword),
-      ).thenThrow(Exception('Network error'));
-
-      // Act & Assert
-      expect(
-        () => useCase(tEmail, tPassword),
-        throwsA(isA<Exception>()),
-      );
-      verify(() => mockAuthRepository.signIn(tEmail, tPassword)).called(1);
-    });
-
-    test('should handle empty email', () async {
-      // Arrange
-      const emptyEmail = '';
-      when(
-        () => mockAuthRepository.signIn(emptyEmail, tPassword),
-      ).thenThrow(Exception('Email cannot be empty'));
-
-      // Act & Assert
-      expect(
-        () => useCase(emptyEmail, tPassword),
-        throwsA(isA<Exception>()),
-      );
-    });
-
-    test('should handle empty password', () async {
-      // Arrange
-      const emptyPassword = '';
-      when(
-        () => mockAuthRepository.signIn(tEmail, emptyPassword),
-      ).thenThrow(Exception('Password cannot be empty'));
-
-      // Act & Assert
-      expect(
-        () => useCase(tEmail, emptyPassword),
-        throwsA(isA<Exception>()),
-      );
     });
   });
 }

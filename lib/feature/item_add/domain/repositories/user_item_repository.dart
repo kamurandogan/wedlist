@@ -4,9 +4,9 @@ import 'package:wedlist/feature/item_add/domain/entities/user_item_entity.dart';
 
 abstract class UserItemRepository {
   Future<Either<Failure, Unit>> addUserItem(UserItemEntity item);
-  Future<UserItemEntity?> fetchUserItemById(String id);
-  Future<List<UserItemEntity>> fetchAllUserItems();
-  Future<void> updateUserItem(UserItemEntity item);
-  Future<void> deleteUserItem(String id);
+  Future<Either<Failure, UserItemEntity?>> fetchUserItemById(String id);
+  Future<Either<Failure, List<UserItemEntity>>> fetchAllUserItems();
+  Future<Either<Failure, Unit>> updateUserItem(UserItemEntity item);
+  Future<Either<Failure, Unit>> deleteUserItem(String id);
   Stream<List<UserItemEntity>> watchAllUserItems();
 }

@@ -88,7 +88,7 @@ class _AddToDowryButtonState extends State<AddToDowryButton>
     setState(() => _clicked = true);
     final imgUrl = photoCubit.state.imageUrl;
     addItemBloc.add(
-      AddItemButtonPressed(
+      AddItemEvent.addItemButtonPressed(
         id: widget.item.id,
         title: widget.item.title,
         category: widget.item.category,
@@ -110,39 +110,43 @@ class _AddToDowryButtonState extends State<AddToDowryButton>
     final isDisabled = _clicked || isUploading; // Fotoğraf zorunlu değil
     return BlocListener<AddItemBloc, AddItemState>(
       listener: (context, state) async {
-        if (state is AddItemSuccess) {
-          // Item başarıyla eklendi, limit service'i güncelle
-          await sl<ItemLimitService>().onItemAdded();
+        await state.maybeWhen(
+          success: () async {
+            // Item başarıyla eklendi, limit service'i güncelle
+            await sl<ItemLimitService>().onItemAdded();
 
-          // Context'i await'lerden önce alalım
-          if (!mounted) return;
-          // ignore: use_build_context_synchronously
-          final dowryListBloc = context.read<DowryListBloc>();
-          // ignore: use_build_context_synchronously
-          final router = GoRouter.of(context);
+            // Context'i await'lerden önce alalım
+            if (!mounted) return;
+            // ignore: use_build_context_synchronously
+            final dowryListBloc = context.read<DowryListBloc>();
+            // ignore: use_build_context_synchronously
+            final router = GoRouter.of(context);
 
-          // Çeyiz listesi tazelenmeli ki Wishlist filtre anında güncellensin
-          dowryListBloc.add(FetchDowryListItems());
-          // Partner sahiplik simetrisini hızlıca iyileştir (özellikle acceptance sonrası ilk ekleme senaryosu)
-          try {
-            await sl<UserService>().ensureUserItemsSymmetric();
-          } on Exception catch (_) {}
-          if (!mounted) return;
-          router.go(AppRoute.main.path);
-        } else if (state is AddItemFailure) {
-          if (!mounted || !context.mounted) return;
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message)),
-          );
-          if (mounted) {
-            setState(() {
-              _clicked = false;
-            });
-            if (!_controller.isAnimating) {
-              await _controller.reverse();
+            // Çeyiz listesi tazelenmeli ki Wishlist filtre anında güncellensin
+            dowryListBloc.add(const DowryListEvent.fetchDowryListItems());
+            // Partner sahiplik simetrisini hızlıca iyileştir (özellikle acceptance sonrası ilk ekleme senaryosu)
+            try {
+              await sl<UserService>().ensureUserItemsSymmetric();
+            } on Exception catch (_) {}
+            if (!mounted) return;
+            router.go(AppRoute.main.path);
+          },
+          failure: (message) async {
+            if (!mounted || !context.mounted) return;
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(message)),
+            );
+            if (mounted) {
+              setState(() {
+                _clicked = false;
+              });
+              if (!_controller.isAnimating) {
+                await _controller.reverse();
+              }
             }
-          }
-        }
+          },
+          orElse: () {},
+        );
       },
       child: Padding(
         padding: const EdgeInsets.only(left: 100, right: 100, bottom: 16),

@@ -19,42 +19,39 @@ class DowryItemListView extends StatelessWidget {
         builder: (context, selectedCategory) {
           return BlocBuilder<DowryListBloc, DowryListState>(
             builder: (context, state) {
-              if (state is DowryListLoading) {
-                return const DowtyListLoadingIndicator();
-              }
-              if (state is DowryListError) {
-                return ErrorText(text: state.message);
-              }
-              if (state is DowryListLoaded) {
-                final filtered =
-                    (selectedCategory.isEmpty
-                          ? List<UserItemEntity>.of(state.items)
-                          : state.items
-                                .where((e) => e.category == selectedCategory)
-                                .toList())
-                      ..sort((a, b) {
-                        final epoch = DateTime.fromMillisecondsSinceEpoch(0);
-                        final da = a.createdAt ?? epoch;
-                        final db = b.createdAt ?? epoch;
-                        return db.compareTo(da);
-                      });
-                if (filtered.isEmpty) {
-                  return const EmptyCategoryText();
-                }
-                return ListView.builder(
-                  itemCount: filtered.length,
-                  itemBuilder: (context, index) {
-                    final item = filtered[index];
-                    if (kDebugMode) {
-                      debugPrint(
-                        'Item: ${item.title}, Category: ${item.category}, Image URL: ${item.imgUrl}',
-                      );
-                    }
-                    return DowryItemCard(item: item);
-                  },
-                );
-              }
-              return const ErrorText(text: 'Liste yüklenemedi');
+              return state.maybeWhen(
+                loading: () => const DowtyListLoadingIndicator(),
+                error: (message) => ErrorText(text: message),
+                loaded: (items) {
+                  final filtered =
+                      (selectedCategory.isEmpty
+                            ? List<UserItemEntity>.of(items)
+                            : items.where((e) => e.category == selectedCategory).toList())
+                        ..sort((a, b) {
+                          final epoch = DateTime.fromMillisecondsSinceEpoch(0);
+                          final da = a.createdAt ?? epoch;
+                          final db = b.createdAt ?? epoch;
+                          return db.compareTo(da);
+                        });
+                  if (filtered.isEmpty) {
+                    return const EmptyCategoryText();
+                  }
+                  return ListView.builder(
+                    itemCount: filtered.length,
+                    itemBuilder: (context, index) {
+                      final item = filtered[index];
+                      if (kDebugMode) {
+                        debugPrint(
+                          'Item: ${item.title}, Category: ${item.category}, Image URL: ${item.imgUrl}',
+                        );
+                      }
+                      return DowryItemCard(item: item);
+                    },
+                  );
+                },
+                empty: (_) => const EmptyCategoryText(),
+                orElse: () => const ErrorText(text: 'Liste yüklenemedi'),
+              );
             },
           );
         },

@@ -14,32 +14,50 @@ class UserItemRepositoryImpl implements UserItemRepository {
     try {
       await remoteDataSource.addUserItem(UserItemModel.fromEntity(item));
       return const Right(unit);
-    } on Exception catch (e, s) {
+    } on Exception catch (e) {
       // Basic mapping. Could be refined by inspecting Firebase exceptions.
-      return Left(UnexpectedFailure(e.toString(), s));
+      return Left(UnexpectedFailure(e.toString()));
     }
   }
 
   @override
-  Future<UserItemEntity?> fetchUserItemById(String id) async {
-    final model = await remoteDataSource.fetchUserItemById(id);
-    return model?.toEntity();
+  Future<Either<Failure, UserItemEntity?>> fetchUserItemById(String id) async {
+    try {
+      final model = await remoteDataSource.fetchUserItemById(id);
+      return Right(model?.toEntity());
+    } on Exception catch (e) {
+      return Left(UnexpectedFailure(e.toString()));
+    }
   }
 
   @override
-  Future<List<UserItemEntity>> fetchAllUserItems() async {
-    final models = await remoteDataSource.fetchAllUserItems();
-    return models.map((e) => e.toEntity()).toList();
+  Future<Either<Failure, List<UserItemEntity>>> fetchAllUserItems() async {
+    try {
+      final models = await remoteDataSource.fetchAllUserItems();
+      return Right(models.map((e) => e.toEntity()).toList());
+    } on Exception catch (e) {
+      return Left(UnexpectedFailure(e.toString()));
+    }
   }
 
   @override
-  Future<void> updateUserItem(UserItemEntity item) async {
-    await remoteDataSource.updateUserItem(UserItemModel.fromEntity(item));
+  Future<Either<Failure, Unit>> updateUserItem(UserItemEntity item) async {
+    try {
+      await remoteDataSource.updateUserItem(UserItemModel.fromEntity(item));
+      return const Right(unit);
+    } on Exception catch (e) {
+      return Left(UnexpectedFailure(e.toString()));
+    }
   }
 
   @override
-  Future<void> deleteUserItem(String id) async {
-    await remoteDataSource.deleteUserItem(id);
+  Future<Either<Failure, Unit>> deleteUserItem(String id) async {
+    try {
+      await remoteDataSource.deleteUserItem(id);
+      return const Right(unit);
+    } on Exception catch (e) {
+      return Left(UnexpectedFailure(e.toString()));
+    }
   }
 
   @override

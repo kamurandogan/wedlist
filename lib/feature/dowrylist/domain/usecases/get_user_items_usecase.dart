@@ -8,11 +8,6 @@ class GetUserItemsUseCase {
   final UserItemRepository repository;
 
   Future<Either<Failure, List<UserItemEntity>>> call() async {
-    try {
-      final items = await repository.fetchAllUserItems();
-      return Right(items);
-    } on Exception catch (e, s) {
-      return Left(UnexpectedFailure(e.toString(), s));
-    }
+    return repository.fetchAllUserItems();
   }
 }

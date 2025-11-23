@@ -14,7 +14,7 @@ class SignInWithAppleButton extends StatelessWidget {
           style: apple.SignInWithAppleButtonStyle.white,
           borderRadius: BorderRadius.zero,
           onPressed: () {
-            context.read<AuthBloc>().add(SignInWithAppleRequested());
+            context.read<AuthBloc>().add(const AuthEvent.signInWithAppleRequested());
           },
         ),
       ),

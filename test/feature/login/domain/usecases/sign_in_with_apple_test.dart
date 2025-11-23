@@ -1,5 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:wedlist/core/error/failures.dart';
 import 'package:wedlist/feature/login/domain/entities/user.dart';
 import 'package:wedlist/feature/login/domain/repositories/auth_repository.dart';
 import 'package:wedlist/feature/login/domain/usecases/sign_in_with_apple.dart';
@@ -17,105 +19,35 @@ void main() {
 
   group('SignInWithApple UseCase', () {
     final tUser = User(id: 'apple_user123', email: 'test@icloud.com');
+    const tFailure = AuthFailure('Apple ile giriş başarısız.');
 
     test('should return User when Apple sign in is successful', () async {
       // Arrange
       when(
         () => mockAuthRepository.signInWithApple(),
-      ).thenAnswer((_) async => tUser);
+      ).thenAnswer((_) async => Right<Failure, User>(tUser));
 
       // Act
       final result = await useCase();
 
       // Assert
-      expect(result, equals(tUser));
+      expect(result, Right<Failure, User>(tUser));
       verify(() => mockAuthRepository.signInWithApple()).called(1);
       verifyNoMoreInteractions(mockAuthRepository);
     });
 
-    test('should return null when Apple sign in is cancelled', () async {
+    test('should return Failure when Apple sign in fails', () async {
       // Arrange
       when(
         () => mockAuthRepository.signInWithApple(),
-      ).thenAnswer((_) async => null);
+      ).thenAnswer((_) async => const Left<Failure, User>(tFailure));
 
       // Act
       final result = await useCase();
 
       // Assert
-      expect(result, isNull);
+      expect(result, const Left<Failure, User>(tFailure));
       verify(() => mockAuthRepository.signInWithApple()).called(1);
-    });
-
-    test('should throw exception when Apple sign in fails', () async {
-      // Arrange
-      when(
-        () => mockAuthRepository.signInWithApple(),
-      ).thenThrow(Exception('Apple sign in failed'));
-
-      // Act & Assert
-      expect(
-        () => useCase(),
-        throwsA(isA<Exception>()),
-      );
-      verify(() => mockAuthRepository.signInWithApple()).called(1);
-    });
-
-    test('should handle network errors during Apple sign in', () async {
-      // Arrange
-      when(
-        () => mockAuthRepository.signInWithApple(),
-      ).thenThrow(Exception('Network error'));
-
-      // Act & Assert
-      expect(
-        () => useCase(),
-        throwsA(
-          isA<Exception>().having(
-            (e) => e.toString(),
-            'message',
-            contains('Network error'),
-          ),
-        ),
-      );
-    });
-
-    test('should handle Sign in with Apple not available', () async {
-      // Arrange
-      when(
-        () => mockAuthRepository.signInWithApple(),
-      ).thenThrow(Exception('Sign in with Apple not available'));
-
-      // Act & Assert
-      expect(
-        () => useCase(),
-        throwsA(
-          isA<Exception>().having(
-            (e) => e.toString(),
-            'message',
-            contains('Sign in with Apple'),
-          ),
-        ),
-      );
-    });
-
-    test('should handle authorization error', () async {
-      // Arrange
-      when(
-        () => mockAuthRepository.signInWithApple(),
-      ).thenThrow(Exception('Authorization failed'));
-
-      // Act & Assert
-      expect(
-        () => useCase(),
-        throwsA(
-          isA<Exception>().having(
-            (e) => e.toString(),
-            'message',
-            contains('Authorization'),
-          ),
-        ),
-      );
     });
   });
 }

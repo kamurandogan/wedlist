@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wedlist/core/utils/paddings.dart';
 import 'package:wedlist/feature/dowrylist/presentation/blocs/bloc/dowry_list_bloc.dart';
 import 'package:wedlist/feature/dowrylist/presentation/pages/dowry_item_card.dart';
-// Indicator removed temporarily
 
 class PhotoCarousel extends StatefulWidget {
   const PhotoCarousel({super.key});
@@ -22,7 +21,7 @@ class _PhotoCarouselState extends State<PhotoCarousel> {
     // Hot restart veya ilk açılışta listeyi yükle
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
-      context.read<DowryListBloc>().add(FetchDowryListItems());
+      context.read<DowryListBloc>().add(const DowryListEvent.fetchDowryListItems());
     });
   }
 
@@ -41,36 +40,36 @@ class _PhotoCarouselState extends State<PhotoCarousel> {
               height: MediaQuery.of(context).size.width * 1.5,
               child: BlocBuilder<DowryListBloc, DowryListState>(
                 builder: (context, state) {
-                  if (state is! DowryListLoaded || state.items.isEmpty) {
-                    return const SizedBox.shrink();
-                  }
-                  final items = List.of(state.items)
-                    ..sort((a, b) {
-                      final da =
-                          a.createdAt ?? DateTime.fromMillisecondsSinceEpoch(0);
-                      final db =
-                          b.createdAt ?? DateTime.fromMillisecondsSinceEpoch(0);
-                      return db.compareTo(da);
-                    });
-                  final controller = PageController(
-                    viewportFraction: 0.92,
-                    initialPage: currentIndex,
-                  );
-                  return Column(
-                    children: [
-                      Expanded(
-                        child: PageView.builder(
-                          itemCount: items.length,
-                          controller: controller,
-                          onPageChanged: (index) =>
-                              setState(() => currentIndex = index),
-                          itemBuilder: (context, index) {
-                            final item = items[index];
-                            return DowryItemCard(item: item);
-                          },
-                        ),
-                      ),
-                    ],
+                  return state.maybeWhen(
+                    loaded: (items) {
+                      if (items.isEmpty) return const SizedBox.shrink();
+                      final sortedItems = List.of(items)
+                        ..sort((a, b) {
+                          final da = a.createdAt ?? DateTime.fromMillisecondsSinceEpoch(0);
+                          final db = b.createdAt ?? DateTime.fromMillisecondsSinceEpoch(0);
+                          return db.compareTo(da);
+                        });
+                      final controller = PageController(
+                        viewportFraction: 0.92,
+                        initialPage: currentIndex,
+                      );
+                      return Column(
+                        children: [
+                          Expanded(
+                            child: PageView.builder(
+                              itemCount: sortedItems.length,
+                              controller: controller,
+                              onPageChanged: (index) => setState(() => currentIndex = index),
+                              itemBuilder: (context, index) {
+                                final item = sortedItems[index];
+                                return DowryItemCard(item: item);
+                              },
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                    orElse: () => const SizedBox.shrink(),
                   );
                 },
               ),

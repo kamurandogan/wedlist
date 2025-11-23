@@ -11,7 +11,6 @@ import 'package:wedlist/feature/notification/presentation/bloc/notification_bloc
 class CustomBottomNavigationBar extends StatelessWidget {
   const CustomBottomNavigationBar({super.key});
 
-  static const double _barHeight = 100;
   static const double _iconSize = 32;
   static const double _radius = 60;
 
@@ -24,9 +23,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
         builder: (context, state) {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-            child: SizedBox(
-              height: _barHeight,
-              child: Card(
+            child: Card(
                 color: Colors.white,
                 elevation: 3,
                 shadowColor: Colors.white10,
@@ -119,8 +116,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
                           );
                         },
                       ),
-                    ],
-                  ),
+                  ],
                 ),
               ),
             ),

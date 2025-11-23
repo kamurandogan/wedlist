@@ -98,7 +98,7 @@ class DeleteDowryItemSheet extends StatelessWidget {
                         icon: const Icon(Icons.delete_outline),
                         onPressed: () {
                           context.read<DowryListBloc>().add(
-                            DeleteDowryItem(itemId),
+                            DowryListEvent.deleteDowryItem(itemId),
                           );
                           Navigator.of(context).pop();
                           ScaffoldMessenger.of(context).showSnackBar(

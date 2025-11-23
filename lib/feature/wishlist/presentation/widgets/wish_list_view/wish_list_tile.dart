@@ -10,6 +10,7 @@ class WishListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       key: ValueKey('${item.category}_${item.title}'),
 
       children: <Widget>[

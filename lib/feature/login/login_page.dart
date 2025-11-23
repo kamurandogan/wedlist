@@ -71,27 +71,22 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 48),
               BlocBuilder<AuthBloc, AuthState>(
                 builder: (context, state) {
-                  Widget? errorWidget;
-                  if (state is AuthFailure) {
-                    errorWidget = Padding(
-                      padding: const EdgeInsets.only(bottom: 8),
-                      child: Text(
-                        state.message,
-                        style: const TextStyle(color: Colors.red),
-                      ),
-                    );
-                  }
-                  return Column(
-                    children: [
-                      if (state is AuthLoading) ...[
-                        const CircularProgressIndicator(),
-                      ] else ...[
-                        if (errorWidget != null) errorWidget,
+                  return state.maybeWhen(
+                    loading: () => const CircularProgressIndicator(),
+                    failure: (message) => Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8),
+                          child: Text(
+                            message,
+                            style: const TextStyle(color: Colors.red),
+                          ),
+                        ),
                         CustomFilledButton(
                           size: Size(size.width, 50),
                           onPressed: () {
                             context.read<AuthBloc>().add(
-                              SignInRequested(
+                              AuthEvent.signInRequested(
                                 emailController.text,
                                 passwordController.text,
                               ),
@@ -100,7 +95,19 @@ class _LoginPageState extends State<LoginPage> {
                           text: context.loc.signInButtonText,
                         ),
                       ],
-                    ],
+                    ),
+                    orElse: () => CustomFilledButton(
+                      size: Size(size.width, 50),
+                      onPressed: () {
+                        context.read<AuthBloc>().add(
+                          AuthEvent.signInRequested(
+                            emailController.text,
+                            passwordController.text,
+                          ),
+                        );
+                      },
+                      text: context.loc.signInButtonText,
+                    ),
                   );
                 },
               ),

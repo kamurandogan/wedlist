@@ -6,6 +6,7 @@ import 'package:wedlist/feature/chart/presentation/ui/atoms/spending_legend.dart
 import 'package:wedlist/feature/chart/presentation/ui/colors/chart_palette.dart';
 import 'package:wedlist/feature/chart/presentation/ui/molecules/category_pie_chart.dart';
 import 'package:wedlist/feature/dowrylist/presentation/blocs/bloc/dowry_list_bloc.dart';
+import 'package:wedlist/feature/item_add/domain/entities/user_item_entity.dart';
 
 class ChartPage extends StatelessWidget {
   const ChartPage({super.key});
@@ -16,23 +17,29 @@ class ChartPage extends StatelessWidget {
       create: (ctx) {
         final bloc = ChartBloc(const ComputeCategorySpending());
         final dowryState = ctx.read<DowryListBloc>().state;
-        if (dowryState is DowryListLoaded) {
-          bloc.add(ChartRebuildFromItems(dowryState.items));
-        } else if (dowryState is DowryListEmpty) {
-          bloc.add(ChartRebuildFromItems(const []));
+        final items = dowryState.maybeWhen(
+          loaded: (items) => items,
+          empty: (_) => const <UserItemEntity>[],
+          orElse: () => null,
+        );
+        if (items != null) {
+          bloc.add(ChartRebuildFromItems(items));
         }
         return bloc;
       },
       child: BlocListener<DowryListBloc, DowryListState>(
-        listenWhen: (prev, curr) =>
-            curr is DowryListLoaded || curr is DowryListEmpty,
+        listenWhen: (prev, curr) => curr.maybeWhen(
+          loaded: (_) => true,
+          empty: (_) => true,
+          orElse: () => false,
+        ),
         listener: (ctx, state) {
           final chartBloc = ctx.read<ChartBloc>();
-          if (state is DowryListLoaded) {
-            chartBloc.add(ChartRebuildFromItems(state.items));
-          } else if (state is DowryListEmpty) {
-            chartBloc.add(ChartRebuildFromItems(const []));
-          }
+          state.maybeWhen(
+            loaded: (items) => chartBloc.add(ChartRebuildFromItems(items)),
+            empty: (_) => chartBloc.add(ChartRebuildFromItems(const [])),
+            orElse: () {},
+          );
         },
         child: BlocBuilder<ChartBloc, ChartState>(
           builder: (context, state) {

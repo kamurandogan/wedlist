@@ -1,13 +1,8 @@
 part of 'auth_bloc.dart';
 
-abstract class AuthEvent {}
-
-class SignInRequested extends AuthEvent {
-  SignInRequested(this.email, this.password);
-  final String email;
-  final String password;
+@freezed
+class AuthEvent with _$AuthEvent {
+  const factory AuthEvent.signInRequested(String email, String password) = SignInRequested;
+  const factory AuthEvent.signInWithAppleRequested() = SignInWithAppleRequested;
+  const factory AuthEvent.signInWithGoogleRequested() = SignInWithGoogleRequested;
 }
-
-class SignInWithAppleRequested extends AuthEvent {}
-
-class SignInWithGoogleRequested extends AuthEvent {}

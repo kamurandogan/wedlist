@@ -8,11 +8,6 @@ class UpdateUserItemUseCase {
   final UserItemRepository repository;
 
   Future<Either<Failure, Unit>> call(UserItemEntity item) async {
-    try {
-      await repository.updateUserItem(item);
-      return const Right(unit);
-    } on Exception catch (e, s) {
-      return Left(UnexpectedFailure(e.toString(), s));
-    }
+    return repository.updateUserItem(item);
   }
 }

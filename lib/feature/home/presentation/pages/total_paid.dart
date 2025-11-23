@@ -8,9 +8,12 @@ class TotalPaid extends StatelessWidget {
     return BlocBuilder<DowryListBloc, DowryListState>(
       builder: (context, state) {
         double total = 0;
-        if (state is DowryListLoaded) {
-          total = state.items.fold<double>(0, (double sum, e) => sum + e.price);
-        }
+        state.maybeWhen(
+          loaded: (items) {
+            total = items.fold<double>(0, (double sum, e) => sum + e.price);
+          },
+          orElse: () {},
+        );
         // final locale = Localizations.localeOf(context).toString();
         // final amountText = _formatCurrency(locale, total);
         return Column(

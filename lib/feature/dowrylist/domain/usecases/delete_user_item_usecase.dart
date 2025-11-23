@@ -7,11 +7,6 @@ class DeleteUserItemUseCase {
   final UserItemRepository repository;
 
   Future<Either<Failure, Unit>> call(String id) async {
-    try {
-      await repository.deleteUserItem(id);
-      return const Right(unit);
-    } on Exception catch (e, s) {
-      return Left(UnexpectedFailure(e.toString(), s));
-    }
+    return repository.deleteUserItem(id);
   }
 }

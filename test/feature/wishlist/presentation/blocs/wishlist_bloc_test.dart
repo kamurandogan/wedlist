@@ -34,7 +34,7 @@ void main() {
     when(() => mockDowryListBloc.stream).thenAnswer(
       (_) => const Stream<DowryListState>.empty(),
     );
-    when(() => mockDowryListBloc.state).thenReturn(DowryListInitial());
+    when(() => mockDowryListBloc.state).thenReturn(const DowryListInitial());
 
     bloc = WishListBloc(
       mockGetWishListItems,

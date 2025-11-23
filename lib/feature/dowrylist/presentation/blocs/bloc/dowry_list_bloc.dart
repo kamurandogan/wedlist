@@ -1,7 +1,8 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:wedlist/core/user/user_service.dart';
 import 'package:wedlist/feature/dowrylist/domain/usecases/delete_user_item_usecase.dart';
 import 'package:wedlist/feature/dowrylist/domain/usecases/get_user_items_usecase.dart';
@@ -10,6 +11,7 @@ import 'package:wedlist/feature/dowrylist/domain/usecases/watch_user_items_useca
 import 'package:wedlist/feature/item_add/domain/entities/user_item_entity.dart';
 import 'package:wedlist/injection_container.dart';
 
+part 'dowry_list_bloc.freezed.dart';
 part 'dowry_list_event.dart';
 part 'dowry_list_state.dart';
 
@@ -19,10 +21,10 @@ class DowryListBloc extends Bloc<DowryListEvent, DowryListState> {
     this.deleteUserItem,
     this.updateUserItem,
     this.watchUserItems,
-  ) : super(DowryListInitial()) {
+  ) : super(const DowryListState.initial()) {
+    on<FetchDowryListItems>(_fetchItems);
     on<DeleteDowryItem>(_deleteItem);
     on<UpdateDowryItem>(_updateItem);
-    on<FetchDowryListItems>(_fetchItems);
     on<SubscribeDowryItems>(_subscribe);
     on<_DowryItemsStreamUpdated>(_onStreamUpdated);
     on<_OptimisticInsert>(_onOptimisticInsert);
@@ -33,38 +35,40 @@ class DowryListBloc extends Bloc<DowryListEvent, DowryListState> {
   final WatchUserItemsUseCase watchUserItems;
   StreamSubscription<List<UserItemEntity>>? _sub;
 
-  // Firestore'dan listeyi çekme fonksiyonu
   Future<void> _fetchItems(
     FetchDowryListItems event,
     Emitter<DowryListState> emit,
   ) async {
-    emit(DowryListLoading());
+    emit(const DowryListState.loading());
     final result = await getUserItems();
-    result.match(
-      (l) => emit(DowryListError(l.message)),
+    result.fold(
+      (l) => emit(DowryListState.error(l.message ?? 'Bir hata oluştu')),
       (items) => items.isEmpty
-          ? emit(DowryListEmpty('Liste boş'))
-          : emit(DowryListLoaded(items)),
+          ? emit(const DowryListState.empty('Liste boş'))
+          : emit(DowryListState.loaded(items)),
     );
   }
 
   void optimisticAdd(UserItemEntity item) {
-    add(_OptimisticInsert(item));
+    add(DowryListEvent.optimisticInsert(item));
   }
 
   void _onOptimisticInsert(
     _OptimisticInsert event,
     Emitter<DowryListState> emit,
   ) {
-    final current = state;
-    if (current is DowryListLoaded) {
-      final existing = current.items;
-      if (existing.any((e) => e.id == event.item.id)) return; // already present
-      final updated = [event.item, ...existing];
-      emit(DowryListLoaded(updated));
-    } else if (current is DowryListEmpty) {
-      emit(DowryListLoaded([event.item]));
-    }
+    state.maybeMap(
+      loaded: (state) {
+        final existing = state.items;
+        if (existing.any((e) => e.id == event.item.id)) return;
+        final updated = [event.item, ...existing];
+        emit(DowryListState.loaded(updated));
+      },
+      empty: (_) {
+        emit(DowryListState.loaded([event.item]));
+      },
+      orElse: () {},
+    );
   }
 
   Future<void> _deleteItem(
@@ -72,15 +76,14 @@ class DowryListBloc extends Bloc<DowryListEvent, DowryListState> {
     Emitter<DowryListState> emit,
   ) async {
     final res = await deleteUserItem(event.id);
-    res.match(
-      (l) => emit(DowryListError(l.message)),
+    res.fold(
+      (l) => emit(DowryListState.error(l.message ?? 'Bir hata oluştu')),
       (_) async {
-        add(FetchDowryListItems());
-        // Silme sonrası sahiplik simetrisini tekrar doğrula (partner eşitleme)
+        add(const DowryListEvent.fetchDowryListItems());
         try {
           await sl<UserService>().ensureUserItemsSymmetric();
         } on Exception catch (_) {
-          // Sessizce yut: kritik değil
+          // Sessizce yut
         }
       },
     );
@@ -91,9 +94,9 @@ class DowryListBloc extends Bloc<DowryListEvent, DowryListState> {
     Emitter<DowryListState> emit,
   ) async {
     final res = await updateUserItem(event.updatedItem);
-    res.match(
-      (l) => emit(DowryListError(l.message)),
-      (_) async => add(FetchDowryListItems()),
+    res.fold(
+      (l) => emit(DowryListState.error(l.message ?? 'Bir hata oluştu')),
+      (_) async => add(const DowryListEvent.fetchDowryListItems()),
     );
   }
 
@@ -102,10 +105,10 @@ class DowryListBloc extends Bloc<DowryListEvent, DowryListState> {
     Emitter<DowryListState> emit,
   ) async {
     await _sub?.cancel();
-    emit(DowryListLoading());
+    emit(const DowryListState.loading());
     _sub = watchUserItems().listen(
-      (items) => add(_DowryItemsStreamUpdated(items)),
-      onError: (Object e, StackTrace _) => emit(DowryListError(e.toString())),
+      (items) => add(DowryListEvent.dowryItemsStreamUpdated(items)),
+      onError: (Object e, StackTrace _) => emit(DowryListState.error(e.toString())),
     );
   }
 
@@ -114,9 +117,9 @@ class DowryListBloc extends Bloc<DowryListEvent, DowryListState> {
     Emitter<DowryListState> emit,
   ) {
     if (event.items.isEmpty) {
-      emit(DowryListEmpty('Liste boş'));
+      emit(const DowryListState.empty('Liste boş'));
     } else {
-      emit(DowryListLoaded(event.items));
+      emit(DowryListState.loaded(event.items));
     }
   }
 
@@ -125,12 +128,4 @@ class DowryListBloc extends Bloc<DowryListEvent, DowryListState> {
     _sub?.cancel();
     return super.close();
   }
-
-  // Future<void> _addItem(AddDowryItem event, Emitter<DowryListState> emit) async {
-  //   try {
-  //     firestore.collection('userList').doc('Mutfak').set(event.newItem.toJson());
-  //   } catch (e) {
-  //     emit(DowryListError(e.toString()));
-  //   }
-  // }
 }
