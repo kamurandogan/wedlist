@@ -30,7 +30,20 @@ workflows:
       flutter: stable
       groups:
         - keystore_credentials
+        - google_play
+        - firebase
+    cache:
+      cache_paths:
+        - $HOME/.pub-cache
     scripts:
+      - name: Add Firebase Android config
+        script: |
+          if [ -n "$FIREBASE_ANDROID_JSON" ]; then
+            echo "$FIREBASE_ANDROID_JSON" | base64 --decode > android/app/google-services.json
+            echo "Wrote android/app/google-services.json"
+          else
+            echo "FIREBASE_ANDROID_JSON is empty, skipping write";
+          fi
       - name: Install dependencies
         script: flutter pub get
       - name: Format check
@@ -49,9 +62,29 @@ workflows:
           storeFile=app/keystore.jks
           EOF
       - name: Build Android App Bundle (release)
-        script: flutter build appbundle --release
+        script: |
+          # Get latest version code from Play Store
+          LATEST_GOOGLE_PLAY=$(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks=internal 2>/dev/null || echo 0)
+          [[ "$LATEST_GOOGLE_PLAY" =~ ^[0-9]+$ ]] || LATEST_GOOGLE_PLAY=0
+          BUILD_NUMBER=$((LATEST_GOOGLE_PLAY + 1))
+          echo "Using BUILD_NUMBER=$BUILD_NUMBER"
+          
+          flutter build appbundle --release \
+            --build-number=$BUILD_NUMBER
     artifacts:
       - build/app/outputs/bundle/release/*.aab
+      - build/app/outputs/mapping/release/mapping.txt
+    publishing:
+      email:
+        recipients:
+          - kamuran.software@gmail.com
+        notify:
+          success: true
+          failure: true
+      google_play:
+        credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
+        track: internal
+        submit_as_draft: false
 
   ios_release:
     name: iOS Release

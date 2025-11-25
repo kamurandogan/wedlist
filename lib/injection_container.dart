@@ -223,7 +223,7 @@ Future<void> init() async {
     ..registerLazySingleton(() => GetWishListItems(sl()))
     ..registerLazySingleton(() => AddWishlistItems(sl()))
     ..registerFactory(
-      () => WishListBloc(sl(), sl<RefreshBus>(), sl<DowryListBloc>()),
+      () => WishListBloc(sl(), sl<RefreshBus>(), sl<WatchUserItemsUseCase>()),
     )
     // Category Injection
     ..registerLazySingleton<CategoryRemoteDataSource>(
