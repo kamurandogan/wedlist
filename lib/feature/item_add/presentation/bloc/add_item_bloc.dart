@@ -31,7 +31,8 @@ class AddItemBloc extends Bloc<AddItemEvent, AddItemState> {
         );
         final result = await addUserItemUseCase(userItem);
         result.fold(
-          (failure) => emit(AddItemState.failure(failure.message ?? 'Bir hata oluştu')),
+          (failure) =>
+              emit(AddItemState.failure(failure.message ?? 'Bir hata oluştu')),
           (_) => emit(const AddItemState.success()),
         );
       } on Exception catch (e) {

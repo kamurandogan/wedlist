@@ -26,7 +26,9 @@ class DowryItemListView extends StatelessWidget {
                   final filtered =
                       (selectedCategory.isEmpty
                             ? List<UserItemEntity>.of(items)
-                            : items.where((e) => e.category == selectedCategory).toList())
+                            : items
+                                  .where((e) => e.category == selectedCategory)
+                                  .toList())
                         ..sort((a, b) {
                           final epoch = DateTime.fromMillisecondsSinceEpoch(0);
                           final da = a.createdAt ?? epoch;

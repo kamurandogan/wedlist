@@ -17,12 +17,20 @@ class WishListTile extends StatelessWidget {
         ListTile(
           dense: true,
           onTap: () {
-            // GoRouter ile yönlendirme ve id+category'yi extra parametresiyle gönder
+            // GoRouter ile yönlendirme - query parametreleriyle gönder
             GoRouter.of(context).push(
-              AppRoute.addItem.path,
-              extra: item,
+              Uri(
+                path: AppRoute.addItem.path,
+                queryParameters: {
+                  'id': item.id,
+                  'title': item.title,
+                  'category': item.category,
+                },
+              ).toString(),
             );
-            debugPrint('DEBUG: ITEM $item');
+            debugPrint(
+              'DEBUG: ITEM ${item.id}, ${item.title}, ${item.category}',
+            );
           },
           contentPadding: EdgeInsets.zero,
           // Atom: Bullet

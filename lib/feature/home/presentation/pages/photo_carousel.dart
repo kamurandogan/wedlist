@@ -21,7 +21,9 @@ class _PhotoCarouselState extends State<PhotoCarousel> {
     // Hot restart veya ilk açılışta listeyi yükle
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
-      context.read<DowryListBloc>().add(const DowryListEvent.fetchDowryListItems());
+      context.read<DowryListBloc>().add(
+        const DowryListEvent.fetchDowryListItems(),
+      );
     });
   }
 
@@ -45,8 +47,12 @@ class _PhotoCarouselState extends State<PhotoCarousel> {
                       if (items.isEmpty) return const SizedBox.shrink();
                       final sortedItems = List.of(items)
                         ..sort((a, b) {
-                          final da = a.createdAt ?? DateTime.fromMillisecondsSinceEpoch(0);
-                          final db = b.createdAt ?? DateTime.fromMillisecondsSinceEpoch(0);
+                          final da =
+                              a.createdAt ??
+                              DateTime.fromMillisecondsSinceEpoch(0);
+                          final db =
+                              b.createdAt ??
+                              DateTime.fromMillisecondsSinceEpoch(0);
                           return db.compareTo(da);
                         });
                       final controller = PageController(
@@ -59,7 +65,8 @@ class _PhotoCarouselState extends State<PhotoCarousel> {
                             child: PageView.builder(
                               itemCount: sortedItems.length,
                               controller: controller,
-                              onPageChanged: (index) => setState(() => currentIndex = index),
+                              onPageChanged: (index) =>
+                                  setState(() => currentIndex = index),
                               itemBuilder: (context, index) {
                                 final item = sortedItems[index];
                                 return DowryItemCard(item: item);

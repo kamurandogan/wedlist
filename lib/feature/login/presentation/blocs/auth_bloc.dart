@@ -21,7 +21,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(const AuthState.loading());
       final result = await signIn(event.email, event.password);
       await result.fold(
-        (failure) async => emit(AuthState.failure(failure.message ?? 'Giriş başarısız.')),
+        (failure) async =>
+            emit(AuthState.failure(failure.message ?? 'Giriş başarısız.')),
         (user) async {
           await _countryService.syncSelectedCountryIfAny();
           emit(AuthState.success(user));
@@ -33,7 +34,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(const AuthState.loading());
       final result = await signInWithApple();
       await result.fold(
-        (failure) async => emit(AuthState.failure(failure.message ?? 'Apple ile giriş başarısız.')),
+        (failure) async => emit(
+          AuthState.failure(failure.message ?? 'Apple ile giriş başarısız.'),
+        ),
         (user) async {
           await _countryService.syncSelectedCountryIfAny();
           emit(AuthState.success(user));
@@ -45,8 +48,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(const AuthState.loading());
       final result = await signInWithGoogle();
       await result.fold(
-        (failure) async =>
-            emit(AuthState.failure(failure.message ?? 'Google ile giriş başarısız.')),
+        (failure) async => emit(
+          AuthState.failure(failure.message ?? 'Google ile giriş başarısız.'),
+        ),
         (user) async {
           await _countryService.syncSelectedCountryIfAny();
           emit(AuthState.success(user));

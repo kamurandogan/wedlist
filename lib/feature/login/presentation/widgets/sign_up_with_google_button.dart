@@ -17,7 +17,9 @@ class SignUpWithGoogleButton extends StatelessWidget {
           ),
         ),
         onPressed: () {
-          context.read<AuthBloc>().add(const AuthEvent.signInWithGoogleRequested());
+          context.read<AuthBloc>().add(
+            const AuthEvent.signInWithGoogleRequested(),
+          );
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -69,7 +69,8 @@ void main() {
         ).thenAnswer((_) async => right<Failure, List<ItemEntity>>(tItems));
         return bloc;
       },
-      act: (bloc) => bloc.add(const WishListEvent.fetch(tCategory, tLangCode, tId)),
+      act: (bloc) =>
+          bloc.add(const WishListEvent.fetch(tCategory, tLangCode, tId)),
       expect: () => [
         const WishListState.loading(),
         WishListState.loaded(tItems),
@@ -86,10 +87,13 @@ void main() {
       build: () {
         when(
           () => mockGetWishListItems.call(any(), any(), any()),
-        ).thenAnswer((_) async => right<Failure, List<ItemEntity>>(<ItemEntity>[]));
+        ).thenAnswer(
+          (_) async => right<Failure, List<ItemEntity>>(<ItemEntity>[]),
+        );
         return bloc;
       },
-      act: (bloc) => bloc.add(const WishListEvent.fetch(tCategory, tLangCode, tId)),
+      act: (bloc) =>
+          bloc.add(const WishListEvent.fetch(tCategory, tLangCode, tId)),
       expect: () => [
         const WishListState.loading(),
         const WishListState.loaded([]),
@@ -106,7 +110,8 @@ void main() {
         );
         return bloc;
       },
-      act: (bloc) => bloc.add(const WishListEvent.fetch(tCategory, tLangCode, tId)),
+      act: (bloc) =>
+          bloc.add(const WishListEvent.fetch(tCategory, tLangCode, tId)),
       expect: () => [
         const WishListState.loading(),
         predicate<WishListState>((state) {

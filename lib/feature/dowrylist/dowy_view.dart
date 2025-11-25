@@ -20,7 +20,9 @@ class _DowryViewState extends State<DowryView> {
     // Sayfa açıldığında listeyi çek (frame sonrası)
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
-      context.read<DowryListBloc>().add(const DowryListEvent.subscribeDowryItems());
+      context.read<DowryListBloc>().add(
+        const DowryListEvent.subscribeDowryItems(),
+      );
       // Kategori butonları için kategori listesini yükle
       final langCode = Localizations.localeOf(context).languageCode;
       final selected = context.read<SelectCategoryCubit>().state;

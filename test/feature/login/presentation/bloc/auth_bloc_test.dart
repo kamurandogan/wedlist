@@ -66,7 +66,8 @@ void main() {
           ).thenAnswer((_) async => {});
           return authBloc;
         },
-        act: (bloc) => bloc.add(const AuthEvent.signInRequested(tEmail, tPassword)),
+        act: (bloc) =>
+            bloc.add(const AuthEvent.signInRequested(tEmail, tPassword)),
         expect: () => [
           const AuthState.loading(),
           AuthState.success(tUser),
@@ -85,7 +86,8 @@ void main() {
           ).thenAnswer((_) async => const Left(tFailure));
           return authBloc;
         },
-        act: (bloc) => bloc.add(const AuthEvent.signInRequested(tEmail, tPassword)),
+        act: (bloc) =>
+            bloc.add(const AuthEvent.signInRequested(tEmail, tPassword)),
         expect: () => [
           const AuthState.loading(),
           const AuthState.failure('Giriş başarısız.'),
@@ -127,7 +129,10 @@ void main() {
         build: () {
           when(
             () => mockSignInWithGoogle(),
-          ).thenAnswer((_) async => const Left(f.AuthFailure('Google ile giriş başarısız.')));
+          ).thenAnswer(
+            (_) async =>
+                const Left(f.AuthFailure('Google ile giriş başarısız.')),
+          );
           return authBloc;
         },
         act: (bloc) => bloc.add(const AuthEvent.signInWithGoogleRequested()),
@@ -144,7 +149,9 @@ void main() {
       blocTest<AuthBloc, AuthState>(
         'emits [AuthLoading, AuthSuccess] when Apple sign in is successful',
         build: () {
-          when(() => mockSignInWithApple()).thenAnswer((_) async => Right(tAppleUser));
+          when(
+            () => mockSignInWithApple(),
+          ).thenAnswer((_) async => Right(tAppleUser));
           when(
             () => mockCountryService.syncSelectedCountryIfAny(),
           ).thenAnswer((_) async => {});
@@ -166,7 +173,10 @@ void main() {
         build: () {
           when(
             () => mockSignInWithApple(),
-          ).thenAnswer((_) async => const Left(f.AuthFailure('Apple ile giriş başarısız.')));
+          ).thenAnswer(
+            (_) async =>
+                const Left(f.AuthFailure('Apple ile giriş başarısız.')),
+          );
           return authBloc;
         },
         act: (bloc) => bloc.add(const AuthEvent.signInWithAppleRequested()),

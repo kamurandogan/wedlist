@@ -53,7 +53,9 @@ void main() {
       // arrange
       when(
         () => mockRepository.getItems(any(), any(), any()),
-      ).thenAnswer((_) async => right<Failure, List<ItemEntity>>(<ItemEntity>[]));
+      ).thenAnswer(
+        (_) async => right<Failure, List<ItemEntity>>(<ItemEntity>[]),
+      );
 
       // act
       final result = await usecase.call(tCategory, tLangCode, tId);

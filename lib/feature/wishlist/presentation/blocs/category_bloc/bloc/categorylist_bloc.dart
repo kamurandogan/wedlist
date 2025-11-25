@@ -65,7 +65,6 @@ class CategorylistBloc extends Bloc<CategorylistEvent, CategorylistState> {
     _sub?.cancel();
     return super.close();
   }
-
 }
 
 class _CategoryFetchParams {

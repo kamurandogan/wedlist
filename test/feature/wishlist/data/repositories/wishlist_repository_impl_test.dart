@@ -45,43 +45,49 @@ void main() {
         verifyNoMoreInteractions(mockDataSource);
       });
 
-      test('should return Right with empty list when data source returns empty', () async {
-        // arrange
-        when(
-          () => mockDataSource.getItems(any(), any(), any()),
-        ).thenAnswer((_) async => <ItemEntity>[]);
+      test(
+        'should return Right with empty list when data source returns empty',
+        () async {
+          // arrange
+          when(
+            () => mockDataSource.getItems(any(), any(), any()),
+          ).thenAnswer((_) async => <ItemEntity>[]);
 
-        // act
-        final result = await repository.getItems(tCategory, tLangCode, tId);
+          // act
+          final result = await repository.getItems(tCategory, tLangCode, tId);
 
-        // assert
-        result.fold(
-          (failure) => fail('Should return Right'),
-          (items) => expect(items, isEmpty),
-        );
-        verify(
-          () => mockDataSource.getItems(tCategory, tLangCode, tId),
-        ).called(1);
-      });
+          // assert
+          result.fold(
+            (failure) => fail('Should return Right'),
+            (items) => expect(items, isEmpty),
+          );
+          verify(
+            () => mockDataSource.getItems(tCategory, tLangCode, tId),
+          ).called(1);
+        },
+      );
 
-      test('should return Left with UnexpectedFailure when exception occurs', () async {
-        // arrange
-        when(
-          () => mockDataSource.getItems(any(), any(), any()),
-        ).thenThrow(Exception('Network error'));
+      test(
+        'should return Left with UnexpectedFailure when exception occurs',
+        () async {
+          // arrange
+          when(
+            () => mockDataSource.getItems(any(), any(), any()),
+          ).thenThrow(Exception('Network error'));
 
-        // act
-        final result = await repository.getItems(tCategory, tLangCode, tId);
+          // act
+          final result = await repository.getItems(tCategory, tLangCode, tId);
 
-        // assert
-        result.fold(
-          (failure) => expect(failure, isA<UnexpectedFailure>()),
-          (items) => fail('Should return Left'),
-        );
-        verify(
-          () => mockDataSource.getItems(tCategory, tLangCode, tId),
-        ).called(1);
-      });
+          // assert
+          result.fold(
+            (failure) => expect(failure, isA<UnexpectedFailure>()),
+            (items) => fail('Should return Left'),
+          );
+          verify(
+            () => mockDataSource.getItems(tCategory, tLangCode, tId),
+          ).called(1);
+        },
+      );
     });
 
     group('addItems', () {

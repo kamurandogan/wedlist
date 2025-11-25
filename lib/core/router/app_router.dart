@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -41,17 +40,13 @@ class GoRouterRefreshStream extends ChangeNotifier {
 }
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
-// final FirebaseAnalytics _analytics = FirebaseAnalytics.instance;
+final FirebaseAnalytics _analytics = FirebaseAnalytics.instance;
 
 final GoRouter appRouter = GoRouter(
   navigatorKey: NavigationService.navigatorKey,
   refreshListenable: GoRouterRefreshStream(_auth.authStateChanges()),
   observers: [
-    if (kIsWeb ||
-        defaultTargetPlatform == TargetPlatform.android ||
-        defaultTargetPlatform == TargetPlatform.iOS ||
-        defaultTargetPlatform == TargetPlatform.macOS)
-      FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
+    FirebaseAnalyticsObserver(analytics: _analytics),
   ],
   redirect: (context, state) {
     final user = _auth.currentUser;
@@ -125,8 +120,12 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: AppRoute.addItem.path,
       builder: (context, state) {
-        final item = state.extra as ItemEntity?;
-        if (item == null) {
+        // Query parametrelerinden ItemEntity'yi oluştur
+        final id = state.uri.queryParameters['id'];
+        final title = state.uri.queryParameters['title'];
+        final category = state.uri.queryParameters['category'];
+
+        if (id == null || title == null || category == null) {
           // Hata ekranı, fallback veya yönlendirme
           return Scaffold(
             body: Center(
@@ -136,6 +135,14 @@ final GoRouter appRouter = GoRouter(
             ),
           );
         }
+
+        // ItemEntity'yi query parametrelerinden oluştur
+        final item = ItemEntity(
+          id: id,
+          title: title,
+          category: category,
+        );
+
         return BlocProvider(
           create: (context) => sl<AddItemBloc>(),
           child: AddItemScreen(

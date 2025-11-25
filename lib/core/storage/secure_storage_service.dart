@@ -4,7 +4,8 @@ class SecureStorageService {
   factory SecureStorageService() => _instance;
   SecureStorageService._internal();
 
-  static final SecureStorageService _instance = SecureStorageService._internal();
+  static final SecureStorageService _instance =
+      SecureStorageService._internal();
 
   final FlutterSecureStorage _storage = const FlutterSecureStorage(
     aOptions: AndroidOptions(

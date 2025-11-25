@@ -108,7 +108,8 @@ class DowryListBloc extends Bloc<DowryListEvent, DowryListState> {
     emit(const DowryListState.loading());
     _sub = watchUserItems().listen(
       (items) => add(DowryListEvent.dowryItemsStreamUpdated(items)),
-      onError: (Object e, StackTrace _) => emit(DowryListState.error(e.toString())),
+      onError: (Object e, StackTrace _) =>
+          emit(DowryListState.error(e.toString())),
     );
   }
 

@@ -86,10 +86,10 @@ class WishListBloc extends Bloc<WishListEvent, WishListState> {
   final GetWishListItems getWishListItems;
   final RefreshBus _refreshBus;
   final WatchUserItemsUseCase _watchUserItemsUseCase;
-  
+
   StreamSubscription<RefreshEvent>? _sub;
   StreamSubscription<List<UserItemEntity>>? _dowrySub;
-  
+
   _FetchParams? _lastParams;
   List<UserItemEntity> _currentUserItems = [];
 
