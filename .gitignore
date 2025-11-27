@@ -87,6 +87,7 @@ coverage/
 /wishlist_uploader/serviceAccountKey.json
 ios_signing_key.pem
 wedlist_cert.pem
+wishlist_uploader/
 
 # Claude Code MCP Configuration
 .claude/
