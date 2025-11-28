@@ -1,8 +1,8 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:wedlist/core/entities/user_item_entity.dart';
 import 'package:wedlist/core/error/failures.dart';
 import 'package:wedlist/feature/item_add/data/datasources/user_item_remote_datasource.dart';
 import 'package:wedlist/feature/item_add/data/models/user_item_model.dart';
-import 'package:wedlist/feature/item_add/domain/entities/user_item_entity.dart';
 import 'package:wedlist/feature/item_add/domain/repositories/user_item_repository.dart';
 
 class UserItemRepositoryImpl implements UserItemRepository {

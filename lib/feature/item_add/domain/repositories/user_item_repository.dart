@@ -1,6 +1,6 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:wedlist/core/entities/user_item_entity.dart';
 import 'package:wedlist/core/error/failures.dart';
-import 'package:wedlist/feature/item_add/domain/entities/user_item_entity.dart';
 
 abstract class UserItemRepository {
   Future<Either<Failure, Unit>> addUserItem(UserItemEntity item);

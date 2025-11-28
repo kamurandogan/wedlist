@@ -6,7 +6,7 @@ import 'package:wedlist/feature/chart/presentation/ui/atoms/spending_legend.dart
 import 'package:wedlist/feature/chart/presentation/ui/colors/chart_palette.dart';
 import 'package:wedlist/feature/chart/presentation/ui/molecules/category_pie_chart.dart';
 import 'package:wedlist/feature/dowrylist/presentation/blocs/bloc/dowry_list_bloc.dart';
-import 'package:wedlist/feature/item_add/domain/entities/user_item_entity.dart';
+import 'package:wedlist/core/entities/user_item_entity.dart';
 
 class ChartPage extends StatelessWidget {
   const ChartPage({super.key});

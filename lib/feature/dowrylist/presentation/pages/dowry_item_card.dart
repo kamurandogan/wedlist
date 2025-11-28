@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:wedlist/core/utils/paddings.dart';
-import 'package:wedlist/feature/item_add/domain/entities/user_item_entity.dart';
+import 'package:wedlist/core/entities/user_item_entity.dart';
 import 'package:wedlist/feature/item_add/presentation/widgets/photo_card_glass/photo_card_glass_container.dart';
 import 'package:wedlist/feature/item_add/presentation/widgets/photo_card_glass/photo_card_glass_content.dart';
 

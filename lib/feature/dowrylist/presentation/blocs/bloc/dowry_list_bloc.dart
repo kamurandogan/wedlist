@@ -8,7 +8,7 @@ import 'package:wedlist/feature/dowrylist/domain/usecases/delete_user_item_useca
 import 'package:wedlist/feature/dowrylist/domain/usecases/get_user_items_usecase.dart';
 import 'package:wedlist/feature/dowrylist/domain/usecases/update_user_item_usecase.dart';
 import 'package:wedlist/feature/dowrylist/domain/usecases/watch_user_items_usecase.dart';
-import 'package:wedlist/feature/item_add/domain/entities/user_item_entity.dart';
+import 'package:wedlist/core/entities/user_item_entity.dart';
 import 'package:wedlist/injection_container.dart';
 
 part 'dowry_list_bloc.freezed.dart';

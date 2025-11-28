@@ -6,7 +6,7 @@ import 'package:wedlist/feature/dowrylist/presentation/pages/dowry_item_card.dar
 import 'package:wedlist/feature/dowrylist/presentation/widgets/dowry_item_list_view/dowty_list_loading_indicator.dart';
 import 'package:wedlist/feature/dowrylist/presentation/widgets/dowry_item_list_view/empty_category_text.dart';
 import 'package:wedlist/feature/dowrylist/presentation/widgets/dowry_item_list_view/error_text.dart';
-import 'package:wedlist/feature/item_add/domain/entities/user_item_entity.dart';
+import 'package:wedlist/core/entities/user_item_entity.dart';
 import 'package:wedlist/feature/wishlist/presentation/blocs/cubit/select_category_cubit.dart';
 
 class DowryItemListView extends StatelessWidget {

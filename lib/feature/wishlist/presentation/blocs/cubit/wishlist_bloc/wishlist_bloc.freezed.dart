@@ -116,10 +116,7 @@ final _that = this;
 switch (_that) {
 case FetchWishListItems():
 return fetch(_that);case WatchWishListItems():
-return watch(_that);case _:
-  throw StateError('Unexpected subclass');
-
-}
+return watch(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -181,10 +178,7 @@ return watch(_that.category,_that.langCode,_that.id);case _:
 switch (_that) {
 case FetchWishListItems():
 return fetch(_that.category,_that.langCode,_that.id);case WatchWishListItems():
-return watch(_that.category,_that.langCode,_that.id);case _:
-  throw StateError('Unexpected subclass');
-
-}
+return watch(_that.category,_that.langCode,_that.id);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///

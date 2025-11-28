@@ -76,6 +76,14 @@ dependencies:
   dio: ^5.9.0
   flutter_secure_storage: ^9.2.4
 
+  # Local Storage - Hive
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  path_provider: ^2.1.1
+
+  # Network Connectivity
+  connectivity_plus: ^5.0.2
+
 dev_dependencies:
   # Flutter SDK
   flutter_test:

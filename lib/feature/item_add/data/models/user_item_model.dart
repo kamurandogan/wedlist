@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:wedlist/core/entities/user_item_entity.dart';
 import 'package:wedlist/core/json/timestamp_converter.dart';
-import 'package:wedlist/feature/item_add/domain/entities/user_item_entity.dart';
 
 part 'user_item_model.freezed.dart';
 part 'user_item_model.g.dart';
@@ -37,12 +37,12 @@ sealed class UserItemModel with _$UserItemModel {
 
 extension UserItemModelX on UserItemModel {
   UserItemEntity toEntity() => UserItemEntity(
-    price,
-    note,
-    imgUrl,
     id: id,
     title: title,
     category: category,
+    price: price,
+    note: note,
+    imgUrl: imgUrl,
     createdAt: createdAt,
     owners: owners,
     createdBy: createdBy,

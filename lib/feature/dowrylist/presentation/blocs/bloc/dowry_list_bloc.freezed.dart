@@ -342,7 +342,7 @@ $Res call({
 });
 
 
-
+$UserItemEntityCopyWith<$Res> get updatedItem;
 
 }
 /// @nodoc
@@ -362,7 +362,16 @@ as UserItemEntity,
   ));
 }
 
-
+/// Create a copy of DowryListEvent
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$UserItemEntityCopyWith<$Res> get updatedItem {
+  
+  return $UserItemEntityCopyWith<$Res>(_self.updatedItem, (value) {
+    return _then(_self.copyWith(updatedItem: value));
+  });
+}
 }
 
 /// @nodoc
@@ -440,7 +449,7 @@ $Res call({
 });
 
 
-
+$UserItemEntityCopyWith<$Res> get item;
 
 }
 /// @nodoc
@@ -460,7 +469,16 @@ as UserItemEntity,
   ));
 }
 
-
+/// Create a copy of DowryListEvent
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$UserItemEntityCopyWith<$Res> get item {
+  
+  return $UserItemEntityCopyWith<$Res>(_self.item, (value) {
+    return _then(_self.copyWith(item: value));
+  });
+}
 }
 
 /// @nodoc

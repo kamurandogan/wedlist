@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:wedlist/core/constants/firebase_paths.dart';
-import 'package:wedlist/feature/item_add/domain/entities/user_item_entity.dart';
+import 'package:wedlist/core/entities/user_item_entity.dart';
 import 'package:wedlist/feature/item_add/domain/usecases/add_user_item_usecase.dart';
 
 part 'add_item_bloc.freezed.dart';
