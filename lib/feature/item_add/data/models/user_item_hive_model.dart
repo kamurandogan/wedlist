@@ -1,7 +1,7 @@
 import 'package:hive/hive.dart';
 import 'package:wedlist/core/entities/user_item_entity.dart';
 
-part 'user_item_hive_model.g.dart';
+part 'user_item_hive_model.g.dart'; // Manuel TypeAdapter'ımız
 
 @HiveType(typeId: 0)
 class UserItemHiveModel extends HiveObject {

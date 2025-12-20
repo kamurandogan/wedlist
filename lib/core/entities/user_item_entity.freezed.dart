@@ -217,8 +217,8 @@ return $default(_that.id,_that.title,_that.category,_that.price,_that.note,_that
 /// @nodoc
 
 
-class _UserItemEntity implements UserItemEntity {
-  const _UserItemEntity({required this.id, required this.title, required this.category, required this.price, required this.note, required this.imgUrl, this.createdAt, final  List<String> owners = const [], this.createdBy = '', this.isPendingSync = false, this.isPendingDelete = false, this.lastSyncedAt}): _owners = owners;
+class _UserItemEntity extends UserItemEntity {
+  const _UserItemEntity({required this.id, required this.title, required this.category, required this.price, required this.note, required this.imgUrl, this.createdAt, final  List<String> owners = const [], this.createdBy = '', this.isPendingSync = false, this.isPendingDelete = false, this.lastSyncedAt}): _owners = owners,super._();
   
 
 @override final  String id;

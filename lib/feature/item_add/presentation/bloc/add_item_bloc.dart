@@ -19,12 +19,12 @@ class AddItemBloc extends Bloc<AddItemEvent, AddItemState> {
         final itemId = generateFirestoreId();
         final uid = FirebaseAuth.instance.currentUser?.uid ?? '';
         final userItem = UserItemEntity(
-          double.tryParse(event.price ?? '') ?? 0.0,
-          event.note ?? '',
-          event.imgUrl ?? '',
           id: itemId,
           title: event.title,
           category: event.category,
+          price: double.tryParse(event.price ?? '') ?? 0.0,
+          note: event.note ?? '',
+          imgUrl: event.imgUrl ?? '',
           createdAt: DateTime.now(),
           owners: uid.isNotEmpty ? [uid] : const [],
           createdBy: uid,

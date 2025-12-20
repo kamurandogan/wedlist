@@ -1,12 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wedlist/core/refresh/refresh_bus.dart';
 import 'package:wedlist/core/services/ads_service.dart';
+import 'package:wedlist/core/services/hive_service.dart';
 import 'package:wedlist/core/services/item_limit_service.dart';
+import 'package:wedlist/core/services/network_info.dart';
 import 'package:wedlist/core/services/purchase_service.dart';
+import 'package:wedlist/core/services/sync_service.dart';
 import 'package:wedlist/core/user/country_persistence.dart';
 import 'package:wedlist/core/user/user_service.dart';
 import 'package:wedlist/feature/dowrylist/domain/usecases/delete_user_item_usecase.dart';
@@ -16,10 +20,11 @@ import 'package:wedlist/feature/dowrylist/domain/usecases/update_user_item_useca
 import 'package:wedlist/feature/dowrylist/domain/usecases/watch_user_items_usecase.dart';
 import 'package:wedlist/feature/dowrylist/presentation/blocs/bloc/dowry_list_bloc.dart';
 import 'package:wedlist/feature/item_add/data/datasources/photo_upload_datasource.dart';
+import 'package:wedlist/feature/item_add/data/datasources/user_item_local_datasource.dart';
 import 'package:wedlist/feature/item_add/data/datasources/user_item_remote_datasource.dart';
 import 'package:wedlist/feature/item_add/data/repositories/item_repository_impl.dart';
 import 'package:wedlist/feature/item_add/data/repositories/photo_repository_impl.dart';
-import 'package:wedlist/feature/item_add/data/repositories/user_item_repository_impl.dart';
+import 'package:wedlist/feature/item_add/data/repositories/user_item_repository_impl_offline.dart';
 import 'package:wedlist/feature/item_add/domain/repositories/item_repository.dart';
 import 'package:wedlist/feature/item_add/domain/repositories/photo_repository.dart';
 import 'package:wedlist/feature/item_add/domain/repositories/user_item_repository.dart';
@@ -79,18 +84,20 @@ import 'package:wedlist/feature/wishlist/presentation/blocs/cubit/wishlist_bloc/
 final GetIt sl = GetIt.instance; // Service Locator (sl)
 
 Future<void> init() async {
+  // Initialize Hive
+  final hiveService = HiveService();
+  await hiveService.init();
+
   // Global utilities
   sl
     ..registerLazySingleton<RefreshBus>(RefreshBus.new)
-    // ItemAdd Feature Injection
-    // continue chain
-    // ItemAdd Feature Injection
-    // ItemAdd Feature Injection
-    // ItemAdd Feature Injection
-    // ItemAdd Feature Injection
-    // ItemAdd Feature Injection
-    // ItemAdd Feature Injection
-    // ItemAdd Feature Injection
+    // Core Services - Offline Support
+    ..registerLazySingleton<HiveService>(() => hiveService)
+    ..registerLazySingleton<Connectivity>(Connectivity.new)
+    ..registerLazySingleton<NetworkInfo>(
+      () => NetworkInfoImpl(sl<Connectivity>()),
+    )
+    // ItemAdd Feature Injection - Offline First
     ..registerLazySingleton<ItemRepository>(ItemRepositoryImpl.new)
     ..registerLazySingleton<UserItemRemoteDataSource>(
       () => UserItemRemoteDataSourceImpl(
@@ -99,8 +106,22 @@ Future<void> init() async {
         FirebaseAuth.instance,
       ),
     )
+    ..registerLazySingleton<UserItemLocalDataSource>(
+      () => UserItemLocalDataSourceImpl(sl<HiveService>()),
+    )
     ..registerLazySingleton<UserItemRepository>(
-      () => UserItemRepositoryImpl(sl<UserItemRemoteDataSource>()),
+      () => UserItemRepositoryImplOffline(
+        remoteDataSource: sl<UserItemRemoteDataSource>(),
+        localDataSource: sl<UserItemLocalDataSource>(),
+        networkInfo: sl<NetworkInfo>(),
+      ),
+    )
+    ..registerLazySingleton<SyncService>(
+      () => SyncService(
+        localDataSource: sl<UserItemLocalDataSource>(),
+        remoteDataSource: sl<UserItemRemoteDataSource>(),
+        networkInfo: sl<NetworkInfo>(),
+      ),
     )
     ..registerLazySingleton<AddUserItemUseCase>(
       () => AddUserItemUseCase(sl<UserItemRepository>()),
@@ -222,7 +243,7 @@ Future<void> init() async {
     )
     ..registerLazySingleton(() => GetWishListItems(sl()))
     ..registerLazySingleton(() => AddWishlistItems(sl()))
-    ..registerFactory(
+    ..registerLazySingleton(
       () => WishListBloc(sl(), sl<RefreshBus>(), sl<WatchUserItemsUseCase>()),
     )
     // Category Injection

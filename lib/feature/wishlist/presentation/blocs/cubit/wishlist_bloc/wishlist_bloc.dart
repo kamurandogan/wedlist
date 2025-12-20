@@ -36,50 +36,17 @@ class WishListBloc extends Bloc<WishListEvent, WishListState> {
       }
     });
 
-    // DowryList (UserItems) değiştiğinde filtering'i yeniden yap
-    // WatchUserItemsUseCase stream'ini dinle
+    // DowryList (UserItems) değiştiğinde _currentUserItems'i güncelle
+    // ve eğer wishlist loaded state'indeyse, filtrelemeyi yeniden yap
     _dowrySub = _watchUserItemsUseCase().listen((items) {
       _currentUserItems = items;
-      // Eğer hali hazırda yüklü bir liste varsa, filtrelemeyi güncelle
-      state.maybeWhen(
-        loaded: (_) {
-          if (_lastParams != null) {
-            // Mevcut parametrelerle yeniden watch tetikle veya
-            // sadece filtrelemeyi güncellemek daha verimli olabilir ama
-            // şimdilik tutarlılık için watch event'ini tekrar tetikleyelim
-            // ya da direkt emit yapabiliriz ama stream-based watch olduğu için
-            // _onWatch içindeki combine logic daha doğru olur.
-            // ANCAK: _onWatch zaten stream dinliyor.
-            // BURADA STRATEJİ DEĞİŞİKLİĞİ:
-            // _onWatch metodunda Rx.combineLatest gibi bir yapı kurmak en temizidir.
-            // Fakat flutter_bloc ile bu biraz manuel.
-            // Basit çözüm: UserItems değiştiğinde, mevcut state loaded ise
-            // ve elimizde ham veri (raw wish items) yoksa tekrar fetch/watch yapmak.
-            // Ama biz _onWatch içinde emit.forEach kullanıyoruz.
-            // Bu yüzden _dowrySub burada sadece tetikleyici olabilir.
 
-            // DAHA İYİ ÇÖZÜM:
-            // _onWatch metodunu hem wishlist stream'ini hem de user items stream'ini
-            // dinleyecek şekilde combine edelim.
-            // Bu durumda buradaki _dowrySub'a gerek kalmayabilir veya
-            // sadece refresh bus mantığı kalır.
-
-            // Şimdilik mevcut yapıyı bozmadan:
-            // UserItems güncellendiğinde, _currentUserItems'i güncelle ve
-            // eğer _lastParams varsa yeniden Watch event'i at.
-            // Bu biraz maliyetli olabilir (tekrar API call vs. stream restart).
-            // Ama en garantisi bu.
-            add(
-              WishListEvent.watch(
-                _lastParams!.category,
-                _lastParams!.langCode,
-                _lastParams!.id,
-              ),
-            );
-          }
-        },
-        orElse: () {},
-      );
+      // Eğer mevcut state loaded ise ve elimizde wishlist verileri varsa,
+      // yeniden filtreleme yapıp emit et (Watch event tetiklemeden)
+      if (state is _Loaded && _lastWishItems.isNotEmpty) {
+        final filteredItems = _filterItems(_lastWishItems);
+        emit(WishListState.loaded(filteredItems));
+      }
     });
   }
 
@@ -92,6 +59,7 @@ class WishListBloc extends Bloc<WishListEvent, WishListState> {
 
   _FetchParams? _lastParams;
   List<UserItemEntity> _currentUserItems = [];
+  List<ItemEntity> _lastWishItems = [];
 
   Future<void> _onFetch(
     FetchWishListItems event,
@@ -112,6 +80,8 @@ class WishListBloc extends Bloc<WishListEvent, WishListState> {
     result.fold(
       (failure) => emit(WishListState.error(_failureToMessage(failure))),
       (items) {
+        // Ham wishlist verilerini sakla (filtering için gerekli)
+        _lastWishItems = items;
         final filteredItems = _filterItems(items);
         emit(WishListState.loaded(filteredItems));
       },
@@ -132,6 +102,8 @@ class WishListBloc extends Bloc<WishListEvent, WishListState> {
         return either.fold(
           (failure) => WishListState.error(_failureToMessage(failure)),
           (items) {
+            // Ham wishlist verilerini sakla (filtering için gerekli)
+            _lastWishItems = items;
             final filteredItems = _filterItems(items);
             return WishListState.loaded(filteredItems);
           },

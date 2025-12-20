@@ -8,12 +8,10 @@ import 'package:wedlist/core/router/app_router.dart';
 import 'package:wedlist/core/utils/colors.dart';
 import 'package:wedlist/core/utils/paddings.dart';
 import 'package:wedlist/feature/wishlist/presentation/blocs/cubit/select_category_cubit.dart';
-import 'package:wedlist/feature/wishlist/presentation/blocs/cubit/wishlist_bloc/wishlist_bloc.dart';
 import 'package:wedlist/feature/wishlist/presentation/constants/wishlist_constants.dart';
 import 'package:wedlist/feature/wishlist/presentation/pages/add_category_view.dart';
 import 'package:wedlist/feature/wishlist/presentation/pages/wish_list_view.dart';
 import 'package:wedlist/feature/wishlist/presentation/widgets/category_buttons/category_buttons.dart';
-import 'package:wedlist/injection_container.dart';
 
 part 'presentation/widgets/search_bar.dart';
 
@@ -45,23 +43,20 @@ class WishlistPage extends StatelessWidget {
         ),
       );
     }
-    return BlocProvider(
-      create: (_) => sl<WishListBloc>(),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // CustomSearchBar(),
-          const CategoryButtons(),
-          BlocBuilder<SelectCategoryCubit, String>(
-            builder: (context, selected) {
-              if (selected == addCategorySelectionKey) {
-                return const Expanded(child: AddCategoryView());
-              }
-              return const WishListView();
-            },
-          ),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // CustomSearchBar(),
+        const CategoryButtons(),
+        BlocBuilder<SelectCategoryCubit, String>(
+          builder: (context, selected) {
+            if (selected == addCategorySelectionKey) {
+              return const Expanded(child: AddCategoryView());
+            }
+            return const WishListView();
+          },
+        ),
+      ],
     );
   }
 }

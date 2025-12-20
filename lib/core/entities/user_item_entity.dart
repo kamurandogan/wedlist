@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'user_item_entity.freezed.dart';
 
 @freezed
-class UserItemEntity with _$UserItemEntity {
+abstract class UserItemEntity with _$UserItemEntity {
   const factory UserItemEntity({
     required String id,
     required String title,
@@ -19,4 +19,6 @@ class UserItemEntity with _$UserItemEntity {
     @Default(false) bool isPendingDelete,
     DateTime? lastSyncedAt,
   }) = _UserItemEntity;
+
+  const UserItemEntity._();
 }

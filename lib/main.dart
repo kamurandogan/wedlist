@@ -12,6 +12,7 @@ import 'package:wedlist/core/logging/app_logger.dart';
 import 'package:wedlist/core/observers/app_bloc_observer.dart';
 import 'package:wedlist/core/router/app_router.dart';
 import 'package:wedlist/core/services/ads_service.dart';
+import 'package:wedlist/core/services/sync_service.dart';
 import 'package:wedlist/core/user/user_service.dart';
 import 'package:wedlist/feature/dowrylist/presentation/blocs/bloc/dowry_list_bloc.dart';
 import 'package:wedlist/feature/login/presentation/blocs/auth_bloc.dart';
@@ -21,6 +22,7 @@ import 'package:wedlist/feature/settings/presentation/bloc/theme_cubit.dart';
 import 'package:wedlist/feature/settings/presentation/bloc/theme_state.dart';
 import 'package:wedlist/feature/wishlist/presentation/blocs/category_bloc/bloc/categorylist_bloc.dart';
 import 'package:wedlist/feature/wishlist/presentation/blocs/cubit/select_category_cubit.dart';
+import 'package:wedlist/feature/wishlist/presentation/blocs/cubit/wishlist_bloc/wishlist_bloc.dart';
 import 'package:wedlist/firebase_options.dart';
 import 'package:wedlist/generated/l10n/app_localizations.dart';
 import 'package:wedlist/injection_container.dart';
@@ -75,6 +77,14 @@ Future<void> main() async {
     AppLogger.error('User service initialization failed', e, stackTrace);
   }
 
+  // Start background sync service (offline-first support)
+  try {
+    sl<SyncService>().startSync();
+    AppLogger.info('Background sync service started');
+  } on Exception catch (e, stackTrace) {
+    AppLogger.warning('Sync service initialization failed', e, stackTrace);
+  }
+
   runApp(
     MultiBlocProvider(
       providers: [
@@ -82,6 +92,7 @@ Future<void> main() async {
         BlocProvider(create: (context) => NavigationCubit()),
         BlocProvider(create: (context) => SelectCategoryCubit()),
         BlocProvider(create: (context) => sl<CategorylistBloc>()),
+        BlocProvider(create: (context) => sl<WishListBloc>()),
         BlocProvider(
           create: (context) =>
               sl<DowryListBloc>()

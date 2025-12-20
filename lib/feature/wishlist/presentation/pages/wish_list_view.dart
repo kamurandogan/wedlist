@@ -12,7 +12,6 @@ import 'package:wedlist/feature/wishlist/presentation/blocs/cubit/wishlist_bloc/
 import 'package:wedlist/feature/wishlist/presentation/widgets/wish_list_view/atoms/wishlist_bullet.dart';
 import 'package:wedlist/feature/wishlist/presentation/widgets/wish_list_view/atoms/wishlist_tile_trailing.dart';
 import 'package:wedlist/feature/wishlist/presentation/widgets/wish_list_view/molecules/wishlist_tile_content.dart';
-import 'package:wedlist/injection_container.dart';
 
 part '../widgets/wish_list_view/wish_list_tile.dart';
 
@@ -45,10 +44,7 @@ class WishListView extends StatelessWidget {
         ),
       );
     }
-    return BlocProvider(
-      create: (context) => sl<WishListBloc>(),
-      child: const _WishListViewContent(),
-    );
+    return const _WishListViewContent();
   }
 }
 
