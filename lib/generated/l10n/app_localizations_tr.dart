@@ -405,4 +405,15 @@ class AppLocalizationsTr extends AppLocalizations {
   String migrationPartialSuccess(int migratedCount, int failedCount) {
     return '$migratedCount öğe senkronize edildi, $failedCount öğe başarısız oldu';
   }
+
+  @override
+  String get internetConnectionRequired => 'İnternet Bağlantısı Gerekli';
+
+  @override
+  String get wishlistRequiresInternet =>
+      'İstek listesini görüntülemek için lütfen internet bağlantınızı kontrol edin.';
+
+  @override
+  String get checkConnectionAndRetry =>
+      'Bağlantınızı kontrol edip tekrar deneyin';
 }

@@ -160,5 +160,8 @@
                 "type": "int"
             }
         }
-    }
+    },
+    "internetConnectionRequired": "İnternet Bağlantısı Gerekli",
+    "wishlistRequiresInternet": "İstek listesini görüntülemek için lütfen internet bağlantınızı kontrol edin.",
+    "checkConnectionAndRetry": "Bağlantınızı kontrol edip tekrar deneyin"
 }

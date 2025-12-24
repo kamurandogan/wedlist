@@ -129,5 +129,8 @@
     "adOptionFreeLabel": "Gratis",
     "adOptionPremiumLabel": "Funciones premium",
     "adOptionRecommendedBadge": "RECOMENDADO",
-    "adLoadingText": "Cargando anuncio..."
+    "adLoadingText": "Cargando anuncio...",
+    "internetConnectionRequired": "Internet Connection Required",
+    "wishlistRequiresInternet": "Please check your internet connection to view the wishlist.",
+    "checkConnectionAndRetry": "Check your connection and try again"
 }

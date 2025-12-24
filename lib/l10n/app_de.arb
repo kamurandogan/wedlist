@@ -129,5 +129,8 @@
     "adOptionFreeLabel": "Kostenlos",
     "adOptionPremiumLabel": "Premium-Funktionen",
     "adOptionRecommendedBadge": "EMPFOHLEN",
-    "adLoadingText": "Werbung wird geladen..."
+    "adLoadingText": "Werbung wird geladen...",
+    "internetConnectionRequired": "Internetverbindung erforderlich",
+    "wishlistRequiresInternet": "Bitte überprüfen Sie Ihre Internetverbindung, um die Wunschliste anzuzeigen.",
+    "checkConnectionAndRetry": "Verbindung prüfen und erneut versuchen"
 }

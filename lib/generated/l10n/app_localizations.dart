@@ -847,6 +847,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{migratedCount} items synced, {failedCount} items failed'**
   String migrationPartialSuccess(int migratedCount, int failedCount);
+
+  /// Title shown when feature requires internet but device is offline
+  ///
+  /// In en, this message translates to:
+  /// **'Internet Connection Required'**
+  String get internetConnectionRequired;
+
+  /// Message explaining that wishlist feature needs internet connection
+  ///
+  /// In en, this message translates to:
+  /// **'Please check your internet connection to view the wishlist.'**
+  String get wishlistRequiresInternet;
+
+  /// Instruction to user to check internet and retry
+  ///
+  /// In en, this message translates to:
+  /// **'Check your connection and try again'**
+  String get checkConnectionAndRetry;
 }
 
 class _AppLocalizationsDelegate

@@ -135,6 +135,14 @@ class CollabRepositoryImpl implements CollabRepository {
     final norm = email.trim().toLowerCase();
     if (norm.isEmpty) return;
 
+    // Email format validation
+    final emailRegex = RegExp(
+      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+    );
+    if (!emailRegex.hasMatch(norm)) {
+      throw Exception('invalid_email_format');
+    }
+
     // partner var mı? engelle
     try {
       final snap = await fs.collection(FirebasePaths.users).doc(meUid).get();
@@ -284,6 +292,67 @@ class CollabRepositoryImpl implements CollabRepository {
       }, SetOptions(merge: true));
     } on Exception {
       /* ignore */
+    }
+
+    // KRITIK: Tüm item'lardan partneri kaldır (güvenlik için)
+    try {
+      // Kendi item'larımdan partneri kaldır
+      final myItems = await fs
+          .collection('userItems')
+          .where('owners', arrayContains: meUid)
+          .get();
+
+      // Batch işlemi ile 500'er item'lık gruplara böl
+      final chunks = <List<QueryDocumentSnapshot<Map<String, dynamic>>>>[];
+      for (var i = 0; i < myItems.docs.length; i += 500) {
+        final end = (i + 500 < myItems.docs.length)
+            ? i + 500
+            : myItems.docs.length;
+        chunks.add(myItems.docs.sublist(i, end));
+      }
+
+      for (final chunk in chunks) {
+        final batch = fs.batch();
+        for (final doc in chunk) {
+          final owners = (doc.data()['owners'] as List?)?.cast<String>() ?? [];
+          if (owners.contains(otherUid)) {
+            batch.update(doc.reference, {
+              'owners': FieldValue.arrayRemove([otherUid]),
+            });
+          }
+        }
+        await batch.commit();
+      }
+
+      // Partner'ın item'larından da kendimi kaldır
+      final partnerItems = await fs
+          .collection('userItems')
+          .where('owners', arrayContains: otherUid)
+          .get();
+
+      final partnerChunks =
+          <List<QueryDocumentSnapshot<Map<String, dynamic>>>>[];
+      for (var i = 0; i < partnerItems.docs.length; i += 500) {
+        final end = (i + 500 < partnerItems.docs.length)
+            ? i + 500
+            : partnerItems.docs.length;
+        partnerChunks.add(partnerItems.docs.sublist(i, end));
+      }
+
+      for (final chunk in partnerChunks) {
+        final batch = fs.batch();
+        for (final doc in chunk) {
+          final owners = (doc.data()['owners'] as List?)?.cast<String>() ?? [];
+          if (owners.contains(meUid)) {
+            batch.update(doc.reference, {
+              'owners': FieldValue.arrayRemove([meUid]),
+            });
+          }
+        }
+        await batch.commit();
+      }
+    } on Exception catch (e) {
+      debugPrint('[CollabRepo] Failed to remove partner from items: $e');
     }
 
     // her iki tarafta davet kayıtlarını temizle (best-effort)

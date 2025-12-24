@@ -41,7 +41,10 @@ class DowryItemCard extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () => Navigator.pop(dialogContext, true),
-                child: const Text('Delete', style: TextStyle(color: Colors.red)),
+                child: const Text(
+                  'Delete',
+                  style: TextStyle(color: Colors.red),
+                ),
               ),
             ],
           ),
@@ -136,7 +139,8 @@ class _ItemImage extends StatelessWidget {
       width: double.infinity,
       height: double.infinity,
       fadeInDuration: const Duration(milliseconds: 200),
-      placeholder: (context, _) => const Center(child: CircularProgressIndicator()),
+      placeholder: (context, _) =>
+          const Center(child: CircularProgressIndicator()),
       errorWidget: (context, _, _) => const _PlaceholderImage(),
       memCacheWidth: 600,
       memCacheHeight: 800,

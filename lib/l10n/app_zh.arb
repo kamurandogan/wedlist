@@ -129,5 +129,8 @@
     "adOptionFreeLabel": "免费",
     "adOptionPremiumLabel": "高级功能",
     "adOptionRecommendedBadge": "推荐",
-    "adLoadingText": "加载广告中..."
+    "adLoadingText": "加载广告中...",
+    "internetConnectionRequired": "Internet Connection Required",
+    "wishlistRequiresInternet": "Please check your internet connection to view the wishlist.",
+    "checkConnectionAndRetry": "Check your connection and try again"
 }

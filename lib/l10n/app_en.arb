@@ -205,5 +205,17 @@
                 "type": "int"
             }
         }
+    },
+    "internetConnectionRequired": "Internet Connection Required",
+    "@internetConnectionRequired": {
+        "description": "Title shown when feature requires internet but device is offline"
+    },
+    "wishlistRequiresInternet": "Please check your internet connection to view the wishlist.",
+    "@wishlistRequiresInternet": {
+        "description": "Message explaining that wishlist feature needs internet connection"
+    },
+    "checkConnectionAndRetry": "Check your connection and try again",
+    "@checkConnectionAndRetry": {
+        "description": "Instruction to user to check internet and retry"
     }
 }

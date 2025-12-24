@@ -129,5 +129,8 @@
     "adOptionFreeLabel": "Gratis",
     "adOptionPremiumLabel": "Premium-functies",
     "adOptionRecommendedBadge": "AANBEVOLEN",
-    "adLoadingText": "Advertentie laden..."
+    "adLoadingText": "Advertentie laden...",
+    "internetConnectionRequired": "Internet Connection Required",
+    "wishlistRequiresInternet": "Please check your internet connection to view the wishlist.",
+    "checkConnectionAndRetry": "Check your connection and try again"
 }

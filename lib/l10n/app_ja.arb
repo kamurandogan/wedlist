@@ -129,5 +129,8 @@
     "adOptionFreeLabel": "無料",
     "adOptionPremiumLabel": "プレミアム機能",
     "adOptionRecommendedBadge": "おすすめ",
-    "adLoadingText": "広告を読み込んでいます..."
+    "adLoadingText": "広告を読み込んでいます...",
+    "internetConnectionRequired": "Internet Connection Required",
+    "wishlistRequiresInternet": "Please check your internet connection to view the wishlist.",
+    "checkConnectionAndRetry": "Check your connection and try again"
 }

@@ -392,4 +392,14 @@ class AppLocalizationsJa extends AppLocalizations {
   String migrationPartialSuccess(int migratedCount, int failedCount) {
     return '$migratedCount items synced, $failedCount items failed';
   }
+
+  @override
+  String get internetConnectionRequired => 'Internet Connection Required';
+
+  @override
+  String get wishlistRequiresInternet =>
+      'Please check your internet connection to view the wishlist.';
+
+  @override
+  String get checkConnectionAndRetry => 'Check your connection and try again';
 }
