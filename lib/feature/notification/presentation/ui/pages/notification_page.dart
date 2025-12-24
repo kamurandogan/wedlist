@@ -67,69 +67,85 @@ class NotificationPage extends StatelessWidget {
           );
         }
 
-        // Authenticated mode - show notifications
-        return BlocBuilder<NotificationBloc, NotificationState>(
-          builder: (context, state) {
-            if (state is NotificationLoading || state is NotificationInitial) {
-              return const LoadingIndicator();
-            }
-            if (state is NotificationError) {
-              return ErrorText(state.message);
-            }
-            final items = (state as NotificationLoaded).items;
-            if (items.isEmpty) {
-              return const EmptyState();
-            }
+        // Authenticated mode - provide NotificationBloc if not already available
+        // This handles the case where the app was started in offline mode but user logged in
+        try {
+          context.read<NotificationBloc>();
+          // Bloc exists, use it directly
+          return _buildNotificationContent(context);
+        } on Exception catch (_) {
+          // Bloc doesn't exist, provide it locally
+          return BlocProvider(
+            create: (context) =>
+                sl<NotificationBloc>()..add(SubscribeNotifications()),
+            child: _buildNotificationContent(context),
+          );
+        }
+      },
+    );
+  }
 
-            // Background-handle collab_removed
-            final removedNotifs = items
-                .where((n) => n.type == 'collab_removed')
-                .toList();
-            if (removedNotifs.isNotEmpty) {
-              WidgetsBinding.instance.addPostFrameCallback((_) async {
-                for (final n in removedNotifs) {
-                  context.read<NotificationBloc>().add(
-                    HandleCollabRemoved(removerUid: n.createdBy, notifId: n.id),
-                  );
-                }
-              });
-            }
+  Widget _buildNotificationContent(BuildContext _) {
+    return BlocBuilder<NotificationBloc, NotificationState>(
+      builder: (context, state) {
+        if (state is NotificationLoading || state is NotificationInitial) {
+          return const LoadingIndicator();
+        }
+        if (state is NotificationError) {
+          return ErrorText(state.message);
+        }
+        final items = (state as NotificationLoaded).items;
+        if (items.isEmpty) {
+          return const EmptyState();
+        }
 
-            // Mark all currently visible unread notifications as read (exclude those being auto-deleted)
-            final unreadIds = items
-                .where((n) => !n.read && n.type != 'collab_removed')
-                .map((n) => n.id)
-                .toSet();
-            final toMark = unreadIds.difference(_markedIds);
-            if (toMark.isNotEmpty) {
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                context.read<NotificationBloc>().add(MarkAllRead(toMark));
-              });
-              _markedIds.addAll(toMark);
+        // Background-handle collab_removed
+        final removedNotifs = items
+            .where((n) => n.type == 'collab_removed')
+            .toList();
+        if (removedNotifs.isNotEmpty) {
+          WidgetsBinding.instance.addPostFrameCallback((_) async {
+            for (final n in removedNotifs) {
+              context.read<NotificationBloc>().add(
+                HandleCollabRemoved(removerUid: n.createdBy, notifId: n.id),
+              );
             }
+          });
+        }
 
-            return NotificationsList(
-              items: items,
-              onAcceptCollab: (n) {
-                context.read<NotificationBloc>().add(
-                  AcceptCollab(senderUid: n.createdBy, notifId: n.id),
-                );
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(context.loc.notificationAcceptSuccess),
-                  ),
-                );
-              },
-              onRejectCollab: (n) {
-                context.read<NotificationBloc>().add(
-                  RejectCollab(senderUid: n.createdBy, notifId: n.id),
-                );
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(context.loc.notificationRejectSuccess),
-                  ),
-                );
-              },
+        // Mark all currently visible unread notifications as read (exclude those being auto-deleted)
+        final unreadIds = items
+            .where((n) => !n.read && n.type != 'collab_removed')
+            .map((n) => n.id)
+            .toSet();
+        final toMark = unreadIds.difference(_markedIds);
+        if (toMark.isNotEmpty) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            context.read<NotificationBloc>().add(MarkAllRead(toMark));
+          });
+          _markedIds.addAll(toMark);
+        }
+
+        return NotificationsList(
+          items: items,
+          onAcceptCollab: (n) {
+            context.read<NotificationBloc>().add(
+              AcceptCollab(senderUid: n.createdBy, notifId: n.id),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(context.loc.notificationAcceptSuccess),
+              ),
+            );
+          },
+          onRejectCollab: (n) {
+            context.read<NotificationBloc>().add(
+              RejectCollab(senderUid: n.createdBy, notifId: n.id),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(context.loc.notificationRejectSuccess),
+              ),
             );
           },
         );
