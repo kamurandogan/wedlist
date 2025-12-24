@@ -182,5 +182,28 @@
     "adOptionFreeLabel": "Free",
     "adOptionPremiumLabel": "Premium features",
     "adOptionRecommendedBadge": "RECOMMENDED",
-    "adLoadingText": "Loading ad..."
+    "adLoadingText": "Loading ad...",
+    "offlineMode": "Offline Mode",
+    "onlineModeRequired": "This feature requires internet connection",
+    "skipLogin": "Explore First",
+    "createAccountOrLogin": "Create Account / Sign In",
+    "offlineOnboardingMessage": "Create an account to manage your wedding list together with your partner, or explore the app first!",
+    "offlineModeActive": "You're in Offline Mode",
+    "loginToSyncData": "Sign in to back up your data and share with your partner",
+    "loginButton": "Sign In",
+    "migrationInProgress": "Syncing your data...",
+    "migrationSuccess": "Your data has been successfully synced",
+    "migrationFailed": "Sync failed. Please try again.",
+    "offlineDataWillSync": "Your data will be automatically synced when you sign in",
+    "migrationPartialSuccess": "{migratedCount} items synced, {failedCount} items failed",
+    "@migrationPartialSuccess": {
+        "placeholders": {
+            "migratedCount": {
+                "type": "int"
+            },
+            "failedCount": {
+                "type": "int"
+            }
+        }
+    }
 }

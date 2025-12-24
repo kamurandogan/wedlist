@@ -86,7 +86,38 @@ class _AddToDowryButtonState extends State<AddToDowryButton>
     // Item ekleme işlemine devam et
     if (!mounted) return;
     setState(() => _clicked = true);
-    final imgUrl = photoCubit.state.imageUrl;
+    final photoState = photoCubit.state;
+    final imgUrl = photoState.imageUrl;
+
+    // Debug: Check imgUrl value
+    debugPrint('[DEBUG] AddToDowryButton - imgUrl: $imgUrl');
+    debugPrint(
+      '[DEBUG] AddToDowryButton - photoState.status: ${photoState.status}',
+    );
+    debugPrint(
+      '[DEBUG] AddToDowryButton - photoState.imageUrl: ${photoState.imageUrl}',
+    );
+
+    // Validation: Check if photo was uploaded but URL is missing
+    if (photoState.status == AddPhotoStatus.success &&
+        (imgUrl == null || imgUrl.isEmpty)) {
+      debugPrint(
+        '[ERROR] AddToDowryButton - Photo upload succeeded but no imageUrl!',
+      );
+      final messenger = ScaffoldMessenger.of(context);
+      if (!mounted) return;
+      messenger.showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Fotoğraf yüklenirken bir hata oluştu. Lütfen tekrar deneyin.',
+          ),
+          backgroundColor: Colors.red,
+        ),
+      );
+      setState(() => _clicked = false);
+      return;
+    }
+
     addItemBloc.add(
       AddItemEvent.addItemButtonPressed(
         id: widget.item.id,
@@ -95,6 +126,7 @@ class _AddToDowryButtonState extends State<AddToDowryButton>
         price: widget.price,
         note: widget.note,
         imgUrl: imgUrl,
+        photoBytes: photoState.previewBytes,
       ),
     );
     // Başarılı olduğunda dinleyici içinde yönlendireceğiz; burada sadece animasyonu başlatıyoruz

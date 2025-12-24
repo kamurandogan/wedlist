@@ -360,4 +360,49 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get adLoadingText => 'Reklam yükleniyor...';
+
+  @override
+  String get offlineMode => 'Çevrimdışı Mod';
+
+  @override
+  String get onlineModeRequired => 'Bu özellik internet bağlantısı gerektirir';
+
+  @override
+  String get skipLogin => 'Şimdilik Keşfet';
+
+  @override
+  String get createAccountOrLogin => 'Hesap Oluştur / Giriş Yap';
+
+  @override
+  String get offlineOnboardingMessage =>
+      'Partnerinizle birlikte düğün listenizi yönetmek için hesap oluşturun veya önce uygulamayı keşfedin!';
+
+  @override
+  String get offlineModeActive => 'Çevrimdışı Moddasınız';
+
+  @override
+  String get loginToSyncData =>
+      'Verilerinizi yedeklemek ve partnerinizle paylaşmak için giriş yapın';
+
+  @override
+  String get loginButton => 'Giriş Yap';
+
+  @override
+  String get migrationInProgress => 'Verileriniz senkronize ediliyor...';
+
+  @override
+  String get migrationSuccess => 'Verileriniz başarıyla senkronize edildi';
+
+  @override
+  String get migrationFailed =>
+      'Senkronizasyon başarısız oldu. Lütfen tekrar deneyin.';
+
+  @override
+  String get offlineDataWillSync =>
+      'Giriş yaptığınızda verileriniz otomatik olarak senkronize edilecek';
+
+  @override
+  String migrationPartialSuccess(int migratedCount, int failedCount) {
+    return '$migratedCount öğe senkronize edildi, $failedCount öğe başarısız oldu';
+  }
 }

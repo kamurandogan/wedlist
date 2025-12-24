@@ -3,6 +3,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:wedlist/core/error/failures.dart' as f;
+import 'package:wedlist/core/services/offline_data_migration_service.dart';
+import 'package:wedlist/core/services/user_mode_service.dart';
+import 'package:wedlist/core/services/wishlist_data_migration_service.dart';
 import 'package:wedlist/core/user/country_persistence.dart';
 import 'package:wedlist/feature/login/domain/entities/user.dart';
 import 'package:wedlist/feature/login/domain/usecases/sign_in.dart';
@@ -19,24 +22,49 @@ class MockSignInWithGoogle extends Mock implements SignInWithGoogle {}
 class MockCountryPersistenceService extends Mock
     implements CountryPersistenceService {}
 
+class MockUserModeService extends Mock implements UserModeService {}
+
+class MockOfflineDataMigrationService extends Mock
+    implements OfflineDataMigrationService {}
+
+class MockWishlistDataMigrationService extends Mock
+    implements WishlistDataMigrationService {}
+
 void main() {
   late AuthBloc authBloc;
   late MockSignIn mockSignIn;
   late MockSignInWithApple mockSignInWithApple;
   late MockSignInWithGoogle mockSignInWithGoogle;
   late MockCountryPersistenceService mockCountryService;
+  late MockUserModeService mockUserModeService;
+  late MockOfflineDataMigrationService mockMigrationService;
+  late MockWishlistDataMigrationService mockWishlistMigrationService;
 
   setUp(() {
     mockSignIn = MockSignIn();
     mockSignInWithApple = MockSignInWithApple();
     mockSignInWithGoogle = MockSignInWithGoogle();
     mockCountryService = MockCountryPersistenceService();
+    mockUserModeService = MockUserModeService();
+    mockMigrationService = MockOfflineDataMigrationService();
+    mockWishlistMigrationService = MockWishlistDataMigrationService();
+
+    // Default: user is not in offline mode (authenticated)
+    when(
+      () => mockUserModeService.isOfflineMode(),
+    ).thenAnswer((_) async => false);
+    when(
+      () => mockUserModeService.setAuthenticatedMode(any()),
+    ).thenAnswer((_) async => {});
 
     authBloc = AuthBloc(
       mockSignIn,
       mockCountryService,
       mockSignInWithApple,
       mockSignInWithGoogle,
+      mockUserModeService,
+      mockMigrationService,
+      mockWishlistMigrationService,
     );
   });
 

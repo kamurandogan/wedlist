@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:wedlist/core/extensions/l10n_extension.dart';
+import 'package:wedlist/core/services/user_mode_service.dart';
 import 'package:wedlist/core/utils/colors.dart';
 import 'package:wedlist/feature/main_page/presentation/blocs/cubit/navigation_cubit.dart';
 import 'package:wedlist/feature/notification/presentation/bloc/notification_bloc.dart';
+import 'package:wedlist/injection_container.dart';
 
 /// Uygulamanın alt kısmında gezinme için kullanılan, erişilebilirlik ve performans odaklı özel bottom navigation bar.
 class CustomBottomNavigationBar extends StatelessWidget {
@@ -16,6 +18,9 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Senkron offline mode kontrolü - SharedPreferences zaten cache'de
+    final isOffline = sl<UserModeService>().isOfflineModeSync();
+
     return SafeArea(
       child: BlocBuilder<NavigationCubit, SelectedPage>(
         // ⚡ PERFORMANS: Sadece sayfa değiştiğinde rebuild
@@ -63,59 +68,71 @@ class CustomBottomNavigationBar extends StatelessWidget {
                       ),
                       tooltip: context.loc.bottomNavDowryList,
                     ),
-                    BlocBuilder<NotificationBloc, NotificationState>(
-                      builder: (context, nstate) {
-                        var unread = 0;
-                        if (nstate is NotificationLoaded) {
-                          unread = nstate.items.where((e) => !e.read).length;
-                        }
-                        return Stack(
-                          clipBehavior: Clip.none,
-                          children: [
-                            _navIcon(
-                              context,
-                              icon: HugeIcons.strokeRoundedNotification01,
-                              selected: state == SelectedPage.notification,
-                              onTap: () =>
-                                  context.read<NavigationCubit>().changePage(
-                                    SelectedPage.notification,
-                                  ),
-                              tooltip: context.loc.bottomNavNotification,
-                            ),
-                            if (unread > 0)
-                              Positioned(
-                                right: -2,
-                                top: -2,
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 6,
-                                    vertical: 2,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.error,
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  constraints: const BoxConstraints(
-                                    minWidth: 18,
-                                    minHeight: 18,
-                                  ),
-                                  child: Text(
-                                    unread > 99 ? '99+' : '$unread',
-                                    style:
-                                        Theme.of(
-                                          context,
-                                        ).textTheme.labelSmall?.copyWith(
-                                          color: Colors.white,
-                                        ),
+                    // Notification badge - offline modda NotificationBloc yok
+                    if (isOffline)
+                      _navIcon(
+                        context,
+                        icon: HugeIcons.strokeRoundedNotification01,
+                        selected: state == SelectedPage.notification,
+                        onTap: () => context.read<NavigationCubit>().changePage(
+                          SelectedPage.notification,
+                        ),
+                        tooltip: context.loc.bottomNavNotification,
+                      )
+                    else
+                      BlocBuilder<NotificationBloc, NotificationState>(
+                        builder: (context, nstate) {
+                          var unread = 0;
+                          if (nstate is NotificationLoaded) {
+                            unread = nstate.items.where((e) => !e.read).length;
+                          }
+                          return Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              _navIcon(
+                                context,
+                                icon: HugeIcons.strokeRoundedNotification01,
+                                selected: state == SelectedPage.notification,
+                                onTap: () =>
+                                    context.read<NavigationCubit>().changePage(
+                                      SelectedPage.notification,
+                                    ),
+                                tooltip: context.loc.bottomNavNotification,
+                              ),
+                              if (unread > 0)
+                                Positioned(
+                                  right: -2,
+                                  top: -2,
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 6,
+                                      vertical: 2,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.error,
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    constraints: const BoxConstraints(
+                                      minWidth: 18,
+                                      minHeight: 18,
+                                    ),
+                                    child: Text(
+                                      unread > 99 ? '99+' : '$unread',
+                                      style:
+                                          Theme.of(
+                                            context,
+                                          ).textTheme.labelSmall?.copyWith(
+                                            color: Colors.white,
+                                          ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                          ],
-                        );
-                      },
-                    ),
+                            ],
+                          );
+                        },
+                      ),
                   ],
                 ),
               ),

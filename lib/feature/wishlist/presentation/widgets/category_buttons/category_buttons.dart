@@ -1,13 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wedlist/core/extensions/l10n_extension.dart';
+import 'package:wedlist/core/services/user_mode_service.dart';
 import 'package:wedlist/core/utils/colors.dart';
 import 'package:wedlist/feature/dowrylist/presentation/blocs/bloc/dowry_list_bloc.dart';
 import 'package:wedlist/feature/wishlist/presentation/blocs/category_bloc/bloc/categorylist_bloc.dart';
 import 'package:wedlist/feature/wishlist/presentation/blocs/cubit/select_category_cubit.dart';
 import 'package:wedlist/feature/wishlist/presentation/constants/wishlist_constants.dart';
+import 'package:wedlist/injection_container.dart';
 
 part 'category_button.dart';
 
@@ -36,13 +37,22 @@ class _CategoryButtonsState extends State<CategoryButtons> {
   Future<void> _loadWishlistOnce() async {
     if (_wishlistLoaded) return;
     try {
-      final uid = FirebaseAuth.instance.currentUser?.uid;
-      if (uid == null || uid.isEmpty) {
-        setState(
-          () => _wishlistLoaded = true,
-        ); // nothing to load when not logged in
+      // Offline modda Firebase'den yükleme yapma
+      final userModeService = sl<UserModeService>();
+      final isOffline = await userModeService.isOfflineMode();
+
+      if (isOffline) {
+        setState(() => _wishlistLoaded = true);
         return;
       }
+
+      // Authenticated mode - Firebase'den yükle
+      final uid = await userModeService.getUserId();
+      if (uid.isEmpty) {
+        setState(() => _wishlistLoaded = true);
+        return;
+      }
+
       final snap = await FirebaseFirestore.instance
           .collection('users')
           .doc(uid)

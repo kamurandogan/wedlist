@@ -2,11 +2,11 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:wedlist/core/entities/user_item_entity.dart';
 import 'package:wedlist/core/error/failures.dart';
 import 'package:wedlist/core/item/item_entity.dart';
 import 'package:wedlist/core/refresh/refresh_bus.dart';
 import 'package:wedlist/feature/dowrylist/domain/usecases/watch_user_items_usecase.dart';
-import 'package:wedlist/core/entities/user_item_entity.dart';
 import 'package:wedlist/feature/wishlist/domain/usecases/get_wishlist_items.dart';
 import 'package:wedlist/feature/wishlist/presentation/blocs/cubit/wishlist_bloc/wishlist_bloc.dart';
 

@@ -4,6 +4,7 @@ mixin SplashPageMixin on State<SplashPage> {
   Future<void> _goNextPage() async {
     final router = GoRouter.of(context);
     await Future<void>.delayed(const Duration(seconds: 2));
+
     // Onboarding kontrolü: ilk girişte onboarding'i göster, sonrakilerde atla
     final prefs = await SharedPreferences.getInstance();
     final seen = prefs.getBool('onboarding_seen') ?? false;
@@ -12,9 +13,23 @@ mixin SplashPageMixin on State<SplashPage> {
       router.go(AppRoute.onBoarding.path);
       return;
     }
+
+    // Kullanıcı modu kontrolü
+    final userModeService = sl<UserModeService>();
+    final isOfflineMode = await userModeService.isOfflineMode();
+
+    if (isOfflineMode) {
+      // Çevrimdışı mod - direkt ana ekrana git
+      if (!mounted) return;
+      router.go(AppRoute.main.path);
+      return;
+    }
+
+    // Firebase auth kontrolü (kimlik doğrulamalı kullanıcılar için)
     final authRepository = sl<AuthRepository>();
     final user = await authRepository.getCurrentUser();
     if (!mounted) return;
+
     if (user != null) {
       // E-posta doğrulama durumunu güncellemek için oturumu tazele
       final firebaseAuth = FirebaseAuth.instance;

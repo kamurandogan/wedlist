@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AddItemEvent {
 
- String get title; String get category; String? get id; String? get price; String? get note; String? get imgUrl;
+ String get title; String get category; String? get id; String? get price; String? get note; String? get imgUrl; Uint8List? get photoBytes;
 /// Create a copy of AddItemEvent
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $AddItemEventCopyWith<AddItemEvent> get copyWith => _$AddItemEventCopyWithImpl<A
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AddItemEvent&&(identical(other.title, title) || other.title == title)&&(identical(other.category, category) || other.category == category)&&(identical(other.id, id) || other.id == id)&&(identical(other.price, price) || other.price == price)&&(identical(other.note, note) || other.note == note)&&(identical(other.imgUrl, imgUrl) || other.imgUrl == imgUrl));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AddItemEvent&&(identical(other.title, title) || other.title == title)&&(identical(other.category, category) || other.category == category)&&(identical(other.id, id) || other.id == id)&&(identical(other.price, price) || other.price == price)&&(identical(other.note, note) || other.note == note)&&(identical(other.imgUrl, imgUrl) || other.imgUrl == imgUrl)&&const DeepCollectionEquality().equals(other.photoBytes, photoBytes));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,title,category,id,price,note,imgUrl);
+int get hashCode => Object.hash(runtimeType,title,category,id,price,note,imgUrl,const DeepCollectionEquality().hash(photoBytes));
 
 @override
 String toString() {
-  return 'AddItemEvent(title: $title, category: $category, id: $id, price: $price, note: $note, imgUrl: $imgUrl)';
+  return 'AddItemEvent(title: $title, category: $category, id: $id, price: $price, note: $note, imgUrl: $imgUrl, photoBytes: $photoBytes)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $AddItemEventCopyWith<$Res>  {
   factory $AddItemEventCopyWith(AddItemEvent value, $Res Function(AddItemEvent) _then) = _$AddItemEventCopyWithImpl;
 @useResult
 $Res call({
- String title, String category, String? id, String? price, String? note, String? imgUrl
+ String title, String category, String? id, String? price, String? note, String? imgUrl, Uint8List? photoBytes
 });
 
 
@@ -62,7 +62,7 @@ class _$AddItemEventCopyWithImpl<$Res>
 
 /// Create a copy of AddItemEvent
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? category = null,Object? id = freezed,Object? price = freezed,Object? note = freezed,Object? imgUrl = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? category = null,Object? id = freezed,Object? price = freezed,Object? note = freezed,Object? imgUrl = freezed,Object? photoBytes = freezed,}) {
   return _then(_self.copyWith(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,category: null == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
@@ -70,7 +70,8 @@ as String,id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_null
 as String?,price: freezed == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
 as String?,note: freezed == note ? _self.note : note // ignore: cast_nullable_to_non_nullable
 as String?,imgUrl: freezed == imgUrl ? _self.imgUrl : imgUrl // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,photoBytes: freezed == photoBytes ? _self.photoBytes : photoBytes // ignore: cast_nullable_to_non_nullable
+as Uint8List?,
   ));
 }
 
@@ -152,10 +153,10 @@ return addItemButtonPressed(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String title,  String category,  String? id,  String? price,  String? note,  String? imgUrl)?  addItemButtonPressed,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String title,  String category,  String? id,  String? price,  String? note,  String? imgUrl,  Uint8List? photoBytes)?  addItemButtonPressed,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case AddItemButtonPressed() when addItemButtonPressed != null:
-return addItemButtonPressed(_that.title,_that.category,_that.id,_that.price,_that.note,_that.imgUrl);case _:
+return addItemButtonPressed(_that.title,_that.category,_that.id,_that.price,_that.note,_that.imgUrl,_that.photoBytes);case _:
   return orElse();
 
 }
@@ -173,10 +174,10 @@ return addItemButtonPressed(_that.title,_that.category,_that.id,_that.price,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String title,  String category,  String? id,  String? price,  String? note,  String? imgUrl)  addItemButtonPressed,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String title,  String category,  String? id,  String? price,  String? note,  String? imgUrl,  Uint8List? photoBytes)  addItemButtonPressed,}) {final _that = this;
 switch (_that) {
 case AddItemButtonPressed():
-return addItemButtonPressed(_that.title,_that.category,_that.id,_that.price,_that.note,_that.imgUrl);}
+return addItemButtonPressed(_that.title,_that.category,_that.id,_that.price,_that.note,_that.imgUrl,_that.photoBytes);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -190,10 +191,10 @@ return addItemButtonPressed(_that.title,_that.category,_that.id,_that.price,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String title,  String category,  String? id,  String? price,  String? note,  String? imgUrl)?  addItemButtonPressed,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String title,  String category,  String? id,  String? price,  String? note,  String? imgUrl,  Uint8List? photoBytes)?  addItemButtonPressed,}) {final _that = this;
 switch (_that) {
 case AddItemButtonPressed() when addItemButtonPressed != null:
-return addItemButtonPressed(_that.title,_that.category,_that.id,_that.price,_that.note,_that.imgUrl);case _:
+return addItemButtonPressed(_that.title,_that.category,_that.id,_that.price,_that.note,_that.imgUrl,_that.photoBytes);case _:
   return null;
 
 }
@@ -205,7 +206,7 @@ return addItemButtonPressed(_that.title,_that.category,_that.id,_that.price,_tha
 
 
 class AddItemButtonPressed implements AddItemEvent {
-  const AddItemButtonPressed({required this.title, required this.category, this.id, this.price, this.note, this.imgUrl});
+  const AddItemButtonPressed({required this.title, required this.category, this.id, this.price, this.note, this.imgUrl, this.photoBytes});
   
 
 @override final  String title;
@@ -214,6 +215,7 @@ class AddItemButtonPressed implements AddItemEvent {
 @override final  String? price;
 @override final  String? note;
 @override final  String? imgUrl;
+@override final  Uint8List? photoBytes;
 
 /// Create a copy of AddItemEvent
 /// with the given fields replaced by the non-null parameter values.
@@ -225,16 +227,16 @@ $AddItemButtonPressedCopyWith<AddItemButtonPressed> get copyWith => _$AddItemBut
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AddItemButtonPressed&&(identical(other.title, title) || other.title == title)&&(identical(other.category, category) || other.category == category)&&(identical(other.id, id) || other.id == id)&&(identical(other.price, price) || other.price == price)&&(identical(other.note, note) || other.note == note)&&(identical(other.imgUrl, imgUrl) || other.imgUrl == imgUrl));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AddItemButtonPressed&&(identical(other.title, title) || other.title == title)&&(identical(other.category, category) || other.category == category)&&(identical(other.id, id) || other.id == id)&&(identical(other.price, price) || other.price == price)&&(identical(other.note, note) || other.note == note)&&(identical(other.imgUrl, imgUrl) || other.imgUrl == imgUrl)&&const DeepCollectionEquality().equals(other.photoBytes, photoBytes));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,title,category,id,price,note,imgUrl);
+int get hashCode => Object.hash(runtimeType,title,category,id,price,note,imgUrl,const DeepCollectionEquality().hash(photoBytes));
 
 @override
 String toString() {
-  return 'AddItemEvent.addItemButtonPressed(title: $title, category: $category, id: $id, price: $price, note: $note, imgUrl: $imgUrl)';
+  return 'AddItemEvent.addItemButtonPressed(title: $title, category: $category, id: $id, price: $price, note: $note, imgUrl: $imgUrl, photoBytes: $photoBytes)';
 }
 
 
@@ -245,7 +247,7 @@ abstract mixin class $AddItemButtonPressedCopyWith<$Res> implements $AddItemEven
   factory $AddItemButtonPressedCopyWith(AddItemButtonPressed value, $Res Function(AddItemButtonPressed) _then) = _$AddItemButtonPressedCopyWithImpl;
 @override @useResult
 $Res call({
- String title, String category, String? id, String? price, String? note, String? imgUrl
+ String title, String category, String? id, String? price, String? note, String? imgUrl, Uint8List? photoBytes
 });
 
 
@@ -262,7 +264,7 @@ class _$AddItemButtonPressedCopyWithImpl<$Res>
 
 /// Create a copy of AddItemEvent
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? category = null,Object? id = freezed,Object? price = freezed,Object? note = freezed,Object? imgUrl = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? category = null,Object? id = freezed,Object? price = freezed,Object? note = freezed,Object? imgUrl = freezed,Object? photoBytes = freezed,}) {
   return _then(AddItemButtonPressed(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,category: null == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
@@ -270,7 +272,8 @@ as String,id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_null
 as String?,price: freezed == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
 as String?,note: freezed == note ? _self.note : note // ignore: cast_nullable_to_non_nullable
 as String?,imgUrl: freezed == imgUrl ? _self.imgUrl : imgUrl // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,photoBytes: freezed == photoBytes ? _self.photoBytes : photoBytes // ignore: cast_nullable_to_non_nullable
+as Uint8List?,
   ));
 }
 

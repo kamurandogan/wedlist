@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:wedlist/core/services/network_info.dart';
+import 'package:wedlist/core/services/user_mode_service.dart';
 import 'package:wedlist/feature/item_add/data/datasources/user_item_local_datasource.dart';
 import 'package:wedlist/feature/item_add/data/datasources/user_item_remote_datasource.dart';
 import 'package:wedlist/feature/item_add/data/models/user_item_hive_model.dart';
@@ -11,11 +12,13 @@ class SyncService {
     required this.localDataSource,
     required this.remoteDataSource,
     required this.networkInfo,
+    required this.userModeService,
   });
 
   final UserItemLocalDataSource localDataSource;
   final UserItemRemoteDataSource remoteDataSource;
   final NetworkInfo networkInfo;
+  final UserModeService userModeService;
 
   Timer? _periodicSyncTimer;
   StreamSubscription<bool>? _connectivitySubscription;
@@ -46,6 +49,14 @@ class SyncService {
 
   /// Manually trigger sync
   Future<SyncResult> syncPendingItems() async {
+    // Skip sync for offline users
+    if (await userModeService.isOfflineMode()) {
+      return SyncResult(
+        success: false,
+        reason: 'User in offline mode - sync disabled',
+      );
+    }
+
     if (!await networkInfo.isConnected) {
       return SyncResult(success: false, reason: 'No internet connection');
     }
@@ -119,6 +130,14 @@ class SyncService {
 
   /// Full sync: Download all items from server and update local cache
   Future<SyncResult> fullSync() async {
+    // Skip sync for offline users
+    if (await userModeService.isOfflineMode()) {
+      return SyncResult(
+        success: false,
+        reason: 'User in offline mode - full sync disabled',
+      );
+    }
+
     if (!await networkInfo.isConnected) {
       return SyncResult(success: false, reason: 'No internet connection');
     }

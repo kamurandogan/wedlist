@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user_item_entity.freezed.dart';
@@ -11,6 +13,8 @@ abstract class UserItemEntity with _$UserItemEntity {
     required double price,
     required String note,
     required String imgUrl,
+    // Photo bytes for offline users (when imgUrl is empty)
+    Uint8List? photoBytes,
     DateTime? createdAt,
     @Default([]) List<String> owners,
     @Default('') String createdBy,

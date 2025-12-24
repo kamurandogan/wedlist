@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:wedlist/core/entities/user_item_entity.dart';
 import 'package:wedlist/core/error/failures.dart';
 import 'package:wedlist/core/item/item_entity.dart';
 import 'package:wedlist/core/refresh/refresh_bus.dart';
 import 'package:wedlist/feature/dowrylist/domain/usecases/watch_user_items_usecase.dart';
-import 'package:wedlist/core/entities/user_item_entity.dart';
 import 'package:wedlist/feature/wishlist/domain/usecases/get_wishlist_items.dart';
 
 part 'wishlist_bloc.freezed.dart';
@@ -23,13 +23,16 @@ class WishListBloc extends Bloc<WishListEvent, WishListState> {
     on<FetchWishListItems>(_onFetch);
     on<WatchWishListItems>(_onWatch);
 
-    // Ülke değiştiğinde son parametrelerle otomatik refresh
+    // Ülke değiştiğinde yeni ülke koduyla otomatik refresh
     _sub = _refreshBus.stream.listen((evt) {
       if (evt.type == RefreshEventType.countryChanged && _lastParams != null) {
+        // Yeni ülke kodunu kullan, eğer yoksa eski langCode'u kullan
+        final newLangCode =
+            evt.countryCode?.toLowerCase() ?? _lastParams!.langCode;
         add(
           WishListEvent.watch(
             _lastParams!.category,
-            _lastParams!.langCode,
+            newLangCode,
             _lastParams!.id,
           ),
         );

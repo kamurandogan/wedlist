@@ -8,7 +8,7 @@ import 'package:wedlist/core/services/purchase_service.dart';
 import 'package:wedlist/core/utils/colors.dart';
 import 'package:wedlist/core/utils/paddings.dart';
 import 'package:wedlist/core/widgets/bottom_navigation_bar/custom_bottom_navigation_bar.dart';
-import 'package:wedlist/feature/dowrylist/dowy_view.dart';
+import 'package:wedlist/feature/dowrylist/dowry_view.dart';
 import 'package:wedlist/feature/home/home_page.dart';
 import 'package:wedlist/feature/main_page/presentation/blocs/cubit/navigation_cubit.dart';
 import 'package:wedlist/feature/notification/presentation/ui/pages/notification_page.dart';

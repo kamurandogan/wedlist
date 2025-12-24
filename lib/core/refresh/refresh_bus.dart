@@ -6,14 +6,16 @@ class RefreshBus {
   Stream<RefreshEvent> get stream => _controller.stream;
 
   void publish(RefreshEvent event) => _controller.add(event);
-  void countryChanged() =>
-      publish(const RefreshEvent(RefreshEventType.countryChanged));
+  void countryChanged({String? newCountryCode}) => publish(
+    RefreshEvent(RefreshEventType.countryChanged, countryCode: newCountryCode),
+  );
   void dispose() => _controller.close();
 }
 
 enum RefreshEventType { countryChanged }
 
 class RefreshEvent {
-  const RefreshEvent(this.type);
+  const RefreshEvent(this.type, {this.countryCode});
   final RefreshEventType type;
+  final String? countryCode;
 }

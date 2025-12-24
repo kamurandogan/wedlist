@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -20,30 +19,7 @@ class WishListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
-    if (user == null) {
-      return Expanded(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  context.loc.loginRequiredForWishlist,
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () => context.go(AppRoute.login.path),
-                  child: Text(context.loc.signInButtonText),
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-    }
+    // Wishlist hem offline hem de authenticated kullanıcılar için erişilebilir
     return const _WishListViewContent();
   }
 }

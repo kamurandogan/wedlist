@@ -14,7 +14,8 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserItemEntity {
 
- String get id; String get title; String get category; double get price; String get note; String get imgUrl; DateTime? get createdAt; List<String> get owners; String get createdBy;// Offline sync metadata
+ String get id; String get title; String get category; double get price; String get note; String get imgUrl;// Photo bytes for offline users (when imgUrl is empty)
+ Uint8List? get photoBytes; DateTime? get createdAt; List<String> get owners; String get createdBy;// Offline sync metadata
  bool get isPendingSync; bool get isPendingDelete; DateTime? get lastSyncedAt;
 /// Create a copy of UserItemEntity
 /// with the given fields replaced by the non-null parameter values.
@@ -26,16 +27,16 @@ $UserItemEntityCopyWith<UserItemEntity> get copyWith => _$UserItemEntityCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserItemEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.category, category) || other.category == category)&&(identical(other.price, price) || other.price == price)&&(identical(other.note, note) || other.note == note)&&(identical(other.imgUrl, imgUrl) || other.imgUrl == imgUrl)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&const DeepCollectionEquality().equals(other.owners, owners)&&(identical(other.createdBy, createdBy) || other.createdBy == createdBy)&&(identical(other.isPendingSync, isPendingSync) || other.isPendingSync == isPendingSync)&&(identical(other.isPendingDelete, isPendingDelete) || other.isPendingDelete == isPendingDelete)&&(identical(other.lastSyncedAt, lastSyncedAt) || other.lastSyncedAt == lastSyncedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserItemEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.category, category) || other.category == category)&&(identical(other.price, price) || other.price == price)&&(identical(other.note, note) || other.note == note)&&(identical(other.imgUrl, imgUrl) || other.imgUrl == imgUrl)&&const DeepCollectionEquality().equals(other.photoBytes, photoBytes)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&const DeepCollectionEquality().equals(other.owners, owners)&&(identical(other.createdBy, createdBy) || other.createdBy == createdBy)&&(identical(other.isPendingSync, isPendingSync) || other.isPendingSync == isPendingSync)&&(identical(other.isPendingDelete, isPendingDelete) || other.isPendingDelete == isPendingDelete)&&(identical(other.lastSyncedAt, lastSyncedAt) || other.lastSyncedAt == lastSyncedAt));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,title,category,price,note,imgUrl,createdAt,const DeepCollectionEquality().hash(owners),createdBy,isPendingSync,isPendingDelete,lastSyncedAt);
+int get hashCode => Object.hash(runtimeType,id,title,category,price,note,imgUrl,const DeepCollectionEquality().hash(photoBytes),createdAt,const DeepCollectionEquality().hash(owners),createdBy,isPendingSync,isPendingDelete,lastSyncedAt);
 
 @override
 String toString() {
-  return 'UserItemEntity(id: $id, title: $title, category: $category, price: $price, note: $note, imgUrl: $imgUrl, createdAt: $createdAt, owners: $owners, createdBy: $createdBy, isPendingSync: $isPendingSync, isPendingDelete: $isPendingDelete, lastSyncedAt: $lastSyncedAt)';
+  return 'UserItemEntity(id: $id, title: $title, category: $category, price: $price, note: $note, imgUrl: $imgUrl, photoBytes: $photoBytes, createdAt: $createdAt, owners: $owners, createdBy: $createdBy, isPendingSync: $isPendingSync, isPendingDelete: $isPendingDelete, lastSyncedAt: $lastSyncedAt)';
 }
 
 
@@ -46,7 +47,7 @@ abstract mixin class $UserItemEntityCopyWith<$Res>  {
   factory $UserItemEntityCopyWith(UserItemEntity value, $Res Function(UserItemEntity) _then) = _$UserItemEntityCopyWithImpl;
 @useResult
 $Res call({
- String id, String title, String category, double price, String note, String imgUrl, DateTime? createdAt, List<String> owners, String createdBy, bool isPendingSync, bool isPendingDelete, DateTime? lastSyncedAt
+ String id, String title, String category, double price, String note, String imgUrl, Uint8List? photoBytes, DateTime? createdAt, List<String> owners, String createdBy, bool isPendingSync, bool isPendingDelete, DateTime? lastSyncedAt
 });
 
 
@@ -63,7 +64,7 @@ class _$UserItemEntityCopyWithImpl<$Res>
 
 /// Create a copy of UserItemEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? category = null,Object? price = null,Object? note = null,Object? imgUrl = null,Object? createdAt = freezed,Object? owners = null,Object? createdBy = null,Object? isPendingSync = null,Object? isPendingDelete = null,Object? lastSyncedAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? category = null,Object? price = null,Object? note = null,Object? imgUrl = null,Object? photoBytes = freezed,Object? createdAt = freezed,Object? owners = null,Object? createdBy = null,Object? isPendingSync = null,Object? isPendingDelete = null,Object? lastSyncedAt = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
@@ -71,7 +72,8 @@ as String,category: null == category ? _self.category : category // ignore: cast
 as String,price: null == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
 as double,note: null == note ? _self.note : note // ignore: cast_nullable_to_non_nullable
 as String,imgUrl: null == imgUrl ? _self.imgUrl : imgUrl // ignore: cast_nullable_to_non_nullable
-as String,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as String,photoBytes: freezed == photoBytes ? _self.photoBytes : photoBytes // ignore: cast_nullable_to_non_nullable
+as Uint8List?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,owners: null == owners ? _self.owners : owners // ignore: cast_nullable_to_non_nullable
 as List<String>,createdBy: null == createdBy ? _self.createdBy : createdBy // ignore: cast_nullable_to_non_nullable
 as String,isPendingSync: null == isPendingSync ? _self.isPendingSync : isPendingSync // ignore: cast_nullable_to_non_nullable
@@ -162,10 +164,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String title,  String category,  double price,  String note,  String imgUrl,  DateTime? createdAt,  List<String> owners,  String createdBy,  bool isPendingSync,  bool isPendingDelete,  DateTime? lastSyncedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String title,  String category,  double price,  String note,  String imgUrl,  Uint8List? photoBytes,  DateTime? createdAt,  List<String> owners,  String createdBy,  bool isPendingSync,  bool isPendingDelete,  DateTime? lastSyncedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserItemEntity() when $default != null:
-return $default(_that.id,_that.title,_that.category,_that.price,_that.note,_that.imgUrl,_that.createdAt,_that.owners,_that.createdBy,_that.isPendingSync,_that.isPendingDelete,_that.lastSyncedAt);case _:
+return $default(_that.id,_that.title,_that.category,_that.price,_that.note,_that.imgUrl,_that.photoBytes,_that.createdAt,_that.owners,_that.createdBy,_that.isPendingSync,_that.isPendingDelete,_that.lastSyncedAt);case _:
   return orElse();
 
 }
@@ -183,10 +185,10 @@ return $default(_that.id,_that.title,_that.category,_that.price,_that.note,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String title,  String category,  double price,  String note,  String imgUrl,  DateTime? createdAt,  List<String> owners,  String createdBy,  bool isPendingSync,  bool isPendingDelete,  DateTime? lastSyncedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String title,  String category,  double price,  String note,  String imgUrl,  Uint8List? photoBytes,  DateTime? createdAt,  List<String> owners,  String createdBy,  bool isPendingSync,  bool isPendingDelete,  DateTime? lastSyncedAt)  $default,) {final _that = this;
 switch (_that) {
 case _UserItemEntity():
-return $default(_that.id,_that.title,_that.category,_that.price,_that.note,_that.imgUrl,_that.createdAt,_that.owners,_that.createdBy,_that.isPendingSync,_that.isPendingDelete,_that.lastSyncedAt);case _:
+return $default(_that.id,_that.title,_that.category,_that.price,_that.note,_that.imgUrl,_that.photoBytes,_that.createdAt,_that.owners,_that.createdBy,_that.isPendingSync,_that.isPendingDelete,_that.lastSyncedAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -203,10 +205,10 @@ return $default(_that.id,_that.title,_that.category,_that.price,_that.note,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String title,  String category,  double price,  String note,  String imgUrl,  DateTime? createdAt,  List<String> owners,  String createdBy,  bool isPendingSync,  bool isPendingDelete,  DateTime? lastSyncedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String title,  String category,  double price,  String note,  String imgUrl,  Uint8List? photoBytes,  DateTime? createdAt,  List<String> owners,  String createdBy,  bool isPendingSync,  bool isPendingDelete,  DateTime? lastSyncedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _UserItemEntity() when $default != null:
-return $default(_that.id,_that.title,_that.category,_that.price,_that.note,_that.imgUrl,_that.createdAt,_that.owners,_that.createdBy,_that.isPendingSync,_that.isPendingDelete,_that.lastSyncedAt);case _:
+return $default(_that.id,_that.title,_that.category,_that.price,_that.note,_that.imgUrl,_that.photoBytes,_that.createdAt,_that.owners,_that.createdBy,_that.isPendingSync,_that.isPendingDelete,_that.lastSyncedAt);case _:
   return null;
 
 }
@@ -218,7 +220,7 @@ return $default(_that.id,_that.title,_that.category,_that.price,_that.note,_that
 
 
 class _UserItemEntity extends UserItemEntity {
-  const _UserItemEntity({required this.id, required this.title, required this.category, required this.price, required this.note, required this.imgUrl, this.createdAt, final  List<String> owners = const [], this.createdBy = '', this.isPendingSync = false, this.isPendingDelete = false, this.lastSyncedAt}): _owners = owners,super._();
+  const _UserItemEntity({required this.id, required this.title, required this.category, required this.price, required this.note, required this.imgUrl, this.photoBytes, this.createdAt, final  List<String> owners = const [], this.createdBy = '', this.isPendingSync = false, this.isPendingDelete = false, this.lastSyncedAt}): _owners = owners,super._();
   
 
 @override final  String id;
@@ -227,6 +229,8 @@ class _UserItemEntity extends UserItemEntity {
 @override final  double price;
 @override final  String note;
 @override final  String imgUrl;
+// Photo bytes for offline users (when imgUrl is empty)
+@override final  Uint8List? photoBytes;
 @override final  DateTime? createdAt;
  final  List<String> _owners;
 @override@JsonKey() List<String> get owners {
@@ -251,16 +255,16 @@ _$UserItemEntityCopyWith<_UserItemEntity> get copyWith => __$UserItemEntityCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserItemEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.category, category) || other.category == category)&&(identical(other.price, price) || other.price == price)&&(identical(other.note, note) || other.note == note)&&(identical(other.imgUrl, imgUrl) || other.imgUrl == imgUrl)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&const DeepCollectionEquality().equals(other._owners, _owners)&&(identical(other.createdBy, createdBy) || other.createdBy == createdBy)&&(identical(other.isPendingSync, isPendingSync) || other.isPendingSync == isPendingSync)&&(identical(other.isPendingDelete, isPendingDelete) || other.isPendingDelete == isPendingDelete)&&(identical(other.lastSyncedAt, lastSyncedAt) || other.lastSyncedAt == lastSyncedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserItemEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.category, category) || other.category == category)&&(identical(other.price, price) || other.price == price)&&(identical(other.note, note) || other.note == note)&&(identical(other.imgUrl, imgUrl) || other.imgUrl == imgUrl)&&const DeepCollectionEquality().equals(other.photoBytes, photoBytes)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&const DeepCollectionEquality().equals(other._owners, _owners)&&(identical(other.createdBy, createdBy) || other.createdBy == createdBy)&&(identical(other.isPendingSync, isPendingSync) || other.isPendingSync == isPendingSync)&&(identical(other.isPendingDelete, isPendingDelete) || other.isPendingDelete == isPendingDelete)&&(identical(other.lastSyncedAt, lastSyncedAt) || other.lastSyncedAt == lastSyncedAt));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,title,category,price,note,imgUrl,createdAt,const DeepCollectionEquality().hash(_owners),createdBy,isPendingSync,isPendingDelete,lastSyncedAt);
+int get hashCode => Object.hash(runtimeType,id,title,category,price,note,imgUrl,const DeepCollectionEquality().hash(photoBytes),createdAt,const DeepCollectionEquality().hash(_owners),createdBy,isPendingSync,isPendingDelete,lastSyncedAt);
 
 @override
 String toString() {
-  return 'UserItemEntity(id: $id, title: $title, category: $category, price: $price, note: $note, imgUrl: $imgUrl, createdAt: $createdAt, owners: $owners, createdBy: $createdBy, isPendingSync: $isPendingSync, isPendingDelete: $isPendingDelete, lastSyncedAt: $lastSyncedAt)';
+  return 'UserItemEntity(id: $id, title: $title, category: $category, price: $price, note: $note, imgUrl: $imgUrl, photoBytes: $photoBytes, createdAt: $createdAt, owners: $owners, createdBy: $createdBy, isPendingSync: $isPendingSync, isPendingDelete: $isPendingDelete, lastSyncedAt: $lastSyncedAt)';
 }
 
 
@@ -271,7 +275,7 @@ abstract mixin class _$UserItemEntityCopyWith<$Res> implements $UserItemEntityCo
   factory _$UserItemEntityCopyWith(_UserItemEntity value, $Res Function(_UserItemEntity) _then) = __$UserItemEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String title, String category, double price, String note, String imgUrl, DateTime? createdAt, List<String> owners, String createdBy, bool isPendingSync, bool isPendingDelete, DateTime? lastSyncedAt
+ String id, String title, String category, double price, String note, String imgUrl, Uint8List? photoBytes, DateTime? createdAt, List<String> owners, String createdBy, bool isPendingSync, bool isPendingDelete, DateTime? lastSyncedAt
 });
 
 
@@ -288,7 +292,7 @@ class __$UserItemEntityCopyWithImpl<$Res>
 
 /// Create a copy of UserItemEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? category = null,Object? price = null,Object? note = null,Object? imgUrl = null,Object? createdAt = freezed,Object? owners = null,Object? createdBy = null,Object? isPendingSync = null,Object? isPendingDelete = null,Object? lastSyncedAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? category = null,Object? price = null,Object? note = null,Object? imgUrl = null,Object? photoBytes = freezed,Object? createdAt = freezed,Object? owners = null,Object? createdBy = null,Object? isPendingSync = null,Object? isPendingDelete = null,Object? lastSyncedAt = freezed,}) {
   return _then(_UserItemEntity(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
@@ -296,7 +300,8 @@ as String,category: null == category ? _self.category : category // ignore: cast
 as String,price: null == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
 as double,note: null == note ? _self.note : note // ignore: cast_nullable_to_non_nullable
 as String,imgUrl: null == imgUrl ? _self.imgUrl : imgUrl // ignore: cast_nullable_to_non_nullable
-as String,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as String,photoBytes: freezed == photoBytes ? _self.photoBytes : photoBytes // ignore: cast_nullable_to_non_nullable
+as Uint8List?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,owners: null == owners ? _self._owners : owners // ignore: cast_nullable_to_non_nullable
 as List<String>,createdBy: null == createdBy ? _self.createdBy : createdBy // ignore: cast_nullable_to_non_nullable
 as String,isPendingSync: null == isPendingSync ? _self.isPendingSync : isPendingSync // ignore: cast_nullable_to_non_nullable

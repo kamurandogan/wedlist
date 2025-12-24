@@ -22,50 +22,76 @@ service cloud.firestore {
       allow write: if false;
     }
 
-    // Country-specific public catalogs (items_<COUNTRY>): readable by authenticated users only
+    // Country-specific public catalogs (items_<COUNTRY>): readable by EVERYONE (including offline users)
+    // These are base/template items that offline users need to access on first launch
     match /items_TR/{itemId} {
-      allow read: if request.auth != null;
-      allow list: if request.auth != null;
-      allow write: if false;
+      allow read: if true;  // Public read for offline users
+      allow list: if true;  // Public list for offline users
+      allow write: if false; // Nobody can write (admin only via console)
     }
     match /items_US/{itemId} {
-      allow read: if request.auth != null;
-      allow list: if request.auth != null;
+      allow read: if true;
+      allow list: if true;
       allow write: if false;
     }
     match /items_CA/{itemId} {
-      allow read: if request.auth != null;
-      allow list: if request.auth != null;
+      allow read: if true;
+      allow list: if true;
       allow write: if false;
     }
     match /items_UK/{itemId} {
-      allow read: if request.auth != null;
-      allow list: if request.auth != null;
+      allow read: if true;
+      allow list: if true;
       allow write: if false;
     }
     match /items_AU/{itemId} {
-      allow read: if request.auth != null;
-      allow list: if request.auth != null;
+      allow read: if true;
+      allow list: if true;
       allow write: if false;
     }
     match /items_DE/{itemId} {
-      allow read: if request.auth != null;
-      allow list: if request.auth != null;
+      allow read: if true;
+      allow list: if true;
       allow write: if false;
     }
     match /items_FR/{itemId} {
-      allow read: if request.auth != null;
-      allow list: if request.auth != null;
+      allow read: if true;
+      allow list: if true;
       allow write: if false;
     }
     match /items_IT/{itemId} {
-      allow read: if request.auth != null;
-      allow list: if request.auth != null;
+      allow read: if true;
+      allow list: if true;
       allow write: if false;
     }
     match /items_JP/{itemId} {
-      allow read: if request.auth != null;
-      allow list: if request.auth != null;
+      allow read: if true;
+      allow list: if true;
+      allow write: if false;
+    }
+    match /items_ES/{itemId} {
+      allow read: if true;
+      allow list: if true;
+      allow write: if false;
+    }
+    match /items_NL/{itemId} {
+      allow read: if true;
+      allow list: if true;
+      allow write: if false;
+    }
+    match /items_PT/{itemId} {
+      allow read: if true;
+      allow list: if true;
+      allow write: if false;
+    }
+    match /items_ZH/{itemId} {
+      allow read: if true;
+      allow list: if true;
+      allow write: if false;
+    }
+    match /items_HI/{itemId} {
+      allow read: if true;
+      allow list: if true;
       allow write: if false;
     }
 

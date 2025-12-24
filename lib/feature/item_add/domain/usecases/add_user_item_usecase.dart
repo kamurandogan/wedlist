@@ -1,6 +1,6 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:wedlist/core/error/failures.dart';
 import 'package:wedlist/core/entities/user_item_entity.dart';
+import 'package:wedlist/core/error/failures.dart';
 import 'package:wedlist/feature/item_add/domain/repositories/user_item_repository.dart';
 
 class AddUserItemUseCase {

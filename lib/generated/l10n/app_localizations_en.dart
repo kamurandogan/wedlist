@@ -361,4 +361,48 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get adLoadingText => 'Loading ad...';
+
+  @override
+  String get offlineMode => 'Offline Mode';
+
+  @override
+  String get onlineModeRequired => 'This feature requires internet connection';
+
+  @override
+  String get skipLogin => 'Explore First';
+
+  @override
+  String get createAccountOrLogin => 'Create Account / Sign In';
+
+  @override
+  String get offlineOnboardingMessage =>
+      'Create an account to manage your wedding list together with your partner, or explore the app first!';
+
+  @override
+  String get offlineModeActive => 'You\'re in Offline Mode';
+
+  @override
+  String get loginToSyncData =>
+      'Sign in to back up your data and share with your partner';
+
+  @override
+  String get loginButton => 'Sign In';
+
+  @override
+  String get migrationInProgress => 'Syncing your data...';
+
+  @override
+  String get migrationSuccess => 'Your data has been successfully synced';
+
+  @override
+  String get migrationFailed => 'Sync failed. Please try again.';
+
+  @override
+  String get offlineDataWillSync =>
+      'Your data will be automatically synced when you sign in';
+
+  @override
+  String migrationPartialSuccess(int migratedCount, int failedCount) {
+    return '$migratedCount items synced, $failedCount items failed';
+  }
 }

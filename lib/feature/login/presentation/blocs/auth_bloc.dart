@@ -1,5 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:wedlist/core/services/offline_data_migration_service.dart';
+import 'package:wedlist/core/services/user_mode_service.dart';
+import 'package:wedlist/core/services/wishlist_data_migration_service.dart';
 import 'package:wedlist/core/user/country_persistence.dart';
 import 'package:wedlist/feature/login/domain/entities/user.dart';
 import 'package:wedlist/feature/login/domain/usecases/sign_in.dart';
@@ -16,6 +19,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     this._countryService,
     this.signInWithApple,
     this.signInWithGoogle,
+    this._userModeService,
+    this._migrationService,
+    this._wishlistMigrationService,
   ) : super(const AuthState.initial()) {
     on<SignInRequested>((event, emit) async {
       emit(const AuthState.loading());
@@ -24,6 +30,35 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         (failure) async =>
             emit(AuthState.failure(failure.message ?? 'Giriş başarısız.')),
         (user) async {
+          // Check if coming from offline mode
+          final wasOffline = await _userModeService.isOfflineMode();
+
+          if (wasOffline) {
+            // Migrate offline data (user items)
+            final localUserId = await _userModeService.getUserId();
+            try {
+              await _migrationService.migrateOfflineDataToFirebase(
+                localUserId,
+                user.id,
+              );
+            } on Exception catch (_) {
+              // Migration failed, but continue with login
+              // User can still use the app, data remains in local storage
+            }
+
+            // Migrate wishlist data
+            try {
+              await _wishlistMigrationService.migrateOfflineToAuthenticated(
+                'en',
+              );
+            } on Exception catch (_) {
+              // Wishlist migration failed, but continue with login
+            }
+          }
+
+          // Set authenticated mode
+          await _userModeService.setAuthenticatedMode(user.id);
+
           await _countryService.syncSelectedCountryIfAny();
           emit(AuthState.success(user));
         },
@@ -38,6 +73,35 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           AuthState.failure(failure.message ?? 'Apple ile giriş başarısız.'),
         ),
         (user) async {
+          // Check if coming from offline mode
+          final wasOffline = await _userModeService.isOfflineMode();
+
+          if (wasOffline) {
+            // Migrate offline data (user items)
+            final localUserId = await _userModeService.getUserId();
+            try {
+              await _migrationService.migrateOfflineDataToFirebase(
+                localUserId,
+                user.id,
+              );
+            } on Exception catch (_) {
+              // Migration failed, but continue with login
+              // User can still use the app, data remains in local storage
+            }
+
+            // Migrate wishlist data
+            try {
+              await _wishlistMigrationService.migrateOfflineToAuthenticated(
+                'en',
+              );
+            } on Exception catch (_) {
+              // Wishlist migration failed, but continue with login
+            }
+          }
+
+          // Set authenticated mode
+          await _userModeService.setAuthenticatedMode(user.id);
+
           await _countryService.syncSelectedCountryIfAny();
           emit(AuthState.success(user));
         },
@@ -52,6 +116,35 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           AuthState.failure(failure.message ?? 'Google ile giriş başarısız.'),
         ),
         (user) async {
+          // Check if coming from offline mode
+          final wasOffline = await _userModeService.isOfflineMode();
+
+          if (wasOffline) {
+            // Migrate offline data (user items)
+            final localUserId = await _userModeService.getUserId();
+            try {
+              await _migrationService.migrateOfflineDataToFirebase(
+                localUserId,
+                user.id,
+              );
+            } on Exception catch (_) {
+              // Migration failed, but continue with login
+              // User can still use the app, data remains in local storage
+            }
+
+            // Migrate wishlist data
+            try {
+              await _wishlistMigrationService.migrateOfflineToAuthenticated(
+                'en',
+              );
+            } on Exception catch (_) {
+              // Wishlist migration failed, but continue with login
+            }
+          }
+
+          // Set authenticated mode
+          await _userModeService.setAuthenticatedMode(user.id);
+
           await _countryService.syncSelectedCountryIfAny();
           emit(AuthState.success(user));
         },
@@ -63,4 +156,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final CountryPersistenceService _countryService;
   final SignInWithApple signInWithApple;
   final SignInWithGoogle signInWithGoogle;
+  final UserModeService _userModeService;
+  final OfflineDataMigrationService _migrationService;
+  final WishlistDataMigrationService _wishlistMigrationService;
 }

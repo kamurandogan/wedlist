@@ -137,5 +137,28 @@
     "adOptionFreeLabel": "Ücretsiz",
     "adOptionPremiumLabel": "Premium özellikler",
     "adOptionRecommendedBadge": "ÖNERİLEN",
-    "adLoadingText": "Reklam yükleniyor..."
+    "adLoadingText": "Reklam yükleniyor...",
+    "offlineMode": "Çevrimdışı Mod",
+    "onlineModeRequired": "Bu özellik internet bağlantısı gerektirir",
+    "skipLogin": "Şimdilik Keşfet",
+    "createAccountOrLogin": "Hesap Oluştur / Giriş Yap",
+    "offlineOnboardingMessage": "Partnerinizle birlikte düğün listenizi yönetmek için hesap oluşturun veya önce uygulamayı keşfedin!",
+    "offlineModeActive": "Çevrimdışı Moddasınız",
+    "loginToSyncData": "Verilerinizi yedeklemek ve partnerinizle paylaşmak için giriş yapın",
+    "loginButton": "Giriş Yap",
+    "migrationInProgress": "Verileriniz senkronize ediliyor...",
+    "migrationSuccess": "Verileriniz başarıyla senkronize edildi",
+    "migrationFailed": "Senkronizasyon başarısız oldu. Lütfen tekrar deneyin.",
+    "offlineDataWillSync": "Giriş yaptığınızda verileriniz otomatik olarak senkronize edilecek",
+    "migrationPartialSuccess": "{migratedCount} öğe senkronize edildi, {failedCount} öğe başarısız oldu",
+    "@migrationPartialSuccess": {
+        "placeholders": {
+            "migratedCount": {
+                "type": "int"
+            },
+            "failedCount": {
+                "type": "int"
+            }
+        }
+    }
 }

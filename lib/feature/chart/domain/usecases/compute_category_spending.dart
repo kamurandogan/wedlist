@@ -1,5 +1,5 @@
-import 'package:wedlist/feature/chart/domain/entities/category_spending.dart';
 import 'package:wedlist/core/entities/user_item_entity.dart';
+import 'package:wedlist/feature/chart/domain/entities/category_spending.dart';
 
 class ComputeCategorySpending {
   const ComputeCategorySpending();

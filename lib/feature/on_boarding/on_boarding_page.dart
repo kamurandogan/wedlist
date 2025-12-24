@@ -7,12 +7,14 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wedlist/core/extensions/l10n_extension.dart';
 import 'package:wedlist/core/router/app_router.dart';
+import 'package:wedlist/core/services/user_mode_service.dart';
 import 'package:wedlist/core/utils/colors.dart';
 import 'package:wedlist/feature/on_boarding/domain/entities/onboarding_entity.dart';
 import 'package:wedlist/feature/on_boarding/presentation/blocs/cubit/cubit/page_view_cubit.dart';
 import 'package:wedlist/feature/on_boarding/presentation/widgets/beck_button.dart';
 import 'package:wedlist/feature/on_boarding/presentation/widgets/next_button.dart';
 import 'package:wedlist/feature/on_boarding/presentation/widgets/onboarding_card.dart';
+import 'package:wedlist/injection_container.dart';
 
 part 'presentation/widgets/circle_indicator_with_button.dart';
 part 'presentation/widgets/on_boarding_mixin.dart';
@@ -75,13 +77,93 @@ class _OnboardingViewState extends State<_OnboardingView>
                       ],
                     ),
                   ),
-                const SizedBox(height: 40),
-                _progressButtonLine(context, state),
+                const SizedBox(height: 24),
+                if (state.isLastPage) _loginOptionsSection(context),
+                if (!state.isLastPage) const SizedBox(height: 40),
+                if (!state.isLastPage) _progressButtonLine(context, state),
               ],
             ),
           ),
         );
       },
+    );
+  }
+
+  Widget _loginOptionsSection(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          context.loc.offlineOnboardingMessage,
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            fontSize: 14,
+            height: 1.4,
+          ),
+        ),
+        const SizedBox(height: 24),
+        ElevatedButton(
+          onPressed: () async {
+            final router = GoRouter.of(context);
+            final prefs = await SharedPreferences.getInstance();
+            if ((_selectedCountry ?? '').isNotEmpty) {
+              await prefs.setString('selected_country', _selectedCountry!);
+            }
+            await prefs.setBool('onboarding_seen', true);
+            router.go(AppRoute.login.path);
+          },
+          style: ElevatedButton.styleFrom(
+            minimumSize: const Size(double.infinity, 52),
+            backgroundColor: AppColors.textColor,
+            foregroundColor: AppColors.bg,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+          child: Text(
+            context.loc.createAccountOrLogin,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+        const SizedBox(height: 12),
+        OutlinedButton(
+          onPressed: () async {
+            final router = GoRouter.of(context);
+            final prefs = await SharedPreferences.getInstance();
+
+            // Ülke seçimini kaydet
+            if ((_selectedCountry ?? '').isNotEmpty) {
+              await prefs.setString('selected_country', _selectedCountry!);
+            }
+
+            // Onboarding görüldü olarak işaretle
+            await prefs.setBool('onboarding_seen', true);
+
+            // Çevrimdışı modu ayarla
+            await sl<UserModeService>().setOfflineMode();
+
+            // Ana ekrana yönlendir
+            router.go(AppRoute.main.path);
+          },
+          style: OutlinedButton.styleFrom(
+            minimumSize: const Size(double.infinity, 52),
+            foregroundColor: AppColors.textColor,
+            side: const BorderSide(color: AppColors.textColor, width: 2),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+          child: Text(
+            context.loc.skipLogin,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -128,9 +210,7 @@ class _OnboardingViewState extends State<_OnboardingView>
           ),
         CircleIndicatorWithButton(
           progress: progress,
-          child: state.isLastPage
-              ? _nextButtonForNavigator(context)
-              : _nextButtonForForward(context),
+          child: _nextButtonForForward(context),
         ),
       ],
     );
@@ -145,24 +225,6 @@ class _OnboardingViewState extends State<_OnboardingView>
         );
         context.read<PageViewCubit>().nextPage();
       },
-    );
-  }
-
-  NextButton _nextButtonForNavigator(BuildContext context) {
-    return NextButton(
-      onTap: () async {
-        // BuildContext'ı async boşluklardan sonra kullanmamak için router'ı
-        // "+await"
-        final router = GoRouter.of(context);
-        final prefs = await SharedPreferences.getInstance();
-        if ((_selectedCountry ?? '').isNotEmpty) {
-          await prefs.setString('selected_country', _selectedCountry!);
-        }
-        await prefs.setBool('onboarding_seen', true);
-        router.go(AppRoute.login.path);
-      },
-      backgroundColor: AppColors.bg,
-      iconColor: AppColors.textColor,
     );
   }
 

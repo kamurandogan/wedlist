@@ -13,6 +13,8 @@ import 'package:wedlist/core/observers/app_bloc_observer.dart';
 import 'package:wedlist/core/router/app_router.dart';
 import 'package:wedlist/core/services/ads_service.dart';
 import 'package:wedlist/core/services/sync_service.dart';
+import 'package:wedlist/core/services/user_mode_service.dart';
+import 'package:wedlist/core/services/wishlist_sync_service.dart';
 import 'package:wedlist/core/user/user_service.dart';
 import 'package:wedlist/feature/dowrylist/presentation/blocs/bloc/dowry_list_bloc.dart';
 import 'package:wedlist/feature/login/presentation/blocs/auth_bloc.dart';
@@ -63,26 +65,47 @@ Future<void> main() async {
     AppLogger.warning('Ads initialization failed', e, stackTrace);
   }
   // Kullanıcı giriş yaptıysa, wishlist başlangıç verilerini hazırla
-  try {
-    await Future.wait([
-      sl<UserService>().migrateLegacyStringListsIfNeeded(),
-      sl<UserService>().ensureWishListInitialized(),
-      sl<UserService>().mergeWishListWithCollaborators(),
-      sl<UserService>().ensureSymmetricCollaborators(),
-      sl<UserService>().ensureProfileInfo(),
-      sl<UserService>().cleanUpAsymmetricCollaborators(),
-      sl<UserService>().ensureUserItemsSymmetric(),
-    ]);
-  } on Exception catch (e, stackTrace) {
-    AppLogger.error('User service initialization failed', e, stackTrace);
+  // Çevrimdışı modda bu işlemleri atla
+  final userModeService = sl<UserModeService>();
+  final isOfflineMode = await userModeService.isOfflineMode();
+
+  if (!isOfflineMode) {
+    try {
+      await Future.wait([
+        sl<UserService>().migrateLegacyStringListsIfNeeded(),
+        sl<UserService>().ensureWishListInitialized(),
+        sl<UserService>().mergeWishListWithCollaborators(),
+        sl<UserService>().ensureSymmetricCollaborators(),
+        sl<UserService>().ensureProfileInfo(),
+        sl<UserService>().cleanUpAsymmetricCollaborators(),
+        sl<UserService>().ensureUserItemsSymmetric(),
+      ]);
+    } on Exception catch (e, stackTrace) {
+      AppLogger.error('User service initialization failed', e, stackTrace);
+    }
   }
 
-  // Start background sync service (offline-first support)
+  // Start background sync services (offline-first support)
   try {
     sl<SyncService>().startSync();
-    AppLogger.info('Background sync service started');
+    AppLogger.info('User items background sync service started');
   } on Exception catch (e, stackTrace) {
-    AppLogger.warning('Sync service initialization failed', e, stackTrace);
+    AppLogger.warning(
+      'User items sync service initialization failed',
+      e,
+      stackTrace,
+    );
+  }
+
+  try {
+    sl<WishlistSyncService>().startSync();
+    AppLogger.info('Wishlist background sync service started');
+  } on Exception catch (e, stackTrace) {
+    AppLogger.warning(
+      'Wishlist sync service initialization failed',
+      e,
+      stackTrace,
+    );
   }
 
   runApp(
@@ -101,11 +124,13 @@ Future<void> main() async {
         BlocProvider(
           create: (context) => sl<AuthBloc>(),
         ), // Added AuthBloc for login feature
-        // Global notifications stream so bottom bar can show unread count badge
-        BlocProvider(
-          create: (context) =>
-              sl<NotificationBloc>()..add(SubscribeNotifications()),
-        ),
+        // Global notifications stream - sadece giriş yapan kullanıcılar için
+        // Çevrimdışı modda NotificationBloc başlatılmaz
+        if (!isOfflineMode)
+          BlocProvider(
+            create: (context) =>
+                sl<NotificationBloc>()..add(SubscribeNotifications()),
+          ),
       ],
       child: const MyApp(),
     ),

@@ -9,8 +9,12 @@ import 'package:wedlist/core/services/ads_service.dart';
 import 'package:wedlist/core/services/hive_service.dart';
 import 'package:wedlist/core/services/item_limit_service.dart';
 import 'package:wedlist/core/services/network_info.dart';
+import 'package:wedlist/core/services/offline_data_migration_service.dart';
 import 'package:wedlist/core/services/purchase_service.dart';
 import 'package:wedlist/core/services/sync_service.dart';
+import 'package:wedlist/core/services/user_mode_service.dart';
+import 'package:wedlist/core/services/wishlist_data_migration_service.dart';
+import 'package:wedlist/core/services/wishlist_sync_service.dart';
 import 'package:wedlist/core/user/country_persistence.dart';
 import 'package:wedlist/core/user/user_service.dart';
 import 'package:wedlist/feature/dowrylist/domain/usecases/delete_user_item_usecase.dart';
@@ -69,10 +73,12 @@ import 'package:wedlist/feature/settings/domain/usecases/toggle_theme.dart';
 import 'package:wedlist/feature/settings/domain/usecases/watch_country.dart';
 import 'package:wedlist/feature/settings/presentation/bloc/country_cubit.dart';
 import 'package:wedlist/feature/settings/presentation/bloc/theme_cubit.dart';
+import 'package:wedlist/feature/wishlist/data/datasources/category_local_data_source.dart';
 import 'package:wedlist/feature/wishlist/data/datasources/category_remote_data_source.dart';
+import 'package:wedlist/feature/wishlist/data/datasources/wishlist_local_data_source.dart';
 import 'package:wedlist/feature/wishlist/data/datasources/wishlist_remote_data_source.dart';
 import 'package:wedlist/feature/wishlist/data/repositories/category_repository_impl.dart';
-import 'package:wedlist/feature/wishlist/data/repositories/wishlist_repository_impl.dart';
+import 'package:wedlist/feature/wishlist/data/repositories/wishlist_repository_impl_offline.dart';
 import 'package:wedlist/feature/wishlist/domain/repositories/category_repository.dart';
 import 'package:wedlist/feature/wishlist/domain/repositories/wishlist_repository.dart';
 import 'package:wedlist/feature/wishlist/domain/usecases/add_wishlist_items.dart';
@@ -88,14 +94,31 @@ Future<void> init() async {
   final hiveService = HiveService();
   await hiveService.init();
 
+  // SharedPreferences - needed early for UserModeService
+  final sharedPreferences = await SharedPreferences.getInstance();
+
   // Global utilities
   sl
     ..registerLazySingleton<RefreshBus>(RefreshBus.new)
     // Core Services - Offline Support
     ..registerLazySingleton<HiveService>(() => hiveService)
+    ..registerLazySingleton<SharedPreferences>(() => sharedPreferences)
     ..registerLazySingleton<Connectivity>(Connectivity.new)
     ..registerLazySingleton<NetworkInfo>(
       () => NetworkInfoImpl(sl<Connectivity>()),
+    )
+    // User Mode Service - Must be registered before repositories
+    ..registerLazySingleton<UserModeService>(
+      () => UserModeService(sl<SharedPreferences>()),
+    )
+    // Offline Data Migration Service
+    ..registerLazySingleton<OfflineDataMigrationService>(
+      () => OfflineDataMigrationService(
+        localDataSource: sl<UserItemLocalDataSource>(),
+        remoteDataSource: sl<UserItemRemoteDataSource>(),
+        userModeService: sl<UserModeService>(),
+        uploadPhotoUseCase: sl<UploadPhotoUseCase>(),
+      ),
     )
     // ItemAdd Feature Injection - Offline First
     ..registerLazySingleton<ItemRepository>(ItemRepositoryImpl.new)
@@ -114,6 +137,7 @@ Future<void> init() async {
         remoteDataSource: sl<UserItemRemoteDataSource>(),
         localDataSource: sl<UserItemLocalDataSource>(),
         networkInfo: sl<NetworkInfo>(),
+        userModeService: sl<UserModeService>(),
       ),
     )
     ..registerLazySingleton<SyncService>(
@@ -121,6 +145,7 @@ Future<void> init() async {
         localDataSource: sl<UserItemLocalDataSource>(),
         remoteDataSource: sl<UserItemRemoteDataSource>(),
         networkInfo: sl<NetworkInfo>(),
+        userModeService: sl<UserModeService>(),
       ),
     )
     ..registerLazySingleton<AddUserItemUseCase>(
@@ -141,9 +166,7 @@ Future<void> init() async {
     )
     ..registerLazySingleton<UploadPhotoWithProgressUseCase>(
       () => UploadPhotoWithProgressUseCase(sl<PhotoRepository>()),
-    );
-  final sharedPreferences = await SharedPreferences.getInstance();
-  sl
+    )
     // Register Feature Injection
     ..registerFactory(() => AddItemBloc(sl<AddUserItemUseCase>()))
     ..registerFactory(
@@ -207,6 +230,8 @@ Future<void> init() async {
         FirebaseFirestore.instance,
         FirebaseAuth.instance,
         sl<RefreshBus>(),
+        sl<WishlistLocalDataSource>(),
+        sl<UserModeService>(),
       ),
     )
     ..registerFactory(
@@ -215,9 +240,11 @@ Future<void> init() async {
         sl<CountryPersistenceService>(),
         sl<SignInWithApple>(),
         sl<SignInWithGoogle>(),
+        sl<UserModeService>(),
+        sl<OfflineDataMigrationService>(),
+        sl<WishlistDataMigrationService>(),
       ),
     )
-    ..registerLazySingleton(() => sharedPreferences)
     // Core
     ..registerLazySingleton<ThemeRepositoryImpl>(
       () => ThemeRepositoryImpl(sl<SharedPreferences>()),
@@ -233,25 +260,57 @@ Future<void> init() async {
         sl<ToggleTheme>(),
       ),
     )
-    // Wishlist Injection
+    // Wishlist Injection - Offline-First
     ..registerLazySingleton(() => FirebaseFirestore.instance)
     ..registerLazySingleton<WishListRemoteDataSource>(
       () => WishListRemoteDataSourceImpl(sl(), FirebaseAuth.instance),
     )
+    ..registerLazySingleton<WishlistLocalDataSource>(
+      () => WishlistLocalDataSourceImpl(sl<HiveService>()),
+    )
     ..registerLazySingleton<WishListRepository>(
-      () => WishListRepositoryImpl(sl()),
+      () => WishListRepositoryImplOffline(
+        remoteDataSource: sl<WishListRemoteDataSource>(),
+        localDataSource: sl<WishlistLocalDataSource>(),
+        networkInfo: sl<NetworkInfo>(),
+        userModeService: sl<UserModeService>(),
+        firestore: sl<FirebaseFirestore>(),
+      ),
+    )
+    ..registerLazySingleton<WishlistSyncService>(
+      () => WishlistSyncService(
+        localDataSource: sl<WishlistLocalDataSource>(),
+        remoteDataSource: sl<WishListRemoteDataSource>(),
+        userModeService: sl<UserModeService>(),
+        networkInfo: sl<NetworkInfo>(),
+      ),
+    )
+    ..registerLazySingleton<WishlistDataMigrationService>(
+      () => WishlistDataMigrationService(
+        localDataSource: sl<WishlistLocalDataSource>(),
+        remoteDataSource: sl<WishListRemoteDataSource>(),
+      ),
     )
     ..registerLazySingleton(() => GetWishListItems(sl()))
     ..registerLazySingleton(() => AddWishlistItems(sl()))
     ..registerLazySingleton(
       () => WishListBloc(sl(), sl<RefreshBus>(), sl<WatchUserItemsUseCase>()),
     )
-    // Category Injection
+    // Category Injection - Offline-First
     ..registerLazySingleton<CategoryRemoteDataSource>(
       () => CategoryRemoteDataSourceImpl(sl(), FirebaseAuth.instance),
     )
+    ..registerLazySingleton<CategoryLocalDataSource>(
+      () => CategoryLocalDataSourceImpl(sl<SharedPreferences>()),
+    )
     ..registerLazySingleton<CategoryRepository>(
-      () => CategoryRepositoryImpl(sl()),
+      () => CategoryRepositoryImpl(
+        remoteDataSource: sl<CategoryRemoteDataSource>(),
+        localDataSource: sl<CategoryLocalDataSource>(),
+        wishlistLocalDataSource: sl<WishlistLocalDataSource>(),
+        userModeService: sl<UserModeService>(),
+        networkInfo: sl<NetworkInfo>(),
+      ),
     )
     ..registerLazySingleton(() => GetCategoryItems(sl()))
     ..registerFactory(() => CategorylistBloc(sl(), sl<RefreshBus>()))

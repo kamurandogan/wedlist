@@ -1,10 +1,8 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
-
+// Manual TypeAdapter for UserItemHiveModel
 part of 'user_item_hive_model.dart';
 
-// **************************************************************************
-// TypeAdapterGenerator
-// **************************************************************************
+// coverage:ignore-file
+// ignore_for_file: type=lint
 
 class UserItemHiveModelAdapter extends TypeAdapter<UserItemHiveModel> {
   @override
@@ -24,18 +22,19 @@ class UserItemHiveModelAdapter extends TypeAdapter<UserItemHiveModel> {
       note: fields[4] as String,
       imgUrl: fields[5] as String,
       createdAt: fields[6] as DateTime?,
-      owners: (fields[7] as List?)?.cast<String>() ?? const [],
+      owners: (fields[7] as List?)?.cast<String>() ?? [],
       createdBy: fields[8] as String? ?? '',
       isPendingSync: fields[9] as bool? ?? false,
       isPendingDelete: fields[10] as bool? ?? false,
       lastSyncedAt: fields[11] as DateTime?,
+      photoBytes: fields[12] as Uint8List?,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserItemHiveModel obj) {
     writer
-      ..writeByte(12)
+      ..writeByte(13)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -59,7 +58,9 @@ class UserItemHiveModelAdapter extends TypeAdapter<UserItemHiveModel> {
       ..writeByte(10)
       ..write(obj.isPendingDelete)
       ..writeByte(11)
-      ..write(obj.lastSyncedAt);
+      ..write(obj.lastSyncedAt)
+      ..writeByte(12)
+      ..write(obj.photoBytes);
   }
 
   @override

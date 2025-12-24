@@ -1,3 +1,6 @@
+import 'dart:developer';
+import 'dart:typed_data';
+
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,16 +18,27 @@ class AddItemBloc extends Bloc<AddItemEvent, AddItemState> {
     on<AddItemButtonPressed>((event, emit) async {
       emit(const AddItemState.loading());
       try {
+        // Debug: Check received imgUrl
+        log('[DEBUG] AddItemBloc - event.imgUrl: ${event.imgUrl}');
+        log('[DEBUG] AddItemBloc - event.title: ${event.title}');
+
         // Her kullanıcı öğesi için daima benzersiz bir Firestore ID üret
         final itemId = generateFirestoreId();
         final uid = FirebaseAuth.instance.currentUser?.uid ?? '';
+        final imgUrl = event.imgUrl ?? '';
+
+        // Debug: Check final imgUrl value
+        log('[DEBUG] AddItemBloc - final imgUrl: $imgUrl');
+        log('[DEBUG] AddItemBloc - imgUrl isEmpty: ${imgUrl.isEmpty}');
+
         final userItem = UserItemEntity(
           id: itemId,
           title: event.title,
           category: event.category,
           price: double.tryParse(event.price ?? '') ?? 0.0,
           note: event.note ?? '',
-          imgUrl: event.imgUrl ?? '',
+          imgUrl: imgUrl,
+          photoBytes: event.photoBytes,
           createdAt: DateTime.now(),
           owners: uid.isNotEmpty ? [uid] : const [],
           createdBy: uid,

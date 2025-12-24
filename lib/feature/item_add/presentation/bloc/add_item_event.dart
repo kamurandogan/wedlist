@@ -9,5 +9,6 @@ sealed class AddItemEvent with _$AddItemEvent {
     String? price,
     String? note,
     String? imgUrl,
+    Uint8List? photoBytes,
   }) = AddItemButtonPressed;
 }

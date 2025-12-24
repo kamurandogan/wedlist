@@ -3,12 +3,12 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:wedlist/core/entities/user_item_entity.dart';
 import 'package:wedlist/core/user/user_service.dart';
 import 'package:wedlist/feature/dowrylist/domain/usecases/delete_user_item_usecase.dart';
 import 'package:wedlist/feature/dowrylist/domain/usecases/get_user_items_usecase.dart';
 import 'package:wedlist/feature/dowrylist/domain/usecases/update_user_item_usecase.dart';
 import 'package:wedlist/feature/dowrylist/domain/usecases/watch_user_items_usecase.dart';
-import 'package:wedlist/core/entities/user_item_entity.dart';
 import 'package:wedlist/injection_container.dart';
 
 part 'dowry_list_bloc.freezed.dart';

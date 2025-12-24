@@ -769,6 +769,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Loading ad...'**
   String get adLoadingText;
+
+  /// No description provided for @offlineMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline Mode'**
+  String get offlineMode;
+
+  /// No description provided for @onlineModeRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'This feature requires internet connection'**
+  String get onlineModeRequired;
+
+  /// No description provided for @skipLogin.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore First'**
+  String get skipLogin;
+
+  /// No description provided for @createAccountOrLogin.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Account / Sign In'**
+  String get createAccountOrLogin;
+
+  /// No description provided for @offlineOnboardingMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Create an account to manage your wedding list together with your partner, or explore the app first!'**
+  String get offlineOnboardingMessage;
+
+  /// No description provided for @offlineModeActive.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re in Offline Mode'**
+  String get offlineModeActive;
+
+  /// No description provided for @loginToSyncData.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to back up your data and share with your partner'**
+  String get loginToSyncData;
+
+  /// No description provided for @loginButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign In'**
+  String get loginButton;
+
+  /// No description provided for @migrationInProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Syncing your data...'**
+  String get migrationInProgress;
+
+  /// No description provided for @migrationSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Your data has been successfully synced'**
+  String get migrationSuccess;
+
+  /// No description provided for @migrationFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync failed. Please try again.'**
+  String get migrationFailed;
+
+  /// No description provided for @offlineDataWillSync.
+  ///
+  /// In en, this message translates to:
+  /// **'Your data will be automatically synced when you sign in'**
+  String get offlineDataWillSync;
+
+  /// No description provided for @migrationPartialSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'{migratedCount} items synced, {failedCount} items failed'**
+  String migrationPartialSuccess(int migratedCount, int failedCount);
 }
 
 class _AppLocalizationsDelegate

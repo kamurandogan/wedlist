@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:wedlist/core/entities/user_item_entity.dart';
 import 'package:wedlist/feature/chart/domain/entities/category_spending.dart';
 import 'package:wedlist/feature/chart/domain/usecases/compute_category_spending.dart';
-import 'package:wedlist/core/entities/user_item_entity.dart';
 
 part 'chart_event.dart';
 part 'chart_state.dart';

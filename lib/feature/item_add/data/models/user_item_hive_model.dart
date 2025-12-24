@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:hive/hive.dart';
 import 'package:wedlist/core/entities/user_item_entity.dart';
 
@@ -12,6 +14,7 @@ class UserItemHiveModel extends HiveObject {
     required this.price,
     required this.note,
     required this.imgUrl,
+    this.photoBytes,
     this.createdAt,
     this.owners = const [],
     this.createdBy = '',
@@ -19,6 +22,24 @@ class UserItemHiveModel extends HiveObject {
     this.isPendingDelete = false,
     this.lastSyncedAt,
   });
+
+  factory UserItemHiveModel.fromEntity(UserItemEntity entity) {
+    return UserItemHiveModel(
+      id: entity.id,
+      title: entity.title,
+      category: entity.category,
+      price: entity.price,
+      note: entity.note,
+      imgUrl: entity.imgUrl,
+      photoBytes: entity.photoBytes,
+      createdAt: entity.createdAt,
+      owners: entity.owners,
+      createdBy: entity.createdBy,
+      isPendingSync: entity.isPendingSync,
+      isPendingDelete: entity.isPendingDelete,
+      lastSyncedAt: entity.lastSyncedAt,
+    );
+  }
 
   @HiveField(0)
   String id;
@@ -56,22 +77,8 @@ class UserItemHiveModel extends HiveObject {
   @HiveField(11)
   DateTime? lastSyncedAt;
 
-  factory UserItemHiveModel.fromEntity(UserItemEntity entity) {
-    return UserItemHiveModel(
-      id: entity.id,
-      title: entity.title,
-      category: entity.category,
-      price: entity.price,
-      note: entity.note,
-      imgUrl: entity.imgUrl,
-      createdAt: entity.createdAt,
-      owners: entity.owners,
-      createdBy: entity.createdBy,
-      isPendingSync: entity.isPendingSync,
-      isPendingDelete: entity.isPendingDelete,
-      lastSyncedAt: entity.lastSyncedAt,
-    );
-  }
+  @HiveField(12)
+  Uint8List? photoBytes;
 
   UserItemEntity toEntity() {
     return UserItemEntity(
@@ -81,6 +88,7 @@ class UserItemHiveModel extends HiveObject {
       price: price,
       note: note,
       imgUrl: imgUrl,
+      photoBytes: photoBytes,
       createdAt: createdAt,
       owners: owners,
       createdBy: createdBy,

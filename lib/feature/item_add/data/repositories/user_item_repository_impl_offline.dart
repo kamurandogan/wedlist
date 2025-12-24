@@ -2,6 +2,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:wedlist/core/entities/user_item_entity.dart';
 import 'package:wedlist/core/error/failures.dart';
 import 'package:wedlist/core/services/network_info.dart';
+import 'package:wedlist/core/services/user_mode_service.dart';
 import 'package:wedlist/feature/item_add/data/datasources/user_item_local_datasource.dart';
 import 'package:wedlist/feature/item_add/data/datasources/user_item_remote_datasource.dart';
 import 'package:wedlist/feature/item_add/data/models/user_item_hive_model.dart';
@@ -13,23 +14,40 @@ class UserItemRepositoryImplOffline implements UserItemRepository {
     required this.remoteDataSource,
     required this.localDataSource,
     required this.networkInfo,
+    required this.userModeService,
   });
 
   final UserItemRemoteDataSource remoteDataSource;
   final UserItemLocalDataSource localDataSource;
   final NetworkInfo networkInfo;
+  final UserModeService userModeService;
 
   @override
   Future<Either<Failure, Unit>> addUserItem(UserItemEntity item) async {
     try {
-      // 1. Optimistic: Save locally first with pending sync flag
+      final isOffline = await userModeService.isOfflineMode();
+
+      // For offline users, use local UUID as createdBy
+      var createdBy = item.createdBy;
+      var owners = item.owners;
+
+      if (isOffline) {
+        createdBy = await userModeService.getUserId();
+        owners = [createdBy];
+      }
+
+      // 1. Optimistic: Save locally first
       final localItem = UserItemHiveModel.fromEntity(
-        item.copyWith(isPendingSync: true),
+        item.copyWith(
+          isPendingSync: !isOffline, // Don't mark as pending for offline users
+          createdBy: createdBy,
+          owners: owners,
+        ),
       );
       await localDataSource.cacheUserItem(localItem);
 
-      // 2. Try sync if online
-      if (await networkInfo.isConnected) {
+      // 2. Try sync if authenticated and online
+      if (!isOffline && await networkInfo.isConnected) {
         try {
           await remoteDataSource.addUserItem(UserItemModel.fromEntity(item));
 

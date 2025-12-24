@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wedlist/core/item/item_entity.dart';
 import 'package:wedlist/core/services/navigation_service.dart';
+import 'package:wedlist/core/services/user_mode_service.dart';
 import 'package:wedlist/feature/chart/presentation/ui/pages/chart_page.dart';
 import 'package:wedlist/feature/item_add/add_item_screen.dart';
 import 'package:wedlist/feature/item_add/presentation/bloc/add_item_bloc.dart';
@@ -48,7 +49,9 @@ final GoRouter appRouter = GoRouter(
   observers: [
     FirebaseAnalyticsObserver(analytics: _analytics),
   ],
-  redirect: (context, state) {
+  redirect: (context, state) async {
+    final userModeService = sl<UserModeService>();
+    final isOfflineMode = await userModeService.isOfflineMode();
     final user = _auth.currentUser;
     final loggedIn = user != null;
     final isVerified = user?.emailVerified ?? false;
@@ -62,13 +65,7 @@ final GoRouter appRouter = GoRouter(
     final isAuthRoute =
         loc == AppRoute.login.path ||
         loc == AppRoute.register.path ||
-        loc == AppRoute.onBoarding.path ||
-        loc == '/';
-    final isProtected =
-        loc == AppRoute.main.path ||
-        loc == AppRoute.addItem.path ||
-        loc == AppRoute.verification.path ||
-        loc == AppRoute.settings.path;
+        loc == AppRoute.onBoarding.path;
 
     // Eğer kullanıcı giriş yaptı ama e-postası doğrulanmadıysa, doğrulama sayfasına yönlendir
     if (loggedIn && !isVerified && loc != AppRoute.verification.path) {
@@ -82,8 +79,20 @@ final GoRouter appRouter = GoRouter(
       return AppRoute.main.path;
     }
 
-    if (!loggedIn && isProtected) {
-      // Oturum yokken korumalı sayfalara gidilemez => login’e yönlendir
+    // Çevrimdışı kullanıcılar ana uygulamaya erişebilir
+    if (isOfflineMode && !loggedIn) {
+      // İşbirliği rotalarını engelle
+      if (loc == AppRoute.collaborators.path) {
+        return AppRoute.main.path; // Ana ekrana yönlendir
+      }
+      return null; // Diğer rotalara erişime izin ver
+    }
+
+    // Mod ayarlanmamış ve giriş yapılmamışsa
+    if (!loggedIn &&
+        !isOfflineMode &&
+        !isAuthRoute &&
+        loc != AppRoute.onBoarding.path) {
       return AppRoute.login.path;
     }
 
